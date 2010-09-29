@@ -1,0 +1,20 @@
+<reaction id="dmr_tetR154_prot" name="binding tetR:tetR" display="binding tetR:tetR" type="binding" reversible="true">
+	<listOfSupportCompartments>
+		<compartment id="E_coli" class="cell"/>
+	</listOfSupportCompartments>
+	<listOfReactants><speciesReference species="tetR154_prot" stoichiometry="2"/></listOfReactants>
+	<listOfProducts><speciesReference species="tetR154_dimer" stoichiometry="1"/></listOfProducts>
+	<kineticLaw>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<apply>
+				<minus/>
+				<apply><times/><ci>tetR154_prot</ci><ci>tetR154_prot</ci><ci>kon</ci></apply>
+				<apply><times/><ci>tetR154_dimer</ci><ci>koff</ci></apply>
+			</apply>
+          	</math>
+	  	<listOfParameters>
+			<parameter id="kon" name="rate_of_binding" value="1000000000" units="litre_per_mole_per_second"/>
+			<parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+		</listOfParameters>
+	</kineticLaw>
+</reaction>

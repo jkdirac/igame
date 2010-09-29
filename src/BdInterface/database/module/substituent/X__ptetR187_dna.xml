@@ -1,0 +1,10 @@
+<module id="X__ptetR187_dna" name="X__ptetR187_dna" display="X__ptetR187_dna" class="substituent">
+	<extra>
+		<can_be_empty>true</can_be_empty>
+	</extra>
+	<link>
+		<index id="ptetR187tetR154_2"/>
+		<index id="ptetR187_dna"/>
+	</link>
+</module>
+

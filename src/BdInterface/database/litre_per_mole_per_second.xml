@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unitDefinition id="litre_per_mole_per_second">
+	<listOfUnits>
+		<unit kind="mole" exponent="-1"/>
+		<unit kind="litre"/>
+		<unit kind="second" exponent="-1"/>
+	</listOfUnits>
+</unitDefinition>

@@ -1,0 +1,15 @@
+<species id="placI185_dna">
+	<structure>
+		<listOfChains>
+			<chain>
+				<module id="X__placI185_dna" type="dna" class="substituent"/>
+				<module id="placI185" type="dna" class="biobrick"/>
+				<module id="placI185_dna__Y" type="dna" class="substituent"/>
+			</chain>
+		</listOfChains>
+	</structure>
+	<link>
+		<index>bid_placI185_lacI153_4</index>
+	</link>
+</species>
+			

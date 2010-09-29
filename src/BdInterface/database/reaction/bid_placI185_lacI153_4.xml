@@ -1,0 +1,25 @@
+<reaction id="bid_placI185_lacI153_4" name="binding plac:lacI4" display="binding plac:lacI4" type="binding" reversible="true">
+	<listOfSupportCompartments>
+		<compartment id="E_coli" class="cell"/>
+	</listOfSupportCompartments>
+	<listOfReactants>
+		<speciesReference species="placI185_dna" stoichiometry="1"/>
+		<speciesReference species="lacI153_tetramer" stoichiometry="1"/>
+	</listOfReactants>
+	<listOfProducts>
+		<speciesReference species="placI185lacI153_4" stoichiometry="1"/>
+	</listOfProducts>
+	<kineticLaw>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<apply>
+				<minus/>
+				<apply><times/><ci>placI185_dna</ci><ci>lacI153_tetramer</ci><ci>kon</ci></apply>
+				<apply><times/><ci>placI185lacI153_4</ci><ci>koff</ci></apply>
+			</apply>
+          	</math>
+	  	<listOfParameters>
+			<parameter id="kon" name="rate_of_binding" value="2000000000" units="litre_per_mole_per_second"/>
+			<parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+		</listOfParameters>
+	</kineticLaw>
+</reaction>

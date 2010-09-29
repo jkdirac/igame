@@ -1,0 +1,15 @@
+<species id="cIlam156_dimer">
+	<structure>
+		<listOfChains>
+			<chain><module id="cIlam156" type="protein" class="biobrick" bsite="cIlam2"/></chain>
+			<chain><module id="cIlam156" type="protein" class="biobrick" bsite="cIlam2"/></chain>
+		</listOfChains>
+		<listOfBsites>
+			<bsite lable="cIlam2"/>
+		</listOfBsites>
+	</structure>
+	<link>
+		<index>dmr_cIlam156_prot</index>
+		<index>bid_pcIlam189_cIlam156_2</index>
+	</link>
+</species>
