@@ -20,10 +20,10 @@ extern "C" {
 #endif
 
 //error code
-#define SUCCESS 0
-#define SYMBOL_NOT_FOUND -1
-#define NULL_POINTER -2
-#define SYNTAX_ERROR -3
+#define STRCACU_SUCCESS 0
+#define STRCACU_SYMBOL_NOT_FOUND -1
+#define STRCACU_NULL_POINTER -2
+#define STRCACU_SYNTAX_ERROR -3
 
 extern int err_no;
 

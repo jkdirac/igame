@@ -41,6 +41,12 @@
 //====================
 #include <sbml/SBMLTypes.h>
 
+//====================
+//    JkDirac       //
+//====================
+#include "str_cacu.h"
+#include "StrCacuException.h"
+
 using namespace std;
 
 #endif

@@ -8,21 +8,8 @@ Driver::~Driver ()
 
 bool Driver::beginSimulation ()
 {
-  //
-  //  const variable
-  //
-  const string DATABASE_NAME = "database";
-
-  //
-  //  (1) load database to a new DBxml Manager
-  //
   readInput dbreader;
-  dbreader.add_directory (DATABASE_NAME);
-
-  //
-  //  (2) create a new MySBMLDocument object
-  //
-  MySBMLDocument* mysbmldoc = new MySBMLDocument;
+  const string DB_PATH = "../../database";
   bool SBMLok =	false;
 
   //
@@ -30,6 +17,8 @@ bool Driver::beginSimulation ()
   //
   try
   {
+  	MySBMLDocument* mysbmldoc = new MySBMLDocument;
+  	dbreader.add_directory (DB_PATH);
 	dbreader.config (mysbmldoc);
 	mysbmldoc->run (dbreader);
 	SBMLok  = validateExampleSBML(mysbmldoc);
@@ -47,9 +36,9 @@ bool Driver::beginSimulation ()
 	cerr << e.what() << ": Unable to allocate memory." << endl;
     return 1;
   }
-  catch (string& str)
+  catch (StrCacuException& e)
   {
-	cerr << str << endl;
+	cerr << e.what () << ": Invalid data term in MoDeL." << endl;
 	return 1;
   }
   catch (...)
