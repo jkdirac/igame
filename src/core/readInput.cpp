@@ -7,288 +7,286 @@ readInput::~readInput ()
 {}
 
 void readInput::config (
-	MySBMLDocument* mysbmldoc
-	) 
+		MySBMLDocument* mysbmldoc
+		) 
 {
-  //  
-  //  constant variables 
-  //
-  const string MODEL = "iGAMEsbml";
-  const string DOC = "input";
-  const string PREFIX = "/sbpmodel/input/";
-
-  //
-  //  create model object in mysbmldoc
-  //
-  Model* m = mysbmldoc->createModel ();
-  m->setId (MODEL);
-
-  //
-  //  read input file and config environment
-  //
-
-  //  (0) load files predefined in PREDEF
-
-  //
-  //  (0.1) load unitDefinitions
-  //
-  const string pathU1 = "/sbpmodel/predef/"
-	"listOfUnitDefinitions/unitDefinition";
-  const string unitDoc = "listOfUnitDefinitions";
-  const int numOfUnitDefs = get_node_element_num (PREDEF, &unitDoc, &pathU1);
-
-  for (int i=1; i <= numOfUnitDefs; i++)
-  {
-	string id, name;
-	nodeQuery (PREDEF, unitDoc, pathU1, i, "id", id); 
-	nodeQuery (PREDEF, unitDoc, pathU1, i, "id", name); 
-
-	UnitDefinition* unitdef = m->createUnitDefinition ();
-	setUnit (unitdef, id, name); 
-	
-	ostringstream oss;
-	oss << pathU1 << "[" << i << "]/unit";
-	const string& pathU2 (oss.str ());
-
-	int numOfUnits = get_node_element_num (PREDEF, &unitDoc, &pathU2);
-	for (int j =1; j <= numOfUnits; j++)
-	{
-	  Unit* unit = unitdef->createUnit ();
-
-	  string kind;
-	  double exponent, multiplier;
-	  int scale;
-
-	  readUnit (PREDEF, unitDoc, pathU2, j, kind, exponent, scale, multiplier);
-
-	  UnitKind_t unitKind = mysbmldoc->getUnitKind_t (kind);
-	  setUnit (unit, unitKind, exponent, scale, multiplier);
-	}
-  }
-
-  //
-  //  (0.2) load functionDefinitions
-  //
-  const string pathFunc = "/sbpmodel/predef/"
-	"listOfFunctionDefinitions/functionDefinition";
-  const string funcDoc = "listOfFunctionDefinitions";
-  const int numOfFuncDefs = get_node_element_num (PREDEF, &funcDoc, &pathFunc);
-
-  for (int i =1; i < numOfFuncDefs; i++)
-  {
-	string id, name, math;
-	readFunctionDef (PREDEF, funcDoc, pathFunc, i, id, name, math);
-
-	FunctionDefinition* fdef = m->createFunctionDefinition ();
-	setFunction (fdef, id, name, math);
-  }
-
-  //
-  //  (1) read listOfConditions 
-  //  parameter listed must be previously defined in
-  //  PREDEF container in database. This would not be
-  //  validated since program which outputs the input
-  //  file should take this responsibility.
-  //
-  const string path1 = PREFIX + "listOfParameters/parameter";
-  const int numOfParas =  get_node_element_num (PREDEF, &DOC, &path1);
-
-  for (int i=1; i <= numOfParas; i++)
-  {
-	string id, name, units;
-	double value;
-	bool constant;
-
-	readParameter (PREDEF, DOC, path1, i, id, 
-		name, value, units, constant);
-	
-	Parameter* para = m->createParameter ();
-	setParameter (para, id, name, value, units, constant);
-  }
-
-  //
-  //  (2) read listOfRules
-  //  functions in listOfRules must be build-in MathML ones
-  //  or previously defined in PREDEF container
-  //
-  const string path3 = PREFIX + "listOfRules";
-
-  //  2.1 read algebraic rules
-  const string path4 = path3 + "/algebraicrule";
-  const int numOfAlgebraicRules = 
-	get_node_element_num (PREDEF, &DOC, &path4);
-
-  for (int i=1; i <= numOfAlgebraicRules; i++)
-  {
-	string variable, math;
-	readRule (PREDEF, DOC, path3, 
-		"algebraicrule", i, variable, math);
-	
-	AlgebraicRule* alger = m->createAlgebraicRule ();
-	setAlgebraicRule (alger, variable, math);
-  }
-
-  //  2.2 read assignment rule
-  const string path5 = path3 + "/assignmentule";
-  const int numOfAssignmentRules = 
-	get_node_element_num (PREDEF, &DOC, &path5);
-
-  for (int i=1; i <= numOfAssignmentRules; i++)
-  {
-	string variable, math;
-	readRule (PREDEF, DOC, path3, 
-		"assignmentrule", i, variable, math);
-	
-	AssignmentRule* assr = m->createAssignmentRule ();
-	setAssignmentRule (assr, variable, math);
-  }
-
-  //  2.3 read rate rule
-  const string path6 = path3 + "/raterule";
-  const int numOfRateRules = 
-	get_node_element_num (PREDEF, &DOC, &path6);
-
-  for (int i=1; i <= numOfRateRules; i++)
-  {
-	string variable, math;
-	readRule (PREDEF, DOC, path3, 
-		"raterule", i, variable, math);
-	
-	RateRule* rater = m->createRateRule ();
-	setRateRule (rater, variable, math);
-  }
-
-  //
-  //  (3) read listOfCompartments
-  //
-  const string path7 = PREFIX + "listOfCompartments/compartment";
-  const int numOfComps =  get_node_element_num (PREDEF, &DOC, &path7);
-
-  for (int i=1; i <= numOfComps; i++)
-  {
-	//outside must be name of its parent compartment
-	string id, name, units, outside;
-	int spatialDimensions;
-	double size;
-	bool constant; 
-
-	readCompartment (PREDEF, DOC, path7, i, id, 
-		name, spatialDimensions, size, units, outside, constant);
-	MyCompartment* comp = mysbmldoc->createMyCompartment ();
-	setCompartment (comp, id, name, spatialDimensions, 
-		size, units, outside, constant);
-
 	//
-	//	add comp* to its outside compartment
+	//  create model object in mysbmldoc
 	//
-	if (outside != "ROOT")
+	Model* m = mysbmldoc->createModel ();
+	m->setId ("iGameModel");
+
+	//===================================
+	//  (0.1) load unitDefinitions
+	//===================================
+	const string unitPath = 
+		"/MoDeL/system/"
+		"listOfUnitDefinitions/"
+		"unitDefinition";
+	const string unitDoc = "units";
+	const int numOfUnitDefs = 
+		get_node_element_num (SYSTEM, &unitDoc, &unitPath);
+
+	for (int i=1; i <= numOfUnitDefs; i++)
 	{
-	  MyCompartment* outComp = 
-		mysbmldoc->getMyCompartment (outside);
-	  if (outComp != NULL) outComp->addMyCompartmentIn (comp);
-	  else throw string (
-		  "Unrecognized Compartment Label (outside)!"
-		  );
+		ostringstream oss;
+		vector<string> _id, _name;
+		string id, name;
+
+		//	attribute path for id
+		oss << unitPath << "[" << i << "]/@id";
+		const string attrPath_id (oss.str ());
+		get_node_attr (SYSTEM, &unitDoc, &attrPath_id, _id); 
+		if (id.empty ()) 
+		{
+			string errno (
+					"UNIT: empty attribute @id in "
+					);
+			errno += unitDoc + ".xml!"
+			throw StrCacuException (errno);
+		}
+		else id = _id[0];
+
+		//	attribute path for name 
+		oss.str ("");
+		oss << unitPath << "[" << i << "]/@name";
+		const string attrPath_name (oss.str ());
+		get_node_attr (SYSTEM, &unitDoc, &attrPath_name, _name); 
+		if (!_name.empty ()) name = _name[0];
+
+		UnitDefinition* unitdef = m->createUnitDefinition ();
+		setUnit (unitdef, id, name); 
+
+		//	read unit
+		oss.str ("");
+		oss << unitPath << "[" << i << "]/listOfUnits/unit";
+		const string unitPath2 (oss.str ());
+		int numOfUnits = get_node_element_num (SYSTEM, &unitDoc, &unitPath2);
+
+		for (int j =1; j <= numOfUnits; j++)
+		{
+			Unit* unit = unitdef->createUnit ();
+
+			string kind;
+			double exponent, multiplier;
+			int scale;
+
+			readUnit (SYSTEM, unitDoc, unitPath2, j, kind, exponent, scale, multiplier);
+
+			UnitKind_t unitKind = mysbmldoc->getUnitKind_t (kind);
+			setUnit (unit, unitKind, exponent, scale, multiplier);
+		}
 	}
 
-	//
-	//	read self-contained contents
-	//
-	const string ddoc = id;
-	const string path8 ("/sbpmodel/compartment/listOfContents/content");
-	const int numOfContents = get_node_element_num (COMPARTMENT, &ddoc, &path8);
+	//	================================
+	//  (0.2) load functionDefinitions
+	//	================================
+	const string pathFunc = 
+		"/MoDeL/system/"
+		"listOfFunctionDefinitions/"
+		"functionDefinition";
+	const string funcDoc ("functions");
+	const int numOfFuncDefs = 
+		get_node_element_num (SYSTEM, &funcDoc, &pathFunc);
 
-	for (int j=1; j <= numOfContents; j++)
+	for (int i =1; i <= numOfFuncDefs; i++)
 	{
-	  string id, name, compartment, substanceUnits;
-	  double initialAmount, initialConcentration;
-	  bool hasOnlySubstanceUnits, boundaryCondition, constant;
-	  int charge;
+		string id, name, math;
+		readFunctionDef (SYSTEM, funcDoc, pathFunc, i, id, name, math);
 
-	  readSpecies (COMPARTMENT, ddoc, path8, j, id, name,
-		  compartment, initialAmount, initialConcentration,
-		  substanceUnits, hasOnlySubstanceUnits, 
-		  boundaryCondition, charge, constant);
-	  
-	  MySpecies* s = mysbmldoc->createMySpecies ();  
-	  
-	  //  name should be unique sbmlid, which should be reset
-	  name = mysbmldoc->genSbmlId ();
-
-	  setSpecies (s, id, name, compartment, initialAmount, 
-		  initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
-		  boundaryCondition, charge, constant);
-
-	  readSpecies_db (s);
-	  mysbmldoc->validateBackSpecies ();
-	  s->rearrange ();
+		FunctionDefinition* fdef = m->createFunctionDefinition ();
+		setFunction (fdef, id, name, math);
 	}
 
-	//
-	//	3.1 read listOfContents
-	//
-	const string path9 = path7 + "/listOfContents";
+	//	===================================================
+	//			READ INPUT FILE
+	//	===================================================
+	const string DOC ("input");
 
-	//	3.1.1 read listOfSpecies
-	const string path10 = path9 + "/listOfSpecies/species";
-	const int numOfSpecies =  get_node_element_num (PREDEF, &DOC, &path10);
+	//	===================================================
+	//  (1) read listOfParameters 
+	//  parameter listed must be previously defined in
+	//  SYSTEM container in database. This would not be
+	//  validated since program which outputs the input
+	//  file should take this responsibility.
+	//  ===================================================
+	const string pathPara = 
+		"/MoDeL/system/"
+		"listOfParameters/"
+		"parameter";
+	const int numOfParas = 
+		get_node_element_num (SYSTEM, &DOC, &pathPara);
 
-	for (int j=1; j <= numOfSpecies; j++)
+	for (int i=1; i <= numOfParas; i++)
 	{
-	  string id, name, compartment, substanceUnits;
-	  double initialAmount, initialConcentration;
-	  bool hasOnlySubstanceUnits, boundaryCondition, constant;
-	  int charge;
+		string id, name, units;
+		double value;
+		bool constant;
 
-	  readSpecies (PREDEF, DOC, path10, j, id, name,
-		  compartment, initialAmount, initialConcentration,
-		  substanceUnits, hasOnlySubstanceUnits, 
-		  boundaryCondition, charge, constant);
+		readParameter (SYSTEM, DOC, pathPara, i, id, 
+				name, value, units, constant);
 
-	  MySpecies* s = mysbmldoc->createMySpecies ();  
-	  setSpecies (s, id, name, compartment, initialAmount, 
-		  initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
-		  boundaryCondition, charge, constant);
-
-	  readSpecies_db (s);
-	  s->rearrange ();
-	  mysbmldoc->validateBackSpecies ();
+		Parameter* para = m->createParameter ();
+		setParameter (para, id, name, value, units, constant);
 	}
 
-	//	
-	//	3.1.2 read listOfPlasmids
-	//	
-	const string path12 = path7 + "/listOfPlasmids/plasmid";
-	const int numOfPlasmids = get_node_element_num (PREDEF, &DOC, &path12);
+	//	======================================================
+	//  (2) read listOfRules
+	//  functions in listOfRules must be build-in MathML ones
+	//  or previously defined in SYSTEM container
+	//	======================================================
+	const string pathRule = 
+		"/MoDeL/input/"
+		"listOfRules";
 
-	for (int j =1; j <= numOfPlasmids; j++)
+	//  2.1 read algebraic rules
+	const string pathAlge (pathRule + "/algebraicrule");
+	const int numOfAlgebraicRules = 
+		get_node_element_num (SYSTEM, &DOC, &pathAlge);
+
+	for (int i=1; i <= numOfAlgebraicRules; i++)
 	{
-	  MySpecies* s = mysbmldoc->createMySpecies ();
-	  Chain* c = s->createChain ();
+		string variable, math;
+		readRule (SYSTEM, DOC, pathAlge, 
+				"algebraicrule", i, variable, math);
 
-	  ostringstream oss;
-	  oss << path12 << "[" << j << "]/biobrick";
-	  const string path13 (oss.str ());
-
-	  const int numOfParts = get_node_element_num (PREDEF, &DOC, &path13);
-	  for (int k =0; k <numOfParts; k++)
-	  {
-		string pR, pL, pT, pC;
-		readPart (PREDEF, DOC, path13, k, pR, pL, pT, pC);
-		
-		Part* p = c->createPart ();
-		p->setDbId (pR);
-		p->setPartLabel (pL);
-		p->setPartType (pT);
-		p->setPartCategory (pC);
-		p->setIsBinded (s->countBindedNode (pL));
-	  }
-
-	  s->rearrange ();
-	  mysbmldoc->validateBackSpecies ();
+		AlgebraicRule* alger = m->createAlgebraicRule ();
+		setAlgebraicRule (alger, variable, math);
 	}
 
-  }//! read listOfMyCompartments
+	//  2.2 read assignment rule
+	const string pathAssr (pathRule + "/assignmentule");
+	const int numOfAssignmentRules = 
+		get_node_element_num (SYSTEM, &DOC, &pathAssr);
+
+	for (int i=1; i <= numOfAssignmentRules; i++)
+	{
+		string variable, math;
+		readRule (SYSTEM, DOC, pathAssr, 
+				"assignmentrule", i, variable, math);
+
+		AssignmentRule* assr = m->createAssignmentRule ();
+		setAssignmentRule (assr, variable, math);
+	}
+
+	//  2.3 read rate rule
+	const string pathRate (pathRule + "/raterule");
+	const int numOfRateRules = 
+		get_node_element_num (SYSTEM, &DOC, &pathRate);
+
+	for (int i=1; i <= numOfRateRules; i++)
+	{
+		string variable, math;
+		readRule (SYSTEM, DOC, pathRate, 
+				"raterule", i, variable, math);
+
+		RateRule* rater = m->createRateRule ();
+		setRateRule (rater, variable, math);
+	}
+
+	//	==================================
+	//  (3) read listOfCompartments
+	//	==================================
+	const string pathComp = 
+		"/MoDeL/dbInterface/input/"
+		"listOfCompartments/"
+		"compartment";
+	const int numOfComps = 
+		get_node_element_num (SYSTEM, &DOC, &pathComp);
+
+	for (int i=1; i <= numOfComps; i++)
+	{
+		//outside must be name of its parent compartment
+		string id, name, units, outside;
+		int spatialDimensions;
+		double size;
+		bool constant; 
+
+		readCompartment (SYSTEM, DOC, path7, i, id, 
+				name, spatialDimensions, size, units, outside, constant);
+		MyCompartment* comp = mysbmldoc->createMyCompartment ();
+		setCompartment (comp, id, name, spatialDimensions, 
+				size, units, outside, constant);
+
+		//
+		//	add comp* to its outside compartment
+		//
+		if (outside != "ROOT")
+		{
+			MyCompartment* outComp = 
+				mysbmldoc->getMyCompartment (outside);
+			if (outComp != NULL) outComp->addMyCompartmentIn (comp);
+			else throw string (
+					"Unrecognized Compartment Label (outside)!"
+					);
+		}
+	}
+
+		//
+		//	3.1 read listOfContents
+		//
+		const string path9 = path7 + "/listOfContents";
+
+		//	3.1.1 read listOfSpecies
+		const string path10 = path9 + "/listOfSpecies/species";
+		const int numOfSpecies =  get_node_element_num (SYSTEM, &DOC, &path10);
+
+		for (int j=1; j <= numOfSpecies; j++)
+		{
+			string id, name, compartment, substanceUnits;
+			double initialAmount, initialConcentration;
+			bool hasOnlySubstanceUnits, boundaryCondition, constant;
+			int charge;
+
+			readSpecies (SYSTEM, DOC, path10, j, id, name,
+					compartment, initialAmount, initialConcentration,
+					substanceUnits, hasOnlySubstanceUnits, 
+					boundaryCondition, charge, constant);
+
+			MySpecies* s = mysbmldoc->createMySpecies ();  
+			setSpecies (s, id, name, compartment, initialAmount, 
+					initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
+					boundaryCondition, charge, constant);
+
+			readSpecies_db (s);
+			s->rearrange ();
+			mysbmldoc->validateBackSpecies ();
+		}
+
+		//	
+		//	3.1.2 read listOfPlasmids
+		//	
+		const string path12 = path7 + "/listOfPlasmids/plasmid";
+		const int numOfPlasmids = get_node_element_num (SYSTEM, &DOC, &path12);
+
+		for (int j =1; j <= numOfPlasmids; j++)
+		{
+			MySpecies* s = mysbmldoc->createMySpecies ();
+			Chain* c = s->createChain ();
+
+			ostringstream oss;
+			oss << path12 << "[" << j << "]/biobrick";
+			const string path13 (oss.str ());
+
+			const int numOfParts = get_node_element_num (SYSTEM, &DOC, &path13);
+			for (int k =0; k <numOfParts; k++)
+			{
+				string pR, pL, pT, pC;
+				readPart (SYSTEM, DOC, path13, k, pR, pL, pT, pC);
+
+				Part* p = c->createPart ();
+				p->setDbId (pR);
+				p->setPartLabel (pL);
+				p->setPartType (pT);
+				p->setPartCategory (pC);
+				p->setIsBinded (s->countBindedNode (pL));
+			}
+
+			s->rearrange ();
+			mysbmldoc->validateBackSpecies ();
+		}
+
+	}//! read listOfMyCompartments
 }
 
 

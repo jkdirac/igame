@@ -9,7 +9,7 @@ Driver::~Driver ()
 bool Driver::beginSimulation ()
 {
   readInput dbreader;
-  const string DB_PATH = "../../database";
+  const string DB_PATH = "../../../database";
   bool SBMLok =	false;
 
   //
@@ -38,7 +38,7 @@ bool Driver::beginSimulation ()
   }
   catch (StrCacuException& e)
   {
-	cerr << e.what () << ": Invalid data term in MoDeL." << endl;
+	cerr << e.what () << ": Invalid data term." << endl;
 	return 1;
   }
   catch (...)

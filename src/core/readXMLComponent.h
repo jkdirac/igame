@@ -26,15 +26,6 @@ class readXMLComponent :
 
   public:
 
-	void nodeQuery (
-		const container_index& cind,
-		const string& doc,
-		const string& qpath,
-		const int& i, 
-		const string& node,
-		string& value
-		);
-
 	void readPart (
 		const container_index& cind,
 		const string& doc,

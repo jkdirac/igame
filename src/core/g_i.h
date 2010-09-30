@@ -44,8 +44,8 @@
 //====================
 //    JkDirac       //
 //====================
-#include "str_cacu.h"
-#include "StrCacuException.h"
+#include "strcacu/str_cacu.h"
+#include "strcacu/StrCacuException.h"
 
 using namespace std;
 

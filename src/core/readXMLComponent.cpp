@@ -6,32 +6,6 @@ readXMLComponent::readXMLComponent ()
 readXMLComponent::~readXMLComponent ()
 {}
 
-void readXMLComponent::nodeQuery (
-	const container_index& cind,
-	const string& doc,
-	const string& qpath,
-	const int& i, 
-	const string& node,
-	string& value
-	)
-{
-  string np (qpath);
-  if (i == 0) np += "/" + node;
-  else 
-  {
-	ostringstream oss;
-	oss << np << "[" << i << "]/" << node;
-	np = string (oss.str ());
-  }
-
-  vector<string> res;
-  
-  int operation = get_node_element (cind, &doc, &np, res);
-  //errorHandle (operation);
-
-  if (!res.empty ()) value = res[0];
-}
-
 void readXMLComponent::readPart (
 	const container_index& cind,
 	const string& doc,
@@ -794,8 +768,8 @@ void readXMLComponent::readUnit (
 	)
 {
   ostringstream oss;
-  oss << "[" << i <<"]/";
-  string prefix = qpath + string(oss.str ());
+  oss << qpath << "[" << i <<"]/@";
+  string prefix (oss.str ());
 
   string np;
   vector<string> temp;
@@ -804,13 +778,13 @@ void readXMLComponent::readUnit (
   //  read attribute kind 
   //
   np = prefix + "kind";
-  get_node_element (cind, &doc, &np, temp);
+  get_node_attr (cind, &doc, &np, temp);
   if (temp.empty ())
   {
-	string error = string (
+	string errno = string (
 		"UNIT: empty attribute @kind in "
 		) + doc + ".xml!";
-	throw error;
+	throw StrCacuException (errno);
   }
   else kind = temp[0];
 
@@ -818,7 +792,7 @@ void readXMLComponent::readUnit (
   //  read attribute exponent
   //
   np = prefix + "exponent";
-  get_node_element (cind, &doc, &np, temp);
+  get_node_attr (cind, &doc, &np, temp);
   if (!temp.empty ()) exponent = atoi (temp[0].c_str ()); 
   else exponent = 1;
 
@@ -826,7 +800,7 @@ void readXMLComponent::readUnit (
   //  read attribute scale
   //
   np = prefix + "scale";
-  get_node_element (cind, &doc, &np, temp);
+  get_node_attr (cind, &doc, &np, temp);
   if (!temp.empty ()) scale = atoi (temp[0].c_str ()); 
   else scale = 0;
 
@@ -834,7 +808,7 @@ void readXMLComponent::readUnit (
   //  read attribute double
   //
   np = prefix + "multiplier";
-  get_node_element (cind, &doc, &np, temp);
+  get_node_attr (cind, &doc, &np, temp);
   if (!temp.empty ()) multiplier = atof (temp[0].c_str ()); 
   else multiplier = 1;
 }
@@ -850,8 +824,14 @@ void readXMLComponent::readFunctionDef (
 	)
 {
   ostringstream oss;
-  oss << "[" << i <<"]/";
-  string prefix = qpath + string(oss.str ());
+  
+  //	node path
+  oss << qpath << "[" << i <<"]/";
+  const string prefix1 (oss.str ());
+
+  //	attribute path
+  oss << "@";
+  const string prefix2 (oss.str ());
 
   string np;
   vector<string> temp;
@@ -859,27 +839,34 @@ void readXMLComponent::readFunctionDef (
   //
   //  read attribute kind 
   //
-  np = prefix + "id";
+  np = prefix2 + "id";
   get_node_element (cind, &doc, &np, temp);
   if (temp.empty ())
   {
-	string error = string (
+	string errno = string (
 		"FUNCTION: empty attribute @id in "
 		) + doc + ".xml!";
-	throw error;
+	throw StrCacuException (errno);
   }
   else id = temp[0];
 
   //
   //  read attribute name
   //
-  np = prefix + "name";
+  np = prefix2 + "name";
   get_node_element (cind, &doc, &np, temp);
   if (!temp.empty ()) name = temp[0];
 
   //
   //  read attribute math
   //
-  np = prefix + "math";
+  np = prefix1 + "math";
   get_node (cind, &doc, &np, math);
+  if (math.empty ())
+  {
+	string errno = string (
+		"FUNCTION: empty node math in "
+		) + doc + ".xml!";
+	throw StrCacuException (errno);
+  }
 }
