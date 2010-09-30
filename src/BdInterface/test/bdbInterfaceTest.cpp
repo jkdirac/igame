@@ -27,7 +27,7 @@
 using namespace std;
 
 bdbXMLInterface test_inter;
-const string XML_FILE_HOME = "/home/jkdirac/Develop/igem/hello_ustc_2010/BdInterface/database";
+const string XML_FILE_HOME = "../../database";
 
 void test_init()
 {
