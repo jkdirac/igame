@@ -18,67 +18,66 @@ void readXMLComponent::readPart (
 		)
 {
 	ostringstream oss;
-	oss << "[" << i <<"]/";
-	string prefix = qpath + string(oss.str ());
+	oss << qpath << "[" << i <<"]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> _pR, _pL, _pT, _pC;
+	vector<string> temp;
 
 	//
-	//  read attribute partReference
+	//  read node partReference
 	//
-	np = prefix + "partReference";
-	get_node_element (cind, &doc, &np, _pR); 
-	if (_pR.empty ())
+	const string path_pr = prefix + "partReference";
+	get_node_element (cind, &doc, &path_pr, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"PART: empty attribute @partReference in "
+		string errno = string (
+				"PART: empty node partReference in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else pR = _pR[0];
+	else pR = temp[0];
 
 	//
-	//  read attribute partLabel
+	//  read node partLabel
 	//
-	np = prefix + "partLabel";
-	get_node_element (cind, &doc, &np, _pL); 
-	if (_pL.empty ())
+	const string path_pl = prefix + "partLabel";
+	get_node_element (cind, &doc, &path_pl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
+		string errno = string (
 				"PART: empty attribute @partLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else pL = _pL[0];
+	else pL = temp[0];
 
 	//
-	//  read attribute partType
+	//  read node partType
 	//
-	np = prefix + "partType";
-	get_node_element (cind, &doc, &np, _pT); 
-	if (_pT.empty ())
+	const string path_pt = prefix + "partType";
+	get_node_element (cind, &doc, &path_pt, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
+		string errno = string (
 				"PART: empty attribute @partType in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else pT = _pT[0];
+	else pT = temp[0];
 
 	//
-	//  read attribute partCategory
+	//  read node partCategory
 	//
-	np = prefix + "partCategory";
-	get_node_element (cind, &doc, &np, _pC); 
-	if (_pC.empty ())
+	const string path_pc = prefix + "partCategory";
+	get_node_element (cind, &doc, &path_pc, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
+		string errno = string (
 				"PART: empty attribute @partCategory in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else pC = _pC[0];
+	else pC = temp[0];
 }
 
 void readXMLComponent::readNode (
@@ -91,39 +90,38 @@ void readXMLComponent::readNode (
 		)
 {
 	ostringstream oss;
-	oss << "[" << i <<"]/";
-	string prefix = qpath + string(oss.str ());
+	oss << qpath << "[" << i <<"]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> _nCL, _nPL;
+	vector<string> temp;
 
 	//
-	//  read attribute currentNodeLabel
+	//  read node currentNodeLabel
 	//
-	np = prefix + "currentNodeLabel";
-	get_node_element (cind, &doc, &np, _nCL); 
-	if (_nCL.empty ())
+	const string path_cnl = prefix + "currentNodeLabel";
+	get_node_element (cind, &doc, &path_cnl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"NODE: empty attribute @currentNodeLabel in "
+		string errno = string (
+				"NODE: empty node currentNodeLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else nCL = _nCL[0];
+	else nCL = temp[0];
 
 	//
-	//  read attribute parentNodeLabel
+	//  read node parentNodeLabel
 	//
-	np = prefix + "parentNodeLabel";
-	get_node_element (cind, &doc, &np, _nPL); 
-	if (_nPL.empty ())
+	const string path_pnl = prefix + "parentNodeLabel";
+	get_node_element (cind, &doc, &path_pnl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"NODE: empty attribute @parentNodeLabel in "
+		string errno = string (
+				"NODE: empty node parentNodeLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else nPL = _nPL[0];
+	else nPL = temp[0];
 }
 
 void readXMLComponent::readSpecies (
@@ -133,57 +131,65 @@ void readXMLComponent::readSpecies (
 		const int& i,
 		string& speciesReference,
 		string& speciesLabel,
-		string& compartmentLabel
+		string& compartmentLabel,
+		int& relation
 		)
 {
 	ostringstream oss;
-	oss << "[" << i << "]/";
-	string prefix = qpath + string (oss.str ());
+	oss << qpath << "[" << i << "]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> _ref, _sl, _cl;
+	vector<string> temp;
 
 	//
-	//  read attribute speciesReference
+	//  read node speciesReference
 	//
-	np = prefix + "speciesReference";
-	get_node_element (cind, &doc, &np, _ref); 
-	if (_ref.empty ())
+	const string path_srf = prefix + "speciesReference";
+	get_node_element (cind, &doc, &path_srf, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"SPECIES: empty attribute @speciesReference in "
+		string errno = string (
+				"SPECIES: empty node speciesReference in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else speciesReference = _ref[0];
+	else speciesReference = temp[0];
 
 	//
-	//  read attribute speciesLabel
+	//  read node speciesLabel
 	//
-	np = prefix + "speciesLabel";
-	get_node_element (cind, &doc, &np, _sl); 
-	if (_sl.empty ())
+	const string path_sl = prefix + "speciesLabel";
+	get_node_element (cind, &doc, &path_sl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"SPECIES: empty attribute @speciesLabel in "
+		string errno = string (
+				"SPECIES: empty node speciesLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else speciesLabel = _sl[0];
+	else speciesLabel = temp[0];
 
 	//
-	//  read attribute compartmentLabel
+	//  read node compartmentLabel
 	//
-	np = prefix + "compartmentLabel";
-	get_node_element (cind, &doc, &np, _cl); 
-	if (_cl.empty ())
+	const string path_cl = prefix + "compartmentLabel";
+	get_node_element (cind, &doc, &path_cl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"SPECIES: empty attribute @compartmentLabel in "
+		string errno = string (
+				"SPECIES: empty node compartmentLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else compartmentLabel = _cl[0];
+	else compartmentLabel = temp[0];
+
+	//
+	//	read attribute relation
+	//
+	const string path_rel = prefix + "compartmentLabel/@relation";
+	get_node_attr (cind, &doc, &path_rel, temp);
+	if (!temp.empty ()) relation = atoi (temp[0].c_str ());
+	else relation = 0;
 }
 
 void readXMLComponent::readCompartment (
@@ -197,53 +203,52 @@ void readXMLComponent::readCompartment (
 		)
 {
 	ostringstream oss;
-	oss << "[" << i <<"]/";
-	string prefix = qpath + string(oss.str ());
+	oss << qpath << "[" << i <<"]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> cref, curr, par; 
+	vector<string> temp; 
 
 	//
-	//  read attribute compartmentLabel
+	//  read node compartmentLabel
 	//
-	np = prefix + "compartmentReference";
-	get_node_element (cind, &doc, &np, cref); 
-	if (cref.empty ())
+	const string path_compref = prefix + "compartmentReference";
+	get_node_element (cind, &doc, &path_compref, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"COMPARTMENT: empty attribute @compartmentReference in "
+		string errno = string (
+				"COMPARTMENT: empty node compartmentReference in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else compartmentReference = cref[0];
+	else compartmentReference = temp[0];
 
 	//
-	//  read attribute currentCompartmentLabel
+	//  read node currentCompartmentLabel
 	//
-	np = prefix + "currentCompartmentLabel";
-	get_node_element (cind, &doc, &np, curr); 
-	if (curr.empty ())
+	const string path_curr = prefix + "currentCompartmentLabel";
+	get_node_element (cind, &doc, &path_curr, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"COMPARTMENT: empty attribute @currentCompartmentLabel in "
+		string errno = string (
+				"COMPARTMENT: empty node currentCompartmentLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else currentCompartmentLabel = curr[0];
+	else currentCompartmentLabel = temp[0];
 
 	//
-	//  read attribute parentCompartmentLabel
+	//  read node parentCompartmentLabel
 	//
-	np = prefix + "parentCompartmentLabel";
-	get_node_element (cind, &doc, &np, par); 
-	if (par.empty ())
+	const string path_par = prefix + "parentCompartmentLabel";
+	get_node_element (cind, &doc, &path_par, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"COMPARTMENT: empty attribute @parentCompartmentLabel in "
+		string errno = string (
+				"COMPARTMENT: empty node parentCompartmentLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else parentCompartmentLabel = par[0];
+	else parentCompartmentLabel = temp[0];
 }
 
 
@@ -257,79 +262,76 @@ void readXMLComponent::readTransfer (
 		)
 {
 	ostringstream oss;
-	oss << "/[" << i << "]/";
-	string prefix = qpath + string (oss.str ());
+	oss << qpath << "/[" << i << "]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> tmp; 
+	vector<string> temp; 
 
 	//
 	//  read component from
 	//
-
+	const string path_from = prefix + "from/";
+	
 	//
-	//  read attribute partLabel
-	//
-	np = prefix + "From/partLabel";
-	get_node_element (cind, &doc, &np, tmp); 
-	if (tmp.empty ())
+	//	read attribute speciesLabel
+	const string path_from_sl = path_from + "@speciesLabel";
+	get_node_element (cind, &doc, &path_from_sl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"TRANSFER: empty attribute From/@partLabel in "
+		string errno = string (
+				"TRANSFER: empty attribute speciesLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else from.first = tmp[0];
-	tmp.clear ();
+	else from.second = temp[0];
 
 	//
-	//  read attribute speciesLabel
+	//  read node from
 	//
-	np = prefix + "From/speciesLabel";
-	get_node_element (cind, &doc, &np, tmp); 
-	if (tmp.empty ())
+	const string path_from_pl = path_from + "partLabel";
+	get_node_element (cind, &doc, &path_from_pl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"TRANSFER: empty attribute From/@speciesLabel in "
+		string errno = string (
+				"TRANSFER: empty node from in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else from.second = tmp[0];
-	tmp.clear ();
+	else from.first = temp[0];
 
 	//
-	//  read component to 
+	//  read component to
 	//
-
+	const string path_to = prefix + "to/";
+	
 	//
-	//  read attribute partLabel
+	//	read attribute speciesLabel
 	//
-	np = prefix + "To/partLabel";
-	get_node_element (cind, &doc, &np, tmp); 
-	if (tmp.empty ())
+	const string path_to_sl = path_to + "@speciesLabel";
+	get_node_element (cind, &doc, &path_to_sl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"TRANSFER: empty attribute To/@partLabel in "
+		string errno = string (
+				"TRANSFER: empty attribute speciesLabel in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else to.first = tmp[0];
-	tmp.clear ();
+	else to.second = temp[0];
 
 	//
-	//  read attribute speciesLabel
+	//  read node to
 	//
-	np = prefix + "To/speciesLabel";
-	get_node_element (cind, &doc, &np, tmp); 
-	if (tmp.empty ())
+	const string path_to_pl = path_to + "partLabel";
+	get_node_element (cind, &doc, &path_to_pl, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"TRANSFER: empty attribute To/@speciesLabel in "
+		string errno = string (
+				"TRANSFER: empty node to in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else to.second = tmp[0];
-	tmp.clear ();
+	else to.first = temp[0];
+
 }
 
 void readXMLComponent::readParameter (
@@ -545,13 +547,7 @@ void readXMLComponent::readSpecies (
 	//
 	const string path_ccid = prefix + "@ccid";
 	get_node_attr (cind, &doc, &path_db, temp);
-	if (temp.empty ())
-	{
-		string errno = string (
-				"SPECIES: empty attribute @ccid in "
-				) + doc + ".xml!";
-	}
-	else ccid = temp[0];
+	if (!temp.empty ()) ccid = temp[0];
 
 	//
 	//  read node id
@@ -713,39 +709,38 @@ void readXMLComponent::readSpeciesLink (
 		) 
 {
 	ostringstream oss;
-	oss << "[" << i <<"]/";
-	string prefix = qpath + string(oss.str ());
+	oss << qpath << "[" << i <<"]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> _ref, _role;
+	vector<string> temp;
 
 	//
-	//  read attribute speciesReference 
+	//  read node referencedSpecies
 	//
-	np = prefix + "speciesReference";
-	get_node_element (cind, &doc, &np, _ref);
-	if (_ref.empty ())
+	const string path_refs = prefix + "referencedSpecies";
+	get_node_element (cind, &doc, &path_refs, temp);
+	if (temp.empty ())
 	{
-		string error = string (
-				"SPECIESLINK: empty attribute @speciesReference in "
+		string errno = string (
+				"REFERENCEDSPECIES: empty node referencedSpcies in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else speciesReference = _ref[0];
+	else speciesReference = temp[0];
 
 	//
 	//  read attribute partType
 	//
-	np = prefix + "partType";
-	get_node_element (cind, &doc, &np, _role);
-	if (_role.empty ())
+	const string path_ptype = prefix + "@partType";
+	get_node_element (cind, &doc, &path_ptype, temp);
+	if (!temp.empty ()) partType = temp[0];
+	else
 	{
-		string error = string (
-				"SPECIESLINK: empty attribute @partType in "
+		string errno = string (
+				"REFERENCEDSPECIES: empty attribute partType in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else partType = _role[0];
 }
 
 void readXMLComponent::readReactionLink (
@@ -758,39 +753,38 @@ void readXMLComponent::readReactionLink (
 		) 
 {
 	ostringstream oss;
-	oss << "[" << i <<"]/";
-	string prefix = qpath + string(oss.str ());
+	oss << qpath << "[" << i <<"]/";
+	string prefix (oss.str ());
 
-	string np;
-	vector<string> _ref, _role;
+	vector<string> temp;
 
 	//
-	//  read attribute reactionReference 
+	//  read node referencedReaction
 	//
-	np = prefix + "reactionReference";
-	get_node_element (cind, &doc, &np, _ref);
-	if (_ref.empty ())
+	const string path_refR = prefix + "referencedReaction";
+	get_node_element (cind, &doc, &path_refR, temp);
+	if (temp.empty ())
 	{
-		string error = string (
-				"REACTIONLINK: empty attribute @reactionReference in "
+		string errno = string (
+				"REFERENCEDREACTION: empty node referencedReaction in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else reactionReference = _ref[0];
+	else reactionReference = temp[0];
 
 	//
-	//  read attribute speciesRole
+	//  read attribute speciesType
 	//
-	np = prefix + "speciesRole";
-	get_node_element (cind, &doc, &np, _role);
-	if (_role.empty ())
+	const string path_stype = prefix + "@speciesType";
+	get_node_element (cind, &doc, &path_stype, temp);
+	if (temp.empty ())
 	{
-		string error = string (
-				"REACTIONLINK: empty attribute @speciesRole in "
+		string errno = string (
+				"REFERENCEDREACTION: empty attribute @speciesType in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else speciesRole = _role[0];
+	else speciesRole = temp[0];
 }
 
 void readXMLComponent::readUnit (
@@ -906,4 +900,221 @@ void readXMLComponent::readFunctionDef (
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
+}
+
+void readXMLComponent::readExternalRef (
+		const container_index& cind,
+		const string& doc,
+		const string& qpath,
+		const int& i,
+		string& id,
+		string& speciesLabel,
+		string& partLabel,
+		string& parameterLabel
+		)
+{
+	ostringstream oss;
+
+	//	node path
+	oss << qpath << "[" << i <<"]/";
+	const string prefix (oss.str ());
+
+	vector<string> temp;
+
+	//
+	//  read node id 
+	//
+	const string path_id = prefix + "id";
+	get_node_element (cind, &doc, &path_id, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: empty node id (extRef) in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else id = temp[0];
+
+	//
+	//	read node extRefSource
+	//
+
+	const string path_ext = prefix + "extRefSource";
+	get_node_element (cind, &doc, &path_ext, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: empty node extRefSource in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else parameterLabel = temp[0];
+
+	//	
+	//	read attribute speciesLabel
+	//
+	
+	const string path_sl = path_ext + "/@speciesLabel";
+	get_node_attr (cind, &doc, &path_sl, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: empty attribute speciesLabel (extRef) in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else speciesLabel = temp[0];
+
+	//
+	//	read attribute partLabel
+	//
+	
+	const string path_pl = path_ext + "/@partLabel";
+	get_node_attr (cind, &doc, &path_pl, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: empty attribute partLabel (extRef) in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else partLabel = temp[0];
+}	
+
+void readXMLComponent::readConditionalParameter (
+		const container_index& cind,
+		const string& dir,
+		const string& doc,
+		const string& para,
+		const string& comp,
+		double& value,
+		string& units,
+		string& name
+		)
+{
+	string nodepath;
+	nodepath = string ("MoDeL/part/") + dir +
+		"/listOfConditionalParameters/"
+		"conditionalParameter[@id=\""
+		+ para + "\"]/parameterValue[@compartment=\""
+		+ comp + "\"]";
+
+	vector<string> temp;
+
+	get_node_element (cind, &doc, &nodepath, temp);
+	if (temp.empty ())
+	{
+		nodepath = string ("MoDeL/part/") + dir +
+			"/listOfConditionalParameters/"
+			"conditionalParameter[@id=\""
+			+ para + "\"][parameterValue/@compartment=\""
+			+ comp + "\"]/@commonValue";
+
+		get_node_attr (cind, &doc, &nodepath, temp);
+		if (temp.empty ())
+		{
+			//	read default
+			const string doc1 ("defaults");
+			string defaultpath;
+			defaultpath = string ("/MoDeL/default/") + 
+				"listOfValueDefaults/"
+				"valueDefault[@id=\""
+				+ para + "\"]";
+			get_node_element (cind, &doc1, &defaultpath, temp);
+			if (temp.empty ())
+			{
+				string errno = string (
+						"DEFAULT: no default value: "
+						) + para + " , in " + doc1 + ".xml!";
+				throw StrCacuException (errno);
+			}
+			else value = atof (temp[0].c_str ());
+		}
+		else value = atof (temp[0].c_str ());
+	}
+	else value = atof (temp[0].c_str ());
+
+	//	
+	//	read units
+	//
+	nodepath = string ("MoDeL/part/") + dir +
+		"/listOfConditionalParameters/"
+		"conditionalParameter[@id=\""
+		+ para + "\"][parameterValue[@compartment=\""
+		+ comp + "\"]/@units";
+
+	get_node_attr (cind, &doc, &nodepath, temp);
+	if (!temp.empty ()) units = temp[0];
+
+	//	
+	//	read name
+	//
+	nodepath = string ("MoDeL/part/") + dir +
+		"/listOfConditionalParameters/"
+		"conditionalParameter[@id=\""
+		+ para + "\"][parameterValue[@compartment=\""
+		+ comp + "\"]/@name";
+
+	get_node_attr (cind, &doc, &nodepath, temp);
+	if (!temp.empty ()) name = temp[0];
+}
+
+void readXMLComponent::readConstraint (
+		const container_index& cind,
+		const string& doc,
+		const string& qpath,
+		const int& i,
+		vector<string>& vars,
+		string& formula
+		)
+{
+	ostringstream oss;
+
+	//	node path
+	oss << qpath << "[" << i <<"]/";
+	const string prefix (oss.str ());
+
+	vector<string> temp;
+
+	//
+	//  read variables 
+	//
+	const string path_vars (
+			prefix + "listOfVariables/variable"
+			);
+	const int numOfVars = get_node_element_num (cind, &doc, &path_vars);
+	if (numOfVars == 0)
+	{
+		string errno = string (
+				"REACTION: no variables defined in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else
+	{
+		for (int i=1; i <= numOfVars; i++)
+		{
+			oss.str ("");
+			oss << path_vars << "[" << i << "]";
+			const string pathVar_text (oss.str ());
+			get_node_element (cind, &doc, &pathVar_text, temp);
+			if (!temp.empty ()) vars.push_back (temp[0]);
+		}
+	}
+
+	//
+	//	read formula
+	//
+	const string path_formula (
+			prefix + "formula"
+			);
+	get_node_element (cind, &doc, &path_formula, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: no formula defined in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else formula = temp[0];
 }

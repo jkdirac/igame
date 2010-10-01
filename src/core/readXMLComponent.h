@@ -53,7 +53,8 @@ class readXMLComponent :
 				const int& i,
 				string& speciesReference,
 				string& speciesLabel,
-				string& compartmentLabel
+				string& compartmentLabel,
+				int &relation
 				);
 
 		void readCompartment (
@@ -169,6 +170,37 @@ class readXMLComponent :
 				string& id,
 				string& name,
 				string& math
+				);
+
+		void readExternalRef (
+				const container_index& cind,
+				const string& doc,
+				const string& qpath,
+				const int& i,
+				string& id,
+				string& speciesLabel,
+				string& partLabel,
+				string& parameterLabel
+				);
+
+		void readConditionalParameter (
+				const container_index& cind,
+				const string& dir,
+				const string& doc,
+				const string& para,
+				const string& comp,
+				double& value,
+				string& units,
+				string& name
+				);
+
+		void readConstraint (
+				const container_index& cind,
+				const string& doc,
+				const string& qpath,
+				const int& i,
+				vector<string>& vars,
+				string& formula
 				);
 };
 #endif 

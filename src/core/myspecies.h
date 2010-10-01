@@ -125,6 +125,14 @@ class MySpecies:
 				const int& n
 				) const;
 
+		Part* getPart (
+				const string& partLabel
+				);
+
+		const Part* getPart (
+				const string& partLabel
+				) const;
+
 		void setDbId (
 				const string& dbid
 				);
@@ -162,7 +170,7 @@ class MySpecies:
 		string label; //used in reaction templates
 
 		//
-		//	ccid (corresponded-compartment index), is a compartment-type attribute
+		//	ccid (corresponded-compartment id), is a compartment-type attribute
 		//	-1 means it is not a compartment-type species,
 		//	positive values gives the index of corresponded compartment
 		//	in compartment list

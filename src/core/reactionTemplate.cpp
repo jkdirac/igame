@@ -68,6 +68,70 @@ string reactionTemplate::getMath () const
   return math;
 }
 
+Parameter* reactionTemplate::getParameter (
+		const string& sid
+		)
+{
+	for (int i=0; i<listOfParameters.size (); i++)
+	{
+		Parameter* para = listOfParameters[i];
+		if (para->getId () == sid) return para;
+	}
+	return NULL;
+}
+
+string reactionTemplate::getCompartment (
+		const string& speciesLabel
+		) const
+{
+	for (int i=0; i<listOfMyReactants.size (); i++)
+	{
+		MySpecies* s = listOfMyReactants[i];
+		if (s->getLabel () == speciesLabel) 
+			return s->getCompartment ();
+	}
+
+	for (int i=0; i<listOfMyModifiers.size (); i++)
+	{
+		MySpecies* s = listOfMyModifiers[i];
+		if (s->getLabel () == speciesLabel) 
+			return s->getCompartment ();
+	}
+
+	for (int i=0; i<listOfMyProducts.size (); i++)
+	{
+		MySpecies* s = listOfMyProducts[i];
+		if (s->getLabel () == speciesLabel) 
+			return s->getCompartment ();
+	}
+
+	return string ();
+}
+const MySpecies* reactionTemplate::getSpecies (
+		const string& speciesLabel
+		) const
+{
+	for (int i=0; i<listOfMyReactants.size (); i++)
+	{
+		MySpecies* s = listOfMyReactants[i];
+		if (s->getLabel () == speciesLabel) return s;
+	}
+
+	for (int i=0; i<listOfMyModifiers.size (); i++)
+	{
+		MySpecies* s = listOfMyModifiers[i];
+		if (s->getLabel () == speciesLabel) return s;
+	}
+
+	for (int i=0; i<listOfMyProducts.size (); i++)
+	{
+		MySpecies* s = listOfMyProducts[i];
+		if (s->getLabel () == speciesLabel) return s; 
+	}
+
+	return NULL;
+}
+
 void reactionTemplate::addCompartment (
 	const string& _compRef,
 	const string& _currComp,
@@ -81,6 +145,23 @@ void reactionTemplate::addCompartment (
 	mapComps[_currComp] = _compRef;
 	mmapComps.insert (make_pair (_parComp, _currComp));
   }
+}
+
+void reactionTemplate::addParameter (
+		Parameter* para
+		)
+{
+	listOfParameters.push_back (para);
+}
+
+void reactionTemplate::addConstraint (
+		const vector<string>& vars,
+		const string& formula
+		)
+{
+	listOfConstraints.push_back (
+			make_pair (vars, formula)
+			);
 }
 
 void reactionTemplate::addReactant (
@@ -309,14 +390,7 @@ bool reactionTemplate::findSpeciesMatch (
 		  possibleReactantMatch[i], possibleModifierMatch[j]
 		  );
 
-	  //
-	  //  external parameter constraints
-	  //  remain to be completed
-	  //  ...
-	  //
-	  bool ok2 = true;
-
-	  if (ok1 && ok2) 
+	  if (ok1) 
 		result.push_back (make_pair (
 			  possibleReactantMatch[i],
 			  possibleModifierMatch[j]

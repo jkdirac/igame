@@ -4,15 +4,15 @@
 		<listOfCompartments>
 			<compartment>
 				<compartmentReference>E_coli</compartmentReference>
-				<currentCompartmentLabel>E_coli</currentCompartmentLabel>
-				<parentCompartmentLabel>ROOT</parentCompartmentLabel>
+				<currentCompartmentLabel>E_coli0</currentCompartmentLabel>
+				<parentCompartmentLabel>Flask</parentCompartmentLabel>
 			</compartment>
 		</listOfCompartments>
 		<listOfReactants>
 			<reactant>
-				<speciesReference>placI185_dna</speciesReference>
+				<speciesReference>E_coli_cell</speciesReference>
 				<speciesLabel>placI185_dna</speciesLabel>
-				<compartmentLabel relation="0">E_coli</compartmentLabel>
+				<compartmentLabel itself="E_coli0">Flask</compartmentLabel>
 			</reactant>
 			<reactant>
 				<speciesReference>lacI153_tetramer</speciesReference>
@@ -108,6 +108,15 @@
 						<constant>true</constant>
 					</localParameter>
 				</listOfLocalparameters>
+				<listOfConstraints>
+					<constraint>
+						<listOfVariables>
+							<var>Th</var>
+							<var>a</var>
+						</listOfVariables>
+						<formula>Th/a+5>0</formula>
+					</constraint>
+				</listOfConstraints>
 			</reverseKineticLaw>
 		</kineticLaw>
 	</reaction>

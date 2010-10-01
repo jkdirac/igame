@@ -611,147 +611,266 @@ void readDataBase::setFunction (
 void readDataBase::readReactionTemplate (
 		reactionTemplate* RT,
 		const string& doc,
-		const bool& redir
+		const bool& direction
 		)
 {
+	string head ("/MoDeL/reaction");
+
 	if (doc.empty ())
-	{
-		string errno ("Reading Reaction...No ID Specified!");
-		throw errno;
-	}
+		throw StrCacuException (
+				"Reading Reaction...No ID Specified!"
+				);
 
-	string qp ("/sbpmodel/reaction");
-	string qpath;
+	vector<string> temp;
 
-	//read element Id
+	//	read attribute Id
 	string id;
-//    nodeQuery (REACTION, doc, qpath, 0, "id", id);
+	const string pathId = head + "/@id";
+	get_node_attr (REACTION, &doc, &pathId, temp);
+	if (temp.empty ())
+	{
+		string errno = string (
+				"REACTION: empty attribute id in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else id = temp[0];
+
+	if (id != doc)
+		throw StrCacuException (
+				"Reading Reaction...Inconsistent ID!"
+				);
+
 	RT->setId (id);
 
-	//read element Name
+	//	read attribute name
 	string name;
-//	nodeQuery (REACTION, doc, qpath, 0, "name", name);
+	const string pathName = head + "/@name";
+	get_node_attr (REACTION, &doc, &pathName, temp);
+	if (!temp.empty ()) name = temp[0];
 	RT->setName (name);
 
-	//read element Reversible
-	string reversible;
-//    nodeQuery (REACTION, doc, qpath, 0, "reversible", reversible);
-	bool rev = (reversible == "true");
-	RT->setReversible (rev);
-	if (!redir && !rev) 
-	{
-		string errno ("Reactions shuold not be linked"
-				" to Products in Irreversible cases!");
-		throw errno;
-	}
+	//	read attribute Reversible
+	bool reversible;
+	const string pathRev = head + "/@reversible";
+	get_node_attr (REACTION, &doc, &pathRev, temp);
+	if (!temp.empty ()) reversible = (temp[0] == "true");
+	else reversible = true;
 
-	//read element fast
-	string fast;
-//    nodeQuery (REACTION, doc, qpath, 0, "fast", fast);
-	RT->setFast (fast == "true");
+	if (!direction && !reversible) 
+		throw StrCacuException (
+				"Reactions shuold not be linked"
+				" to Products in Irreversible cases!"
+				);
+	RT->setReversible (reversible);
+
+	//	read attribute fast
+	bool fast;
+	const string pathFast = head + "/@fast";
+	get_node_attr (REACTION, &doc, &pathFast, temp);
+	if (!temp.empty ()) fast = (temp[0] == "true");
+	else fast = false;
+	RT->setFast (fast);
 
 	//readReactionCompartments
-	qpath = qp + "/listOfCompartments/compartment";
-	int numOfComps = get_node_element_num (REACTION, &doc, &qpath);
+	const string pathComp = head + "/listOfCompartments/compartment";
+	int numOfComps = get_node_element_num (REACTION, &doc, &pathComp);
 	for (int cnt =1; cnt <= numOfComps; cnt++)
 	{
 		string compartmentRef, currComp, parComp;
-		readCompartment (REACTION, doc, qpath, cnt, compartmentRef, currComp, parComp);
+		readCompartment (REACTION, doc, pathComp, cnt, compartmentRef, currComp, parComp);
 		RT->addCompartment (compartmentRef, currComp, parComp);
 	}
 
 	//readReactionSpecies
 	//(1) read reactants
-	if (redir) qpath = qp + "/listOfReactants/reactant";
-	else qpath = qp + "/listOfProducts/product";
-	int numOfRs = get_node_element_num (REACTION, &doc, &qpath);
+	
+	string pathReactants = head;
+	if (direction)  pathReactants += "/listOfReactants/reactant";
+	else pathReactants += "/listOfProducts/product";
+	int numOfReactants = get_node_element_num (
+			REACTION, &doc, &pathReactants
+			);
 
-	for (int cnt =1; cnt <= numOfRs; cnt++)
+	for (int cnt =1; cnt <= numOfReactants; cnt++)
 	{
 		string speciesReference, speciesLabel, compartmentLabel;
-		readSpecies (REACTION, doc, qpath, cnt,
-				speciesReference, speciesLabel, compartmentLabel);
+		int relation;
+		readSpecies (
+				REACTION, doc, pathReactants, cnt,
+				speciesReference, speciesLabel, 
+				compartmentLabel, relation
+				);
 
+		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
+		if (relation == 1) s->setCCid (compartmentLabel);
+		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
-//        readSpecies_db (s);
-
-		if (redir) RT->addReactant (s, compartmentLabel);
+		if (direction) RT->addReactant (s, compartmentLabel);
 		else RT->addProduct (s, compartmentLabel);
 	}
 
-	//(1) read Compartments
-
 	//(2) read products
-	if (redir) qpath = qp + "/listOfProducts/product";
-	else qpath = qp + "/listOfReactants/reactant";
-	int numOfPs = get_node_element_num (REACTION, &doc, &qpath);
+	string pathProducts (head);
+	if (direction) pathProducts += "/listOfProducts/product";
+	else pathProducts += "/listOfReactants/reactant";
+	int numOfProducts = get_node_element_num (REACTION, &doc, &pathProducts);
 
-	for (int cnt =1; cnt < numOfPs; cnt++)
+	for (int cnt =1; cnt <= numOfProducts; cnt++)
 	{
 		string speciesReference, speciesLabel, compartmentLabel;
-		readSpecies (REACTION, doc, qpath, cnt,
-				speciesReference, speciesLabel, compartmentLabel);
+		int relation;
 
+		readSpecies (
+				REACTION, doc, pathProducts, cnt,
+				speciesReference, speciesLabel, 
+				compartmentLabel, relation
+				);
+
+		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
+		if (relation == 1) s->setCCid (compartmentLabel);
+		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
-//        readSpecies_db (s);
-
-		if (redir) RT->addProduct (s, compartmentLabel);
+		if (direction) RT->addProduct (s, compartmentLabel);
 		else RT->addReactant (s, compartmentLabel);
 	}
 
 	//(3) read Modifier
-	qpath = qp + "/listOfModifiers/modifier";
-	int numOfMs = get_node_element_num (REACTION, &doc, &qpath);
+	const string pathModifier = head + "/listOfModifiers/modifier";
+	int numOfModifiers = get_node_element_num (REACTION, &doc, &pathModifier);
 
-	for (int cnt =1; cnt < numOfMs; cnt++)
+	for (int cnt =1; cnt <= numOfModifiers; cnt++)
 	{
-		qpath += "/modifier";
 		string speciesReference, speciesLabel, compartmentLabel;
-		readSpecies (REACTION, doc, qpath, cnt,
-				speciesReference, speciesLabel, compartmentLabel);
+		int relation;
+		readSpecies (
+				REACTION, doc, pathModifier, cnt,
+				speciesReference, speciesLabel, 
+				compartmentLabel, relation
+				);
 
+		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
-
-//        readSpecies_db (s);
+		if (relation == 1) s->setCCid (compartmentLabel);
+		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 		RT->addModifier (s, compartmentLabel);
 	}
 
 	//read substituent transfer table
 	vector< pair<string,string> > source;
 	vector< pair<string,string> > destin;
-	qpath = qp + "/listOfSubstituentTransfers/substituentTransfer";
-	int numOfTrans = get_node_element_num (REACTION, &doc, &qpath);
+	const string pathTransfer = head + 
+		"/listOfSubstituentTransfers/substituentTransfer";
+	int numOfTrans = get_node_element_num (REACTION, &doc, &pathTransfer);
 
-	for (int cnt=0; cnt < numOfTrans; cnt++)
+	for (int cnt= 1; cnt <= numOfTrans; cnt++)
 	{
 		pair<string,string> from, to;
-		readTransfer (REACTION, doc, qpath, cnt, from, to);
+		readTransfer (REACTION, doc, pathTransfer, cnt, from, to);
 		RT->addSubstituentTransfer (from, to);
 	}
 
-	//read KineticLaw
-	if (redir) qpath = qp + "/forwardKineticLaw";
-	else qpath = qp + "/reverseKineticLaw";
+	//	read KineticLaw
+	string pathKineticLaw;
+	if (direction) pathKineticLaw = head + "/forwardKineticLaw";
+	else pathKineticLaw = head + "/reverseKineticLaw";
 
-	//read math
+	//	read math
 	string math;
 
-	string nodepath = qpath + "/math";
-	get_node (REACTION, &doc, &nodepath, math); 
+	const string pathMath = pathKineticLaw + "/math";
+	get_node (REACTION, &doc, &pathMath, math); 
 
 	if (math.empty ())
-	{
-		string errno ("Reading Reaction...No Math Specified!");
-		throw errno;
-	}
+		throw StrCacuException (
+				"Reading Reaction...No Math Specified!"
+				);
 
 	RT->setMath (math);
+
+	//	read local parameters
+	const string pathLocalPara = 
+		pathKineticLaw + "/listOfLocalParameters/localParameter";
+	const int numOfLocalParas = get_node_element_num (
+			REACTION, &doc, &pathLocalPara
+			);
+
+	for (int i=1; i <= numOfLocalParas; i++)
+	{
+		string db, id, name, units;
+		double value;
+		bool constant;
+
+		readParameter (REACTION, doc, pathLocalPara, i, db, id,
+			   name, value, units, constant);
+
+		Parameter* para = new Parameter (2,4);
+		setParameter (para, id, name, value, units, constant);
+		RT->addParameter (para);
+	}
+
+	//	read referenced parameters
+	const string pathExtRef = 
+		pathKineticLaw + "/listOfReferencedParameters/referencedParameter";
+	const int numOfRefParas = get_node_element_num (
+			REACTION, &doc, &pathExtRef
+			);
+
+	for (int i=1; i <= numOfRefParas; i++)
+	{
+		string id, partLabel, speciesLabel, parameterLabel, formula;
+		readExternalRef (
+				REACTION, doc, pathExtRef, i, id, 
+				speciesLabel, partLabel, parameterLabel
+				);
+
+		//	find species 
+		const MySpecies* s = RT->getSpecies (speciesLabel);
+		if (s == NULL)
+			throw StrCacuException (
+					string ("REACTION: No species existed with label ")
+					+ speciesLabel + "!"
+					);
+		string compartmentLabel = s->getCompartment ();
+
+		string units, name;
+		double value;
+
+		const Part* p = s->getPart (partLabel);
+		readConditionalParameter (
+				PART, p->getPartCategory (),
+				p->getPartLabel (), parameterLabel,
+			    compartmentLabel, value, units, name
+				);
+
+		Parameter* para = new Parameter (2,4);
+		setParameter (para, id, name, value, units, true);
+		RT->addParameter (para);
+	}
+	
+	//	read listOfConstraints
+	const string pathConstraint = 
+		pathKineticLaw + "/listOfConstraints/constraint";
+	const int numOfConstraints = get_node_element_num (
+			REACTION, &doc, &pathConstraint
+			);
+
+	for (int i=1; i <= numOfConstraints; i++)
+	{
+		vector<string> variables;
+		string formula;
+		readConstraint (REACTION, doc, pathConstraint,
+				i, variables, formula);
+		RT->addConstraint (variables, formula);
+	}
+
+	return;
 }

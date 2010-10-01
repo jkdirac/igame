@@ -179,10 +179,10 @@ void MySBMLDocument::run (
 
 				//read species link
 				string speciesLinkPath =
-					"/sbpmodel/part/" +
+					"/MoDeL/part/" +
 					p->getPartCategory () + 
-					"/listOfSpeciesLinks/"
-					"speciesLink";
+					"/listOfReferencedSpecies/"
+					"referencedSpecies";
 				string doc_1 = p->getDbId ();
 
 				int numOfSpeciesLinks = 
@@ -218,7 +218,7 @@ void MySBMLDocument::run (
 
 					MySpecies* sLink = new MySpecies;
 					sLink->setDbId (speciesReference);  
-//                    dbreader.readSpecies_db (sLink);
+					//                    dbreader.readSpecies_db (sLink);
 
 					//
 					//  is this species template match?
@@ -230,9 +230,9 @@ void MySBMLDocument::run (
 					//  read reaction Links
 					//
 					string reactionLinkPath =
-						"/sbpmodel/species/"  
-						"/listOfReactionLinks/"
-						"reactionLink";
+						"/MoDeL/species/"  
+						"/listOfReferencedReactions/"
+						"referencedReaction";
 
 					int numOfReactionLinks = dbreader.get_node_element_num (
 							SPECIES, &speciesReference, &reactionLinkPath
@@ -259,11 +259,9 @@ void MySBMLDocument::run (
 							|| (speciesRole == "modifier");
 
 						if (!validRole)
-						{
-							string errno ("Reading SPECIES...Invalid "
-									"speciesRole value!");
-							throw errno;
-						}
+							throw string (
+									"Reading SPECIES...Invalid speciesType value!"
+									);
 
 						handleReactionTemplate (
 								dbreader, reactionReference, speciesRole, i
@@ -304,9 +302,67 @@ void MySBMLDocument::handleReactionTemplate (
 	bool direction = true;
 	if (role == "product") direction = false;
 
-	//create a reaction template object
+	//	create a reaction template object
 	reactionTemplate* RT = new reactionTemplate;
 	dbreader.readReactionTemplate (RT, doc, direction); 
+
+	//	handle constraints
+	for (int i=0; i < RT->listOfConstraints.size (); i++)
+	{
+		vector<string> vars = RT->listOfConstraints[i].first;
+		string formula = RT->listOfConstraints[i].second;
+
+		string conditions;
+		Model* m = getModel ();
+
+		//	find values of vars
+		for (int j=0; j < vars.size (); j++)
+		{
+			string varid = vars[j];
+
+			//	(1) search global parameters
+			Parameter* para = m->getParameter (varid);		
+			if (para != NULL)
+			{
+				if (!para->getConstant ())
+					throw StrCacuException (
+							"Constant parameter is needed in" 
+							"calculation of constraint expression!"
+							);
+				else 
+				{
+					ostringstream oss;
+					oss << varid << "=" << para->getValue () << ",";
+					conditions += oss.str ();
+					continue;
+				}
+			}
+
+			//	(2) search local parameters
+			para = RT->getParameter (varid);
+			if (para != NULL)
+			{
+				ostringstream oss;
+				oss << varid << "=" << para->getValue () << ",";
+				conditions += oss.str ();
+				continue;
+			}
+
+			//	not found
+			throw StrCacuException (
+					string ("Unrecognized parameter id: ")
+					+ varid + "!"
+					);
+		}
+		conditions.substr (0, conditions.size ()-1);
+
+		if (cacu_string_exp (conditions.c_str (), formula.c_str ()) == 0)
+		{
+			delete RT;
+			return;
+		}
+	}
+	
 
 	//
 	//  find species and compartment configuration that

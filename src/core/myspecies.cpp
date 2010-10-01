@@ -270,6 +270,32 @@ const Tree* MySpecies::getTree (
 	return listOfTrees.at(n);
 }
 
+Part* MySpecies::getPart (
+		const string& partLabel
+		)
+{
+	for (int i=0; i < listOfChains.size (); i++)
+	{
+		Chain* c = listOfChains[i];
+		Part* p = c->getPart (partLabel);
+		if (p != NULL) return p;
+	}
+	return NULL;
+}
+
+const Part* MySpecies::getPart (
+		const string& partLabel
+		) const
+{
+	for (int i=0; i < listOfChains.size (); i++)
+	{
+		Chain* c = listOfChains[i];
+		Part* p = c->getPart (partLabel);
+		if (p != NULL) return p;
+	}
+	return NULL;
+}
+
 void MySpecies::setDbId (
 		const string& dbid
 		)

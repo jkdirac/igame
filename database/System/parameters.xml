@@ -9,12 +9,6 @@
 				<constant>false</constant>
 			</globalParameter>
 			<globalParameter>
-				<id>Temperature</id>
-				<units>kelvin</units>
-				<value>300</value>
-				<constant>true</constant>
-			</globalParameter>
-			<globalParameter>
 				<id>unit_time</id>
 				<units>second</units>
 				<value>1</value>
