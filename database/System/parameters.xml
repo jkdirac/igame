@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoDeL>
+	<system>
+		<listOfGlobalParameters>
+			<globalParameter>
+				<id>t</id>
+				<name>time</name>
+				<units>second</units>
+				<constant>false</constant>
+			</globalParameter>
+			<globalParameter>
+				<id>Temperature</id>
+				<units>kelvin</units>
+				<value>300</value>
+				<constant>true</constant>
+			</globalParameter>
+			<globalParameter>
+				<id>unit_time</id>
+				<units>second</units>
+				<value>1</value>
+				<constant>true</constant>
+			</globalParameter>
+			<globalParameter>
+				<id>unit_temperature</id>
+				<units>kelvin</units>
+				<value>1</value>
+				<constant>true</constant>
+			</globalParameter>
+			<globalParameter>
+				<id>unit_concentration</id>
+				<units>mole_per_litre</units>
+				<value>1</value>
+				<constant>true</constant>
+			</globalParameter>
+			<globalParameter>
+				<id>unit_volume</id>
+				<units>litre</units>
+				<value>1</value>
+				<constant>true</constant>
+			</globalParameter>
+		</listOfGlobalParameters>
+	</system>
+</MoDeL>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoDeL>
+	<system>
+		<listOfUnitDefinitions>
+			<unitDefinition id="time">
+					<listOfUnits>
+							<unit kind = "second"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="volume">
+					<listOfUnits>
+							<unit kind = "litre"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="substance">
+					<listOfUnits>
+							<unit kind = "mole"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="mls">
+					<listOfUnits>
+							<unit kind = "mole"/>
+							<unit kind = "litre" exponent="-1"/>
+							<unit kind = "second" exponent="-1"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="per_second">
+					<listOfUnits>
+							<unit kind = "second" exponent = "-1"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="lms">
+					<listOfUnits>
+							<unit kind = "litre"/>
+							<unit kind = "mole" exponent="-1"/>
+							<unit kind = "second" exponent="-1"/>
+					</listOfUnits>
+			</unitDefinition>
+			<unitDefinition id="mole_per_litre">
+					<listOfUnits>
+							<unit kind = "mole"/>
+							<unit kind = "litre" exponent ="-1"/>
+					</listOfUnits>
+			</unitDefinition>
+		</listOfUnitDefinitions>
+	</system>
+</MoDeL>
