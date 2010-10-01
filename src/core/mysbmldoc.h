@@ -54,8 +54,7 @@ class MySBMLDocument:
 	int getNumOfMySpecies () const;
 
 	//
-	//	return NULL indicates the back species is new
-	//	in the compartment
+	//	return species pointer 
 	//
 	MySpecies* validateBackSpecies ();
 

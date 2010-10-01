@@ -20,9 +20,10 @@ enum container_index
 {
 	SPECIES=0,
 	REACTION,
-	PREDEF,
+	SYSTEM,
 	PART,
 	COMPARTMENT,
+	DBINTERFACE,
 	CONT_IDX_NUM
 };
 

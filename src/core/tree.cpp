@@ -56,6 +56,22 @@ Node* Tree::createNode (
   return newNode;
 }
 
+Node* Tree::createNode (
+		const string& nCL,
+		const string& nPL
+		)
+{
+	Node* newNode = new Node;
+
+	//	set data members
+	newNode->nodeLabel = nCL;
+	newNode->parentNodeLabel = nPL;
+
+	//	push it back into nodes list
+	listOfNodes.push_back (newNode);
+	return newNode;
+}
+
 void Tree::addNodeMap (
 	Node* node
 	)

@@ -1,14 +1,14 @@
 /*************************************************************************************
-*
-*            Author: liaochen- liaochen@mail.ustc.edu.cn
-*
-*            Last modified:	2010-09-25 12:16
-*
-*            Filename:		myspecies.h
-*
-*            Description: .
-*
-************************************************************************************/
+ *
+ *            Author: liaochen- liaochen@mail.ustc.edu.cn
+ *
+ *            Last modified:	2010-09-25 12:16
+ *
+ *            Filename:		myspecies.h
+ *
+ *            Description: .
+ *
+ ************************************************************************************/
 #ifndef MY_SPECIES_H
 #define MY_SPECIES_H
 
@@ -18,156 +18,169 @@
 
 class IsLess_c
 {
-  public:
+	public:
 
-	IsLess_c () {}
+		IsLess_c () {}
 
-	inline bool operator () (
-		const Chain* x, 
-		const Chain* y
-		) const
-	{
-	  return x->unicode < y->unicode;
-	}
+		inline bool operator () (
+				const Chain* x, 
+				const Chain* y
+				) const
+		{
+			return x->unicode < y->unicode;
+		}
 };
 
 class IsLess_t
 {
-  public:
+	public:
 
-	IsLess_t () {}
+		IsLess_t () {}
 
-	inline bool operator () (
-		const Tree* x, 
-		const Tree* y
-		) const
-	{
-	  pair<int,int> xw = 
-		x->mapNodes.find ("ROOT")
-		->second->getNodeWeight ();
-	  pair<int,int> yw = 
-		y->mapNodes.find ("ROOT")
-		->second->getNodeWeight ();
-	  return xw < yw;
-	}
+		inline bool operator () (
+				const Tree* x, 
+				const Tree* y
+				) const
+		{
+			pair<int,int> xw = 
+				x->mapNodes.find ("ROOT")
+				->second->getNodeWeight ();
+			pair<int,int> yw = 
+				y->mapNodes.find ("ROOT")
+				->second->getNodeWeight ();
+			return xw < yw;
+		}
 };
 
 class MySpecies:
-  public Species
+	public Species
 {
-  public:
-	
-	typedef vector<int> vi;
-	typedef vector<vi> dvi;
-	typedef vector<dvi> tvi;
-	typedef tvi permType;
+	public:
 
-	typedef pair<int,int> markType;
-	typedef list<markType> cMatchType;
-	typedef vector<cMatchType> cMatchsType;
-	typedef pair<cMatchType, int> cMatchType2;
-	typedef vector<cMatchType2> cMatchsType2;
+		typedef vector<int> vi;
+		typedef vector<vi> dvi;
+		typedef vector<dvi> tvi;
+		typedef tvi permType;
 
-  public:
+		typedef pair<int,int> markType;
+		typedef list<markType> cMatchType;
+		typedef vector<cMatchType> cMatchsType;
+		typedef pair<cMatchType, int> cMatchType2;
+		typedef vector<cMatchType2> cMatchsType2;
 
-	MySpecies ();
+	public:
 
-	MySpecies (
-		const MySpecies* orig
-		);
+		MySpecies ();
 
-	~MySpecies ();
+		MySpecies (
+				const MySpecies* orig
+				);
 
-	void DeleteAndSave (
-		const set<int>& chainSaved,
-		const set<string>& nodeSaved
-		);
+		~MySpecies ();
 
-	void split (
-		vector<MySpecies*>& pieces
-		);
+		void DeleteAndSave (
+				const set<int>& chainSaved,
+				const set<string>& nodeSaved
+				);
 
-	void rearrange ();
+		void split (
+				vector<MySpecies*>& pieces
+				);
 
-	bool equal (
-		const MySpecies* rhs
-		);
+		void rearrange ();
 
-	Chain* createChain ();
+		bool equal (
+				const MySpecies* rhs
+				);
 
-	Chain* createChain (
-		const Chain* c
-		);
+		Chain* createChain ();
 
-	Tree* createTree ();
+		Chain* createChain (
+				const Chain* c
+				);
 
-	Tree* createTree (
-		const Tree* t
-		);
+		Tree* createTree ();
 
-	int getNumOfChains () const;
+		Tree* createTree (
+				const Tree* t
+				);
 
-	int getNumOfTrees () const;
+		int getNumOfChains () const;
 
-	Chain* getChain (
-		const int& n
-		);
+		int getNumOfTrees () const;
 
-	const Chain* getChain (
-		const int& n
-		) const;
+		Chain* getChain (
+				const int& n
+				);
 
-	Tree* getTree (
-		const int& n
-		);
+		const Chain* getChain (
+				const int& n
+				) const;
 
-	const Tree* getTree (
-		const int& n
-		) const;
+		Tree* getTree (
+				const int& n
+				);
 
-	void setDbId (
-		const string& dbid
-		);
+		const Tree* getTree (
+				const int& n
+				) const;
 
-	void setLabel (
-		const string& _label
-		);
+		void setDbId (
+				const string& dbid
+				);
 
-	string getDbId () const;
-	string getLabel () const;
+		void setLabel (
+				const string& _label
+				);
 
-	bool countBindedNode (
-		const string& label
-		) const;
+		void setCCid (
+				const string& _ccid 
+				);
 
-	Node* findBindedNode (
-		const string& label
-		);
+		string getDbId () const;
+		string getLabel () const;
+		string getCCid () const;
 
-	bool match (
-		const MySpecies* s,
-		vector<cMatchsType2>& trym
-		) const;
+		bool countBindedNode (
+				const string& label
+				) const;
 
-	void Output () const;
+		Node* findBindedNode (
+				const string& label
+				);
 
-  private:
+		bool match (
+				const MySpecies* s,
+				vector<cMatchsType2>& trym
+				) const;
 
-	string dbId;
-	string label; //used in reaction templates
+		void Output () const;
 
-	bool isRearranged;
+	private:
 
-	vector<Chain*> listOfChains;
-	vector<Tree*> listOfTrees;
+		string dbId;
+		string label; //used in reaction templates
 
-	vector< pair<int,int> > equiv;
+		//
+		//	ccid (corresponded-compartment index), is a compartment-type attribute
+		//	-1 means it is not a compartment-type species,
+		//	positive values gives the index of corresponded compartment
+		//	in compartment list
+		//
+		string ccid;
 
-	void findEquiv ();
+		bool isRearranged;
 
-	void perm (
-		const int& i, 
-		const permType& permAll
-		);
+		vector<Chain*> listOfChains;
+		vector<Tree*> listOfTrees;
+
+		vector< pair<int,int> > equiv;
+
+		void findEquiv ();
+
+		void perm (
+				const int& i, 
+				const permType& permAll
+				);
 };
 #endif

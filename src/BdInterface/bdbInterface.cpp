@@ -68,11 +68,12 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 		}
 
 		container_names.resize(CONT_IDX_NUM);
-		container_names[SPECIES] = "species";
-		container_names[REACTION] = "reaction";
-		container_names[PREDEF] = "predef";
+		container_names[SPECIES] = "Species";
+		container_names[REACTION] = "Reaction";
+		container_names[SYSTEM] = "System";
+		container_names[DBINTERFACE] = "dbInterface";
 		container_names[PART] = "Part";
-		container_names[COMPARTMENT] = "compartment";
+		container_names[COMPARTMENT] = "Compartment";
 
 		for (int i=0; i < container_names.size(); i++)
 		{

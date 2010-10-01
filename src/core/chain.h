@@ -54,6 +54,14 @@ class Chain
 		const Part* p
 		);
 
+	Part* createPart (
+			const string& partReference,
+			const string& partLabel,
+			const string& partType,
+			const string& partCategory,
+			const bool& isBinded
+			);
+
 	void genUnicode ();
 
 	string genUnicode (

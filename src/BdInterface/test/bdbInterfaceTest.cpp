@@ -115,7 +115,7 @@ void test_get_node_element()
 		try
 		{
 			cout << "test get node element: " << i << endl;
-			test_inter.get_node_element(PREDEF, &docs[i], &paths[i], res_str);
+//            test_inter.get_node_element(PREDEF, &docs[i], &paths[i], res_str);
 			for (int j=0; j<res_str.size(); j++)
 			{
 				cout << "==element: " << j << " " << res_str[j] << endl;
@@ -147,7 +147,7 @@ void test_get_node()
 //                        test_inter.get_node(PREDEF, &docs[i], &paths[i], res_str);
 //                        cout << "test get node: " << i << " " << res_str << endl;
 			res_str.clear();
-			test_inter.get_node(PREDEF, &docs[i], &paths[i], res_str, "", uri);
+//            test_inter.get_node(PREDEF, &docs[i], &paths[i], res_str, "", uri);
 			cout << "test get node with namespace: " << i << " " << res_str << endl;
 		}
 		catch (XmlException &se)

@@ -27,11 +27,16 @@ class readDataBase:
 		~readDataBase () {}
 
 		/**
-		 * read Species defined in Database
+		 * read cnModel of Species 
 		 */
-		void readSpecies_db (
-				MySpecies* s
+		void read_cnModel (
+				MySpecies* s,
+				const container_index& cind,
+				const string& doc,
+				const string& qp,
+				const bool& isTemplate
 				);
+
 		/**
 		 * read reaction template
 		 */
@@ -72,6 +77,7 @@ class readDataBase:
 
 		void setCompartment (
 				MyCompartment* comp,
+				const string& db,
 				const string& id,
 				const string& name,
 				const int& spatialDimensions,
@@ -83,6 +89,8 @@ class readDataBase:
 
 		void setSpecies (
 				MySpecies* s,
+				const string& db,
+				const string& ccid,
 				const string& id,
 				const string& name,
 				const string& compartment,

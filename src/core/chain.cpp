@@ -32,6 +32,28 @@ Part* Chain::createPart (const Part* p)
   listOfParts.push_back (newPart);
   return newPart;
 }
+
+Part* Chain::createPart (
+		const string& partReference,
+		const string& partLabel,
+		const string& partType,
+		const string& partCategory,
+		const bool& isBinded
+		)
+{
+	Part* newPart = new Part;
+	
+	//	set data members
+	newPart->dbId = partReference;
+	newPart->partLabel = partLabel;
+	newPart->partType = partType;
+	newPart->partCategory = partCategory;
+	newPart->isBinded = isBinded;
+
+	//	push back in parts list
+	listOfParts.push_back (newPart);
+	return newPart;
+}
 	
 int Chain::getNumOfParts () const
 {

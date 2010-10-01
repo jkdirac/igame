@@ -1,14 +1,14 @@
 /*************************************************************************************
-*
-*            Author: liaochen- liaochen@mail.ustc.edu.cn
-*
-*            Last modified:	2010-09-25 16:05
-*
-*            Filename:		tree.h
-*
-*            Description: .
-*
-************************************************************************************/
+ *
+ *            Author: liaochen- liaochen@mail.ustc.edu.cn
+ *
+ *            Last modified:	2010-09-25 16:05
+ *
+ *            Filename:		tree.h
+ *
+ *            Description: .
+ *
+ ************************************************************************************/
 #ifndef TREE_H
 #define TREE_H
 
@@ -16,86 +16,92 @@
 
 class IsLess_n
 {
-  public:
+	public:
 
-	IsLess_n () {}
+		IsLess_n () {}
 
-	inline bool operator () (
-		const Node* x, 
-		const Node* y
-		) const
-	{
-	  return x->weight < y->weight;
-	}
+		inline bool operator () (
+				const Node* x, 
+				const Node* y
+				) const
+		{
+			return x->weight < y->weight;
+		}
 };
 
 class Tree
 {
-  friend class MySpecies;
-  friend class IsLess_t;
+	friend class MySpecies;
+	friend class IsLess_t;
 
-  public:
+	public:
 
 	Tree ();
 
 	Tree (
-		const Tree* orig
-		);
+			const Tree* orig
+		 );
 
 	~Tree ();
 
 	bool equal (
-		const Tree* rhs
-		) const;
+			const Tree* rhs
+			) const;
 
 	Node* createNode ();
 
 	Node* createNode (
-		const Node* n
-		);
+			const Node* n
+			);
+
+	Node* createNode (
+			const string& nCL,
+			const string& pCL
+			);
+
 
 	void addNodeMap (
-		Node* node
-	);
+			Node* node
+			);
 
 	void addNodeChildren ();
 
 	Node* getNode (
-		const string& label
-		);
+			const string& label
+			);
 
 	Node* getNode (
-		const int& num
-		);
+			const int& num
+			);
 
 	const Node* getNode (
-		const string& label
-		) const;
+			const string& label
+			) const;
 
 	const Node* getNode (
-		const int& num
-		) const;
+			const int& num
+			) const;
 
 	pair<int,int> genWeight (
-		const string& label
-		);
+			const string& label
+			);
 
 	void genHuffman (
-		const string& label
-		);
+			const string& label
+			);
 
 	void Output (
-		ostream& os
-		) const; 
+			ostream& os
+			) const; 
 
-  private:
+	private:
 
 	void Output (
-		ostream& os, 
-		const string& label
-		) const;
+			ostream& os, 
+			const string& label
+			) const;
 
-  private:
+	private:
 
 	vector<Node*> listOfNodes;
 	map<string, Node*> mapNodes;

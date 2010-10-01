@@ -16,9 +16,12 @@ void readInput::config (
 	Model* m = mysbmldoc->createModel ();
 	m->setId ("iGameModel");
 
-	//===================================
-	//  (0.1) load unitDefinitions
-	//===================================
+	//===================================================
+	//	PART1:	LOADING UNITDEFS AND FUNCTIONDEFS FROM DB
+	//===================================================
+	
+
+	//  (1.1) load unitDefinitions
 	const string unitPath = 
 		"/MoDeL/system/"
 		"listOfUnitDefinitions/"
@@ -42,7 +45,7 @@ void readInput::config (
 			string errno (
 					"UNIT: empty attribute @id in "
 					);
-			errno += unitDoc + ".xml!"
+			errno += unitDoc + ".xml!";
 			throw StrCacuException (errno);
 		}
 		else id = _id[0];
@@ -78,9 +81,7 @@ void readInput::config (
 		}
 	}
 
-	//	================================
-	//  (0.2) load functionDefinitions
-	//	================================
+	//  (1.2) load functionDefinitions
 	const string pathFunc = 
 		"/MoDeL/system/"
 		"listOfFunctionDefinitions/"
@@ -99,7 +100,7 @@ void readInput::config (
 	}
 
 	//	===================================================
-	//			READ INPUT FILE
+	//		PART2:	READ INPUT FILE
 	//	===================================================
 	const string DOC ("input");
 
@@ -110,21 +111,36 @@ void readInput::config (
 	//  validated since program which outputs the input
 	//  file should take this responsibility.
 	//  ===================================================
+	set<string> paraUsed;
+
 	const string pathPara = 
-		"/MoDeL/system/"
+		"/MoDeL/dbinterface/input"
 		"listOfParameters/"
 		"parameter";
 	const int numOfParas = 
-		get_node_element_num (SYSTEM, &DOC, &pathPara);
+		get_node_element_num (DBINTERFACE, &DOC, &pathPara);
 
 	for (int i=1; i <= numOfParas; i++)
 	{
-		string id, name, units;
+		string db, id, name, units;
 		double value;
 		bool constant;
 
-		readParameter (SYSTEM, DOC, pathPara, i, id, 
+		readParameter (SYSTEM, DOC, pathPara, i, db, id, 
 				name, value, units, constant);
+
+		//	db must be the same with id
+		if (db != id)
+			throw StrCacuException (
+					"Attribute db and id must be same"
+					" in Parameter Definition"
+					);
+		else if (paraUsed.count (db))
+			throw StrCacuException (
+					string ("Redefinition of Parameter ")
+					+ db + "!"
+					);
+		else paraUsed.insert (db);
 
 		Parameter* para = m->createParameter ();
 		setParameter (para, id, name, value, units, constant);
@@ -134,21 +150,30 @@ void readInput::config (
 	//  (2) read listOfRules
 	//  functions in listOfRules must be build-in MathML ones
 	//  or previously defined in SYSTEM container
-	//	======================================================
+	// ======================================================
+	set<string> variableUsed;
+
 	const string pathRule = 
-		"/MoDeL/input/"
+		"/MoDeL/dbinterface/input/"
 		"listOfRules";
 
 	//  2.1 read algebraic rules
 	const string pathAlge (pathRule + "/algebraicrule");
 	const int numOfAlgebraicRules = 
-		get_node_element_num (SYSTEM, &DOC, &pathAlge);
+		get_node_element_num (DBINTERFACE, &DOC, &pathAlge);
 
 	for (int i=1; i <= numOfAlgebraicRules; i++)
 	{
 		string variable, math;
-		readRule (SYSTEM, DOC, pathAlge, 
+		readRule (DBINTERFACE, DOC, pathAlge, 
 				"algebraicrule", i, variable, math);
+
+		if (variableUsed.count (variable))
+			throw StrCacuException (
+					string ("Redefinition of Variable ")
+					+ variable + "!"
+					);
+		else variableUsed.insert (variable);
 
 		AlgebraicRule* alger = m->createAlgebraicRule ();
 		setAlgebraicRule (alger, variable, math);
@@ -162,8 +187,15 @@ void readInput::config (
 	for (int i=1; i <= numOfAssignmentRules; i++)
 	{
 		string variable, math;
-		readRule (SYSTEM, DOC, pathAssr, 
+		readRule (DBINTERFACE, DOC, pathAssr, 
 				"assignmentrule", i, variable, math);
+
+		if (variableUsed.count (variable))
+			throw StrCacuException (
+					string ("Redefinition of Variable ")
+					+ variable + "!"
+					);
+		else variableUsed.insert (variable);
 
 		AssignmentRule* assr = m->createAssignmentRule ();
 		setAssignmentRule (assr, variable, math);
@@ -172,13 +204,20 @@ void readInput::config (
 	//  2.3 read rate rule
 	const string pathRate (pathRule + "/raterule");
 	const int numOfRateRules = 
-		get_node_element_num (SYSTEM, &DOC, &pathRate);
+		get_node_element_num (DBINTERFACE, &DOC, &pathRate);
 
 	for (int i=1; i <= numOfRateRules; i++)
 	{
 		string variable, math;
 		readRule (SYSTEM, DOC, pathRate, 
 				"raterule", i, variable, math);
+
+		if (variableUsed.count (variable))
+			throw StrCacuException (
+					string ("Redefinition of Variable ")
+					+ variable + "!"
+					);
+		else variableUsed.insert (variable);
 
 		RateRule* rater = m->createRateRule ();
 		setRateRule (rater, variable, math);
@@ -192,20 +231,20 @@ void readInput::config (
 		"listOfCompartments/"
 		"compartment";
 	const int numOfComps = 
-		get_node_element_num (SYSTEM, &DOC, &pathComp);
+		get_node_element_num (DBINTERFACE, &DOC, &pathComp);
 
 	for (int i=1; i <= numOfComps; i++)
 	{
 		//outside must be name of its parent compartment
-		string id, name, units, outside;
+		string id, db, name, units, outside;
 		int spatialDimensions;
 		double size;
 		bool constant; 
 
-		readCompartment (SYSTEM, DOC, path7, i, id, 
+		readCompartment (DBINTERFACE, DOC, pathComp, i, db, id, 
 				name, spatialDimensions, size, units, outside, constant);
 		MyCompartment* comp = mysbmldoc->createMyCompartment ();
-		setCompartment (comp, id, name, spatialDimensions, 
+		setCompartment (comp, db, id, name, spatialDimensions, 
 				size, units, outside, constant);
 
 		//
@@ -216,77 +255,160 @@ void readInput::config (
 			MyCompartment* outComp = 
 				mysbmldoc->getMyCompartment (outside);
 			if (outComp != NULL) outComp->addMyCompartmentIn (comp);
-			else throw string (
+			else throw StrCacuException (
 					"Unrecognized Compartment Label (outside)!"
 					);
 		}
 	}
 
-		//
-		//	3.1 read listOfContents
-		//
-		const string path9 = path7 + "/listOfContents";
+	//	=========================================
+	//			READ listOfSpecies
+	//	=========================================
+	const string pathSpe =
+		"/MoDeL/dbinterface/input"
+		"/listOfSpecies/species";
 
-		//	3.1.1 read listOfSpecies
-		const string path10 = path9 + "/listOfSpecies/species";
-		const int numOfSpecies =  get_node_element_num (SYSTEM, &DOC, &path10);
+	const int numOfSpecies =  
+		get_node_element_num (DBINTERFACE, &DOC, &pathSpe);
 
-		for (int j=1; j <= numOfSpecies; j++)
+	for (int i=1; i <= numOfSpecies; i++)
+	{
+		string db, ccid, id, name, compartment, substanceUnits;
+		double initialAmount, initialConcentration;
+		bool hasOnlySubstanceUnits, boundaryCondition, constant;
+		int charge;
+
+		readSpecies (DBINTERFACE, DOC, pathSpe, i, db, ccid, id, name,
+				compartment, initialAmount, initialConcentration,
+				substanceUnits, hasOnlySubstanceUnits, 
+				boundaryCondition, charge, constant);
+
+		MySpecies* s = mysbmldoc->createMySpecies ();  
+		setSpecies (s, db, ccid, id, name, compartment, initialAmount, 
+				initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
+				boundaryCondition, charge, constant);
+
+		//
+		//	read species container if db attr has been specified
+		//	or read chain-node model component to complete its structure
+		//
+		ostringstream oss;
+		if (db.empty ())
 		{
-			string id, name, compartment, substanceUnits;
-			double initialAmount, initialConcentration;
-			bool hasOnlySubstanceUnits, boundaryCondition, constant;
-			int charge;
-
-			readSpecies (SYSTEM, DOC, path10, j, id, name,
-					compartment, initialAmount, initialConcentration,
-					substanceUnits, hasOnlySubstanceUnits, 
-					boundaryCondition, charge, constant);
-
-			MySpecies* s = mysbmldoc->createMySpecies ();  
-			setSpecies (s, id, name, compartment, initialAmount, 
-					initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
-					boundaryCondition, charge, constant);
-
-			readSpecies_db (s);
-			s->rearrange ();
-			mysbmldoc->validateBackSpecies ();
+			//	read structure
+			oss << pathSpe << "[" << i << "]";
+			read_cnModel (s, DBINTERFACE, DOC, oss.str (), false);
+		}
+		else
+		{
+			//	read structure
+			oss << "/MoDeL/species";
+			read_cnModel (s, SPECIES, db, oss.str (), false);
 		}
 
-		//	
-		//	3.1.2 read listOfPlasmids
-		//	
-		const string path12 = path7 + "/listOfPlasmids/plasmid";
-		const int numOfPlasmids = get_node_element_num (SYSTEM, &DOC, &path12);
 
-		for (int j =1; j <= numOfPlasmids; j++)
+		//	sort chain-node model
+		s->rearrange ();
+
+		//	add species in compartment
+		mysbmldoc->validateBackSpecies (); //check if this species has been existed before
+	}
+
+	//	=========================================
+	//	PART3: LOADING PARAMETERS AND RULES IN DB
+	//	=========================================
+	
+	//	(3.1) read global parameter
+	//	parameter definition in input file will shade that in db
+	const string pathPara_db = 
+		"/MoDeL/system/"
+		"listOfGlobalParameters/"
+		"parameter";
+	const string DOCdb = "parameters";
+	const int numOfParas_db = 
+		get_node_element_num (SYSTEM, &DOCdb, &pathPara_db);
+
+	for (int i=1; i <= numOfParas; i++)
+	{
+		string db, id, name, units;
+		double value;
+		bool constant;
+
+		readParameter (SYSTEM, DOCdb, pathPara, i, db, id, 
+				name, value, units, constant);
+
+		if (paraUsed.count (id)) continue;
+		else
 		{
-			MySpecies* s = mysbmldoc->createMySpecies ();
-			Chain* c = s->createChain ();
-
-			ostringstream oss;
-			oss << path12 << "[" << j << "]/biobrick";
-			const string path13 (oss.str ());
-
-			const int numOfParts = get_node_element_num (SYSTEM, &DOC, &path13);
-			for (int k =0; k <numOfParts; k++)
-			{
-				string pR, pL, pT, pC;
-				readPart (SYSTEM, DOC, path13, k, pR, pL, pT, pC);
-
-				Part* p = c->createPart ();
-				p->setDbId (pR);
-				p->setPartLabel (pL);
-				p->setPartType (pT);
-				p->setPartCategory (pC);
-				p->setIsBinded (s->countBindedNode (pL));
-			}
-
-			s->rearrange ();
-			mysbmldoc->validateBackSpecies ();
+			Parameter* para = m->createParameter ();
+			setParameter (para, id, name, value, units, constant);
 		}
+	}
 
-	}//! read listOfMyCompartments
+	//  (3.2) read listOfRules
+	//	rule definition in input file will shade that in db
+
+	const string pathRule_db = 
+		"/MoDeL/system/listOfRules";
+
+	//  2.1 read algebraic rules
+	const string pathAlge_db (pathRule_db + "/algebraicrule");
+	const int numOfAlgebraicRules_db = 
+		get_node_element_num (SYSTEM, &DOCdb, &pathAlge_db);
+
+	for (int i=1; i <= numOfAlgebraicRules_db; i++)
+	{
+		string variable, math;
+		readRule (SYSTEM, DOCdb, pathAlge_db, 
+				"algebraicrule", i, variable, math);
+
+		if (variableUsed.count (variable)) continue;
+		else
+		{
+			AlgebraicRule* alger = m->createAlgebraicRule ();
+			setAlgebraicRule (alger, variable, math);
+		}
+	}
+
+	//  2.2 read assignment rule
+	const string pathAssr_db (pathRule_db + "/assignmentule");
+	const int numOfAssignmentRules_db = 
+		get_node_element_num (SYSTEM, &DOCdb, &pathAssr_db);
+
+	for (int i=1; i <= numOfAssignmentRules_db; i++)
+	{
+		string variable, math;
+		readRule (DBINTERFACE, DOCdb, pathAssr_db, 
+				"assignmentrule", i, variable, math);
+
+		if (variableUsed.count (variable)) continue;
+		else
+		{
+			AssignmentRule* assr = m->createAssignmentRule ();
+			setAssignmentRule (assr, variable, math);
+		}
+	}
+
+	//  2.3 read rate rule
+	const string pathRate_db (pathRule_db + "/raterule");
+	const int numOfRateRules_db = 
+		get_node_element_num (DBINTERFACE, &DOCdb, &pathRate_db);
+
+	for (int i=1; i <= numOfRateRules_db; i++)
+	{
+		string variable, math;
+		readRule (SYSTEM, DOCdb, pathRate_db, 
+				"raterule", i, variable, math);
+
+		if (variableUsed.count (variable)) continue;
+		else
+		{
+			RateRule* rater = m->createRateRule ();
+			setRateRule (rater, variable, math);
+		}
+	}
+	
+	return;
 }
 
 
