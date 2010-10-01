@@ -21,6 +21,12 @@ bool Driver::beginSimulation ()
   	dbreader.add_directory (DB_PATH);
 	dbreader.config (mysbmldoc);
 	mysbmldoc->run (dbreader);
+
+	//	for test
+	ofstream ofs ("toSBML.xml", ios::out);
+	ofs << mysbmldoc->toSBML () << endl;
+
+	//	validate 
 	SBMLok  = validateExampleSBML(mysbmldoc);
 	if (SBMLok) writeExampleSBML(mysbmldoc, "network.xml");
 	delete mysbmldoc;
@@ -28,22 +34,22 @@ bool Driver::beginSimulation ()
   }
   catch (XmlException& xe)
   {
-	cerr << xe.what () << ": Unable to parse xml file." << endl;
+	cerr << xe.what () << "\n: Unable to parse xml file." << endl;
 	return 1;
   }
   catch (std::bad_alloc& e)
   {
-	cerr << e.what() << ": Unable to allocate memory." << endl;
+	cerr << e.what() << "\n: Unable to allocate memory." << endl;
     return 1;
   }
   catch (StrCacuException& e)
   {
-	cerr << e.what () << ": Invalid data term." << endl;
+	cerr << e.what () << "\n: Invalid data term." << endl;
 	return 1;
   }
   catch (...)
   {
-	cerr << "Unexpected exceptional condition encountered." << endl;
+	cerr << "\nUnexpected exceptional condition encountered." << endl;
 	return 1;
   }
    

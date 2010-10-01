@@ -2,7 +2,7 @@
 	<system>
 		<listOfRules>
 			<assignmentRule variable="t">
-				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time
 					</csymbol>
 				</math>

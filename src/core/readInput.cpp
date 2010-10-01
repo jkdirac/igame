@@ -10,6 +10,9 @@ void readInput::config (
 		MySBMLDocument* mysbmldoc
 		) 
 {
+
+	cout << "\n=================	CONFIGURING...	===================\n";
+
 	//
 	//  create model object in mysbmldoc
 	//
@@ -40,7 +43,7 @@ void readInput::config (
 		oss << unitPath << "[" << i << "]/@id";
 		const string attrPath_id (oss.str ());
 		get_node_attr (SYSTEM, &unitDoc, &attrPath_id, _id); 
-		if (id.empty ()) 
+		if (_id.empty ()) 
 		{
 			string errno (
 					"UNIT: empty attribute @id in "
@@ -99,6 +102,8 @@ void readInput::config (
 		setFunction (fdef, id, name, math);
 	}
 
+	cout << "\nPART1...DONE." << endl;
+
 	//	===================================================
 	//		PART2:	READ INPUT FILE
 	//	===================================================
@@ -114,7 +119,7 @@ void readInput::config (
 	set<string> paraUsed;
 
 	const string pathPara = 
-		"/MoDeL/dbinterface/input"
+		"/MoDeL/dbinterface/input/"
 		"listOfParameters/"
 		"parameter";
 	const int numOfParas = 
@@ -126,21 +131,22 @@ void readInput::config (
 		double value;
 		bool constant;
 
-		readParameter (SYSTEM, DOC, pathPara, i, db, id, 
+		readParameter (DBINTERFACE, DOC, pathPara, i, db, id, 
 				name, value, units, constant);
 
 		//	db must be the same with id
-		if (db != id)
+		if (!db.empty () && db != id)
 			throw StrCacuException (
 					"Attribute db and id must be same"
 					" in Parameter Definition"
 					);
-		else if (paraUsed.count (db))
+
+		if (paraUsed.count (id))
 			throw StrCacuException (
 					string ("Redefinition of Parameter ")
 					+ db + "!"
 					);
-		else paraUsed.insert (db);
+		else paraUsed.insert (id);
 
 		Parameter* para = m->createParameter ();
 		setParameter (para, id, name, value, units, constant);
@@ -165,8 +171,7 @@ void readInput::config (
 	for (int i=1; i <= numOfAlgebraicRules; i++)
 	{
 		string variable, math;
-		readRule (DBINTERFACE, DOC, pathAlge, 
-				"algebraicrule", i, variable, math);
+		readRule (DBINTERFACE, DOC, pathAlge, i, variable, math, true);
 
 		if (variableUsed.count (variable))
 			throw StrCacuException (
@@ -180,15 +185,14 @@ void readInput::config (
 	}
 
 	//  2.2 read assignment rule
-	const string pathAssr (pathRule + "/assignmentule");
+	const string pathAssr (pathRule + "/assignmentrule");
 	const int numOfAssignmentRules = 
-		get_node_element_num (SYSTEM, &DOC, &pathAssr);
+		get_node_element_num (DBINTERFACE, &DOC, &pathAssr);
 
 	for (int i=1; i <= numOfAssignmentRules; i++)
 	{
 		string variable, math;
-		readRule (DBINTERFACE, DOC, pathAssr, 
-				"assignmentrule", i, variable, math);
+		readRule (DBINTERFACE, DOC, pathAssr, i, variable, math, true);
 
 		if (variableUsed.count (variable))
 			throw StrCacuException (
@@ -209,8 +213,7 @@ void readInput::config (
 	for (int i=1; i <= numOfRateRules; i++)
 	{
 		string variable, math;
-		readRule (SYSTEM, DOC, pathRate, 
-				"raterule", i, variable, math);
+		readRule (DBINTERFACE, DOC, pathRate, i, variable, math, true);
 
 		if (variableUsed.count (variable))
 			throw StrCacuException (
@@ -222,6 +225,7 @@ void readInput::config (
 		RateRule* rater = m->createRateRule ();
 		setRateRule (rater, variable, math);
 	}
+
 
 	//	==================================
 	//  (3) read listOfCompartments
@@ -240,6 +244,7 @@ void readInput::config (
 		int spatialDimensions;
 		double size;
 		bool constant; 
+
 
 		readCompartment (DBINTERFACE, DOC, pathComp, i, db, id, 
 				name, spatialDimensions, size, units, outside, constant);
@@ -302,10 +307,11 @@ void readInput::config (
 		else
 		{
 			//	read structure
-			oss << "/MoDeL/species";
-			read_cnModel (s, SPECIES, db, oss.str (), false);
+//            cout << "\ndb = " << db << endl;
+			read_cnModel (s, SPECIES, db, "/MoDeL/species", false);
 		}
 
+//        cout << "\ni = " << i << endl;
 
 		//	sort chain-node model
 		s->rearrange ();
@@ -313,6 +319,8 @@ void readInput::config (
 		//	add species in compartment
 		mysbmldoc->validateBackSpecies (); //check if this species has been existed before
 	}
+
+	cout << "\nPART2...DONE." << endl;
 
 	//	=========================================
 	//	PART3: LOADING PARAMETERS AND RULES IN DB
@@ -323,8 +331,8 @@ void readInput::config (
 	const string pathPara_db = 
 		"/MoDeL/system/"
 		"listOfGlobalParameters/"
-		"parameter";
-	const string DOCdb = "parameters";
+		"globalParameter";
+	string DOCdb = "parameters";
 	const int numOfParas_db = 
 		get_node_element_num (SYSTEM, &DOCdb, &pathPara_db);
 
@@ -334,7 +342,7 @@ void readInput::config (
 		double value;
 		bool constant;
 
-		readParameter (SYSTEM, DOCdb, pathPara, i, db, id, 
+		readParameter (SYSTEM, DOCdb, pathPara_db, i, db, id, 
 				name, value, units, constant);
 
 		if (paraUsed.count (id)) continue;
@@ -350,6 +358,7 @@ void readInput::config (
 
 	const string pathRule_db = 
 		"/MoDeL/system/listOfRules";
+	DOCdb = "rules";
 
 	//  2.1 read algebraic rules
 	const string pathAlge_db (pathRule_db + "/algebraicrule");
@@ -359,8 +368,7 @@ void readInput::config (
 	for (int i=1; i <= numOfAlgebraicRules_db; i++)
 	{
 		string variable, math;
-		readRule (SYSTEM, DOCdb, pathAlge_db, 
-				"algebraicrule", i, variable, math);
+		readRule (SYSTEM, DOCdb, pathAlge_db, i, variable, math, false);
 
 		if (variableUsed.count (variable)) continue;
 		else
@@ -378,8 +386,7 @@ void readInput::config (
 	for (int i=1; i <= numOfAssignmentRules_db; i++)
 	{
 		string variable, math;
-		readRule (DBINTERFACE, DOCdb, pathAssr_db, 
-				"assignmentrule", i, variable, math);
+		readRule (SYSTEM, DOCdb, pathAssr_db, i, variable, math, false);
 
 		if (variableUsed.count (variable)) continue;
 		else
@@ -392,13 +399,12 @@ void readInput::config (
 	//  2.3 read rate rule
 	const string pathRate_db (pathRule_db + "/raterule");
 	const int numOfRateRules_db = 
-		get_node_element_num (DBINTERFACE, &DOCdb, &pathRate_db);
+		get_node_element_num (SYSTEM, &DOCdb, &pathRate_db);
 
 	for (int i=1; i <= numOfRateRules_db; i++)
 	{
 		string variable, math;
-		readRule (SYSTEM, DOCdb, pathRate_db, 
-				"raterule", i, variable, math);
+		readRule (SYSTEM, DOCdb, pathRate_db, i, variable, math, false);
 
 		if (variableUsed.count (variable)) continue;
 		else
@@ -408,6 +414,9 @@ void readInput::config (
 		}
 	}
 	
+	cout << "\nPART3...DONE." << endl;
+
+	cout << "\n=================	CONFIGURING...Done	===================\n";
 	return;
 }
 

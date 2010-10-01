@@ -3,7 +3,7 @@
 	<dbinterface>
 		<input>
 			<listOfParameters>
-				<parameter db="Temperatrue">
+				<parameter db="Temperature">
 					<id>Temperature</id>
 					<units>kelvin</units>
 					<constant>false</constant>

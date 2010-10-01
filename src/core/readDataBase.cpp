@@ -10,6 +10,7 @@ void readDataBase::read_cnModel (
 {
 	//read tree map
 	string qpt = qp + "/cnModel/listOfTrees/tree";
+//    cout << qpt << endl;
 	int numOfTrees = get_node_element_num (cind, &doc, &qpt);
 
 	for (int itree = 1; itree <= numOfTrees; itree++)
@@ -40,6 +41,7 @@ void readDataBase::read_cnModel (
 	//read chains
 	string qpc = qp + "/cnModel/listOfChains/chain";
 	int numOfChains = get_node_element_num (cind, &doc, &qpc);
+//    cout << "\nnumOfChains = " << numOfChains << endl;
 
 	for (int ichain = 1; ichain <= numOfChains; ichain++)
 	{
@@ -50,7 +52,8 @@ void readDataBase::read_cnModel (
 		ostringstream oss;
 		oss << qpc << "[" << ichain << "]/listOfParts/part";
 		string qpp (oss.str ());
-		int numOfParts = get_node_element_num (SPECIES, &doc, &qpp);
+		int numOfParts = get_node_element_num (cind, &doc, &qpp);
+//        cout << "\nnumOfParts = " << numOfParts << endl;
 
 		for (int ipart = 1; ipart <= numOfParts; ipart++)
 		{
@@ -81,14 +84,16 @@ void readDataBase::setParameter (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block Parameter...";
 
 	//
 	//  setId
 	//
 	operation = para->setId (id); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: id!";
+		throw StrCacuException (
+				"Reading Block Parameter..."
+				"Invalid Attribute Value: id!"
+				);
 
 	//
 	//  setName
@@ -97,7 +102,10 @@ void readDataBase::setParameter (
 	{
 		operation = para->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-			throw errno + "Invalid Attribute Value: name!";
+			throw StrCacuException (
+					"Reading Block Parameter..."
+					"Invalid Attribute Value: name!"
+					);
 	}
 
 	//
@@ -112,7 +120,10 @@ void readDataBase::setParameter (
 	{
 		operation = para->setUnits (units);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-			throw errno + "Invalid Attribute Value: units!";
+			throw StrCacuException (
+					"Reading Block Parameter..."
+					"Invalid Attribute Value: units!"
+					);
 	}
 
 	//
@@ -120,7 +131,10 @@ void readDataBase::setParameter (
 	//
 	operation = para->setConstant (constant);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		throw errno + "Invalid Attribute Value: constant!";
+		throw StrCacuException (
+				"Reading Block Parameter..."
+				"Unexpected Attribute: constant!"
+				);
 
 	return;
 }
@@ -132,23 +146,31 @@ void readDataBase::setAlgebraicRule (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block AlgebraicRule...";
 
 	//
 	//  setVariable
 	//
 	operation = alger->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block AlgebraicRule..."
+				"Invalid Attribute Value: variable!"
+				);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		throw errno + "Unexpected Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block AlgebraicRule..."
+				"Unexpected Attribute Value: variable!"
+				);
 
 	//
 	//  setFormula
 	//
 	operation = alger->setFormula (math);
 	if (operation == LIBSBML_INVALID_OBJECT)
-		throw errno + "Invalid Object: math!";
+		throw StrCacuException (
+				"Reading Block AlgebraicRule..."
+				"Invalid Object: math!"
+				);
 
 	return;
 }
@@ -160,23 +182,31 @@ void readDataBase::setAssignmentRule (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block AssignmentRule...";
 
 	//
 	//  setVariable
 	//
 	operation = assr->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block AssignmentRule..."
+				"Invalid Attribute Value: variable!"
+				);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		throw errno + "Unexpected Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block AssignmentRule..."
+				"Unexpected Attribute Value: variable!"
+				);
 
 	//
 	//  setFormula
 	//
 	operation = assr->setFormula (math);
 	if (operation == LIBSBML_INVALID_OBJECT)
-		throw errno + "Invalid Object: math!";
+		throw StrCacuException (
+				"Reading Block AssignmentRule..."
+				"Invalid Object: math!"
+				);
 
 	return;
 }
@@ -188,23 +218,31 @@ void readDataBase::setRateRule (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block RateRule...";
 
 	//
 	//  setVariable
 	//
 	operation = rater->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block RateRule..."
+				"Invalid Attribute Value: variable!"
+				);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		throw errno + "Unexpected Attribute Value: variable!";
+		throw StrCacuException (
+				"Reading Block RateRule..."
+				"Unexpected Attribute Value: variable!"
+				);
 
 	//
 	//  setFormula
 	//
 	operation = rater->setFormula (math);
 	if (operation == LIBSBML_INVALID_OBJECT)
-		throw errno + "Invalid Object: math!";
+		throw StrCacuException (
+				"Reading Block RateRule..."
+				"Invalid Object: math!"
+				);
 
 	return;
 }
@@ -245,12 +283,10 @@ void readDataBase::setCompartment (
 	{
 		operation = comp->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		{
 			throw StrCacuException (
 					"Reading Block Compartment..."
 					"Invalid Attribute Value: name!"
 					);
-		}
 	}
 
 	//
@@ -454,14 +490,16 @@ void readDataBase::setUnit (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block UnitDefinition...";
 
 	//
 	//  setId
 	//
 	operation = unitdef->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: id!";
+		throw StrCacuException (
+				"Reading Block UnitDefinition..."
+				"Invalid Attribute Value: id!"
+				);
 
 	//
 	//  setName
@@ -470,7 +508,10 @@ void readDataBase::setUnit (
 	{
 		operation = unitdef->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-			throw errno + "Invalid Attribute Value: name!";
+			throw StrCacuException (
+					"Reading Block UnitDefinition..."
+					"Invalid Attribute Value: name!"
+					);
 	}
 }
 
@@ -483,14 +524,16 @@ void readDataBase::setUnit (
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
-	string errno = "Reading Block Unit...";
 
 	//
 	//  setKind
 	//
 	operation = unit->setKind (kind);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: kind!";
+		throw StrCacuException (
+				"Reading Block Unit..."
+				"Invalid Attribute Value: kind!"
+				);
 
 	//
 	//  setExponent
@@ -507,10 +550,11 @@ void readDataBase::setUnit (
 	//
 	operation = unit->setMultiplier (multiplier);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		throw errno + "Unexpected Attrbute: multiplier!";
+		throw StrCacuException (
+				"Reading Block Unit..."
+				"Unexpected Attribute: multiplier!"
+				);
 }
-
-
 
 void readDataBase::setFunction (
 		FunctionDefinition* fdef,
@@ -527,7 +571,10 @@ void readDataBase::setFunction (
 	//
 	operation = fdef->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-		throw errno + "Invalid Attribute Value: id!";
+		throw StrCacuException (
+				"Reading Block FunctionDefinition..."
+				"Invalid Attribute Value: id!"
+				);
 
 	//
 	//  setName
@@ -536,20 +583,28 @@ void readDataBase::setFunction (
 	{
 		operation = fdef->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
-			throw errno + "Invalid Attribute Value: name!";
+			throw StrCacuException (
+					"Reading Block FunctionDefinition..."
+					"Invalid Attribute Value: name!"
+					);
 	}
 
 	//
 	//  setMath
 	//
-	cout << math;
 	ASTNode* astMath = readMathMLFromString(math.c_str());
 	if (astMath == NULL) 
-		throw errno + "Null or Invalid Attribute Value: math!";
+		throw StrCacuException (
+				"Reading Block FunctionDefinition..."
+				"Null or Invalid Attribute Value: math!"
+				);
 
 	operation = fdef->setMath(astMath);
 	if (operation == LIBSBML_INVALID_OBJECT)
-		throw errno + "Invalid Object: astMath!";
+		throw StrCacuException (
+				"Reading Block FunctionDefinition..."
+				"Invalid Object: astMath!"
+				);
 	delete astMath;
 }
 

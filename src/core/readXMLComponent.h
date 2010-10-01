@@ -126,10 +126,10 @@ class readXMLComponent :
 				const container_index& cind, 
 				const string& doc,
 				const string& qpath,
-				const string& rule_t,
 				const int& i,
 				string& variable,
-				string& math
+				string& math,
+				const bool& text
 				);
 
 		void readSpeciesLink (

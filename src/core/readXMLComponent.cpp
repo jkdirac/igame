@@ -354,7 +354,7 @@ void readXMLComponent::readParameter (
 	//
 	//	read attribute db
 	//
-	const string part_db = prefix + "@id";
+	const string part_db = prefix + "@db";
 	get_node_attr (cind, &doc, &part_db, temp);
 	if (!temp.empty ()) db = temp[0];
 
@@ -528,7 +528,7 @@ void readXMLComponent::readSpecies (
 		)
 {
 	ostringstream oss;
-	oss << qpath  << "/[" << i <<"]/";
+	oss << qpath  << "[" << i <<"]/";
 	string prefix (oss.str ());
 
 	vector<string> temp;
@@ -538,14 +538,7 @@ void readXMLComponent::readSpecies (
 	//
 	const string path_db = prefix + "@db";
 	get_node_attr (cind, &doc, &path_db, temp);
-	if (temp.empty ())
-	{
-		string errno = string (
-				"SPECIES: empty attribute @db in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
-	}
-	else db = temp[0];
+	if (!temp.empty ()) db = temp[0];
 
 	//
 	//	read attribute ccid
@@ -579,14 +572,7 @@ void readXMLComponent::readSpecies (
 	//
 	const string path_name = prefix + "name";
 	get_node_element (cind, &doc, &path_name, temp); 
-	if (temp.empty ())
-	{
-		string errno = string (
-				"SPECIES: empty node name in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
-	}
-	else name = temp[0];
+	if (!temp.empty ()) name = temp[0];
 
 	//
 	//  read node compartment 
@@ -672,46 +658,49 @@ void readXMLComponent::readRule (
 		const container_index& cind, 
 		const string& doc,
 		const string& qpath,
-		const string& rule_t,
 		const int& i,
 		string& variable,
-		string& math
+		string& math,
+		const bool& text
 		)
 {
 	ostringstream oss;
-	oss << "/" << rule_t << "[" << i <<"]/";
+	oss << "[" << i <<"]/";
 	string prefix = qpath + string(oss.str ());
 
-	string np; 
-	vector<string> _var, _math;
+	vector<string> temp;
+	string temp1;
 
 	//
 	//  read attribute variable
 	//
-	np = prefix + "variable";
-	get_node_element (cind, &doc, &np, _var); 
-	if (_var.empty ())
+	const string path_var = prefix + "variable";
+	get_node_element (cind, &doc, &path_var, temp); 
+	if (temp.empty ())
 	{
-		string error = string (
-				"RULE: empty attribute @variable in "
+		string errno = string (
+				"RULE: empty node variable in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else variable = _var[0];
+	else variable = temp[0];
 
 	//
 	//  read attribute math
 	//
-	np = prefix + "math";
-	get_node_element (cind, &doc, &np, _math);
-	if (_math.empty ())
+	const string path_math = prefix + "math";
+	if (text)
+		get_node_element (cind, &doc, &path_math, temp);
+	else get_node (cind, &doc, &path_math, temp1);
+	if ((temp.empty () && text)
+			|| (temp1.empty () && !text))
 	{
-		string error = string (
-				"RULE: empty attribute @math in "
+		string errno = string (
+				"RULE: empty node math in "
 				) + doc + ".xml!";
-		throw error;
+		throw StrCacuException (errno);
 	}
-	else math = _math[0];
+	else math = temp[0];
 }
 
 void readXMLComponent::readSpeciesLink (
@@ -841,8 +830,8 @@ void readXMLComponent::readUnit (
 	//
 	np = prefix + "exponent";
 	get_node_attr (cind, &doc, &np, temp);
-	if (!temp.empty ()) exponent = atoi (temp[0].c_str ()); 
-	else exponent = 1;
+	if (!temp.empty ()) exponent = atof (temp[0].c_str ()); 
+	else exponent = 1.0;
 
 	//
 	//  read attribute scale
@@ -858,7 +847,7 @@ void readXMLComponent::readUnit (
 	np = prefix + "multiplier";
 	get_node_attr (cind, &doc, &np, temp);
 	if (!temp.empty ()) multiplier = atof (temp[0].c_str ()); 
-	else multiplier = 1;
+	else multiplier = 1.0;
 }
 
 void readXMLComponent::readFunctionDef (
@@ -888,7 +877,7 @@ void readXMLComponent::readFunctionDef (
 	//  read attribute kind 
 	//
 	np = prefix2 + "id";
-	get_node_element (cind, &doc, &np, temp);
+	get_node_attr (cind, &doc, &np, temp);
 	if (temp.empty ())
 	{
 		string errno = string (
@@ -897,12 +886,12 @@ void readXMLComponent::readFunctionDef (
 		throw StrCacuException (errno);
 	}
 	else id = temp[0];
-
+	
 	//
 	//  read attribute name
 	//
 	np = prefix2 + "name";
-	get_node_element (cind, &doc, &np, temp);
+	get_node_attr (cind, &doc, &np, temp);
 	if (!temp.empty ()) name = temp[0];
 
 	//
