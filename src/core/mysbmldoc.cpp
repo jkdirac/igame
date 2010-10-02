@@ -177,7 +177,13 @@ void MySBMLDocument::run (
 			{
 				Part* p = c->getPart (k);
 
-				//read species link
+				//	search transcription reactions
+				searchTranscriptionReactions (i, j, k, dbreader);
+				
+				//	search translation reactions
+				searchTranslationReactions (i, j, k, dbreader);
+
+				//	read species containing this part 
 				string speciesLinkPath =
 					"/MoDeL/part/" +
 					p->getPartCategory () + 
@@ -186,7 +192,9 @@ void MySBMLDocument::run (
 				string doc_1 = p->getDbId ();
 
 				int numOfSpeciesLinks = 
-					dbreader.get_node_element_num (PART, &doc_1, &speciesLinkPath);
+					dbreader.get_node_element_num (
+							PART, &doc_1, &speciesLinkPath
+							);
 
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
@@ -196,24 +204,16 @@ void MySBMLDocument::run (
 							t, speciesReference, partType
 							);
 
-					//
-					//  constraints
-					//
-					if (speciesReference.empty ())
-					{
-						string errno ("Reading Part...Empty "
-								"speciesReference attribute!");
-						throw errno;
-					}
-
+					//	check if this species has been searched
 					if (speciesUsed.count (speciesReference)) continue;
 					else speciesUsed.insert (speciesReference);
 
+					//	partType must be consistant
 					if (!partType.empty () && 
 							partType != p->getPartType ()) continue;
 
 					//
-					//  handle species read
+					//	read searched species
 					//
 
 					MySpecies* sLink = new MySpecies;
@@ -245,24 +245,6 @@ void MySBMLDocument::run (
 								SPECIES, speciesReference, reactionLinkPath, 
 								r, reactionReference, speciesRole
 								);
-
-						if (reactionReference.empty ())
-						{
-							string errno ("Reading SPECIES...Empty "
-									"reactionReference attribute!");
-							throw errno;
-						}
-
-						bool validRole = 
-							(speciesRole == "reactant")
-							|| (speciesRole == "product") 
-							|| (speciesRole == "modifier");
-
-						if (!validRole)
-							throw string (
-									"Reading SPECIES...Invalid speciesType value!"
-									);
-
 						handleReactionTemplate (
 								dbreader, reactionReference, speciesRole, i
 								);
@@ -415,3 +397,360 @@ void MySBMLDocument::handleReactionTemplate (
 	delete RT;
 }
 
+void MySBMLDocument::searchTranscriptionReactions (
+		const int& i,
+		const int& j,
+		const int& k,
+		readDataBase& dbreader
+		)
+{
+	MySpecies* s = listOfMySpecies[i];
+	Chain* c = s->getChain (j);
+	Part* p = c->getPart (k);
+	string ptype = p->getPartType ();
+	bool isvalidseq = (ptype != "ForwardDNA" || ptype != "ReverseDNA");
+	if (!isvalidseq) return;
+
+	//	check if p is a promoter
+	string units, name;
+	double value;
+
+	//	if p is a forward element, query its forward attribute
+	//	if p is a reverse element, query its reverse attribute
+	
+	//	===============================
+	//	forward transcription reaction
+	//	===============================
+	string PE_fw ("forwardPromoterEfficiency");
+	if (ptype == "ReverseRNA") PE_fw = "reversePromoterEfficiency";
+	dbreader.readConditionalParameter (
+			PART, p->getPartCategory (), p->getDbId (),
+			PE_fw, s->getCompartment (), value, units, name
+			);
+
+	if (value <0) throw StrCacuException (
+			"Invalid parameter value: forward/reverse PromoterEfficiency!"
+			);
+
+	if (value > TINY)
+	{
+		int numofparts = c->getNumOfParts ();
+		if (k < numofparts-1)
+		{
+			string termUnits, termName;
+			double termeff;
+
+			int ci = k;
+			double k_tc = value;	//k_tc
+
+			do
+			{
+				if (++ci != numofparts)
+				{
+					p = c->getPart (ci);
+					ptype = p->getPartType ();
+					isvalidseq = (ptype != "ForwardDNA" || ptype != "ReverseDNA");
+					if (isvalidseq)
+					{
+						string TE_fw ("forwardTerminatorEfficiency");
+						if (ptype == "ReverseDNA") TE_fw = "reverseTerminatorEfficiency";
+						dbreader.readConditionalParameter (
+								PART, p->getPartCategory (), p->getDbId (),
+								TE_fw, s->getCompartment (), termeff, termUnits, termName
+								);
+						if (termeff <0 || termeff > 1) throw StrCacuException (
+								"Invalid parameter value: forward/reverse TerminatorEfficiency!"
+								);
+					}
+				}
+				else termeff = 1;
+
+				if (termeff > TINY || !isvalidseq)
+				{
+					//	the biobrick next to promoter is not a valid sequence
+					if (!isvalidseq && ci == k + 1) break;	
+
+					MySpecies* mrna = new MySpecies;
+
+					if (mrna->setId (genSbmlId ()) 
+							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
+						throw StrCacuException (
+								"Transcription: Invalid Attribute Value: id!"
+								);
+					mrna->setName ("mrna");
+					mrna->setCompartment (s->getCompartment ());
+					mrna->setInitialAmount (0.0);
+
+					Chain* mrna_chain = mrna->createChain ();
+					assert (k+1 <= ci-1);
+
+					for (int j=k+1; j < ci; j++)
+					{
+						Part* tm = c->getPart (j);
+						Part* mrna_part = mrna_chain->createPart (tm);
+
+						if (tm->getPartType () == "ForwardDNA")
+							mrna_part->setPartType ("ForwardRNA");
+						else if (tm->getPartType () == "ReverseDNA")
+							mrna_part->setPartType ("ReverseRNA");
+						else throw StrCacuException (
+								"Invalid Transcriptional Unit!"
+								);
+					}
+					mrna->rearrange ();
+
+					//	check existance of myspecies
+					listOfMySpecies.push_back (mrna);
+					mrna = validateBackSpecies ();
+
+					//	record a reaction
+					MyReaction* transcription = new MyReaction;
+					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
+					listOfMyReactions.push_back (transcription);
+
+					if (!isvalidseq) break;
+					if (fabs (1-termeff) < TINY) break;
+					else k_tc *= 1-termeff;
+				}
+
+			}	while (1);
+		}
+	}
+
+	//	==============================
+	//	reverse transcription reaction
+	//	==============================
+
+	if (!units.empty ()) units.clear ();
+	if (!name.empty ()) name.clear ();
+
+	string PE_rev ("reversePromoterEfficiency");
+	if (ptype == "ReverseDNA") PE_rev = "forwardPromoterEfficiency";
+	dbreader.readConditionalParameter (
+			PART, p->getPartCategory (), p->getDbId (),
+			PE_rev, s->getCompartment (), value, units, name
+			);
+	if (value <0) throw StrCacuException (
+			"Invalid parameter value: reverse/forward PromoterEfficiency!"
+			);
+
+	if (value > TINY)
+	{
+		int numofparts = c->getNumOfParts ();
+		if (k > 0)
+		{
+			string termUnits, termName;
+			double termeff;
+
+			int ci = k;
+			double k_tc = value;	//k_tc
+
+			do
+			{
+				if (--ci != 0)
+				{
+					p = c->getPart (ci);
+					ptype = p->getPartType ();
+					isvalidseq = (ptype != "ForwardDNA" && ptype != "ReverseDNA");
+					if (isvalidseq)
+					{
+						string TE_rev ("reverseTerminatorEfficiency");
+						if (ptype == "ReverseDNA") TE_rev = "forwardTerminatorEfficiency";
+						dbreader.readConditionalParameter (
+								PART, p->getPartCategory (), p->getDbId (),
+								TE_rev, s->getCompartment (), termeff, termUnits, termName
+								);
+						if (termeff <0 || termeff > 1) throw StrCacuException (
+								"Invalid parameter value: reverse/forward TerminatorEfficiency!"
+								);
+					}
+				}
+				else termeff = 1;
+
+				if (termeff > TINY || !isvalidseq)
+				{
+					//	the biobrick next to promoter is not a valid sequence
+					if (!isvalidseq && ci == k-1) break;	
+
+					MySpecies* mrna = new MySpecies;
+
+					if (mrna->setId (genSbmlId ()) 
+							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
+						throw StrCacuException (
+								"Transcription: Invalid Attribute Value: id!"
+								);
+					mrna->setName ("mrna");
+					mrna->setCompartment (s->getCompartment ());
+					mrna->setInitialAmount (0.0);
+
+					Chain* mrna_chain = mrna->createChain ();
+					assert (k-1 >= ci+1);
+
+					for (int j=k-1; j > ci; j--)
+					{
+						Part* tm = c->getPart (j);
+						Part* mrna_part = mrna_chain->createPart (tm);
+
+						if (tm->getPartType () == "ForwardDNA")
+							mrna_part->setPartType ("ReverseRNA");
+						else if (tm->getPartType () == "ReverseDNA")
+							mrna_part->setPartType ("ForwardRNA");
+						else throw StrCacuException (
+								"Invalid Transcriptional Unit!"
+								);
+					}
+					mrna->rearrange ();
+
+					//	check existance of myspecies
+					listOfMySpecies.push_back (mrna);
+					mrna = validateBackSpecies ();
+
+					//	record a reaction
+					MyReaction* transcription = new MyReaction;
+					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
+					listOfMyReactions.push_back (transcription);
+
+					if (!isvalidseq) break;
+					if (fabs (1-termeff) < TINY) break;
+					else k_tc *= 1-termeff;
+				}
+
+			}	while(1);
+
+		} //!k>0
+	}
+
+	return;
+}
+
+void MySBMLDocument::searchTranslationReactions (
+		const int& i,
+		const int& j,
+		const int& k,
+		readDataBase& dbreader
+		)
+{
+	MySpecies* s = listOfMySpecies[i];
+	Chain* c = s->getChain (j);
+	Part* p = c->getPart (k);
+	string ptype = p->getPartType ();
+	bool isvalidseq = (ptype != "ForwardRNA" && ptype != "ReverseRNA");
+	if (!isvalidseq) return;
+
+	//	check if p is a promoter
+	string units, name;
+	double value;
+
+	//	forward transcription reaction
+	string RE_fw ("forwardRbsEfficiency");
+	if (ptype == "ReverseRNA") RE_fw = "reverseRbsEfficiency";
+	dbreader.readConditionalParameter (
+			PART, p->getPartCategory (), p->getDbId (),
+			RE_fw, s->getCompartment (), value, units, name
+			);
+
+	if (value <0) throw StrCacuException (
+			"Invalid parameter value: forward/reverse RbsEfficiency!"
+			);
+
+	if (value > TINY)
+	{
+		int numofparts = c->getNumOfParts ();
+		if (k < numofparts-1)
+		{
+			string codonUnits, codonName;
+			double codonEff;
+
+			int ci = k+1;
+			p = c->getPart (ci);
+			string ptype = p->getPartType ();
+			bool isvalidseq = (ptype != "ForwardRNA" && ptype != "ReverseRNA");
+			if (!isvalidseq) return;
+
+			string StartC_fw ("forwardStartCodon");
+			if (ptype == "ReverseRNA") StartC_fw = "reverseStartCodon";
+			dbreader.readConditionalParameter (
+					PART, p->getPartCategory (), p->getDbId (),
+					StartC_fw, s->getCompartment (), codonEff, codonUnits, codonName
+					);
+			if (codonEff <0 || codonEff > 1) throw StrCacuException (
+					"Invalid parameter value: forward/reverse StartCodon!"
+					);
+
+			if (fabs (1.0-codonEff) > TINY) return;
+			else
+			{
+				do
+				{
+					if (ci != numofparts)
+					{
+						p = c->getPart (ci);
+						ptype = p->getPartType ();
+						isvalidseq = (ptype == "ForwardRNA" || ptype == "ReverseRNA");
+						if (isvalidseq)
+						{
+							string StopC_fw ("forwardStopCodon");
+							if (ptype == "ReverseRNA") StopC_fw = "reverseStopCodon";
+							dbreader.readConditionalParameter (
+									PART, p->getPartCategory (), p->getDbId (),
+									StopC_fw, s->getCompartment (), codonEff, codonUnits, codonName
+									);
+							if (codonEff <0 || codonEff > 1) throw StrCacuException (
+									"Invalid parameter value: forward/reverse StopCodon!"
+									);
+						}
+					}
+					else codonEff = 1;
+
+					if (codonEff > TINY || !isvalidseq)
+					{
+						//	the biobrick next to rbs is not a valid sequence
+						MySpecies* prot = new MySpecies;
+
+						if (prot->setId (genSbmlId ()) 
+								== LIBSBML_INVALID_ATTRIBUTE_VALUE)
+							throw StrCacuException (
+									"Translation: Invalid Attribute Value: id!"
+									);
+						prot->setName ("prot");
+						prot->setCompartment (s->getCompartment ());
+						prot->setInitialAmount (0.0);
+
+						Chain* prot_chain = prot->createChain ();
+						assert (k+1 <= ci);
+
+						for (int j=k+1; j <= ci; j++)
+						{
+							Part* tm = c->getPart (j);
+							Part* prot_part = prot_chain->createPart (tm);
+
+							if (tm->getPartType () == "ForwardRNA")
+								prot_part->setPartType ("ForwardProtein");
+							else if (tm->getPartType () == "ReverseRNA")
+								prot_part->setPartType ("ReverseProtein");
+							else throw StrCacuException (
+									"Invalid Translation Unit!"
+									);
+						}
+						prot->rearrange ();
+
+						//	check existance of myspecies
+						listOfMySpecies.push_back (prot);
+						prot = validateBackSpecies ();
+
+						//	record a reaction
+						MyReaction* transcription = new MyReaction;
+						transcription->addSpecialReaction (s, prot, "k_tl", name, value, units);
+						listOfMyReactions.push_back (transcription);
+
+						break;
+					}
+
+					ci++;
+				}	while (1);
+			}
+		}
+	}
+
+	return;
+}

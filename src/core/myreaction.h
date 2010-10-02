@@ -36,6 +36,14 @@ class MyReaction:
 		const reactionTemplate* RT
 		);
 
+	void addSpecialReaction (
+			MySpecies* modifier,
+			MySpecies* product,
+			const string& paraId,
+			const string& paraName,
+			const double& paraValue,
+			const string& paraUnits
+			);
 
   private:
 	

@@ -200,25 +200,42 @@ void MyReaction::completeReaction (
   //
   //  complete components of Reaction object needed for SBML
   //
+  int operation;
 
   //  speciesReference and ModifierReference
   for (int i=0; i<listOfMyReactants.size (); i++)
   {
 	SpeciesReference* spr = createReactant ();
-	spr->setSpecies (listOfMyReactants[i]->getId ());
+	operation = spr->setSpecies (listOfMyReactants[i]->getId ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid attribute value: speciesReference!"
+				);
   }
 
   for (int i=0; i<listOfMyProducts.size (); i++)
   {
 	SpeciesReference* spr = createProduct ();
-	spr->setSpecies (listOfMyProducts[i]->getId ());
+	operation = spr->setSpecies (listOfMyProducts[i]->getId ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid attribute value: speciesReference!"
+				);
+
 	spr->setStoichiometry (stoiMath[i]);
   }
 
   for (int i=0; i<listOfMyModifiers.size (); i++)
   {
 	ModifierSpeciesReference* smr = createModifier ();
-	smr->setSpecies (listOfMyModifiers[i]->getId ());
+	operation = smr->setSpecies (listOfMyModifiers[i]->getId ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid attribute value: modifierSpeciesReference!"
+				);
   }
 
   //  setKineticLaw
@@ -245,10 +262,105 @@ void MyReaction::completeReaction (
   }
 
   ASTNode* astMath = readMathMLFromString(mathXMLString.c_str());
-  kl->setMath (astMath);
-  delete astMath;
+  if (astMath == NULL) throw StrCacuException (
+		  "Invalid MathML string converted!"
+		  );
+  operation = kl->setMath (astMath);
+  if (operation == LIBSBML_INVALID_OBJECT)
+	  throw StrCacuException (
+			  "Writing Block Reaction..."
+			  "Invalid object: astMath!"
+			  );
 
+  delete astMath;
   delete stoiMath;
 }
 
+
+void MyReaction::addSpecialReaction (
+		MySpecies* modifier,
+		MySpecies* product,
+		const string& paraId,
+		const string& paraName,
+		const double& paraValue,
+		const string& paraUnits
+		)
+{
+	listOfMyModifiers.push_back (modifier);
+	listOfMyProducts.push_back (product);
+	
+	int operation;
+
+	//	set Modifier
+	ModifierSpeciesReference* mpr = createModifier ();
+	operation = mpr->setSpecies (modifier->getId ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid attribute value: modifierSpeciesReference!"
+				);
+
+	//	set Produtct
+	SpeciesReference* spr = createProduct ();
+	operation = spr->setSpecies (product->getId ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid attribute value: speciesReference!"
+				);
+
+	//  setKineticLaw
+	KineticLaw* kl = createKineticLaw ();
+
+	//  setLocalParameter
+	Parameter* para = kl->createParameter ();
+	
+	operation = para->setId (paraId);
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Writing Block Parameter..."
+				"Invalid Attribute Value: id!"
+				);
+	if (!paraName.empty ())
+	{
+		para->setName (paraName);
+		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+			throw StrCacuException (
+					"Writing Block Parameter..."
+					"Invalid Attribute Value: name!"
+					);
+	}
+
+	para->setValue (paraValue);
+	
+	if (!paraUnits.empty ())
+	{
+		operation = para->setUnits (paraUnits);
+		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+			throw StrCacuException (
+					"Writing Block Parameter..."
+					"Invalid Attribute Value: units!"
+					);
+	}
+
+	para->setConstant (true);
+
+	//  setMath
+	string formula = paraId + "*" 
+		+ modifier->getId () + "*"
+		+ modifier->getCompartment ();
+
+	ASTNode_t* astMath = SBML_parseFormula (formula.c_str ());
+	if (astMath == NULL) throw StrCacuException (
+			"Invalid MathML string converted!"
+			);
+	
+	operation = kl->setMath (astMath);
+	if (operation == LIBSBML_INVALID_OBJECT)
+		throw StrCacuException (
+				"Writing Block Reaction..."
+				"Invalid object: astMath!"
+				);
+	delete astMath;
+}
 

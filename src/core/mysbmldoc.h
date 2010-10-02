@@ -18,73 +18,88 @@
 #include "reactionTemplate.h"
 #include "readDataBase.h"
 
+#define TINY 1E-5
+
 class MySBMLDocument:
-  public SBMLDocument
+	public SBMLDocument
 {
-  public:
+	public:
 
-	friend class Driver;
+		friend class Driver;
 
-  public:
+	public:
 
-	MySBMLDocument ();
-	~MySBMLDocument ();
+		MySBMLDocument ();
+		~MySBMLDocument ();
 
-	MyCompartment* createMyCompartment ();
+		MyCompartment* createMyCompartment ();
 
-	MySpecies* createMySpecies ();
+		MySpecies* createMySpecies ();
 
-	MyReaction* createMyReaction ();
+		MyReaction* createMyReaction ();
 
-	MyCompartment* getMyCompartment (
-		const string& label
-		);
+		MyCompartment* getMyCompartment (
+				const string& label
+				);
 
-	const MyCompartment* getMyCompartment (
-		const string& label
-		) const;
+		const MyCompartment* getMyCompartment (
+				const string& label
+				) const;
 
-	string genSbmlId () const;
+		string genSbmlId () const;
 
-	UnitKind_t getUnitKind_t (
-		const string& unit
-		) const;
+		UnitKind_t getUnitKind_t (
+				const string& unit
+				) const;
 
-	int getNumOfMyCompartments () const;
-	int getNumOfMySpecies () const;
+		int getNumOfMyCompartments () const;
+		int getNumOfMySpecies () const;
 
-	//
-	//	return species pointer 
-	//
-	MySpecies* validateBackSpecies ();
+		//
+		//	return species pointer 
+		//
+		MySpecies* validateBackSpecies ();
 
-	//
-	//	core programe
-	//
-	void run (
-		readDataBase& dbreader
-		);
+		//
+		//	core programe
+		//
+		void run (
+				readDataBase& dbreader
+				);
 
-  private:
+	private:
 
-	void handleReactionTemplate (
-		readDataBase& dbreader,
-		const string& doc,
-		const string& role,
-		const int& speciesIndex
-		);
+		void handleReactionTemplate (
+				readDataBase& dbreader,
+				const string& doc,
+				const string& role,
+				const int& speciesIndex
+				);
 
-  private:
+		void searchTranscriptionReactions (
+				const int& i,
+				const int& j,
+				const int& k,
+				readDataBase& dbreader
+				);
 
-	vector<MyCompartment*> listOfMyCompartments;
+		void searchTranslationReactions (
+				const int& i,
+				const int& j,
+				const int& k,
+				readDataBase& dbreader
+				);
+	private:
 
-	vector<MySpecies*> listOfMySpecies;
+		vector<MyCompartment*> listOfMyCompartments;
 
-	vector<MyReaction*> listOfMyReactions;
+		vector<MySpecies*> listOfMySpecies;
 
-	//
-	//	map string to UnitKind_t
-	//
-	map <string, UnitKind_t> unitMap;
+		vector<MyReaction*> listOfMyReactions;
+
+		//
+		//	map string to UnitKind_t
+		//
+		map <string, UnitKind_t> unitMap;
 };
 #endif

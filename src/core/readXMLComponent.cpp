@@ -749,7 +749,7 @@ void readXMLComponent::readReactionLink (
 		const string& qpath,
 		const int& i,
 		string& reactionReference,
-		string& speciesRole 
+		string& speciesType 
 		) 
 {
 	ostringstream oss;
@@ -784,7 +784,23 @@ void readXMLComponent::readReactionLink (
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
-	else speciesRole = temp[0];
+	else 
+	{
+		set<string> validSpeciesType;
+
+		validSpeciesType.insert ("reactant");
+		validSpeciesType.insert ("modifier");
+		validSpeciesType.insert ("product");
+
+		if (!validSpeciesType.count (temp[0]))
+		{
+			string errno = string (
+					"REFERENCEREACTION: invalid speciesType value in "
+					) + doc + ".xml";
+			throw StrCacuException (errno);
+		}
+		else speciesType = temp[0];
+	}
 }
 
 void readXMLComponent::readUnit (
@@ -992,6 +1008,7 @@ void readXMLComponent::readConditionalParameter (
 		string& name
 		)
 {
+	//	search conditional parameter value
 	string nodepath;
 	nodepath = string ("MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
