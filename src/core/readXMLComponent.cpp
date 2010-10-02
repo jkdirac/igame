@@ -726,8 +726,8 @@ void readXMLComponent::readSpeciesLink (
 		throw StrCacuException (errno);
 	}
 	else speciesReference = temp[0];
-    cout << "\nspeciesReference = " << speciesReference;
-	cout << "\nsize = " << speciesReference.size ();
+//    cout << "\nspeciesReference = " << speciesReference;
+//    cout << "\nsize = " << speciesReference.size ();
 
 	//
 	//  read attribute partType
@@ -1011,8 +1011,8 @@ void readXMLComponent::readConditionalParameter (
 		string& name
 		)
 {
-	cout << "\ndir = " << dir << " doc = " << doc << 
-		" para = " << para << " comp = " << comp << endl;
+//    cout << "\ndir = " << dir << " doc = " << doc << 
+//        " para = " << para << " comp = " << comp << endl;
 
 	//	search conditional parameter value
 	string nodepath;
@@ -1057,7 +1057,6 @@ void readXMLComponent::readConditionalParameter (
 	}
 	else value = atof (temp[0].c_str ());
 
-	cout << "\nbefore units! " << endl;
 	//	
 	//	read units
 	//
@@ -1067,11 +1066,10 @@ void readXMLComponent::readConditionalParameter (
 		+ para + "\"][parameterValue[@compartment=\""
 		+ comp + "\"]]/@units";
 
-	cout << "\nnodepath = " << nodepath << endl;
+//    cout << "\nnodepath = " << nodepath << endl;
 	get_node_attr (cind, &doc, &nodepath, temp);
 	if (!temp.empty ()) units = temp[0];
 
-	cout << "\nbefore name! " << endl;
 	//	
 	//	read name
 	//
@@ -1079,7 +1077,7 @@ void readXMLComponent::readConditionalParameter (
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
 		+ para + "\"][parameterValue[@compartment=\""
-		+ comp + "\"]/@name";
+		+ comp + "\"]]/@name";
 
 	get_node_attr (cind, &doc, &nodepath, temp);
 	if (!temp.empty ()) name = temp[0];

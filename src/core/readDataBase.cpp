@@ -10,10 +10,10 @@ void readDataBase::read_cnModel (
 {
 	//read tree map
 	string qpt = qp + "/cnModel/listOfTrees/tree";
-	cout << "\nbegin read num of trees..." << endl;
-	cout << "\ndoc = " << doc << "\nqpt = " << qpt << endl;
+//    cout << "\nbegin read num of trees..." << endl;
+//    cout << "\ndoc = " << doc << "\nqpt = " << qpt << endl;
 	int numOfTrees = get_node_element_num (cind, &doc, &qpt);
-	cout << "\nnumoftrees = " << numOfTrees << endl;
+//    cout << "\nnumoftrees = " << numOfTrees << endl;
 
 	for (int itree = 1; itree <= numOfTrees; itree++)
 	{

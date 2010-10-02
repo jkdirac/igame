@@ -5,26 +5,26 @@
 			<compartment>
 				<compartmentReference>E_coli</compartmentReference>
 				<currentCompartmentLabel>E_coli0</currentCompartmentLabel>
-				<parentCompartmentLabel>Flask</parentCompartmentLabel>
+				<parentCompartmentLabel>ROOT</parentCompartmentLabel>
 			</compartment>
 		</listOfCompartments>
 		<listOfReactants>
 			<reactant>
-				<speciesReference>E_coli_cell</speciesReference>
+				<speciesReference>placI185_dna</speciesReference>
 				<speciesLabel>placI185_dna</speciesLabel>
-				<compartmentLabel itself="E_coli0">Flask</compartmentLabel>
+				<compartmentLabel>E_coli0</compartmentLabel>
 			</reactant>
 			<reactant>
 				<speciesReference>lacI153_tetramer</speciesReference>
 				<speciesLabel>lacI153_tetramer</speciesLabel>
-				<compartmentLabel relation="0">E_coli</compartmentLabel>
+				<compartmentLabel>E_coli</compartmentLabel>
 			</reactant>
 		</listOfReactants>
 		<listOfProducts>
 			<product>
 				<speciesReference>placI185lacI153_4</speciesReference>
 				<speciesLabel>placI185lacI153_4</speciesLabel>
-				<compartmentLabel relation="0">E_coli</compartmentLabel>
+				<compartmentLabel>E_coli</compartmentLabel>
 			</product>
 		</listOfProducts>
 		<listOfSubstituentTransfers>
@@ -71,7 +71,7 @@
 		</listOfSubstituentTransfers>
 		<kineticLaw>
 			<forwardKineticlaw>
-				<math xlms="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<apply>
 						<times>
 						</times>
@@ -92,7 +92,7 @@
 				</listOfLocalParameters>
 			</forwardKineticlaw>
 			<reverseKineticLaw>
-				<math xlms="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<times>
 					</times>
 					<ci>placI185lacI153_4</ci>
@@ -108,15 +108,6 @@
 						<constant>true</constant>
 					</localParameter>
 				</listOfLocalparameters>
-				<listOfConstraints>
-					<constraint>
-						<listOfVariables>
-							<var>Th</var>
-							<var>a</var>
-						</listOfVariables>
-						<formula>Th/a+5>0</formula>
-					</constraint>
-				</listOfConstraints>
 			</reverseKineticLaw>
 		</kineticLaw>
 	</reaction>

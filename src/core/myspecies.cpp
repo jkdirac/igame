@@ -1,6 +1,6 @@
 #include "myspecies.h"
 
-MySpecies::MySpecies () 
+	MySpecies::MySpecies () 
 :Species (2,4), isRearranged (false)
 {}
 
@@ -487,63 +487,58 @@ bool MySpecies::equal (
 	MySpecies* lhs = this;
 
 	//compare chains
-	int numC = 0;
-	int numC_l = lhs->listOfChains.size ();
-	int numC_r = rhs->listOfChains.size ();
-	if ((numC = numC_l) != numC_r) return false;
+	if (lhs->listOfChains.size () != rhs->listOfChains.size ()) return false;
 	else
 	{
-		for (int cnt =0; cnt < numC; cnt++)
+		for (int i=0; i < lhs->listOfChains.size (); i++)
 		{
-			Chain* left = lhs->listOfChains[cnt];
-			Chain* right = rhs->listOfChains[cnt];
-			//	  cout << "\nleft = " << left->getUnicode () << 
-			//		" right = " << right->getUnicode ()<< endl;
+			Chain* left = lhs->listOfChains[i];
+			Chain* right = rhs->listOfChains[i];
+			cout << "\nleft = " << left->getUnicode () << 
+				" right = " << right->getUnicode ()<< endl;
 			if (!left->equal (right)) return false;
 		}
 	}
 
-	//compare trees, but situation is some complex
-	//algorithm to generate ordered full array 
-
-	// (1) calculate and generate all permutations
-	// (important! initialize permAll)
-	int numPerm = 1;
-	MySpecies::permType permAll (lhs->equiv.size());
-	for (int i =0; i < lhs->equiv.size (); i++)
+	//campare trees
+	if (lhs->listOfTrees.size () != rhs->listOfTrees.size ()) return false;
+	else
 	{
-		vector<int> perm;
-		const pair <int, int>& eqv = lhs->equiv[i];
-		for (int j = eqv.first; j <= eqv.second; j++) perm.push_back (j);
-
-		//calculate full-array of numbers in perm
-		Math::ordered_FullArray (perm, permAll[i]);
-		numPerm *= (eqv.second-eqv.first+1);
-	}
-
-	for (int i = 0; i < numPerm; i++)
-	{
-		//permute equivalent chains to get a new chain order
-		lhs->perm (i, permAll);
-
-		//compare tree structure
-		int numT = 0;
-		int numT_l = lhs->listOfTrees.size ();
-		int numT_r = rhs->listOfTrees.size ();
-		if ((numT = numT_l) != numT_r) return false;
+		if (lhs->listOfTrees.size () == 0) return true;
 		else
 		{
-			for (int cnt =0; cnt < numT; cnt++)
+			// (1) calculate and generate all permutations
+			// (important! initialize permAll)
+			int numPerm = 1;
+			MySpecies::permType permAll (lhs->equiv.size());
+			for (int i =0; i < lhs->equiv.size (); i++)
 			{
-				Tree* left = lhs->listOfTrees[cnt];
-				Tree* right = rhs->listOfTrees[cnt];
-				if (left->equal (right)) return true;
+				vector<int> perm;
+				const pair <int, int>& eqv = lhs->equiv[i];
+				for (int j = eqv.first; j <= eqv.second; j++) perm.push_back (j);
+
+				//calculate full-array of numbers in perm
+				Math::ordered_FullArray (perm, permAll[i]);
+				numPerm *= (eqv.second-eqv.first+1);
 			}
+
+			for (int i = 0; i < numPerm; i++)
+			{
+				//permute equivalent chains to get a new chain order
+				lhs->perm (i, permAll);
+
+				//compare tree structure
+				for (int j =0; j < lhs->listOfTrees.size (); j++)
+				{
+					Tree* left = lhs->listOfTrees[j];
+					Tree* right = rhs->listOfTrees[j];
+					if (left->equal (right)) return true;
+				}
+			}
+
+			return false;
 		}
 	}
-
-	//complete
-	return false;
 }
 
 void MySpecies::findEquiv () 

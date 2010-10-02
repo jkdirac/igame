@@ -167,6 +167,9 @@ void MySBMLDocument::run (
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
+		cout << "\n************* SPECIES	" << i << "	****************";
+		s->Output ();	
+
 		//a set to store species id that has been used
 		set<string> speciesUsed;
 
@@ -177,18 +180,13 @@ void MySBMLDocument::run (
 			{
 				Part* p = c->getPart (k);
 
-				cout << "\nspecies = " << i << "; chain = " << j 
-					<< "; part = " << k << endl;
-
 				//	search transcription reactions
 				searchTranscriptionReactions (i, j, k, dbreader);
 
-				cout << "\nTranscription...Done!" << endl;
-				
 				//	search translation reactions
 				searchTranslationReactions (i, j, k, dbreader);
 
-				cout << "\nTranslation...Done!" << endl;
+				continue;
 
 				//	read species containing this part 
 				string speciesLinkPath =
@@ -233,8 +231,8 @@ void MySBMLDocument::run (
 							sLink, SPECIES, speciesReference,
 							"/MoDeL/species", true
 							);
-					cout << "\nspeciesReference = " <<
-						speciesReference << endl;
+//                    cout << "\nspeciesReference = " <<
+//                        speciesReference << endl;
 
 					//
 					//  is this species template match?
@@ -283,19 +281,93 @@ void MySBMLDocument::run (
 
 	//  add species, compartment and reaction to SBML file
 
+	cout << "\n=========================================================";
+	cout << "\n	 COPY MYOBJECTS TO SBML COMPONENTS... 		";
+	cout << "\n=========================================================";
+	cout <<	endl;
+
 	Model* m = getModel ();
 
-	cout << "\nspecies num = " << listOfMySpecies.size ();
 	for (int i=0; i < listOfMySpecies.size (); i++)
-		m->addSpecies (listOfMySpecies[i]);
+	{
+		int operation = m->addSpecies (listOfMySpecies[i]);
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Species to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Species to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Species to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Species to Model: Failed!"
+					);
+	}
 
-	cout << "\ncompartments num = " << listOfMyCompartments.size ();
 	for (int i=0; i < listOfMyCompartments.size (); i++)
-		m->addCompartment (listOfMyCompartments[i]);
+	{
+		MyCompartment* comp = listOfMyCompartments[i];
+		if (comp->getOutside () == "ROOT") 
+		{
+			int operation = comp->unsetOutside ();
+			if (operation == LIBSBML_OPERATION_FAILED)
+				throw StrCacuException (
+						"Operation Failed: Unable to unset Outside"
+						" attribute of compartment!"
+						);
+		}
+		int operation = m->addCompartment (comp);
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Compartment to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Compartment to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Compartment to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Compartment to Model: Failed!"
+					);
+	}
 
-	cout << "\nreactions num = " << listOfMyReactions.size ();
 	for (int i=0; i < listOfMyReactions.size (); i++)
-		m->addReaction (listOfMyReactions[i]);
+	{
+		int operation = m->addReaction (listOfMyReactions[i]);
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Reaction to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Reaction to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Reaction to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Reaction to Model: Failed!"
+					);
+	}
+
+	cout << "\nREAL RULEs Number: " << m->getNumRules () << endl;
+	cout << "\nREAL FUNCTIONDEFINITIONs Number: " << m->getNumFunctionDefinitions () << endl;
+	cout << "\nREAL PARAMETERs Number: " << m->getNumParameters () << endl;
+	cout << "\nREAL UNITs Number: " << m->getNumUnitDefinitions () << endl;
+	cout << "\nREAL SPECIES Number: " << m->getNumSpecies () << endl;
+	cout << "\nREAL COMPARTMENTs Number: " << m->getNumCompartments () << endl;
+	cout << "\nREAL REACTIONs Number: " << m->getNumReactions () << endl;
 }
 
 void MySBMLDocument::handleReactionTemplate (
@@ -530,6 +602,8 @@ void MySBMLDocument::searchTranscriptionReactions (
 					//	check existance of myspecies
 					listOfMySpecies.push_back (mrna);
 					mrna = validateBackSpecies ();
+					cout << "\nmrna = ";
+					mrna->Output ();
 
 					//	record a reaction
 					MyReaction* transcription = new MyReaction;
@@ -548,7 +622,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 	//	==============================
 	//	reverse transcription reaction
 	//	==============================
-
+	
 	if (!units.empty ()) units.clear ();
 	if (!name.empty ()) name.clear ();
 
@@ -698,15 +772,16 @@ void MySBMLDocument::searchTranslationReactions (
 			bool isvalidseq = (ptype == "ForwardRNA" || ptype == "ReverseRNA");
 			if (!isvalidseq) return;
 
-			string StartC_fw ("forwardStartCodon");
-			if (ptype == "ReverseRNA") StartC_fw = "reverseStartCodon";
+			string StartC_fw ("forwardStartCodonEfficiency");
+			if (ptype == "ReverseRNA") 
+				StartC_fw = "reverseStartCodonEfficiency";
 			db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 			dbreader.readConditionalParameter (
 					PART, p->getPartCategory (), p->getDbId (),
 					StartC_fw, db_comp, codonEff, codonUnits, codonName
 					);
 			if (codonEff <0 || codonEff > 1) throw StrCacuException (
-					"Invalid parameter value: forward/reverse StartCodon!"
+					"Invalid parameter value: forward/reverse StartCodonEfficiency!"
 					);
 
 			if (fabs (1.0-codonEff) > TINY) return;
@@ -721,15 +796,15 @@ void MySBMLDocument::searchTranslationReactions (
 						isvalidseq = (ptype == "ForwardRNA" || ptype == "ReverseRNA");
 						if (isvalidseq)
 						{
-							string StopC_fw ("forwardStopCodon");
-							if (ptype == "ReverseRNA") StopC_fw = "reverseStopCodon";
+							string StopC_fw ("forwardStopCodonEfficiency");
+							if (ptype == "ReverseRNA") StopC_fw = "reverseStopCodonEfficiency";
 							db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 							dbreader.readConditionalParameter (
 									PART, p->getPartCategory (), p->getDbId (),
 									StopC_fw, db_comp, codonEff, codonUnits, codonName
 									);
 							if (codonEff <0 || codonEff > 1) throw StrCacuException (
-									"Invalid parameter value: forward/reverse StopCodon!"
+									"Invalid parameter value: forward/reverse StopCodonEfficiency!"
 									);
 						}
 					}
