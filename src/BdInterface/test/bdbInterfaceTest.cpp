@@ -102,11 +102,8 @@ void test_get_node_element()
 	vector<string> docs;
 	vector<string> paths;
 
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("/sbpmodel/predef/listOfFunctionDefinitions/functionDefinition[1]");
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("/sbpmodel/predef/listOfFunctionDefinitions/functionDefinition[1]/math");
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("/sbpmodel/predef/listOfFunctionDefinitions/functionDefinition[1]/math/lambda");
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("/sbpmodel/predef/listOfFunctionDefinitions/functionDefinition[1]/id");
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("/sbpmodel/predef/listOfFunctionDefinitions/functionDefinition[1]/name");
+//    docs.push_back("input"); paths.push_back("/MoDeL/dbInterface/input/listOfSpecies/species[1]/cnModel/listOfChains/chain[1]/listOfParts/part[1]");
+	docs.push_back("input"); paths.push_back("/MoDeL");
 	vector<string> res_str;
 
 	cout << "-------- test get nodes element start---------" << endl;
@@ -134,7 +131,7 @@ void test_get_node()
 	vector<string> docs;
 	vector<string> paths;
 
-	docs.push_back("listOfFunctionDefinitions"); paths.push_back("//math");
+	docs.push_back("input"); paths.push_back("/MoDeL");
 	string res_str;
 
 	cout << "-------- test get nodes start---------" << endl;
@@ -166,8 +163,8 @@ int main()
 		test_inter.add_directory(XML_FILE_HOME);
 		test_get_node();
 		test_get_node_element();
-		test_get_speice_link();
-		test_get_module_num();
+//        test_get_speice_link();
+//        test_get_module_num();
 	} 
 	catch (XmlException &se)
 	{

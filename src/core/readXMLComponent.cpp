@@ -45,21 +45,22 @@ void readXMLComponent::readPart (
 	if (temp.empty ())
 	{
 		string errno = string (
-				"PART: empty attribute @partLabel in "
+				"PART: empty node partLabel in "
 				) + doc + ".xml!";
+		cout << path_pl << endl;
 		throw StrCacuException (errno);
 	}
 	else pL = temp[0];
 
 	//
-	//  read node partType
+	//  read node partType (optional)
 	//
 	const string path_pt = prefix + "partType";
 	get_node_element (cind, &doc, &path_pt, temp); 
-	if (temp.empty ())
+	if (temp.empty ()) 
 	{
 		string errno = string (
-				"PART: empty attribute @partType in "
+				"PART: empty node partType in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
@@ -73,7 +74,7 @@ void readXMLComponent::readPart (
 	if (temp.empty ())
 	{
 		string errno = string (
-				"PART: empty attribute @partCategory in "
+				"PART: empty node partCategory in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
@@ -132,7 +133,7 @@ void readXMLComponent::readSpecies (
 		string& speciesReference,
 		string& speciesLabel,
 		string& compartmentLabel,
-		int& relation
+		string& ccid
 		)
 {
 	ostringstream oss;
@@ -186,10 +187,9 @@ void readXMLComponent::readSpecies (
 	//
 	//	read attribute relation
 	//
-	const string path_rel = prefix + "compartmentLabel/@relation";
+	const string path_rel = prefix + "compartmentLabel/@ccid";
 	get_node_attr (cind, &doc, &path_rel, temp);
-	if (!temp.empty ()) relation = atoi (temp[0].c_str ());
-	else relation = 0;
+	if (!temp.empty ()) ccid = temp[0];
 }
 
 void readXMLComponent::readCompartment (
@@ -545,7 +545,7 @@ void readXMLComponent::readSpecies (
 	//
 	//	read attribute ccid
 	//
-	const string path_ccid = prefix + "@ccid";
+	const string path_ccid = prefix + "compartment/@ccid";
 	get_node_attr (cind, &doc, &path_db, temp);
 	if (!temp.empty ()) ccid = temp[0];
 
@@ -709,7 +709,7 @@ void readXMLComponent::readSpeciesLink (
 		) 
 {
 	ostringstream oss;
-	oss << qpath << "[" << i <<"]/";
+	oss << qpath << "[" << i <<"]";
 	string prefix (oss.str ());
 
 	vector<string> temp;
@@ -717,30 +717,33 @@ void readXMLComponent::readSpeciesLink (
 	//
 	//  read node referencedSpecies
 	//
-	const string path_refs = prefix + "referencedSpecies";
-	get_node_element (cind, &doc, &path_refs, temp);
+	get_node_element (cind, &doc, &prefix, temp);
 	if (temp.empty ())
 	{
 		string errno = string (
-				"REFERENCEDSPECIES: empty node referencedSpcies in "
+				"\nReferencedSpecies: empty node referencedSpcies in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
 	else speciesReference = temp[0];
+    cout << "\nspeciesReference = " << speciesReference;
+	cout << "\nsize = " << speciesReference.size ();
 
 	//
 	//  read attribute partType
 	//
-	const string path_ptype = prefix + "@partType";
-	get_node_element (cind, &doc, &path_ptype, temp);
+	const string path_ptype = prefix + "/@partType";
+//    cout << "\nnodepath = " << path_ptype << endl;
+	get_node_attr (cind, &doc, &path_ptype, temp);
 	if (!temp.empty ()) partType = temp[0];
 	else
 	{
 		string errno = string (
-				"REFERENCEDSPECIES: empty attribute partType in "
+				"\nReferencedSpecies: empty attribute partType in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
+//    cout << "\npartType = " << partType << endl;
 }
 
 void readXMLComponent::readReactionLink (
@@ -766,7 +769,7 @@ void readXMLComponent::readReactionLink (
 	if (temp.empty ())
 	{
 		string errno = string (
-				"REFERENCEDREACTION: empty node referencedReaction in "
+				"ReferencedReaction: empty node referencedReaction in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
@@ -780,7 +783,7 @@ void readXMLComponent::readReactionLink (
 	if (temp.empty ())
 	{
 		string errno = string (
-				"REFERENCEDREACTION: empty attribute @speciesType in "
+				"\nReferencedReaction: empty attribute @speciesType in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
@@ -795,7 +798,7 @@ void readXMLComponent::readReactionLink (
 		if (!validSpeciesType.count (temp[0]))
 		{
 			string errno = string (
-					"REFERENCEREACTION: invalid speciesType value in "
+					"\nReferencedReaction: invalid speciesType value in "
 					) + doc + ".xml";
 			throw StrCacuException (errno);
 		}
@@ -1008,9 +1011,12 @@ void readXMLComponent::readConditionalParameter (
 		string& name
 		)
 {
+	cout << "\ndir = " << dir << " doc = " << doc << 
+		" para = " << para << " comp = " << comp << endl;
+
 	//	search conditional parameter value
 	string nodepath;
-	nodepath = string ("MoDeL/part/") + dir +
+	nodepath = string ("/MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
 		+ para + "\"]/parameterValue[@compartment=\""
@@ -1021,7 +1027,7 @@ void readXMLComponent::readConditionalParameter (
 	get_node_element (cind, &doc, &nodepath, temp);
 	if (temp.empty ())
 	{
-		nodepath = string ("MoDeL/part/") + dir +
+		nodepath = string ("/MoDeL/part/") + dir +
 			"/listOfConditionalParameters/"
 			"conditionalParameter[@id=\""
 			+ para + "\"][parameterValue/@compartment=\""
@@ -1033,7 +1039,7 @@ void readXMLComponent::readConditionalParameter (
 			//	read default
 			const string doc1 ("defaults");
 			string defaultpath;
-			defaultpath = string ("/MoDeL/default/") + 
+			defaultpath = string ("/MoDeL/part/") + 
 				"listOfValueDefaults/"
 				"valueDefault[@id=\""
 				+ para + "\"]";
@@ -1051,22 +1057,25 @@ void readXMLComponent::readConditionalParameter (
 	}
 	else value = atof (temp[0].c_str ());
 
+	cout << "\nbefore units! " << endl;
 	//	
 	//	read units
 	//
-	nodepath = string ("MoDeL/part/") + dir +
+	nodepath = string ("/MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
 		+ para + "\"][parameterValue[@compartment=\""
-		+ comp + "\"]/@units";
+		+ comp + "\"]]/@units";
 
+	cout << "\nnodepath = " << nodepath << endl;
 	get_node_attr (cind, &doc, &nodepath, temp);
 	if (!temp.empty ()) units = temp[0];
 
+	cout << "\nbefore name! " << endl;
 	//	
 	//	read name
 	//
-	nodepath = string ("MoDeL/part/") + dir +
+	nodepath = string ("/MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
 		+ para + "\"][parameterValue[@compartment=\""

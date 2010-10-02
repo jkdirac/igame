@@ -191,10 +191,8 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	if (node_path != NULL)
 		query_string += *node_path;
 
-
 	XmlQueryContext context = m_manager->createQueryContext();
 
-//        cout << query_string << endl;
 
 	XmlQueryExpression qe;
 	XmlResults results;
@@ -205,6 +203,7 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
+		cout << query_string << endl;
 		cout << "get_node_element in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 //                return xml_exception;
@@ -262,7 +261,6 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 
 	XmlQueryContext context = m_manager->createQueryContext();
 
-//        cout << query_string << endl;
 
 	XmlQueryExpression qe;
 	XmlResults results;
@@ -273,6 +271,7 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
+		cout << query_string << endl;
 		cout << "get_node_attr in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 //                return xml_exception;
@@ -329,7 +328,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 
 	XmlQueryContext context = m_manager->createQueryContext();
 
-//        cout << query_string << endl;
 
 	XmlQueryExpression qe;
 	XmlResults results;
@@ -340,6 +338,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
+		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 //                return xml_exception;
@@ -414,7 +413,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	{
 		query_string += "'";
 	}
-	cout << query_string << endl;
 
 	XmlQueryExpression qe;
 	XmlResults results;
@@ -426,6 +424,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
+		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 //                return xml_exception;
@@ -537,8 +536,6 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 	query_string += ")";
 	XmlQueryContext context = m_manager->createQueryContext();
 
-//        cout << query_string << endl;
-
 	XmlQueryExpression qe;
 	XmlResults results;
 	try
@@ -548,6 +545,7 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
+		cout << query_string << endl;
 		cout << "get_node_attr_num exception: " << xe.what() << endl;
 		throw xe;
 //                return xml_exception;

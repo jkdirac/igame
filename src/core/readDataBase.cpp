@@ -10,8 +10,10 @@ void readDataBase::read_cnModel (
 {
 	//read tree map
 	string qpt = qp + "/cnModel/listOfTrees/tree";
-//    cout << qpt << endl;
+	cout << "\nbegin read num of trees..." << endl;
+	cout << "\ndoc = " << doc << "\nqpt = " << qpt << endl;
 	int numOfTrees = get_node_element_num (cind, &doc, &qpt);
+	cout << "\nnumoftrees = " << numOfTrees << endl;
 
 	for (int itree = 1; itree <= numOfTrees; itree++)
 	{
@@ -694,19 +696,18 @@ void readDataBase::readReactionTemplate (
 
 	for (int cnt =1; cnt <= numOfReactants; cnt++)
 	{
-		string speciesReference, speciesLabel, compartmentLabel;
-		int relation;
+		string speciesReference, speciesLabel, compartmentLabel, ccid;
 		readSpecies (
 				REACTION, doc, pathReactants, cnt,
 				speciesReference, speciesLabel, 
-				compartmentLabel, relation
+				compartmentLabel, ccid
 				);
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
-		if (relation == 1) s->setCCid (compartmentLabel);
+		if (!ccid.empty ()) s->setCCid (compartmentLabel);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
 		if (direction) RT->addReactant (s, compartmentLabel);
@@ -721,20 +722,19 @@ void readDataBase::readReactionTemplate (
 
 	for (int cnt =1; cnt <= numOfProducts; cnt++)
 	{
-		string speciesReference, speciesLabel, compartmentLabel;
-		int relation;
+		string speciesReference, speciesLabel, compartmentLabel, ccid;
 
 		readSpecies (
 				REACTION, doc, pathProducts, cnt,
 				speciesReference, speciesLabel, 
-				compartmentLabel, relation
+				compartmentLabel, ccid
 				);
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
-		if (relation == 1) s->setCCid (compartmentLabel);
+		if (!ccid.empty ()) s->setCCid (compartmentLabel);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
 		if (direction) RT->addProduct (s, compartmentLabel);
@@ -747,19 +747,18 @@ void readDataBase::readReactionTemplate (
 
 	for (int cnt =1; cnt <= numOfModifiers; cnt++)
 	{
-		string speciesReference, speciesLabel, compartmentLabel;
-		int relation;
+		string speciesReference, speciesLabel, compartmentLabel, ccid;
 		readSpecies (
 				REACTION, doc, pathModifier, cnt,
 				speciesReference, speciesLabel, 
-				compartmentLabel, relation
+				compartmentLabel, ccid
 				);
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
 		s->setDbId (speciesReference);
 		s->setLabel (speciesLabel);
-		if (relation == 1) s->setCCid (compartmentLabel);
+		if (!ccid.empty ()) s->setCCid (compartmentLabel);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 		RT->addModifier (s, compartmentLabel);
 	}

@@ -270,11 +270,12 @@ void readInput::config (
 	//			READ listOfSpecies
 	//	=========================================
 	const string pathSpe =
-		"/MoDeL/dbinterface/input"
+		"/MoDeL/dbInterface/input"
 		"/listOfSpecies/species";
 
 	const int numOfSpecies =  
 		get_node_element_num (DBINTERFACE, &DOC, &pathSpe);
+//    cout << "\nnumOfSpecies = " << numOfSpecies << endl;
 
 	for (int i=1; i <= numOfSpecies; i++)
 	{
@@ -307,11 +308,9 @@ void readInput::config (
 		else
 		{
 			//	read structure
-//            cout << "\ndb = " << db << endl;
+            cout << "\ndb = " << db << endl;
 			read_cnModel (s, SPECIES, db, "/MoDeL/species", false);
 		}
-
-//        cout << "\ni = " << i << endl;
 
 		//	sort chain-node model
 		s->rearrange ();

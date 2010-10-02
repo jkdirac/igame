@@ -54,7 +54,7 @@ class readXMLComponent :
 				string& speciesReference,
 				string& speciesLabel,
 				string& compartmentLabel,
-				int &relation
+				string& ccid
 				);
 
 		void readCompartment (

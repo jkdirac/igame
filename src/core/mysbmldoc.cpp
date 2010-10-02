@@ -177,11 +177,18 @@ void MySBMLDocument::run (
 			{
 				Part* p = c->getPart (k);
 
+				cout << "\nspecies = " << i << "; chain = " << j 
+					<< "; part = " << k << endl;
+
 				//	search transcription reactions
 				searchTranscriptionReactions (i, j, k, dbreader);
+
+				cout << "\nTranscription...Done!" << endl;
 				
 				//	search translation reactions
 				searchTranslationReactions (i, j, k, dbreader);
+
+				cout << "\nTranslation...Done!" << endl;
 
 				//	read species containing this part 
 				string speciesLinkPath =
@@ -198,6 +205,8 @@ void MySBMLDocument::run (
 
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
+					cout << "\nHandling the First Referenced Species...";
+
 					string speciesReference, partType;
 					dbreader.readSpeciesLink (
 							PART, p->getDbId (),speciesLinkPath, 
@@ -216,15 +225,28 @@ void MySBMLDocument::run (
 					//	read searched species
 					//
 
+					cout << "\nReading Species...";
+
 					MySpecies* sLink = new MySpecies;
 					sLink->setDbId (speciesReference);  
-					//                    dbreader.readSpecies_db (sLink);
+					dbreader.read_cnModel (
+							sLink, SPECIES, speciesReference,
+							"/MoDeL/species", true
+							);
+					cout << "\nspeciesReference = " <<
+						speciesReference << endl;
 
 					//
 					//  is this species template match?
 					//
 					vector<MySpecies::cMatchsType2> trym;
-					if (!s->match (sLink, trym)) continue;
+					if (!s->match (sLink, trym)) 
+					{
+						cout << "\nDoes not MATCH! Continue to NEXT...";
+						continue;
+					}
+					else cout << "\nMATCH! Continue...";
+
 
 					//
 					//  read reaction Links
@@ -263,12 +285,15 @@ void MySBMLDocument::run (
 
 	Model* m = getModel ();
 
+	cout << "\nspecies num = " << listOfMySpecies.size ();
 	for (int i=0; i < listOfMySpecies.size (); i++)
 		m->addSpecies (listOfMySpecies[i]);
 
+	cout << "\ncompartments num = " << listOfMyCompartments.size ();
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 		m->addCompartment (listOfMyCompartments[i]);
 
+	cout << "\nreactions num = " << listOfMyReactions.size ();
 	for (int i=0; i < listOfMyReactions.size (); i++)
 		m->addReaction (listOfMyReactions[i]);
 }
@@ -408,7 +433,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 	Chain* c = s->getChain (j);
 	Part* p = c->getPart (k);
 	string ptype = p->getPartType ();
-	bool isvalidseq = (ptype != "ForwardDNA" || ptype != "ReverseDNA");
+	bool isvalidseq = ((ptype == "ForwardDNA") || (ptype == "ReverseDNA"));
 	if (!isvalidseq) return;
 
 	//	check if p is a promoter
@@ -422,10 +447,12 @@ void MySBMLDocument::searchTranscriptionReactions (
 	//	forward transcription reaction
 	//	===============================
 	string PE_fw ("forwardPromoterEfficiency");
-	if (ptype == "ReverseRNA") PE_fw = "reversePromoterEfficiency";
+	if (ptype == "ReverseDNA") PE_fw = "reversePromoterEfficiency";
+	
+	string db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 	dbreader.readConditionalParameter (
 			PART, p->getPartCategory (), p->getDbId (),
-			PE_fw, s->getCompartment (), value, units, name
+			PE_fw, db_comp, value, units, name
 			);
 
 	if (value <0) throw StrCacuException (
@@ -449,14 +476,15 @@ void MySBMLDocument::searchTranscriptionReactions (
 				{
 					p = c->getPart (ci);
 					ptype = p->getPartType ();
-					isvalidseq = (ptype != "ForwardDNA" || ptype != "ReverseDNA");
+					isvalidseq = (ptype == "ForwardDNA" || ptype == "ReverseDNA");
 					if (isvalidseq)
 					{
 						string TE_fw ("forwardTerminatorEfficiency");
 						if (ptype == "ReverseDNA") TE_fw = "reverseTerminatorEfficiency";
+						db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 						dbreader.readConditionalParameter (
 								PART, p->getPartCategory (), p->getDbId (),
-								TE_fw, s->getCompartment (), termeff, termUnits, termName
+								TE_fw, db_comp, termeff, termUnits, termName
 								);
 						if (termeff <0 || termeff > 1) throw StrCacuException (
 								"Invalid parameter value: forward/reverse TerminatorEfficiency!"
@@ -526,9 +554,10 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 	string PE_rev ("reversePromoterEfficiency");
 	if (ptype == "ReverseDNA") PE_rev = "forwardPromoterEfficiency";
+	db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 	dbreader.readConditionalParameter (
 			PART, p->getPartCategory (), p->getDbId (),
-			PE_rev, s->getCompartment (), value, units, name
+			PE_rev, db_comp, value, units, name
 			);
 	if (value <0) throw StrCacuException (
 			"Invalid parameter value: reverse/forward PromoterEfficiency!"
@@ -551,14 +580,15 @@ void MySBMLDocument::searchTranscriptionReactions (
 				{
 					p = c->getPart (ci);
 					ptype = p->getPartType ();
-					isvalidseq = (ptype != "ForwardDNA" && ptype != "ReverseDNA");
+					isvalidseq = (ptype == "ForwardDNA" || ptype == "ReverseDNA");
 					if (isvalidseq)
 					{
 						string TE_rev ("reverseTerminatorEfficiency");
 						if (ptype == "ReverseDNA") TE_rev = "forwardTerminatorEfficiency";
+						db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 						dbreader.readConditionalParameter (
 								PART, p->getPartCategory (), p->getDbId (),
-								TE_rev, s->getCompartment (), termeff, termUnits, termName
+								TE_rev, db_comp, termeff, termUnits, termName
 								);
 						if (termeff <0 || termeff > 1) throw StrCacuException (
 								"Invalid parameter value: reverse/forward TerminatorEfficiency!"
@@ -634,7 +664,7 @@ void MySBMLDocument::searchTranslationReactions (
 	Chain* c = s->getChain (j);
 	Part* p = c->getPart (k);
 	string ptype = p->getPartType ();
-	bool isvalidseq = (ptype != "ForwardRNA" && ptype != "ReverseRNA");
+	bool isvalidseq = (ptype == "ForwardRNA" || ptype == "ReverseRNA");
 	if (!isvalidseq) return;
 
 	//	check if p is a promoter
@@ -644,9 +674,10 @@ void MySBMLDocument::searchTranslationReactions (
 	//	forward transcription reaction
 	string RE_fw ("forwardRbsEfficiency");
 	if (ptype == "ReverseRNA") RE_fw = "reverseRbsEfficiency";
+	string db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 	dbreader.readConditionalParameter (
 			PART, p->getPartCategory (), p->getDbId (),
-			RE_fw, s->getCompartment (), value, units, name
+			RE_fw, db_comp, value, units, name
 			);
 
 	if (value <0) throw StrCacuException (
@@ -664,14 +695,15 @@ void MySBMLDocument::searchTranslationReactions (
 			int ci = k+1;
 			p = c->getPart (ci);
 			string ptype = p->getPartType ();
-			bool isvalidseq = (ptype != "ForwardRNA" && ptype != "ReverseRNA");
+			bool isvalidseq = (ptype == "ForwardRNA" || ptype == "ReverseRNA");
 			if (!isvalidseq) return;
 
 			string StartC_fw ("forwardStartCodon");
 			if (ptype == "ReverseRNA") StartC_fw = "reverseStartCodon";
+			db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 			dbreader.readConditionalParameter (
 					PART, p->getPartCategory (), p->getDbId (),
-					StartC_fw, s->getCompartment (), codonEff, codonUnits, codonName
+					StartC_fw, db_comp, codonEff, codonUnits, codonName
 					);
 			if (codonEff <0 || codonEff > 1) throw StrCacuException (
 					"Invalid parameter value: forward/reverse StartCodon!"
@@ -691,9 +723,10 @@ void MySBMLDocument::searchTranslationReactions (
 						{
 							string StopC_fw ("forwardStopCodon");
 							if (ptype == "ReverseRNA") StopC_fw = "reverseStopCodon";
+							db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 							dbreader.readConditionalParameter (
 									PART, p->getPartCategory (), p->getDbId (),
-									StopC_fw, s->getCompartment (), codonEff, codonUnits, codonName
+									StopC_fw, db_comp, codonEff, codonUnits, codonName
 									);
 							if (codonEff <0 || codonEff > 1) throw StrCacuException (
 									"Invalid parameter value: forward/reverse StopCodon!"
