@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../bin/libbdinterface.a  CMakeFiles/bdinterface.dir/bdbInterface.cpp.o
-/usr/bin/ranlib ../bin/libbdinterface.a
