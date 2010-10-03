@@ -494,8 +494,8 @@ bool MySpecies::equal (
 		{
 			Chain* left = lhs->listOfChains[i];
 			Chain* right = rhs->listOfChains[i];
-			cout << "\nleft = " << left->getUnicode () << 
-				" right = " << right->getUnicode ()<< endl;
+//            cout << "\nleft = " << left->getUnicode () << 
+//                " right = " << right->getUnicode ()<< endl;
 			if (!left->equal (right)) return false;
 		}
 	}

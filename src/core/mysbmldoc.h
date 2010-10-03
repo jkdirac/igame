@@ -45,8 +45,16 @@ class MySBMLDocument:
 		const MyCompartment* getMyCompartment (
 				const string& label
 				) const;
+ 
 
-		string genSbmlId () const;
+		//
+		//	switch (t)
+		//	t=0 --> species
+		//	t=1 --> reaction
+		//
+		string genSbmlId (
+				const int& t
+				) const;
 
 		UnitKind_t getUnitKind_t (
 				const string& unit

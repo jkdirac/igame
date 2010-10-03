@@ -135,10 +135,18 @@ MySpecies* MySBMLDocument::validateBackSpecies ()
 	return myspe;
 }
 
-string MySBMLDocument::genSbmlId () const
+string MySBMLDocument::genSbmlId (
+		const int& t
+		) const
 {
 	ostringstream oss;
-	oss << "sPecIes" << listOfMySpecies.size ();
+	switch (t)
+	{
+		case 0: oss << "sPecIes" << listOfMySpecies.size ();
+				break;
+		case 1: oss << "rEactIon" << listOfMyReactions.size ();
+				break;
+	}
 	return string (oss.str ());
 }
 
@@ -186,6 +194,7 @@ void MySBMLDocument::run (
 				//	search translation reactions
 				searchTranslationReactions (i, j, k, dbreader);
 
+				cout << "\nREAL REACTIONs Number: " << listOfMyReactions.size () << endl;
 				continue;
 
 				//	read species containing this part 
@@ -343,6 +352,8 @@ void MySBMLDocument::run (
 	for (int i=0; i < listOfMyReactions.size (); i++)
 	{
 		int operation = m->addReaction (listOfMyReactions[i]);
+		cout << listOfMyReactions[i]->toSBML () << endl;
+
 		if (operation == LIBSBML_LEVEL_MISMATCH)
 			throw StrCacuException (
 					"Add Reaction to Model: Level Mismatch!"
@@ -458,14 +469,9 @@ void MySBMLDocument::handleReactionTemplate (
 	//
 	for (int i=0; i < result.size (); i++)
 	{
-		ostringstream oss;
-		oss << "rEactIon" << listOfMyReactions.size ();
-
 		//	new reaction
-		MyReaction* myreaction = createMyReaction ();
-
-		//	set attributes
-		myreaction->setId (oss.str ());
+		MyReaction* myreaction = new MyReaction;
+		myreaction->setId (genSbmlId (1));
 		myreaction->setName (RT->getName ());
 		myreaction->setFast (RT->getFast ());
 		myreaction->setReversible (false);
@@ -572,7 +578,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 					MySpecies* mrna = new MySpecies;
 
-					if (mrna->setId (genSbmlId ()) 
+					if (mrna->setId (genSbmlId (0)) 
 							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
 						throw StrCacuException (
 								"Transcription: Invalid Attribute Value: id!"
@@ -607,6 +613,10 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 					//	record a reaction
 					MyReaction* transcription = new MyReaction;
+					transcription->setId (genSbmlId (1));
+					transcription->setName ("transcription");
+					transcription->setReversible (false);
+
 					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
 					listOfMyReactions.push_back (transcription);
 
@@ -678,7 +688,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 					MySpecies* mrna = new MySpecies;
 
-					if (mrna->setId (genSbmlId ()) 
+					if (mrna->setId (genSbmlId (0)) 
 							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
 						throw StrCacuException (
 								"Transcription: Invalid Attribute Value: id!"
@@ -711,6 +721,10 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 					//	record a reaction
 					MyReaction* transcription = new MyReaction;
+					transcription->setId (genSbmlId (1));
+					transcription->setName ("transcription");
+					transcription->setReversible (false);
+
 					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
 					listOfMyReactions.push_back (transcription);
 
@@ -815,7 +829,7 @@ void MySBMLDocument::searchTranslationReactions (
 						//	the biobrick next to rbs is not a valid sequence
 						MySpecies* prot = new MySpecies;
 
-						if (prot->setId (genSbmlId ()) 
+						if (prot->setId (genSbmlId (0)) 
 								== LIBSBML_INVALID_ATTRIBUTE_VALUE)
 							throw StrCacuException (
 									"Translation: Invalid Attribute Value: id!"
@@ -847,9 +861,13 @@ void MySBMLDocument::searchTranslationReactions (
 						prot = validateBackSpecies ();
 
 						//	record a reaction
-						MyReaction* transcription = new MyReaction;
-						transcription->addSpecialReaction (s, prot, "k_tl", name, value, units);
-						listOfMyReactions.push_back (transcription);
+						MyReaction* translation = new MyReaction;
+						translation->setId (genSbmlId (1));
+						translation->setName ("translation");
+						translation->setReversible (false);
+
+						translation->addSpecialReaction (s, prot, "k_tl", name, value, units);
+						listOfMyReactions.push_back (translation);
 
 						break;
 					}
