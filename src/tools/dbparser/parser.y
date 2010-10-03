@@ -129,7 +129,7 @@ module_attribute:  /*empty*/
 			}
 		;
 
-module_body_statement: /*empty body*/
+module_body_statement:  {}/*empty body*/
 		     | module_body_statement TOKEN_COMMENT 
 			{ 
 				if (isempty(&depth_stack) == true)

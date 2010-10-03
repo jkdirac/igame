@@ -1,5 +1,6 @@
 #include "genXml.h"
 #include <stdlib.h>
+#include <string.h>
 
 FILE* open_file(const char *filename)
 {
