@@ -1,5 +1,5 @@
 LIBS = -lsbml
-LDFLG = -L/home/jkdirac/Develop/igame/ExternalLib/linux
+LDFLG = -L ../../../ExternalLib/linux
 CC = cc
 CXX = g++
 LEX = flex
