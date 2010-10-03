@@ -1,16 +1,22 @@
-LIBS = 
+LIBS = -lsbml
+LDFLG = -L/home/jkdirac/Develop/igame/ExternalLib/linux
 CC = cc
+CXX = g++
 LEX = flex
 YACC = yacc
 CCFLAGS = -g
 
-parser:	parseryac.o parserlex.o genXml.o
+parser:	parseryac.o parserlex.o genXml.o trans.o
 	${CC} ${CCFLAGS} -o $@ $^ ${LIBS}
 
-genXml.o: genXml.c genXml.h
-	${CC} -c ${CCFLAGS} $^ ${LIBS}
+trans.o : trans.cpp 
+	${CXX} -c ${CCFLAGS} $^ -o $@
 
-parserlex.o: parserlex.c parseryac.h
+genXml.o: genXml.c
+	${CC} -c ${CCFLAGS} $^ -o $@
+
+parserlex.o: parserlex.c 
+	${CC} -c ${CCFLAGS} $^ -o $@
 
 parserlex.c:	parser.l
 	${LEX} parser.l

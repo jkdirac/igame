@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "genXml.h"
+#include "trans.h"
 
 int lineno = 0;
 FILE *fp_outfile;
@@ -17,12 +18,8 @@ stack depth_stack;
     int    integer;          /* int value */
 }
 
-%token <string> TOK_NODENAME VALUESTRING QSTRING SSTRING TOKEN_COMMENT TOKEN_IDENTIFIER TOK_GROUPSTART TOK_GROUPEND
-%token <string> TOK_MODULE TOK_ID TOK_NAME TOK_CLASS TOK_MODULE_REGID TOK_MODULE_UR TOK_SHORT_DESC TOK_PARAMETERS
-%token <string> TOK_MODULE_FW_PROM_EFF TOK_MODULE_EV_PROM_EFF TOK_MODULE_FW_TERM_EFF TOK_MODULE_REV_TERM_EFF
-%token <string> TOK_MODULE_RBS_EFF TOK_MODULE_REV_RBS_EFF TOK_MODULE_FW_START_CONDON TOK_MODULE_REV_START_CONDON
-%token <string> TOK_MODULE_FW_STOP_CONDON TOK_MODULE_REV_STOP_CONDON TOK_MODULE_LISTOFSPECIESLINKS TOK_MODULE_SPECIESLINKS 
-%token <string> TOK_TYPE TOK_DIRECTION TOK_FILENAME
+%token <string> VALUESTRING QSTRING SSTRING TOKEN_COMMENT TOKEN_IDENTIFIER TOK_GROUPSTART TOK_GROUPEND
+%token <string> TOK_FILENAME TOK_MATH
 %type <string> module_name
 %type <integer> module_body_statement module_statement
 
@@ -64,31 +61,13 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 						put_string(fp_outfile, 0, "\n");
 						finish_make_node_name_str(p_att_str, &p_attr);
 					}
-			/*	
-				int size = strlen($3);
-				if (size > 0)
-				{
+			}
+		| TOK_MATH ':' VALUESTRING separte
+			{
+					char *math = translateInfixCh($3);
 					cur_depth = top_stack(&depth_stack);
-					//头部
-					if (p_attr == NULL)
-						p_attr = start_par_att(); 
-					p_att_str = make_node_name_str($1, p_attr);;
-					put_string(fp_outfile, cur_depth, p_att_str);
-					finish_make_node_name_str(p_att_str, &p_attr);
-
-					//值
-					put_string(fp_outfile, 0, $3);
-
-					//尾部
-					put_string(fp_outfile, 0, "</");
-					put_string(fp_outfile, 0, $1);
-					put_string(fp_outfile, 0, ">\n");
-				}
-				else
-				{
-				}
-				$$ = 0;
-*/
+					if (math != NULL)
+						put_string(fp_outfile, cur_depth, math);
 			}
 		;
 

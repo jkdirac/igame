@@ -42,7 +42,7 @@ identifer [A-Za-z][^\[\]\"\ \n\t\r\=:]*
 {nl}	  lineno++;
 {comment} ;
 
-NODENAME { yylval.string = strdup(yytext); my_return(TOK_NODENAME); }
+math {yylval.string = strdup(yytext); my_return(TOK_MATH);}
 file { yylval.string = strdup(yytext); my_return(TOK_FILENAME); }
 
 {identifer} {

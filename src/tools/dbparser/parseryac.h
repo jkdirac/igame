@@ -39,71 +39,27 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TOK_NODENAME = 258,
-     VALUESTRING = 259,
-     QSTRING = 260,
-     SSTRING = 261,
-     TOKEN_COMMENT = 262,
-     TOKEN_IDENTIFIER = 263,
-     TOK_GROUPSTART = 264,
-     TOK_GROUPEND = 265,
-     TOK_MODULE = 266,
-     TOK_ID = 267,
-     TOK_NAME = 268,
-     TOK_CLASS = 269,
-     TOK_MODULE_REGID = 270,
-     TOK_MODULE_UR = 271,
-     TOK_SHORT_DESC = 272,
-     TOK_PARAMETERS = 273,
-     TOK_MODULE_FW_PROM_EFF = 274,
-     TOK_MODULE_EV_PROM_EFF = 275,
-     TOK_MODULE_FW_TERM_EFF = 276,
-     TOK_MODULE_REV_TERM_EFF = 277,
-     TOK_MODULE_RBS_EFF = 278,
-     TOK_MODULE_REV_RBS_EFF = 279,
-     TOK_MODULE_FW_START_CONDON = 280,
-     TOK_MODULE_REV_START_CONDON = 281,
-     TOK_MODULE_FW_STOP_CONDON = 282,
-     TOK_MODULE_REV_STOP_CONDON = 283,
-     TOK_MODULE_LISTOFSPECIESLINKS = 284,
-     TOK_MODULE_SPECIESLINKS = 285,
-     TOK_TYPE = 286,
-     TOK_DIRECTION = 287,
-     TOK_FILENAME = 288
+     VALUESTRING = 258,
+     QSTRING = 259,
+     SSTRING = 260,
+     TOKEN_COMMENT = 261,
+     TOKEN_IDENTIFIER = 262,
+     TOK_GROUPSTART = 263,
+     TOK_GROUPEND = 264,
+     TOK_FILENAME = 265,
+     TOK_MATH = 266
    };
 #endif
 /* Tokens.  */
-#define TOK_NODENAME 258
-#define VALUESTRING 259
-#define QSTRING 260
-#define SSTRING 261
-#define TOKEN_COMMENT 262
-#define TOKEN_IDENTIFIER 263
-#define TOK_GROUPSTART 264
-#define TOK_GROUPEND 265
-#define TOK_MODULE 266
-#define TOK_ID 267
-#define TOK_NAME 268
-#define TOK_CLASS 269
-#define TOK_MODULE_REGID 270
-#define TOK_MODULE_UR 271
-#define TOK_SHORT_DESC 272
-#define TOK_PARAMETERS 273
-#define TOK_MODULE_FW_PROM_EFF 274
-#define TOK_MODULE_EV_PROM_EFF 275
-#define TOK_MODULE_FW_TERM_EFF 276
-#define TOK_MODULE_REV_TERM_EFF 277
-#define TOK_MODULE_RBS_EFF 278
-#define TOK_MODULE_REV_RBS_EFF 279
-#define TOK_MODULE_FW_START_CONDON 280
-#define TOK_MODULE_REV_START_CONDON 281
-#define TOK_MODULE_FW_STOP_CONDON 282
-#define TOK_MODULE_REV_STOP_CONDON 283
-#define TOK_MODULE_LISTOFSPECIESLINKS 284
-#define TOK_MODULE_SPECIESLINKS 285
-#define TOK_TYPE 286
-#define TOK_DIRECTION 287
-#define TOK_FILENAME 288
+#define VALUESTRING 258
+#define QSTRING 259
+#define SSTRING 260
+#define TOKEN_COMMENT 261
+#define TOKEN_IDENTIFIER 262
+#define TOK_GROUPSTART 263
+#define TOK_GROUPEND 264
+#define TOK_FILENAME 265
+#define TOK_MATH 266
 
 
 
@@ -113,14 +69,14 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 16 "parser.y"
+#line 17 "parser.y"
  char    *string;     /* string buffer */
     int    integer;          /* int value */
 
 
 
 /* Line 1676 of yacc.c  */
-#line 124 "y.tab.h"
+#line 80 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

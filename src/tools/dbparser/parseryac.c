@@ -74,6 +74,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "genXml.h"
+#include "trans.h"
 
 int lineno = 0;
 FILE *fp_outfile;
@@ -85,7 +86,7 @@ stack depth_stack;
 
 
 /* Line 189 of yacc.c  */
-#line 89 "y.tab.c"
+#line 90 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -112,71 +113,27 @@ stack depth_stack;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TOK_NODENAME = 258,
-     VALUESTRING = 259,
-     QSTRING = 260,
-     SSTRING = 261,
-     TOKEN_COMMENT = 262,
-     TOKEN_IDENTIFIER = 263,
-     TOK_GROUPSTART = 264,
-     TOK_GROUPEND = 265,
-     TOK_MODULE = 266,
-     TOK_ID = 267,
-     TOK_NAME = 268,
-     TOK_CLASS = 269,
-     TOK_MODULE_REGID = 270,
-     TOK_MODULE_UR = 271,
-     TOK_SHORT_DESC = 272,
-     TOK_PARAMETERS = 273,
-     TOK_MODULE_FW_PROM_EFF = 274,
-     TOK_MODULE_EV_PROM_EFF = 275,
-     TOK_MODULE_FW_TERM_EFF = 276,
-     TOK_MODULE_REV_TERM_EFF = 277,
-     TOK_MODULE_RBS_EFF = 278,
-     TOK_MODULE_REV_RBS_EFF = 279,
-     TOK_MODULE_FW_START_CONDON = 280,
-     TOK_MODULE_REV_START_CONDON = 281,
-     TOK_MODULE_FW_STOP_CONDON = 282,
-     TOK_MODULE_REV_STOP_CONDON = 283,
-     TOK_MODULE_LISTOFSPECIESLINKS = 284,
-     TOK_MODULE_SPECIESLINKS = 285,
-     TOK_TYPE = 286,
-     TOK_DIRECTION = 287,
-     TOK_FILENAME = 288
+     VALUESTRING = 258,
+     QSTRING = 259,
+     SSTRING = 260,
+     TOKEN_COMMENT = 261,
+     TOKEN_IDENTIFIER = 262,
+     TOK_GROUPSTART = 263,
+     TOK_GROUPEND = 264,
+     TOK_FILENAME = 265,
+     TOK_MATH = 266
    };
 #endif
 /* Tokens.  */
-#define TOK_NODENAME 258
-#define VALUESTRING 259
-#define QSTRING 260
-#define SSTRING 261
-#define TOKEN_COMMENT 262
-#define TOKEN_IDENTIFIER 263
-#define TOK_GROUPSTART 264
-#define TOK_GROUPEND 265
-#define TOK_MODULE 266
-#define TOK_ID 267
-#define TOK_NAME 268
-#define TOK_CLASS 269
-#define TOK_MODULE_REGID 270
-#define TOK_MODULE_UR 271
-#define TOK_SHORT_DESC 272
-#define TOK_PARAMETERS 273
-#define TOK_MODULE_FW_PROM_EFF 274
-#define TOK_MODULE_EV_PROM_EFF 275
-#define TOK_MODULE_FW_TERM_EFF 276
-#define TOK_MODULE_REV_TERM_EFF 277
-#define TOK_MODULE_RBS_EFF 278
-#define TOK_MODULE_REV_RBS_EFF 279
-#define TOK_MODULE_FW_START_CONDON 280
-#define TOK_MODULE_REV_START_CONDON 281
-#define TOK_MODULE_FW_STOP_CONDON 282
-#define TOK_MODULE_REV_STOP_CONDON 283
-#define TOK_MODULE_LISTOFSPECIESLINKS 284
-#define TOK_MODULE_SPECIESLINKS 285
-#define TOK_TYPE 286
-#define TOK_DIRECTION 287
-#define TOK_FILENAME 288
+#define VALUESTRING 258
+#define QSTRING 259
+#define SSTRING 260
+#define TOKEN_COMMENT 261
+#define TOKEN_IDENTIFIER 262
+#define TOK_GROUPSTART 263
+#define TOK_GROUPEND 264
+#define TOK_FILENAME 265
+#define TOK_MATH 266
 
 
 
@@ -186,14 +143,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 16 "parser.y"
+#line 17 "parser.y"
  char    *string;     /* string buffer */
     int    integer;          /* int value */
 
 
 
 /* Line 214 of yacc.c  */
-#line 197 "y.tab.c"
+#line 154 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -205,7 +162,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 209 "y.tab.c"
+#line 166 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -420,20 +377,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   33
+#define YYLAST   26
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  37
+#define YYNTOKENS  15
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  9
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  15
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  25
+#define YYNSTATES  29
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   288
+#define YYMAXUTOK   266
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -446,8 +403,8 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    35,    36,
-       2,    34,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    13,    14,
+       2,    12,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -467,9 +424,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    33
+       5,     6,     7,     8,     9,    10,    11
 };
 
 #if YYDEBUG
@@ -477,25 +432,25 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     4,     7,    10,    14,    19,    25,    28,
-      29,    34,    35,    38,    41
+       0,     0,     3,     4,     7,    10,    14,    19,    25,    30,
+      33,    34,    39,    40,    43,    46
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      38,     0,    -1,    -1,    38,    39,    -1,    40,    41,    -1,
-      33,    34,     4,    -1,    42,     9,    44,    10,    -1,     8,
-      35,     4,    43,    45,    -1,     8,    43,    -1,    -1,    43,
-       8,    34,     4,    -1,    -1,    44,     7,    -1,    44,    41,
-      -1,    36,    -1
+      16,     0,    -1,    -1,    16,    17,    -1,    18,    19,    -1,
+      10,    12,     3,    -1,    20,     8,    22,     9,    -1,     7,
+      13,     3,    21,    23,    -1,    11,    13,     3,    23,    -1,
+       7,    21,    -1,    -1,    21,     7,    12,     3,    -1,    -1,
+      22,     6,    -1,    22,    19,    -1,    14,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    31,    33,    36,    41,    54,    95,   123,
-     124,   132,   133,   149,   155
+       0,    27,    27,    28,    30,    33,    38,    51,    65,    74,
+     102,   103,   111,   112,   128,   134
 };
 #endif
 
@@ -504,17 +459,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TOK_NODENAME", "VALUESTRING", "QSTRING",
-  "SSTRING", "TOKEN_COMMENT", "TOKEN_IDENTIFIER", "TOK_GROUPSTART",
-  "TOK_GROUPEND", "TOK_MODULE", "TOK_ID", "TOK_NAME", "TOK_CLASS",
-  "TOK_MODULE_REGID", "TOK_MODULE_UR", "TOK_SHORT_DESC", "TOK_PARAMETERS",
-  "TOK_MODULE_FW_PROM_EFF", "TOK_MODULE_EV_PROM_EFF",
-  "TOK_MODULE_FW_TERM_EFF", "TOK_MODULE_REV_TERM_EFF",
-  "TOK_MODULE_RBS_EFF", "TOK_MODULE_REV_RBS_EFF",
-  "TOK_MODULE_FW_START_CONDON", "TOK_MODULE_REV_START_CONDON",
-  "TOK_MODULE_FW_STOP_CONDON", "TOK_MODULE_REV_STOP_CONDON",
-  "TOK_MODULE_LISTOFSPECIESLINKS", "TOK_MODULE_SPECIESLINKS", "TOK_TYPE",
-  "TOK_DIRECTION", "TOK_FILENAME", "'='", "':'", "';'", "$accept", "files",
+  "$end", "error", "$undefined", "VALUESTRING", "QSTRING", "SSTRING",
+  "TOKEN_COMMENT", "TOKEN_IDENTIFIER", "TOK_GROUPSTART", "TOK_GROUPEND",
+  "TOK_FILENAME", "TOK_MATH", "'='", "':'", "';'", "$accept", "files",
   "file_des", "filename_state", "module_statement", "module_name",
   "module_attribute", "module_body_statement", "separte", 0
 };
@@ -526,24 +473,22 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,    61,    58,    59
+     265,   266,    61,    58,    59
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    37,    38,    38,    39,    40,    41,    41,    42,    43,
-      43,    44,    44,    44,    45
+       0,    15,    16,    16,    17,    18,    19,    19,    19,    20,
+      21,    21,    22,    22,    22,    23
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     2,     3,     4,     5,     2,     0,
-       4,     0,     2,     2,     1
+       0,     2,     0,     2,     2,     3,     4,     5,     4,     2,
+       0,     4,     0,     2,     2,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -551,31 +496,31 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     0,     3,     0,     0,     9,     4,     0,
-       5,     0,     8,    11,     9,     0,     0,     0,     0,    12,
-       6,    13,    14,     7,    10
+       2,     0,     1,     0,     3,     0,     0,    10,     0,     4,
+       0,     5,     0,     9,     0,    12,    10,     0,     0,     0,
+       0,     0,    15,     8,    13,     6,    14,     7,    11
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     4,     5,     8,     9,    12,    16,    23
+      -1,     1,     4,     5,     9,    10,    13,    19,    23
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -31
+#define YYPACT_NINF -9
 static const yytype_int8 yypact[] =
 {
-     -31,     0,   -31,   -30,   -31,    -2,     3,   -27,   -31,     1,
-     -31,     5,     4,   -31,   -31,   -23,    -5,    -7,     9,   -31,
-     -31,   -31,   -31,   -31,   -31
+      -9,     0,    -9,    -8,    -9,     2,     3,    -2,    -1,    -9,
+       6,    -9,    12,     9,    14,    -9,    -9,     7,     4,    -4,
+      -6,    17,    -9,    -9,    -9,    -9,    -9,    -9,    -9
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -31,   -31,   -31,   -31,    -1,   -31,     2,   -31,   -31
+      -9,    -9,    -9,    -9,     5,    -9,    10,    -9,     1
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -585,27 +530,25 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       2,    15,    19,     7,     6,    20,     7,    10,    11,    14,
-      13,    18,    15,    24,     0,    21,    17,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    22,
-       0,     0,     0,     3
+       2,    17,    24,     7,     6,    25,    11,     8,    22,     7,
+       3,    12,    14,     8,    15,    16,    17,    18,    22,    21,
+      28,    27,     0,     0,    26,     0,    20
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     8,     7,     8,    34,    10,     8,     4,    35,     4,
-       9,    34,     8,     4,    -1,    16,    14,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    36,
-      -1,    -1,    -1,    33
+       0,     7,     6,     7,    12,     9,     3,    11,    14,     7,
+      10,    13,    13,    11,     8,     3,     7,     3,    14,    12,
+       3,    20,    -1,    -1,    19,    -1,    16
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    38,     0,    33,    39,    40,    34,     8,    41,    42,
-       4,    35,    43,     9,     4,     8,    44,    43,    34,     7,
-      10,    41,    36,    45,     4
+       0,    16,     0,    10,    17,    18,    12,     7,    11,    19,
+      20,     3,    13,    21,    13,     8,     3,     7,     3,    22,
+      21,    12,    14,    23,     6,     9,    19,    23,     3
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1419,7 +1362,7 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 37 "parser.y"
+#line 34 "parser.y"
     { 
 		fp_outfile = open_file((yyvsp[(3) - (3)].string)); 
 	      }
@@ -1428,7 +1371,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 42 "parser.y"
+#line 39 "parser.y"
     {
 				pop_stack(&depth_stack);
 				if (isempty(&depth_stack) == true)
@@ -1446,7 +1389,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 55 "parser.y"
+#line 52 "parser.y"
     {
 					cur_depth = top_stack(&depth_stack);
 					//头部
@@ -1459,38 +1402,25 @@ yyreduce:
 						put_string(fp_outfile, 0, "\n");
 						finish_make_node_name_str(p_att_str, &p_attr);
 					}
-			/*	
-				int size = strlen($3);
-				if (size > 0)
-				{
-					cur_depth = top_stack(&depth_stack);
-					//头部
-					if (p_attr == NULL)
-						p_attr = start_par_att(); 
-					p_att_str = make_node_name_str($1, p_attr);;
-					put_string(fp_outfile, cur_depth, p_att_str);
-					finish_make_node_name_str(p_att_str, &p_attr);
-
-					//值
-					put_string(fp_outfile, 0, $3);
-
-					//尾部
-					put_string(fp_outfile, 0, "</");
-					put_string(fp_outfile, 0, $1);
-					put_string(fp_outfile, 0, ">\n");
-				}
-				else
-				{
-				}
-				$$ = 0;
-*/
 			}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 96 "parser.y"
+#line 66 "parser.y"
+    {
+					char *math = translateInfixCh((yyvsp[(3) - (4)].string));
+					cur_depth = top_stack(&depth_stack);
+					if (math != NULL)
+						put_string(fp_outfile, cur_depth, math);
+			}
+    break;
+
+  case 9:
+
+/* Line 1455 of yacc.c  */
+#line 75 "parser.y"
     {
 			//尾部
 			if (isempty(&depth_stack) == true)
@@ -1518,10 +1448,10 @@ yyreduce:
 		}
     break;
 
-  case 10:
+  case 11:
 
 /* Line 1455 of yacc.c  */
-#line 125 "parser.y"
+#line 104 "parser.y"
     { 
 				if(p_attr == NULL)
 					p_attr = start_par_att();
@@ -1529,17 +1459,17 @@ yyreduce:
 			}
     break;
 
-  case 11:
-
-/* Line 1455 of yacc.c  */
-#line 132 "parser.y"
-    {}
-    break;
-
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 134 "parser.y"
+#line 111 "parser.y"
+    {}
+    break;
+
+  case 13:
+
+/* Line 1455 of yacc.c  */
+#line 113 "parser.y"
     { 
 				if (isempty(&depth_stack) == true)
 				{
@@ -1557,10 +1487,10 @@ yyreduce:
 			}
     break;
 
-  case 13:
+  case 14:
 
 /* Line 1455 of yacc.c  */
-#line 150 "parser.y"
+#line 129 "parser.y"
     {
 				debug_output("sub module\n");
 			}
@@ -1569,7 +1499,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1573 "y.tab.c"
+#line 1503 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1781,7 +1711,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 157 "parser.y"
+#line 136 "parser.y"
 
 
 int yyerror (char *err) {
