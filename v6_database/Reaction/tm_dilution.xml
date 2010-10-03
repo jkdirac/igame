@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoDeL>
+	<reaction id="tm_dilution" reversible="false">
+		<listOfCompartments>
+			<compartment>
+				<compartmentReference>E_coli</compartmentReference>
+				<currentCompartmentLabel>E_coli</currentCompartmentLabel>
+				<parentCompartmentLabel>Flask</parentCompartmentLabel>
+			</compartment>
+			<compartment>
+				<compartmentReference>Flask</compartmentReference>
+				<currentCompartmentLabel>Flask</currentCompartmentLabel>
+				<parentCompartmentLabel>ROOT</parentCompartmentLabel>
+			</compartment>
+		</listOfCompartments>
+		<listOfReactants>
+			<reactant>
+				<speciesReference>speciesX</speciesReference>
+				<speciesLabel>speciesX0</speciesLabel>
+				<compartmentLabel>E_coli</compartmentLabel>
+			</reactant>
+		</listOfReactants>
+		<listOfModifiers>
+			<modifier>
+				<speciesReference>E_coli_cell</speciesReference>
+				<speciesLabel>E_coli_cell_0</speciesLabel>
+				<compartmentLabel relation="1">E_coli</compartmentLabel>
+			</modifier>
+		</listOfModifiers>
+		<kineticLaw>
+			<forwardKineticlaw>
+				<math xlms="http://www.w3.org/1998/Math/MathML">
+					<apply>
+						<times/>
+						<ci>kgrowth</ci>
+						<apply>
+							<minus/>
+							<cn type="integer"> 1 </cn>
+							<apply>
+								<divide/>
+								<ci>E_coli_cell_0</ci>
+								<ci>maxC</ci>
+							</apply>
+						</apply>
+						<ci>speciesX</ci>
+						<ci>E_coli</ci>
+					</apply>
+				</math>
+				<listOfReferencedParameters>
+					<referencedParameter>
+						<id>kgrowth</id>
+						<extRefSource speciesLabel="E_coli_cell_0"
+							partLabel="E_coli0">growthRate</extRefSource>
+						<math>kgrowth > 0</math>
+					</referencedParameter>
+					<referencedParameter>
+						<id>maxC</id>
+						<extRefSource speciesLabel="E_coli_cell_0"
+							partLabel="E_coli0">maxConcentration</extRefSource>
+					</referencedParameter>
+				</listOfLocalParameters>
+			</forwardKineticlaw>
+		</kineticLaw>
+	</reaction>
+</MoDeL>
