@@ -203,7 +203,8 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	XmlValue value;
 	while (results.next(value))
 	{
-		res.push_back(value.getFirstChild().getNodeValue());
+	    string stripped_str = strip_char(value.getFirstChild().getNodeValue());
+		res.push_back(stripped_str);
 	}
 
 	return no_error;
@@ -535,4 +536,51 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 		res = 0;
 
 	return res;
+}
+
+/** 
+ * @breif 
+ * 	strip the space, return and tab chars 
+ * 	exist in the head and tail positions of string 
+ * 
+ * @Param instring
+ * 	The string need be strip
+ * 
+ * @Returns   
+ * 	The result string of stripped param instring
+ */
+string bdbXMLInterface::strip_char(string instring)
+{
+		int pos_head = 0;
+		int pos_tail = instring.size() - 1;
+
+		while (pos_head < instring.size())
+		{
+				if ((instring[pos_head] == ' ')
+								|| (instring[pos_head] == '\t')
+								|| (instring[pos_head] == '\n'))
+				{
+						pos_head ++;
+				}
+				else
+				{
+						break;
+				}
+		}
+
+		while (pos_tail > 0)
+		{
+				if ((instring[pos_tail] == ' ')
+								|| (instring[pos_tail] == '\t')
+								|| (instring[pos_tail] == '\n'))
+				{
+						pos_tail --;
+				}
+				else
+				{
+						break;
+				}
+		}
+
+		return string (instring, pos_head, pos_tail-pos_head+1);
 }

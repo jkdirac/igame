@@ -72,6 +72,7 @@ INCLUDE_DIRECTORIES( BEFORE
 	${IGAME_SOURCE_DIR}/ExternalCode/SBML_odeSolver-1.6.0/src
 	${IGAME_SOURCE_DIR}/ExternalCode/SBML_odeSolver-1.6.0/src/sbmlsolver
 	${IGAME_SOURCE_DIR}/ExternalCode/sundials-2.1.1/include
+	${IGAME_SOURCE_DIR}/ExternalCode/
 	${IGAME_SOURCE_DIR}/ExternalCode/sbml/
 	${IGAME_SOURCE_DIR}/ExternalCode/sbml/xml
 	)
