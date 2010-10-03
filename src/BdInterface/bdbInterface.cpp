@@ -53,18 +53,14 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 		if (dberr != 0)
 		{
 			throw XmlException(XmlException::NULL_POINTER, "db env create error", __FILE__, __LINE__);
-//                        cout << "db env create error" << endl;
-//                        return;
 		}
 
-//                db_env->set_data_dir(db_env, db_env_home.c_str());
 		db_env->open(db_env, db_env_home.c_str(), env_flags, 0);
 		m_manager = new XmlManager(db_env, DBXML_ADOPT_DBENV);
 
 		if (!m_manager)
 		{
 			throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                        return;
 		}
 
 		container_names.resize(CONT_IDX_NUM);
@@ -100,7 +96,6 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "n_manager NULL", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 	QString q_pathname(pathname.c_str());
@@ -119,7 +114,6 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	if (container == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "container NULL", __FILE__, __LINE__);
-//                return no_container;
 	}
 
 	try{
@@ -145,7 +139,6 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 			{
 				cout << "xml exception: " << e.what() << endl;
 				throw e;
-//                                return xml_exception;
 			}
 		}
 	}
@@ -163,14 +156,12 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -206,7 +197,6 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node_element in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -214,8 +204,6 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	while (results.next(value))
 	{
 		res.push_back(value.getFirstChild().getNodeValue());
-//                cout << "Node name: " << value.getNodeName() << " value: " 
-//                        << value.getFirstChild().getNodeValue() << endl;
 	}
 
 	return no_error;
@@ -231,14 +219,12 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -274,7 +260,6 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node_attr in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -282,7 +267,6 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	while (results.next(value))
 	{
 		res.push_back(value.getNodeValue());
-//                cout << " attr: " << value.getNodeValue() << endl;
 	}
 
 	return no_error;
@@ -298,14 +282,12 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager null", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -341,7 +323,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -349,7 +330,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	while (results.next(value))
 	{
 		res = value.asString();
-//                cout <<  " attr: " << res << endl;
 	}
 
 	return no_error;
@@ -367,14 +347,12 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager null", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (prefix == "")
@@ -427,7 +405,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -435,7 +412,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	while (results.next(value))
 	{
 		res = value.asString();
-//                cout <<  " attr: " << res << endl;
 	}
 
 	return no_error;
