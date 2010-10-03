@@ -37,6 +37,7 @@ filename_state: TOK_FILENAME '=' VALUESTRING
 	
 module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND 
 			{
+					//generate the compounded sub node (node with subnode as element)
 				pop_stack(&depth_stack);
 				if (isempty(&depth_stack) == true)
 					cur_depth = 0;
@@ -50,6 +51,7 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 			}
 		| TOKEN_IDENTIFIER ':' VALUESTRING module_attribute separte
 			{
+					//generate the simple sub node (node without subnode as element)
 					cur_depth = top_stack(&depth_stack);
 					//头部
 					if (p_attr == NULL)
@@ -64,10 +66,54 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 			}
 		| TOK_MATH ':' VALUESTRING separte
 			{
+					//generate the mathml string for math expression
 					char *math = translateInfixCh($3);
 					cur_depth = top_stack(&depth_stack);
 					if (math != NULL)
-						put_string(fp_outfile, cur_depth, math);
+					{
+						int len = strlen(math);
+						char *pool = (char *) malloc (sizeof(char) * (len+1));
+						if (pool == NULL)
+						{
+							printf ("pool error\n");
+							put_string(fp_outfile, cur_depth, math);
+							put_string(fp_outfile, 0, "\n");
+						}
+						else
+						{
+							printf ("pool success: len %d\n", len);
+							int idx = 0;
+							int nsize = 0;
+							while (idx+nsize < len)
+							{
+								if (math[idx+nsize] == '\n')
+								{
+									memset (pool, 0, sizeof(char) * (len+1));
+									strncpy(pool, math+idx, nsize);
+									printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);
+									put_string(fp_outfile, cur_depth, pool);
+									put_string(fp_outfile, 0, "\n");
+									idx += nsize + 1;
+									nsize = 0;
+								}
+								else
+									nsize++;
+							}
+							memset (pool, 0, sizeof(char) * (len+1));
+							strcpy(pool, math+idx);
+									printf ("haha there is a return: %s\n", pool);
+							put_string(fp_outfile, cur_depth, pool);
+						  	put_string(fp_outfile, 0, "\n");
+						}
+						
+						if (pool != NULL)
+							free(pool);
+						//将mathml串分开呀
+					}
+					if (math != NULL)
+					{
+						free(math);
+					}
 			}
 		;
 

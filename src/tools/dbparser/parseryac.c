@@ -449,8 +449,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    28,    30,    33,    38,    51,    65,    74,
-     102,   103,   111,   112,   128,   134
+       0,    27,    27,    28,    30,    33,    38,    52,    67,   120,
+     148,   149,   157,   158,   174,   180
 };
 #endif
 
@@ -1373,6 +1373,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 39 "parser.y"
     {
+					//generate the compounded sub node (node with subnode as element)
 				pop_stack(&depth_stack);
 				if (isempty(&depth_stack) == true)
 					cur_depth = 0;
@@ -1389,8 +1390,9 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 52 "parser.y"
+#line 53 "parser.y"
     {
+					//generate the simple sub node (node without subnode as element)
 					cur_depth = top_stack(&depth_stack);
 					//头部
 					if (p_attr == NULL)
@@ -1408,19 +1410,63 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 66 "parser.y"
+#line 68 "parser.y"
     {
+					//generate the mathml string for math expression
 					char *math = translateInfixCh((yyvsp[(3) - (4)].string));
 					cur_depth = top_stack(&depth_stack);
 					if (math != NULL)
-						put_string(fp_outfile, cur_depth, math);
+					{
+						int len = strlen(math);
+						char *pool = (char *) malloc (sizeof(char) * (len+1));
+						if (pool == NULL)
+						{
+							printf ("pool error\n");
+							put_string(fp_outfile, cur_depth, math);
+							put_string(fp_outfile, 0, "\n");
+						}
+						else
+						{
+							printf ("pool success: len %d\n", len);
+							int idx = 0;
+							int nsize = 0;
+							while (idx+nsize < len)
+							{
+								if (math[idx+nsize] == '\n')
+								{
+									memset (pool, 0, sizeof(char) * (len+1));
+									strncpy(pool, math+idx, nsize);
+									printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);
+									put_string(fp_outfile, cur_depth, pool);
+									put_string(fp_outfile, 0, "\n");
+									idx += nsize + 1;
+									nsize = 0;
+								}
+								else
+									nsize++;
+							}
+							memset (pool, 0, sizeof(char) * (len+1));
+							strcpy(pool, math+idx);
+									printf ("haha there is a return: %s\n", pool);
+							put_string(fp_outfile, cur_depth, pool);
+						  	put_string(fp_outfile, 0, "\n");
+						}
+						
+						if (pool != NULL)
+							free(pool);
+						//将mathml串分开呀
+					}
+					if (math != NULL)
+					{
+						free(math);
+					}
 			}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 75 "parser.y"
+#line 121 "parser.y"
     {
 			//尾部
 			if (isempty(&depth_stack) == true)
@@ -1451,7 +1497,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 104 "parser.y"
+#line 150 "parser.y"
     { 
 				if(p_attr == NULL)
 					p_attr = start_par_att();
@@ -1462,14 +1508,14 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 111 "parser.y"
+#line 157 "parser.y"
     {}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 113 "parser.y"
+#line 159 "parser.y"
     { 
 				if (isempty(&depth_stack) == true)
 				{
@@ -1490,7 +1536,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 129 "parser.y"
+#line 175 "parser.y"
     {
 				debug_output("sub module\n");
 			}
@@ -1499,7 +1545,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1503 "y.tab.c"
+#line 1549 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1711,7 +1757,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 136 "parser.y"
+#line 182 "parser.y"
 
 
 int yyerror (char *err) {

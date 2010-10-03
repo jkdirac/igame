@@ -10,7 +10,8 @@
     <ci> a </ci>
     <ci> b </ci>
   </apply>
-</math>	<submodule3>
+</math>
+	<submodule3>
 		<subsubmodule>helloworld</subsubmodule>
 	</submodule3>
 </module>
