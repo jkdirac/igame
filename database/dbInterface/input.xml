@@ -6,27 +6,21 @@
 		<input>
 			<listOfParameters>
 				<parameter db="temperature">
-					<id>temperature_i000</id>
+					<id>temperature</id>
 					<value>300.0</value>
 					<units>kelvin</units>
 					<constant>false</constant>
 				</parameter>
-				<parameter db="blue_light">
-					<id>blue_light_i001</id>
-					<value>1.0</value>
-					<units>light_energy_per_ecoli</units>
-					<constant>true</constant>
-				</parameter>
 			</listOfParameters>
 			<listOfRules>
-				<assignmentrule>
-					<variables>temperature_i000</variables>
-					<math>exp(t/unit_t)*unit_temperature</math>
-				</assignmentrule>
-				<raterule>
-					<variables>IPTG_molecule_i005</variables>
-					<math>sin(t/unit_t)*unit_mole</math>
-				</raterule>
+				<assignmentRule>
+					<variable>temperature</variable>
+					<math>exp(t/unit_time)*unit_temperature</math>
+				</assignmentRule>
+				<rateRule>
+					<variable>IPTG_molecule_i005</variable>
+					<math>sin(t/unit_time)*unit_mls</math>
+				</rateRule>
 			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">

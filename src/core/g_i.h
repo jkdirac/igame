@@ -47,6 +47,7 @@
 #include "strcacu/str_cacu.h"
 #include "strcacu/StrCacuException.h"
 
+LIBSBML_CPP_NAMESPACE_USE
 using namespace std;
 
 #endif

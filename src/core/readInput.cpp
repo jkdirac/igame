@@ -100,9 +100,8 @@ void readInput::config (
 
 		FunctionDefinition* fdef = m->createFunctionDefinition ();
 		setFunction (fdef, id, name, math);
-	}
 
-	cout << "\nPART1...DONE." << endl;
+	}
 
 	//	===================================================
 	//		PART2:	READ INPUT FILE
@@ -119,7 +118,7 @@ void readInput::config (
 	set<string> paraUsed;
 
 	const string pathPara = 
-		"/MoDeL/dbinterface/input/"
+		"/MoDeL/dbInterface/input/"
 		"listOfParameters/"
 		"parameter";
 	const int numOfParas = 
@@ -160,11 +159,11 @@ void readInput::config (
 	set<string> variableUsed;
 
 	const string pathRule = 
-		"/MoDeL/dbinterface/input/"
+		"/MoDeL/dbInterface/input/"
 		"listOfRules";
 
 	//  2.1 read algebraic rules
-	const string pathAlge (pathRule + "/algebraicrule");
+	const string pathAlge (pathRule + "/algebraicRule");
 	const int numOfAlgebraicRules = 
 		get_node_element_num (DBINTERFACE, &DOC, &pathAlge);
 
@@ -185,7 +184,7 @@ void readInput::config (
 	}
 
 	//  2.2 read assignment rule
-	const string pathAssr (pathRule + "/assignmentrule");
+	const string pathAssr (pathRule + "/assignmentRule");
 	const int numOfAssignmentRules = 
 		get_node_element_num (DBINTERFACE, &DOC, &pathAssr);
 
@@ -206,7 +205,7 @@ void readInput::config (
 	}
 
 	//  2.3 read rate rule
-	const string pathRate (pathRule + "/raterule");
+	const string pathRate (pathRule + "/rateRule");
 	const int numOfRateRules = 
 		get_node_element_num (DBINTERFACE, &DOC, &pathRate);
 
@@ -275,7 +274,6 @@ void readInput::config (
 
 	const int numOfSpecies =  
 		get_node_element_num (DBINTERFACE, &DOC, &pathSpe);
-//    cout << "\nnumOfSpecies = " << numOfSpecies << endl;
 
 	for (int i=1; i <= numOfSpecies; i++)
 	{
@@ -308,7 +306,6 @@ void readInput::config (
 		else
 		{
 			//	read structure
-            cout << "\ndb = " << db << endl;
 			read_cnModel (s, SPECIES, db, "/MoDeL/species", false);
 		}
 
@@ -318,8 +315,6 @@ void readInput::config (
 		//	add species in compartment
 		mysbmldoc->validateBackSpecies (); //check if this species has been existed before
 	}
-
-	cout << "\nPART2...DONE." << endl;
 
 	//	=========================================
 	//	PART3: LOADING PARAMETERS AND RULES IN DB
@@ -335,7 +330,7 @@ void readInput::config (
 	const int numOfParas_db = 
 		get_node_element_num (SYSTEM, &DOCdb, &pathPara_db);
 
-	for (int i=1; i <= numOfParas; i++)
+	for (int i=1; i <= numOfParas_db; i++)
 	{
 		string db, id, name, units;
 		double value;
@@ -360,7 +355,7 @@ void readInput::config (
 	DOCdb = "rules";
 
 	//  2.1 read algebraic rules
-	const string pathAlge_db (pathRule_db + "/algebraicrule");
+	const string pathAlge_db (pathRule_db + "/algebraicRule");
 	const int numOfAlgebraicRules_db = 
 		get_node_element_num (SYSTEM, &DOCdb, &pathAlge_db);
 
@@ -378,7 +373,7 @@ void readInput::config (
 	}
 
 	//  2.2 read assignment rule
-	const string pathAssr_db (pathRule_db + "/assignmentule");
+	const string pathAssr_db (pathRule_db + "/assignmentRule");
 	const int numOfAssignmentRules_db = 
 		get_node_element_num (SYSTEM, &DOCdb, &pathAssr_db);
 
@@ -396,7 +391,7 @@ void readInput::config (
 	}
 
 	//  2.3 read rate rule
-	const string pathRate_db (pathRule_db + "/raterule");
+	const string pathRate_db (pathRule_db + "/rateRule");
 	const int numOfRateRules_db = 
 		get_node_element_num (SYSTEM, &DOCdb, &pathRate_db);
 
@@ -413,8 +408,6 @@ void readInput::config (
 		}
 	}
 	
-	cout << "\nPART3...DONE." << endl;
-
 	cout << "\n=================	CONFIGURING...Done	===================\n";
 	return;
 }

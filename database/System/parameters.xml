@@ -27,6 +27,12 @@
 				<constant>true</constant>
 			</globalParameter>
 			<globalParameter>
+				<id>unit_mls</id>
+				<units>mole_per_litre_second</units>
+				<value>1</value>
+				<constant>true</constant>
+			</globalParameter>
+			<globalParameter>
 				<id>unit_volume</id>
 				<units>litre</units>
 				<value>1</value>

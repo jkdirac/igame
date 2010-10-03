@@ -1,10 +1,10 @@
 <MoDeL>
 	<system>
 		<listOfRules>
-			<assignmentRule variable="t">
+			<assignmentRule>
+				<variable>t</variable>
 				<math>
-					<csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time
-					</csymbol>
+					<csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">t0</csymbol>
 				</math>
 			</assignmentRule>
 		</listOfRules>

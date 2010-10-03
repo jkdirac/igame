@@ -42,6 +42,13 @@
 							<unit kind = "litre" exponent ="-1"/>
 					</listOfUnits>
 			</unitDefinition>
+			<unitDefinition id="mole_per_litre_second">
+					<listOfUnits>
+							<unit kind = "mole"/>
+							<unit kind = "second" exponent ="-1"/>
+							<unit kind = "litre" exponent ="-1"/>
+					</listOfUnits>
+			</unitDefinition>
 		</listOfUnitDefinitions>
 	</system>
 </MoDeL>
