@@ -220,6 +220,12 @@ void MySBMLDocument::run (
 							t, speciesReference, partType
 							);
 
+					//	if partType is not empty, it has to check
+					//	part type matching
+					if (!partType.empty () && 
+							p->getPartType () != partType)
+						continue;
+
 					//	check if this species has been searched
 					if (speciesUsed.count (speciesReference)) continue;
 					else speciesUsed.insert (speciesReference);

@@ -721,29 +721,19 @@ void readXMLComponent::readSpeciesLink (
 	if (temp.empty ())
 	{
 		string errno = string (
-				"\nReferencedSpecies: empty node referencedSpcies in "
+				"\nReferencedSpecies:"
+			   	" empty node referencedSpcies in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
 	else speciesReference = temp[0];
-//    cout << "\nspeciesReference = " << speciesReference;
-//    cout << "\nsize = " << speciesReference.size ();
 
 	//
 	//  read attribute partType
 	//
 	const string path_ptype = prefix + "/@partType";
-//    cout << "\nnodepath = " << path_ptype << endl;
 	get_node_attr (cind, &doc, &path_ptype, temp);
 	if (!temp.empty ()) partType = temp[0];
-	else
-	{
-		string errno = string (
-				"\nReferencedSpecies: empty attribute partType in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
-	}
-//    cout << "\npartType = " << partType << endl;
 }
 
 void readXMLComponent::readReactionLink (
