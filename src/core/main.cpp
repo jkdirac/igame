@@ -2,8 +2,8 @@
 
 int main ()
 {
-  Driver driver;
+	Driver driver;
 	bool errno = driver.beginSimulation ();
 
-  return 0;
+	return 0;
 }

@@ -120,6 +120,7 @@ const MySpecies* reactionTemplate::getSpecies (
 	for (int i=0; i<listOfMyModifiers.size (); i++)
 	{
 		MySpecies* s = listOfMyModifiers[i];
+		cout << "\nlabel = " << s->getLabel () << endl;
 		if (s->getLabel () == speciesLabel) return s;
 	}
 

@@ -756,7 +756,7 @@ void readXMLComponent::readReactionLink (
 		) 
 {
 	ostringstream oss;
-	oss << qpath << "[" << i <<"]/";
+	oss << qpath << "[" << i <<"]";
 	string prefix (oss.str ());
 
 	vector<string> temp;
@@ -764,8 +764,7 @@ void readXMLComponent::readReactionLink (
 	//
 	//  read node referencedReaction
 	//
-	const string path_refR = prefix + "referencedReaction";
-	get_node_element (cind, &doc, &path_refR, temp);
+	get_node_element (cind, &doc, &prefix, temp);
 	if (temp.empty ())
 	{
 		string errno = string (
@@ -778,8 +777,8 @@ void readXMLComponent::readReactionLink (
 	//
 	//  read attribute speciesType
 	//
-	const string path_stype = prefix + "@speciesType";
-	get_node_element (cind, &doc, &path_stype, temp);
+	const string path_stype = prefix + "/@speciesType";
+	get_node_attr (cind, &doc, &path_stype, temp);
 	if (temp.empty ())
 	{
 		string errno = string (

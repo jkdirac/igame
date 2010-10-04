@@ -65,8 +65,8 @@ class Chain
 	void genUnicode ();
 
 	string genUnicode (
-		const Part* ps,
-		const Part* pe
+		const int& start,
+		const int& end
 		) const;
 
 	//
@@ -126,6 +126,7 @@ class Chain
 
 	string chainLabel;
 
+	map<string, int> keywords;
 };
 
 #endif

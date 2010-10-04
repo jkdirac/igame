@@ -494,8 +494,8 @@ bool MySpecies::equal (
 		{
 			Chain* left = lhs->listOfChains[i];
 			Chain* right = rhs->listOfChains[i];
-//            cout << "\nleft = " << left->getUnicode () << 
-//                " right = " << right->getUnicode ()<< endl;
+			//            cout << "\nleft = " << left->getUnicode () << 
+			//                " right = " << right->getUnicode ()<< endl;
 			if (!left->equal (right)) return false;
 		}
 	}
@@ -639,6 +639,8 @@ bool MySpecies::match (
 	vector<cMatchsType> records (numc_t);
 	vector<vi> chainNum (numc_t);
 
+	cout << "\nFind Chain Match..." << endl;
+
 	//
 	// for each chain in template species, we find all matchings
 	// in this species, and records them
@@ -654,14 +656,15 @@ bool MySpecies::match (
 			listOfChains[j]->match (c1, records[i]);
 
 			int numM = records[i].size ();
-			for (int k =0; k < numM; k++) 
-				chainNum[i].push_back (j);
+			for (int k =0; k < numM; k++) chainNum[i].push_back (j);
 
 			found_all += numM;
 		}
 		if (found_all == 0) return false; 
 		else permuteAll *= found_all;
 	}
+
+	cout << "\npermuteAll = " << permuteAll;
 
 	//
 	//	Permutation
@@ -789,4 +792,6 @@ bool MySpecies::match (
 			trym.push_back (tryAssemble);
 		}
 	}
+
+	return !(trym.size () == 0);
 }

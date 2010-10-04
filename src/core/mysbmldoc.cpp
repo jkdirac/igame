@@ -175,7 +175,7 @@ void MySBMLDocument::run (
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n************* SPECIES	" << i << "	****************";
+		cout << "\n************* SPECIES	" << i << "	****************\n";
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -193,9 +193,6 @@ void MySBMLDocument::run (
 
 				//	search translation reactions
 				searchTranslationReactions (i, j, k, dbreader);
-
-				cout << "\nREAL REACTIONs Number: " << listOfMyReactions.size () << endl;
-				continue;
 
 				//	read species containing this part 
 				string speciesLinkPath =
@@ -215,6 +212,9 @@ void MySBMLDocument::run (
 					cout << "\nHandling the First Referenced Species...";
 
 					string speciesReference, partType;
+					
+					cout << "\ndb = " << p->getDbId () << endl;
+
 					dbreader.readSpeciesLink (
 							PART, p->getDbId (),speciesLinkPath, 
 							t, speciesReference, partType
@@ -243,6 +243,9 @@ void MySBMLDocument::run (
 //                    cout << "\nspeciesReference = " <<
 //                        speciesReference << endl;
 
+					cout << "\n=============Species Referred...=================\n";
+					sLink->Output ();
+
 					//
 					//  is this species template match?
 					//
@@ -250,6 +253,7 @@ void MySBMLDocument::run (
 					if (!s->match (sLink, trym)) 
 					{
 						cout << "\nDoes not MATCH! Continue to NEXT...";
+						terminate ();
 						continue;
 					}
 					else cout << "\nMATCH! Continue...";
@@ -260,7 +264,7 @@ void MySBMLDocument::run (
 					//
 					string reactionLinkPath =
 						"/MoDeL/species/"  
-						"/listOfReferencedReactions/"
+						"listOfReferencedReactions/"
 						"referencedReaction";
 
 					int numOfReactionLinks = dbreader.get_node_element_num (
@@ -270,7 +274,7 @@ void MySBMLDocument::run (
 					for (int r=1; r <= numOfReactionLinks; r++)
 					{
 						string reactionReference, speciesRole;
-						dbreader.readSpeciesLink (
+						dbreader.readReactionLink (
 								SPECIES, speciesReference, reactionLinkPath, 
 								r, reactionReference, speciesRole
 								);
@@ -352,7 +356,6 @@ void MySBMLDocument::run (
 	for (int i=0; i < listOfMyReactions.size (); i++)
 	{
 		int operation = m->addReaction (listOfMyReactions[i]);
-		cout << listOfMyReactions[i]->toSBML () << endl;
 
 		if (operation == LIBSBML_LEVEL_MISMATCH)
 			throw StrCacuException (
@@ -608,8 +611,8 @@ void MySBMLDocument::searchTranscriptionReactions (
 					//	check existance of myspecies
 					listOfMySpecies.push_back (mrna);
 					mrna = validateBackSpecies ();
-					cout << "\nmrna = ";
-					mrna->Output ();
+//                    cout << "\nmrna = ";
+//                    mrna->Output ();
 
 					//	record a reaction
 					MyReaction* transcription = new MyReaction;

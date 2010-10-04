@@ -354,7 +354,7 @@ void MyReaction::addSpecialReaction (
 		+ modifier->getId () + "*"
 		+ modifier->getCompartment ();
 
-	cout << "\nformula = " << formula << endl;
+//    cout << "\nformula = " << formula << endl;
 
 	ASTNode_t* astMath = SBML_parseFormula (formula.c_str ());
 	if (astMath == NULL) throw StrCacuException (

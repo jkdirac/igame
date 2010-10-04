@@ -779,8 +779,8 @@ void readDataBase::readReactionTemplate (
 
 	//	read KineticLaw
 	string pathKineticLaw;
-	if (direction) pathKineticLaw = head + "/forwardKineticLaw";
-	else pathKineticLaw = head + "/reverseKineticLaw";
+	if (direction) pathKineticLaw = head + "/kineticLaw/forwardKineticLaw";
+	else pathKineticLaw = head + "/kineticLaw/reverseKineticLaw";
 
 	//	read math
 	string math;
@@ -789,9 +789,12 @@ void readDataBase::readReactionTemplate (
 	get_node (REACTION, &doc, &pathMath, math); 
 
 	if (math.empty ())
+	{
+		cout << "\npath = " << pathMath << endl;
 		throw StrCacuException (
 				"Reading Reaction...No Math Specified!"
 				);
+	}
 
 	RT->setMath (math);
 
