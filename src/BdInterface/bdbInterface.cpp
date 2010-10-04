@@ -53,18 +53,14 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 		if (dberr != 0)
 		{
 			throw XmlException(XmlException::NULL_POINTER, "db env create error", __FILE__, __LINE__);
-//                        cout << "db env create error" << endl;
-//                        return;
 		}
 
-//                db_env->set_data_dir(db_env, db_env_home.c_str());
 		db_env->open(db_env, db_env_home.c_str(), env_flags, 0);
 		m_manager = new XmlManager(db_env, DBXML_ADOPT_DBENV);
 
 		if (!m_manager)
 		{
 			throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                        return;
 		}
 
 		container_names.resize(CONT_IDX_NUM);
@@ -94,13 +90,27 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 	}
 }
 
+/** 
+ * @breif  
+ * 		Put a file to dbxml database, if there already
+ * 		had the file in db, check the time stamp to decide if
+ * 		update needed.
+ * 
+ * @Param pathname
+ * 		the path of the file
+ * @Param docname
+ * 		The doc name in the dbxml database
+ * 
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docname)
 {
 	XmlContainer* container = NULL;
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "n_manager NULL", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 	QString q_pathname(pathname.c_str());
@@ -119,18 +129,19 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	if (container == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "container NULL", __FILE__, __LINE__);
-//                return no_container;
 	}
 
+	XmlUpdateContext the_context = m_manager->createUpdateContext();
 	try{
 		XmlDocument the_doc = container->getDocument(docname);
+
+//        container->updateDocument(
 	}
 	catch (XmlException &e)
 	{
 //                cout << "open document xml exception: " << e.what() << " file name: " << docname << endl;
 		if (e.getExceptionCode() == XmlException::DOCUMENT_NOT_FOUND)
 		{
-			XmlUpdateContext the_context = m_manager->createUpdateContext();
 			try {
 				cout << "putting file: " << pathname << " to container " << container->getName() <<
 					" as doc " << docname << endl;
@@ -145,7 +156,6 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 			{
 				cout << "xml exception: " << e.what() << endl;
 				throw e;
-//                                return xml_exception;
 			}
 		}
 	}
@@ -153,6 +163,25 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	return no_error;
 }
 
+/** 
+ * @breif  
+ * 	get the element of a node
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param doc
+ * 	the document name of xml file
+ * @Param node_path
+ * 	the xpath path of node to be search
+ * @Param res
+ * 	output parameter, return the values of element,
+ * 	For there might be serveral node have the same name,
+ * 	so the result may be a vector of string. 
+ *
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::get_node_element (container_index container_type, 
 		const string *doc, 
 		const string *node_path, 
@@ -163,14 +192,12 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -206,21 +233,38 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node_element in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
 	XmlValue value;
 	while (results.next(value))
 	{
-		res.push_back(value.getFirstChild().getNodeValue());
-//                cout << "Node name: " << value.getNodeName() << " value: " 
-//                        << value.getFirstChild().getNodeValue() << endl;
+	    string stripped_str = strip_char(value.getFirstChild().getNodeValue());
+		res.push_back(stripped_str);
 	}
 
 	return no_error;
 }
 
+/** 
+ * @breif  
+ * 	get the attribute value of a node
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param doc
+ * 	the document name of xml file
+ * @Param node_path
+ * 	the xpath path of node to be search
+ * @Param res
+ * 	output parameter, return the values of attribute,
+ * 	For there might be serveral node have the same name,
+ * 	so the result may be a vector of string. 
+ *
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::get_node_attr(container_index container_type, 
 		const string *doc, 
 		const string *node_path, 
@@ -231,14 +275,12 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -274,7 +316,6 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node_attr in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -282,12 +323,28 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	while (results.next(value))
 	{
 		res.push_back(value.getNodeValue());
-//                cout << " attr: " << value.getNodeValue() << endl;
 	}
 
 	return no_error;
 }
 
+/** 
+ * @breif  
+ * 	get the node content of a document as a string
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param doc
+ * 	the document name of xml file
+ * @Param node_path
+ * 	the xpath path of node to be search
+ * @Param res
+ * 	output parameter, return the string value of results
+ *
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::get_node(container_index container_type, 
 		const string *doc, 
 		const string *node_path, 
@@ -298,14 +355,12 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager null", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (doc == NULL)
@@ -341,7 +396,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -349,12 +403,33 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	while (results.next(value))
 	{
 		res = value.asString();
-//                cout <<  " attr: " << res << endl;
 	}
 
 	return no_error;
 }
 
+/** 
+ * @breif  
+ * 	get the node content of a document as a string, see also get_node,
+ * 	this function is in developing and should not be called.
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param doc
+ * 	the document name of xml file
+ * @Param node_path
+ * 	the xpath path of node to be search
+ * @Param res
+ * 	output parameter, return the string value of results
+ * @Param prefix
+ * 	prefix of xml namespace
+ * @Param uri
+ * 	uri of xml namespace
+ *
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::get_node(container_index container_type, 
 		const string *doc, 
 		const string *node_path, 
@@ -367,14 +442,12 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	if (m_manager == NULL)
 	{
 		throw XmlException(XmlException::NULL_POINTER, "m_manager null", __FILE__, __LINE__);
-//                return xml_exception;
 	}
 
 
 	if (container_type >= CONT_IDX_NUM)
 	{
 		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-//                return para_error;
 	}
 
 	if (prefix == "")
@@ -427,7 +500,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 		cout << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	res.clear();
@@ -435,7 +507,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	while (results.next(value))
 	{
 		res = value.asString();
-//                cout <<  " attr: " << res << endl;
 	}
 
 	return no_error;
@@ -449,6 +520,17 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 
 //}
 
+/** 
+ * @breif  
+ * 		Add all files in a directory to dbxml database
+ * 
+ * @Param directory
+ * 		The path of drectory
+ * 
+ * @Returns   
+ * 	return no_error for success
+ * 	otherwise an XmlException was throwed
+ */
 BdRetVal bdbXMLInterface::add_directory(const string &directory)
 {
 	if (directory.empty())
@@ -495,6 +577,20 @@ BdRetVal bdbXMLInterface::add_directory(const string &directory)
 	}
 }
 
+/** 
+ * @breif  
+ * 		Get the number of nodes in a xml file
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param doc
+ * 	the document name of xml file
+ * @Param node_path
+ * 	the xpath path of node to be search
+ *
+ * @Returns   
+ * 		the node number
+ */
 int bdbXMLInterface::get_node_element_num (container_index container_type, 
 		const string *doc, 
 		const string *node_path)
@@ -546,9 +642,8 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 	catch (XmlException &xe)
 	{
 		cout << query_string << endl;
-		cout << "get_node_attr_num exception: " << xe.what() << endl;
+		cout << "get_node_element_num exception: " << xe.what() << endl;
 		throw xe;
-//                return xml_exception;
 	}
 
 	XmlValue value;
@@ -559,4 +654,51 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 		res = 0;
 
 	return res;
+}
+
+/** 
+ * @breif 
+ * 	strip the space, return and tab chars 
+ * 	exist in the head and tail positions of string 
+ * 
+ * @Param instring
+ * 	The string need be strip
+ * 
+ * @Returns   
+ * 	The result string of stripped param instring
+ */
+string bdbXMLInterface::strip_char(string instring)
+{
+		int pos_head = 0;
+		int pos_tail = instring.size() - 1;
+
+		while (pos_head < instring.size())
+		{
+				if ((instring[pos_head] == ' ')
+								|| (instring[pos_head] == '\t')
+								|| (instring[pos_head] == '\n'))
+				{
+						pos_head ++;
+				}
+				else
+				{
+						break;
+				}
+		}
+
+		while (pos_tail > 0)
+		{
+				if ((instring[pos_tail] == ' ')
+								|| (instring[pos_tail] == '\t')
+								|| (instring[pos_tail] == '\n'))
+				{
+						pos_tail --;
+				}
+				else
+				{
+						break;
+				}
+		}
+
+		return string (instring, pos_head, pos_tail-pos_head+1);
 }

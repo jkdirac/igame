@@ -1,0 +1,177 @@
+file = [input.xml]
+
+MoDeL
+{
+	dbInterface
+	{
+		input
+		{
+			listOfParameters
+			{
+				parameter db = [temperature]
+				{
+					id:[temperature];
+					value:[300.0];
+					units:[kelvin];
+					constant:[false];
+				}
+				parameter db = [blue_light]
+				{
+					id:[blue_light];
+					value:[1.0];
+					units:[light_energy_per_ecoli];
+					constant:[true];
+				}
+			}
+			listOfRules
+			{
+				assignmentrule
+				{
+					variable:[temperature];
+					math:[exp(t/unit_t)*unit_temperature];
+				}
+				raterule
+				{
+					variable:[IPTG_molecule_i005];
+					math:[sin(t/unit_t)*unit_mole];
+				}
+			}
+			listOfCompartments
+			{
+				compartment db = [Flask]
+				{
+					id:[Flask_i002];
+					size:[0.40];
+					outside:[ROOT];
+					constant:[true];
+				}
+				compartment db = [E_coli]
+				{
+					id:[E_coli_i003];
+					size:[1E-14];
+					outside:[Flask_i002];
+					constant:[true];
+				}
+			}
+			listOfSpecies
+			{
+				species db = []
+				{
+					id:[E_coli_i004];
+					compartment:[Flask_i002] itself = [E_coli_i003];
+					initialConcentration:[1E-20];
+					initialAmount:[];
+					substanceUnits:[mole];
+					hasOnlySubstanceUnits:[false];
+					boundaryCondition:[false];
+					constant:[false];
+					cnModel
+					{
+						listOfChains
+						{
+							chain
+							{
+								listOfParts
+								{
+									part
+									{
+										partReference:[E_coli];
+										partLabel:[];
+										partType:[Compartment];
+										partCategory:[compartment];
+									}
+								}
+							}
+						}
+					}
+				}
+				species db = [IPTG_molecule]
+				{
+					id:[IPTG_molecule_i005];
+					compartment:[Flask_i002] itself = [];
+					initialConcentration:[1E-14];
+					initialAmount:[];
+					substanceUnits:[mole];
+					hasOnlySubstanceUnits:[false];
+					boundaryCondition:[false];
+					constant:[false];
+					cnModel
+					{
+					}
+				}
+				species db = [ampicillin_molecule]
+				{
+					id:[ampicillin_i006];
+					compartment:[Flask_i002] itself = [];
+					initialConcentration:[2E-14];
+					initialAmount:[];
+					substanceUnits:[mole];
+					hasOnlySubstanceUnits:[false];
+					boundaryCondition:[false];
+					constant:[false];
+					cnModel
+					{
+					}
+				}
+				species db = []
+				{
+					id:[tm_pSB1A3_i007];
+					compartment:[E_coli_i003] itself = [];
+					initialConcentration:[];
+					initialAmount:[];
+					substanceUnits:[mole];
+					hasOnlySubstanceUnits:[false];
+					boundaryCondition:[false];
+					constant:[false];
+					cnModel
+					{
+						listOfChains
+						{
+							chain
+							{
+								listOfParts
+								{
+									part
+									{
+										partReference:[pSB1A3];
+										partLabel:[pSB1A3_i008];
+										partType:[ForwardDNA];
+										partCategory:[biobrick];
+									}
+									part
+									{
+										partReference:[placI185];
+										partLabel:[placI185_i009];
+										partType:[ForwardDNA];
+										partCategory:[biobrick];
+									}
+									part
+									{
+										partReference:[RBS147];
+										partLabel:[RBS147_i010];
+										partType:[ForwardDNA];
+										partCategory:[biobrick];
+									}
+									part
+									{
+										partReference:[lacI153];
+										partLabel:[lacI153_i011];
+										partType:[ForwardDNA];
+										partCategory:[biobrick];
+									}
+									part
+									{
+										partReference:[TE145];
+										partLabel:[TE145_i012];
+										partType:[ForwardDNA];
+										partCategory:[biobrick];
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

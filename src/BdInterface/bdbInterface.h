@@ -39,6 +39,7 @@ class bdbXMLInterface
 		const string db_container_name;
 
 		vector<string> container_names;
+		string strip_char(string instring);
 
 	public:
 		bdbXMLInterface();
