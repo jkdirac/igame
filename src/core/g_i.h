@@ -50,4 +50,24 @@
 LIBSBML_CPP_NAMESPACE_USE
 using namespace std;
 
+//====================
+//    TYPEDEF       //
+//====================
+typedef pair<int,int> markType;
+typedef list<markType> cMatchType;
+typedef vector<cMatchType> cMatchsType;
+typedef pair<cMatchType, int> cMatchType2;
+typedef vector<cMatchType2> cMatchsType2;
+typedef vector<cMatchsType2> cMatchsArray;
+typedef pair<int, cMatchsType2> speciesMatch;
+typedef vector<speciesMatch> speciesArrayMatch;
+typedef pair<speciesArrayMatch, speciesArrayMatch> reactionMatch;
+typedef vector<reactionMatch> reactionArrayMatch;
+
+typedef vector<int> vi;
+typedef vector<vi> dvi;
+typedef vector<dvi> tvi;
+typedef tvi permType;
+typedef pair<string,string> subsp;
+
 #endif

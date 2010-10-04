@@ -57,19 +57,6 @@ class MySpecies:
 {
 	public:
 
-		typedef vector<int> vi;
-		typedef vector<vi> dvi;
-		typedef vector<dvi> tvi;
-		typedef tvi permType;
-
-		typedef pair<int,int> markType;
-		typedef list<markType> cMatchType;
-		typedef vector<cMatchType> cMatchsType;
-		typedef pair<cMatchType, int> cMatchType2;
-		typedef vector<cMatchType2> cMatchsType2;
-
-	public:
-
 		MySpecies ();
 
 		MySpecies (
@@ -94,9 +81,10 @@ class MySpecies:
 				);
 
 		Chain* createChain ();
-
+		Chain* createChain (const Chain* c);
 		Chain* createChain (
-				const Chain* c
+				const string& prefix,
+				const int& chainnum
 				);
 
 		Tree* createTree ();

@@ -4,16 +4,73 @@ void readDataBase::read_cnModel (
 		MySpecies* s,
 		const container_index& cind,
 		const string& doc,
-		const string& qp,
+		const string& nodepath,
 		const bool& isTemplate
 		)
 {
+	//	temporary map
+	map <string, string> newLabel;
+
+	//	============
+	//	read chains
+	//	============
+	
+	string pathChain = nodepath + "/cnModel/listOfChains/chain";
+	int numOfChains = get_node_element_num (cind, &doc, &pathChain);
+
+	for (int ichain = 1; ichain <= numOfChains; ichain++)
+	{
+		//create an empty chain
+		Chain* c = s->createChain (s->getLabel (), ichain);
+
+		//read parts 
+		ostringstream oss;
+		oss << pathChain << "[" << ichain << "]/listOfParts/part";
+		string pathPart (oss.str ());
+		int numOfParts = get_node_element_num (cind, &doc, &pathPart);
+
+		for (int ipart = 1; ipart <= numOfParts; ipart++)
+		{
+			string __ref, __label, __type, __ctg;
+			readPart (cind, doc, qpp, ipart, 
+					__ref, __label, __type, __ctg); 
+
+			//
+			//	TIPS:
+			//
+			//	1. if __label is empty, program will automatically 
+			//	generate one. 
+			//	2. __type is mandatory if it is not a substituent-type part
+			//
+
+			//	regenerate part label
+			__label_new = c->getLabel () + "[" + __label + "]";
+			if (newLabel.count (__label))
+				throw StrCacuException (
+						"Species: partLabel should be unique within"
+						"one species cnModel definition!"
+						);
+			else newLabel[__label] = __label_new;
+
+			//	it is not allow species with substituent-type part
+			//	if it is not a template species
+			if (partCtg == "substituent" && !isTemplate)
+				throw StrCacuException (
+						"Reading Block cnModel..."
+						"Non-Template species is required!"
+						);
+			else
+			{
+				bool __isb = s->countBindedNode (__label);
+				Part* p = c->createPart ();
+				p->setPart (__ref, __label_new, __type, __ctg, __isb);
+			}
+		}
+	}
+
 	//read tree map
-	string qpt = qp + "/cnModel/listOfTrees/tree";
-//    cout << "\nbegin read num of trees..." << endl;
-//    cout << "\ndoc = " << doc << "\nqpt = " << qpt << endl;
-	int numOfTrees = get_node_element_num (cind, &doc, &qpt);
-//    cout << "\nnumoftrees = " << numOfTrees << endl;
+	string pathTree = nodepath + "/cnModel/listOfTrees/tree";
+	int numOfTrees = get_node_element_num (cind, &doc, &pathTree);
 
 	for (int itree = 1; itree <= numOfTrees; itree++)
 	{
@@ -22,58 +79,39 @@ void readDataBase::read_cnModel (
 
 		//read nodes 
 		ostringstream oss;
-		oss << qpt << "[" << itree << "]/listOfNodes/node";
-		string qpn (oss.str ());
-		int numOfNodes = get_node_element_num (cind, &doc, &qpn);
+		oss << pathTree << "[" << itree << "]/listOfNodes/node";
+		string pathNode (oss.str ());
+		int numOfNodes = get_node_element_num (cind, &doc, &pathNode);
 
 		for (int inode = 1; inode <= numOfNodes; inode++)
 		{
-			string nCL, nPL;
-			readNode (cind, doc, qpn, inode, nCL, nPL);
+			string child, parent;
+			readNode (cind, doc, qpn, inode, child, parent);
+
+			if (!newLabel.count (child))
+			{
+				string errno ("No Label: ");
+				errno += child + " found defined in Part!";
+				throw StrCacuException (errno);
+			}
+			else child = newLabel[child];
+
+			if (!newLabel.count (parent))
+			{
+				string errno ("No Label: ");
+				errno += parent + " found defined in Part!";
+				throw StrCacuException (errno);
+			}
+			else parent = newLabel[parent];
 
 			//create an empty node
-			Node* n = t->createNode (nCL, nPL);
+			Node* n = t->createNode (child, parent);
 			t->addNodeMap (n);
 		}
 
 		//add Children of each node
 		t->addNodeChildren ();	
 	}
-
-	//read chains
-	string qpc = qp + "/cnModel/listOfChains/chain";
-	int numOfChains = get_node_element_num (cind, &doc, &qpc);
-//    cout << "\nnumOfChains = " << numOfChains << endl;
-
-	for (int ichain = 1; ichain <= numOfChains; ichain++)
-	{
-		//create an empty chain
-		Chain* c = s->createChain ();
-
-		//read parts 
-		ostringstream oss;
-		oss << qpc << "[" << ichain << "]/listOfParts/part";
-		string qpp (oss.str ());
-		int numOfParts = get_node_element_num (cind, &doc, &qpp);
-//        cout << "\nnumOfParts = " << numOfParts << endl;
-
-		for (int ipart = 1; ipart <= numOfParts; ipart++)
-		{
-			string pR, pL, pT, pC;
-			readPart (cind, doc, qpp, ipart, pR, pL, pT, pC); 
-			if (pT == "substituent" && !isTemplate)
-				throw StrCacuException (
-						"Reading Block cnModel..."
-						"Non-Template species is required!"
-						);
-			else
-			{
-				bool isBinded = s->countBindedNode (pL);
-				c->createPart (pR, pL, pT, pC, isBinded);
-			}
-		}
-	}
-	return;
 }
 
 void readDataBase::setParameter (

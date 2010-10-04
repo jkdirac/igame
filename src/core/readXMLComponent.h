@@ -24,6 +24,12 @@ class readXMLComponent :
 		readXMLComponent ();
 		~readXMLComponent ();
 
+	protected:
+
+		set<string> PartCtg_set;
+		set<string> partType_set;
+		set<string> speciesType_set;
+
 	public:
 
 		void readPart (
@@ -31,11 +37,11 @@ class readXMLComponent :
 				const string& doc,
 				const string& qpath,
 				const int& i,
-				string& pR, 
-				string& pL,
-				string& pT,
-				string& pC 
-				);
+				string& __ref, 
+				string& __label,
+				string& __type,
+				string& __ctg 
+				)
 
 		void readNode (
 				const container_index& cind,

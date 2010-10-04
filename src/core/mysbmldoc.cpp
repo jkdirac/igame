@@ -255,7 +255,7 @@ void MySBMLDocument::run (
 					//
 					//  is this species template match?
 					//
-					vector<MySpecies::cMatchsType2> trym;
+					vector<cMatchsType2> trym;
 					if (!s->match (sLink, trym)) 
 					{
 						cout << "\nDoes not MATCH! Continue to NEXT...";
@@ -467,7 +467,7 @@ void MySBMLDocument::handleReactionTemplate (
 	//  find species and compartment configuration that
 	//  matching patterns described in reaction template
 	//
-	reactionTemplate::reactionArrayMatch result;
+	reactionArrayMatch result;
 	RT->findSpeciesMatch (
 			listOfMyCompartments, listOfMySpecies, 
 			speciesIndex, role, result

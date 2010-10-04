@@ -49,14 +49,10 @@ class Tree
 			) const;
 
 	Node* createNode ();
-
+	Node* createNode (const Node* n);
 	Node* createNode (
-			const Node* n
-			);
-
-	Node* createNode (
-			const string& nCL,
-			const string& pCL
+			const string& child,
+			const string& parent
 			);
 
 

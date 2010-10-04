@@ -140,7 +140,9 @@ void reactionTemplate::addCompartment (
 	)
 {
   if (mapComps.count (_currComp))
-	throw "Two Many Compartments of the same label!";
+	throw StrCacuException (
+			"Two Many Compartments of the same label!"
+			);
   else
   {
 	mapComps[_currComp] = _compRef;
@@ -435,17 +437,22 @@ bool reactionTemplate::compartmentConstraints (
 	//	find compartment where it locates in
 	//
 	MyCompartment* currComp = NULL;
+	cout << "\nsize = " << listOfMyCompartments.size () << endl;
 	for (int icomp =0; icomp < listOfMyCompartments.size (); icomp++)
 	{
 	  MyCompartment* mycomp = listOfMyCompartments[icomp];
+	  cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
 	  if (mycomp->isMySpeciesIn (speciesLabel) != NULL) currComp = mycomp;
 	}
 
 	//	check
 	if (currComp == NULL) 
 	{
-	  cout << "No Compartment Found for Species with Label " << speciesLabel << endl;
-	  terminate ();
+		string errno (
+			  "\nNo Compartment Found for Species with Label "
+			  );
+		errno += speciesLabel;
+		throw StrCacuException (errno);
 	}
 
 	if (cnt == 0) 
@@ -477,17 +484,22 @@ bool reactionTemplate::compartmentConstraints (
 	//	find compartment where it locates in
 	//
 	MyCompartment* currComp = NULL;
+	cout << "\nsize = " << listOfMyCompartments.size () << endl;
 	for (int icomp =0; icomp < listOfMyCompartments.size (); icomp++)
 	{
 	  MyCompartment* mycomp = listOfMyCompartments[icomp];
+	  cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
 	  if (mycomp->isMySpeciesIn (speciesLabel) != NULL) currComp = mycomp; 
 	}
 	
 	//	check
 	if (currComp == NULL) 
 	{
-	  cout << "No Compartment Found for Species with Label " << speciesLabel << endl;
-	  terminate ();
+		string errno (
+			  "\nNo Compartment Found for Species with Label "
+			  );
+		errno += speciesLabel;
+		throw StrCacuException (errno);
 	}
 
 	if (fixedComp != NULL)

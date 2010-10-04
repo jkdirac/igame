@@ -31,8 +31,8 @@ class MyReaction:
 		vector<MyCompartment*>& listOfMyCompartments,
 		vector<MySpecies*>& listOfMySpecies,
 		vector<MySpecies*>& productsBody,
-		const reactionTemplate::speciesArrayMatch& reactantsM,
-		const reactionTemplate::speciesArrayMatch& modifiersM,
+		const speciesArrayMatch& reactantsM,
+		const speciesArrayMatch& modifiersM,
 		const reactionTemplate* RT
 		);
 

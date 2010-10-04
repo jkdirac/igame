@@ -1,7 +1,29 @@
 #include "readXMLComponent.h"
 
 readXMLComponent::readXMLComponent ()
-{}
+{
+	//	set partCtg
+	partCtg_set.insert ("biobrick");
+	partCtg_set.insert ("plasmidBackbone");
+	partCtg_set.insert ("compound");
+	partCtg_set.insert ("substituent");
+	partCtg_set.insert ("compartment");	
+
+	//	set partType
+	partType_set.insert ("ForwardDNA");
+	partType_set.insert ("ForwardRNA");
+	partType_set.insert ("ForwardProtein");
+	partType_set.insert ("ReverseDNA");
+	partType_set.insert ("ReverseRNA");
+	partType_set.insert ("ReverseProtein");
+	partType_set.insert ("Compound");
+	partType_set.insert ("Compartment");
+	
+	//	set speciesType
+	speciesType_set.insert ("reactant");
+	speciesType_set.insert ("modifier");
+	speciesType_set.insert ("product");
+}
 
 readXMLComponent::~readXMLComponent ()
 {}
@@ -11,10 +33,10 @@ void readXMLComponent::readPart (
 		const string& doc,
 		const string& qpath,
 		const int& i,
-		string& pR, 
-		string& pL,
-		string& pT,
-		string& pC 
+		string& __ref, 
+		string& __label,
+		string& __type,
+		string& __ctg 
 		)
 {
 	ostringstream oss;
@@ -24,7 +46,7 @@ void readXMLComponent::readPart (
 	vector<string> temp;
 
 	//
-	//  read node partReference
+	//  read node partReference (mandatory)
 	//
 	const string path_pr = prefix + "partReference";
 	get_node_element (cind, &doc, &path_pr, temp); 
@@ -35,36 +57,14 @@ void readXMLComponent::readPart (
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
-	else pR = temp[0];
+	else __ref = temp[0];
 
 	//
-	//  read node partLabel
+	//  read node partLabel (optional)
 	//
 	const string path_pl = prefix + "partLabel";
 	get_node_element (cind, &doc, &path_pl, temp); 
-	if (temp.empty ())
-	{
-		string errno = string (
-				"PART: empty node partLabel in "
-				) + doc + ".xml!";
-		cout << path_pl << endl;
-		throw StrCacuException (errno);
-	}
-	else pL = temp[0];
-
-	//
-	//  read node partType (optional)
-	//
-	const string path_pt = prefix + "partType";
-	get_node_element (cind, &doc, &path_pt, temp); 
-	if (temp.empty ()) 
-	{
-		string errno = string (
-				"PART: empty node partType in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
-	}
-	else pT = temp[0];
+	if (!temp.empty ()) __label = temp[0];
 
 	//
 	//  read node partCategory
@@ -78,7 +78,40 @@ void readXMLComponent::readPart (
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
-	else pC = temp[0];
+	else __ctg = temp[0];
+
+	//	check if it is invalid
+	if (!temp.empty () && !partCtg_set.count (__ctg))
+	{
+		string errno = string (
+				"PART: Invalid partCategory value in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+
+	//
+	//  read node partType (optional)
+	//
+	const string path_pt = prefix + "partType";
+	get_node_element (cind, &doc, &path_pt, temp); 
+	if (!temp.empty ()) __type = temp[0];
+	else if (__ctg != "substituent") 
+	{
+		string errno = string (
+				"PART: empty node partType for"
+			    " non-substituent type part in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+
+	//	check if it is invalid
+	if (!temp.empty () && !partType_set.count (__type))
+	{
+		string errno = string (
+				"PART: Invalid partType value in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
 }
 
 void readXMLComponent::readNode (
@@ -545,7 +578,8 @@ void readXMLComponent::readSpecies (
 	//
 	//	read attribute ccid
 	//
-	const string path_ccid = prefix + "compartment/@ccid";
+	const string path_ccid = 
+		prefix + "compartment/@itself";
 	get_node_attr (cind, &doc, &path_db, temp);
 	if (!temp.empty ()) ccid = temp[0];
 

@@ -20,8 +20,8 @@ void MyReaction::completeReaction (
 	vector<MyCompartment*>& listOfMyCompartments,
 	vector<MySpecies*>& listOfMySpecies,
 	vector<MySpecies*>& productsBody,
-	const reactionTemplate::speciesArrayMatch& reactantsM,
-	const reactionTemplate::speciesArrayMatch& modifiersM,
+	const speciesArrayMatch& reactantsM,
+	const speciesArrayMatch& modifiersM,
 	const reactionTemplate* RT
 	)
 {
@@ -44,7 +44,7 @@ void MyReaction::completeReaction (
   for (int i=0; i < reactantsM.size (); i++)
   {
 	int sind = reactantsM[i].first;
-	reactionTemplate::cMatchsType2 speciesM = reactantsM[i].second;
+	cMatchsType2 speciesM = reactantsM[i].second;
 
 	MySpecies* sr = listOfMySpecies[sind];
 	listOfMyReactants.push_back (sr);

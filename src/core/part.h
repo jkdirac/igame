@@ -21,53 +21,39 @@ class Part
   public:
 
 	Part ();
-
-	Part (
-		const Part* orig
-		);
-
+	Part (const Part* orig);
 	~Part ();
 
-	void setDbId (
-		const string& dbid
-		);
+	void setPartRef (const string& );
+	void setPartLabel (const string& );
+	void setPartType (const string& );
+	void setPartCtg (const string& );
+	void setIsBinded (const bool& );
 
-	void setPartLabel (
-		const string& label
-		);
+	void setPart (
+			const string&, 
+			const string&, 
+			const string&, 
+			const string&, 
+			const string& = false
+			);
 
-	void setPartType (
-		const string& type
-		);
-
-	void setPartCategory (
-		const string& category
-		);
-
-	void setIsBinded (
-		const bool& isb
-		);
-
-	string getDbId () const;
-
+	string getPartRef () const;
 	string getPartLabel () const;
-
 	string getPartType () const;
-
-	string getPartCategory () const;
-
+	string getPartCtg () const;
 	bool getIsBinded () const;
 
   private:
 	
-	string dbId;
+	//
+	//	four listed attribute in database
+	//
+	string partRef, partLabel, partType, partCtg;
 
-	string partLabel;
-
-	string partType;
-
-	string partCategory;
-
+	//
+	//	bool flag to indicate whether this part is in binded state
+	//
 	bool isBinded;
 };
 #endif

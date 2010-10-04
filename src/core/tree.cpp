@@ -57,27 +57,25 @@ Node* Tree::createNode (
 }
 
 Node* Tree::createNode (
-		const string& nCL,
-		const string& nPL
+		const string& child,
+		const string& parent
 		)
 {
-	Node* newNode = new Node;
+	Node* n = new Node;
 
 	//	set data members
-	newNode->nodeLabel = nCL;
-	newNode->parentNodeLabel = nPL;
+	n->nodeLabel = child;
+	n->parentNodeLabel = parent;
 
 	//	push it back into nodes list
-	listOfNodes.push_back (newNode);
-	return newNode;
+	listOfNodes.push_back (n);
+	return n;
 }
 
-void Tree::addNodeMap (
-	Node* node
-	)
+void Tree::addNodeMap (Node* n)
 {
-  if (!mapNodes.count (node->nodeLabel))
-	mapNodes[node->nodeLabel] = node;
+  if (!mapNodes.count (n->nodeLabel)) 
+	  mapNodes[n->nodeLabel] = n;
 }
 
 void Tree::addNodeChildren ()

@@ -1,78 +1,58 @@
 #include "part.h"
 
-Part::Part ()
-  :isBinded (false)
+Part::Part () :isBinded (false) {}
+
+Part::Part (const Part* orig) : 
+	partRef (orig->partRef), 
+	partLabel (orig->partLabel),
+  	partType (orig->partType),
+  	partCtg (orig->partCtg),
+	isBinded (orig->isBinded)
 {}
 
-Part::Part (
-	const Part* orig
-	):
-  dbId (orig->dbId),
-  partLabel (orig->partLabel),
-  partType (orig->partType),
-  partCategory (orig->partCategory),
-  isBinded (orig->isBinded)
-{}
+Part::~Part (){}
 
-Part::~Part ()
-{}
-
-void Part::setDbId (
-	const string& dbid
-	) 
+void Part::setPart (
+		const string& __ref, 
+		const string& __label, 
+		const string& __type, 
+		const string& __ctg, 
+		const string& __isb 
+		)
 {
-  dbId = dbid;
+	partRef = __ref;
+	partLabel = __label;
+	partType = __type;
+	partCtg = __ctg;
+	isBinded = __isb;
 }
 
-void Part::setPartLabel (
-	const string& label
-	)
-{
-  partLabel = label;
+void Part::setPartRef (const string& __ref) {
+	partRef = __ref
 }
 
-void Part::setPartType (
-	const string& type
-	)
-{
-  partType = type;
+void Part::setPartLabel (const string& __label) {
+  	partLabel = __label;
 }
 
-void Part::setPartCategory (
-	const string& category
-	)
-{
-  partCategory = category;
+void Part::setPartType (const string& __type) {
+  	partType = __type;
 }
 
-void Part::setIsBinded (
-	const bool& isb
-	)
-{
-  isBinded = isb;
+void Part::setPartCtg (const string& __ctg) {
+  	partCtg = _ctg;
 }
 
-string Part::getDbId () const
-{
-  return dbId;
+void Part::setIsBinded (const bool& isb) {
+	isBinded = isb;
 }
 
-string Part::getPartLabel () const
-{
-  return partLabel;
-}
+string Part::getPartRef () const {return dbId;}
 
-string Part::getPartType () const
-{
-  return partType;
-}
+string Part::getPartLabel () const {return partLabel;}
 
-string Part::getPartCategory () const
-{
-  return partCategory;
-}
+string Part::getPartType () const {return partType;}
 
-bool Part::getIsBinded () const
-{
-  return isBinded;
-}
+string Part::getPartCtg () const {return partCtg;}
+
+bool Part::getIsBinded () const {return isBinded;}

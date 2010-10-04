@@ -20,11 +20,6 @@ class Chain
   friend class MySpecies;
 
   public:
-	
-	typedef pair<int,int> markType;
-	typedef list<markType> cMatchType;
-
-  public:
 
 	Chain ();
 
@@ -33,11 +28,6 @@ class Chain
 		);
 
 	~Chain ();
-
-	void genChainLabel (
-		const string& slabel,
-		const int& num
-		);
 
 	bool equal (
 		const Chain* rhs
@@ -49,11 +39,7 @@ class Chain
 		) const; 
 
 	Part* createPart ();
-
-	Part* createPart (
-		const Part* p
-		);
-
+	Part* createPart (const Part* p);
 	Part* createPart (
 			const string& partReference,
 			const string& partLabel,

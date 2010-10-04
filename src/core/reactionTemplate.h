@@ -24,20 +24,6 @@ class reactionTemplate
 
 	public:
 
-		typedef pair <int,int> markType;
-		typedef list<markType> cMatchType;
-		typedef pair<cMatchType, int> cMatchType2;
-		typedef vector<cMatchType2> cMatchsType2; //chain match assemble (CMA)
-		typedef vector<cMatchsType2> cMatchsArray; //all possible CMAs
-		typedef pair<int, cMatchsType2> speciesMatch; // all CMAs matched to one species
-		typedef vector<speciesMatch> speciesArrayMatch; // an array match of all reactants or modifiers
-		typedef pair<speciesArrayMatch, speciesArrayMatch> reactionMatch;
-		typedef vector<reactionMatch> reactionArrayMatch;
-
-		typedef pair<string,string> subsp;
-
-	public:
-
 		reactionTemplate ();
 		~reactionTemplate ();
 
@@ -177,6 +163,10 @@ class reactionTemplate
 		//
 		//	map	compartment labels to its children 
 		//	compartment labels
+		//	//
+		//	say, if Flask is the outside compartment of E_coli,
+		//	it has mmapComps[Flask] = E_coli
+		//
 		multimap <string,string> mmapComps;
 
 		//

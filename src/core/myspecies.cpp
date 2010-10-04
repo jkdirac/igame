@@ -202,18 +202,33 @@ Node* MySpecies::findBindedNode (
 
 Chain* MySpecies::createChain ()
 {
-	Chain* newChain = new Chain;
-	listOfChains.push_back (newChain);
-	return newChain;
+	Chain* c = new Chain;
+	listOfChains.push_back (c);
+	return c;
 }
 
 Chain* MySpecies::createChain (
-		const Chain* c
+		const Chain* orig
 		)
 {
-	Chain* newChain = new Chain (c);
-	listOfChains.push_back (newChain);
-	return newChain;
+	Chain* c = new Chain (orig);
+	listOfChains.push_back (c);
+	return c;
+}
+
+Chain* MySpecies::createChain (
+		const string& prefix,
+		const int& chainnum
+		)
+{
+	Chain* c = new Chain;
+
+	ostringstream oss;
+	oss << prefix << "[cHaIn" << chainnum << "]";
+	c->label  = oss.str ();
+	
+	listOfChains.push_back (c);
+	return c;
 }
 
 Tree* MySpecies::createTree ()
@@ -510,7 +525,7 @@ bool MySpecies::equal (
 			// (1) calculate and generate all permutations
 			// (important! initialize permAll)
 			int numPerm = 1;
-			MySpecies::permType permAll (lhs->equiv.size());
+			permType permAll (lhs->equiv.size());
 			for (int i =0; i < lhs->equiv.size (); i++)
 			{
 				vector<int> perm;
