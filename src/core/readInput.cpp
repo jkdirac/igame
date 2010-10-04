@@ -244,7 +244,6 @@ void readInput::config (
 		double size;
 		bool constant; 
 
-
 		readCompartment (DBINTERFACE, DOC, pathComp, i, db, id, 
 				name, spatialDimensions, size, units, outside, constant);
 		MyCompartment* comp = mysbmldoc->createMyCompartment ();

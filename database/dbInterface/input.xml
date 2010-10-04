@@ -41,7 +41,7 @@
 			</listOfCompartments>
 			<listOfSpecies>
 				<species>
-					<id>E_coli_i004</id>
+					<id>sPecIes4</id>
 					<compartment itself="E_coli_i003">Flask_i002</compartment>
 					<initialConcentration>1E-20</initialConcentration>
 					<substanceUnits>mole</substanceUnits>

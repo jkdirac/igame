@@ -2,12 +2,12 @@
 
 Chain::Chain ()
 {
-	keywords["X"] = 0;
-	keywords["X2"] = 1;
-	keywords["Z"] = 2;
-	keywords["Z2"] = 3;
-	keywords["T"] = 4;
-	keywords["T2"] = 5;
+	keywords["ANY"] = 0;
+	keywords["ANYUB"] = 1;
+	keywords["NZ"] = 2;
+	keywords["NZUB"] = 3;
+	keywords["ONE"] = 4;
+	keywords["ONEUB"] = 5;
 }
 
 Chain::Chain (

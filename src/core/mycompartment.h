@@ -22,43 +22,22 @@ class MyCompartment:
 	MyCompartment ();
 	~MyCompartment ();
 
-	void addMySpeciesIn (
-		MySpecies* s
-		);
+	void addMySpeciesIn (MySpecies*);
+	void addMyCompartmentIn (MyCompartment*);
 
-	void addMyCompartmentIn (
-		MyCompartment* comp
-		);
+	MySpecies* isMySpeciesIn (const string&);
+	MySpecies* isMySpeciesIn (const MySpecies*);
+	const MySpecies* isMySpeciesIn (const string&) const;
 
-	void setDbId (
-		const string& dbid
-		);
+	MyCompartment* isMyCompartmentIn (const string&);
+	const MyCompartment* isMyCompartmentIn (const string&) const;
 
-	MySpecies* isMySpeciesIn (
-		const string& sbmlid
-		);
-
-	MySpecies* isMySpeciesIn (
-		const MySpecies* s
-		);
-
-	const MySpecies* isMySpeciesIn (
-		const string& sbmlid
-		) const;
-
-	MyCompartment* isMyCompartmentIn (
-		const string& sbmlid
-		);
-
-	const MyCompartment* isMyCompartmentIn (
-		const string& sbmlid
-		) const;
-
-	string getDbId () const;
+	void setDB_ref (const string&);
+	string getDB_ref () const;
 
   private:
 
-	string dbId;
+	string reference_db;
 
 	vector<MySpecies*> listOfMySpeciesIn;
 	vector<MyCompartment*> listOfMyCompartmentsIn;

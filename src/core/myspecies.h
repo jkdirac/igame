@@ -163,7 +163,7 @@ class MySpecies:
 		//	positive values gives the index of corresponded compartment
 		//	in compartment list
 		//
-		string ccid;
+		string species_of_compartment_type;
 
 		bool isRearranged;
 

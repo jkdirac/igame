@@ -1,19 +1,19 @@
 #include "myreaction.h"
 
-MyReaction::MyReaction ()
-	:Reaction (2, 4)
+MyReaction::MyReaction ():
+	Reaction (2, 4)
 {}
 
 MyReaction::~MyReaction () 
 {
 	/*
-	for (int i=0; i<listOfMyReactants.size (); i++)
-		listOfMyReactants[i]->~Species ();
-	for (int i=0; i<listOfMyModifiers.size (); i++)
-		listOfMyModifiers[i]->~Species ();
-	for (int i=0; i<listOfMyProducts.size (); i++)
-		listOfMyProducts[i]->~Species ();
-		*/
+	   for (int i=0; i<listOfMyReactants.size (); i++)
+	   listOfMyReactants[i]->~Species ();
+	   for (int i=0; i<listOfMyModifiers.size (); i++)
+	   listOfMyModifiers[i]->~Species ();
+	   for (int i=0; i<listOfMyProducts.size (); i++)
+	   listOfMyProducts[i]->~Species ();
+	   */
 }
 
 void MyReaction::completeReaction (
