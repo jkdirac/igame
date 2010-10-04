@@ -129,13 +129,15 @@ class MySpecies:
 				const string& _label
 				);
 
-		void setCCid (
+		void setCompartment (
 				const string& _ccid 
 				);
 
+		void 
+
 		string getDbId () const;
 		string getLabel () const;
-		string getCCid () const;
+		string getCompTypeId () const;
 
 		bool countBindedNode (
 				const string& label
@@ -158,12 +160,12 @@ class MySpecies:
 		string label; //used in reaction templates
 
 		//
-		//	ccid (corresponded-compartment id), is a compartment-type attribute
+		//	compartment type id, is a compartment-type attribute
 		//	-1 means it is not a compartment-type species,
 		//	positive values gives the index of corresponded compartment
 		//	in compartment list
 		//
-		string species_of_compartment_type;
+		string comp_type_id;
 
 		bool isRearranged;
 

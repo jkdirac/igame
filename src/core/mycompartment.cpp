@@ -50,11 +50,22 @@ MySpecies* MyCompartment::isMySpeciesIn (
 	for (int i=0; i < listOfMySpeciesIn.size (); i++)
 	{
 		MySpecies* lhs = listOfMySpeciesIn[i];
-		string compLHS = lhs->getOutside ();
+		string compLHS = lhs->getCompartment ();
+		string compTypeIdLHS = lhs->getCompTypeId ();
 		
 		//	is compartment same?
-		compRHS = rhs->getOutside (); 
-		if (species->equal (s)) return species;
+		compRHS = rhs->getCompartment(); 
+		if (compLHS != compRHS) continue; 
+
+		//	if same cnModel Strucutrue
+		if (!lhs->equal (rhs)) continue;
+
+		//	compare their corresonded compartment
+		string compTypeIdRHS = rhs->getCompTypeId ();
+		if (compTypeIdLHS.empty () && 
+				compTypeIdRHS.empty()) return lhs;
+		else if (compTypeIdLHS == compTypeIdRHS) return lhs;
+		else continue;
 	}
 	return NULL;
 }
@@ -63,39 +74,57 @@ const MySpecies* MyCompartment::isMySpeciesIn (
 		const string& sbmlid
 		) const
 {
-	cout << "\nmyspecies in = " << listOfMySpeciesIn.size ();
-	int numOfSpecies = listOfMySpeciesIn.size ();
-	for (int i=0; i < numOfSpecies; i++)
+
+	//	TIPS
+	//
+	//	(1) same cnModel Structure
+	//	(2) in the same compartment
+	//	(3) if they are two compartment-type species,
+	//	compare their species_of_compartment_type
+	//
+	for (int i=0; i < listOfMySpeciesIn.size (); i++)
 	{
-		MySpecies* s = listOfMySpeciesIn[i];
-		cout << "\nspecies = " << s->getId ();
-		if (s->getId () == sbmlid) return s;
+		MySpecies* lhs = listOfMySpeciesIn[i];
+		string compLHS = lhs->getCompartment ();
+		string compTypeIdLHS = lhs->getCompTypeId ();
+		
+		//	is compartment same?
+		compRHS = rhs->getCompartment(); 
+		if (compLHS != compRHS) continue; 
+
+		//	if same cnModel Strucutrue
+		if (!lhs->equal (rhs)) continue;
+
+		//	compare their corresonded compartment
+		string compTypeIdRHS = rhs->getCompTypeId ();
+		if (compTypeIdLHS.empty () && 
+				compTypeIdRHS.empty()) return lhs;
+		else if (compTypeIdLHS == compTypeIdRHS) return lhs;
+		else continue;
 	}
 	return NULL;
 }
 
 MyCompartment* MyCompartment::isMyCompartmentIn (
-		const string& sbmlid
+		const string& ref
 		)
 {
-	int numOfComps = listOfMyCompartmentsIn.size ();
-	for (int i =0; i < numOfComps; i++)
+	for (int i =0; i < listOfMyCompartmentsIn.size (); i++)
 	{
 		MyCompartment* comp = listOfMyCompartmentsIn[i];
-		if (comp->getId () == sbmlid) return comp;
+		if (comp->getId () == ref) return comp;
 	}
 	return NULL;
 }
 
 const MyCompartment* MyCompartment::isMyCompartmentIn (
-		const string& sbmlid
+		const string& ref
 		) const
 {
-	int numOfComps = listOfMyCompartmentsIn.size ();
-	for (int i =0; i < numOfComps; i++)
+	for (int i =0; i < listOfMyCompartmentsIn.size (); i++)
 	{
 		MyCompartment* comp = listOfMyCompartmentsIn[i];
-		if (comp->getId () == sbmlid) return comp;
+		if (comp->getId () == ref) return comp;
 	}
 	return NULL;
 }
