@@ -47,9 +47,12 @@ int MySpecies::getNumOfTrees () const
 }
 
 void MySpecies::split (
+		bdbXMLInterface& dbreader,
 		vector<MySpecies*>& pieces
 		)
 {
+	//	first trim the species
+	trim (dbreader);
 
 	//	container to store chainnum of species
 	//	chainUsed[species][chainnum set]
@@ -897,4 +900,20 @@ void MySpecies::trim (bdbXMLInterface& dbreader)
 		if (!tmp.empty ()) p->setPartRef (tmp[0]);
 		p->setIsBinded (false);
 	}
+
+	//	rearrange
+	rearrange ();
 }
+
+void MySpecies::genUniqueLabel (const int& i)
+{
+	ostringstream oss;
+
+	for (int i=0; i<listOfChains.size (); i++)
+	{
+		oss.str ("");
+		oss << speciesLabel_db << "[cHaIn" << i << "]";
+		listOfChains[i]->chainLabel = oss.str ();
+	} 
+}
+

@@ -66,8 +66,9 @@ class MySpecies:
 
 		void rearrange ();
 		bool equal (const MySpecies*);
-		void split (vector<MySpecies*>&);
+		void split (bdbXMLInterface&, vector<MySpecies*>&);
 		void partialDup (const set<int>&, const set<string>&);
+		void genUniqueLabel (const int&);	// for unique chain label in reaction template
 
 		Chain* createChain ();
 		Chain* createChain (const Chain* c); 

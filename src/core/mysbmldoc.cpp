@@ -489,7 +489,7 @@ void MySBMLDocument::handleReactionTemplate (
 		//	generate real product
 		//
 		myreaction->completeReaction (
-				listOfMyCompartments, listOfMySpecies, newGenProducts, 
+				dbreader, listOfMyCompartments, listOfMySpecies, newGenProducts, 
 				result[i].first, result[i].second, RT
 				);
 

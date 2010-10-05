@@ -28,6 +28,7 @@ class MyReaction:
 	//	return false if it is an intramolecular reaction
 	//
 	void completeReaction (
+		bdbXMLInterface& dbreader,
 		vector<MyCompartment*>& listOfMyCompartments,
 		vector<MySpecies*>& listOfMySpecies,
 		vector<MySpecies*>& productsBody,

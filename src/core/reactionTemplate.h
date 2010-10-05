@@ -27,30 +27,15 @@ class reactionTemplate
 		reactionTemplate ();
 		~reactionTemplate ();
 
-		void setId (
-				const string& _id
-				);
-
-		void setName (
-				const string& _name
-				);
-
-		void setReversible (
-				const bool& _rev
-				);
-
-		void setFast (
-				const bool& _fast
-				);
+		void setId (const string&);
+		void setName (const string&);
+		void setReversible (const bool&);
+		void setFast (const bool&);
 
 		string getId () const;
-
 		string getName () const;
-
 		bool getFast () const;
-
 		bool getReversible () const;
-
 		string getMath () const;
 
 		string getCompartment (
@@ -170,7 +155,7 @@ class reactionTemplate
 		multimap <string,string> mmapComps;
 
 		//
-		//	map compartment label to reactants/modifier index
+		//	map compartment label to reactants/modifier/product index
 		//
 		multimap <string, int> mmapIndexReactants;
 		multimap <string, int> mmapIndexModifiers;
