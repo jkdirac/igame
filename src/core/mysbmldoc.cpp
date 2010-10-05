@@ -191,11 +191,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 
 				//	read species containing this part 
 				string speciesLinkPath =
-					"/MoDeL/part/" +
-					p->getPartCategory () + 
+					"/MoDeL/part/" + p->getPartCtg + 
 					"/listOfReferencedSpecies/"
 					"referencedSpecies";
-				string doc_1 = p->getDbId ();
+				string doc_1 = p->getPartRef ();
 
 				int numOfSpeciesLinks = 
 					dbreader.get_node_element_num (
@@ -207,11 +206,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					cout << "\nHandling the First Referenced Species...";
 
 					string speciesReference, partType;
-
-					cout << "\ndb = " << p->getDbId () << endl;
-
 					dbreader.readSpeciesLink (
-							PART, p->getDbId (),speciesLinkPath, 
+							PART, p->getPartRef (),speciesLinkPath, 
 							t, speciesReference, partType
 							);
 
@@ -225,10 +221,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					if (speciesUsed.count (speciesReference)) continue;
 					else speciesUsed.insert (speciesReference);
 
-					//	partType must be consistant
-					if (!partType.empty () && 
-							partType != p->getPartType ()) continue;
-
 					//
 					//	read searched species
 					//
@@ -236,7 +228,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					cout << "\nReading Species...";
 
 					MySpecies* sLink = new MySpecies;
-					sLink->setDbId (speciesReference);  
+					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (
 							sLink, SPECIES, speciesReference,
 							"/MoDeL/species", true
@@ -250,7 +242,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//
 					//  is this species template match?
 					//
-					vector<cMatchsType2> trym;
+					cMatchsArray trym;
 					if (!s->match (sLink, trym)) 
 					{
 						cout << "\nDoes not MATCH! Continue to NEXT...";
@@ -264,9 +256,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//  read reaction Links
 					//
 					string reactionLinkPath =
-						"/MoDeL/species/"  
-						"listOfReferencedReactions/"
-						"referencedReaction";
+						"/MoDeL/species/listOfReferencedReactions/referencedReaction";
 
 					int numOfReactionLinks = dbreader.get_node_element_num (
 							SPECIES, &speciesReference, &reactionLinkPath

@@ -23,6 +23,14 @@ readXMLComponent::readXMLComponent ()
 	speciesType_set.insert ("reactant");
 	speciesType_set.insert ("modifier");
 	speciesType_set.insert ("product");
+
+	//	set substituentType 
+	substituentType_set.insert ("ANY");
+	substituentType_set.insert ("ANYUB");
+	substituentType_set.insert ("NZ");
+	substituentType_set.insert ("NZUB");
+	substituentType_set.insert ("ONE");
+	substituentType_set.insert ("ONEUB");
 }
 
 readXMLComponent::~readXMLComponent ()
@@ -79,6 +87,11 @@ void readXMLComponent::readPart (
 		throw StrCacuException (errno);
 	}
 	else __ctg = temp[0];
+
+	if (__ctg == "substituent" && !substituentType_set.count (__ref))
+		throw StrCacuException (
+				"PART: invalid substituent-type part Reference!"
+				);
 
 	//	check if it is invalid
 	if (!temp.empty () && !partCtg_set.count (__ctg))

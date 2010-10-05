@@ -463,6 +463,8 @@ bool Chain::substituent_m (
 	assert (l1 <= u1 + 1);
 	assert (l2 <= u2 + 1);
 
+	//	take case! l1 = u1+1 and l2 = u2+1 has been ruled out previously
+
 	if (l1 == u1 + 1)
 	{
 		if (l2 == u2 + 1) return true;
@@ -474,10 +476,17 @@ bool Chain::substituent_m (
 		if (l1 == u1 + 1) return true;	
 		else 
 		{
-			list< pair<int,int> > emptyM;
 			for (int i=l1; i <= u1; i++) 
-				emptyM.push_back (make_pair(l2, u2));
-			result.push_back (emptyM);
+			{
+				string partRef = c->listOfParts[i]->getPartRef ();
+				int keyValue = keywords.find (partRef)->second;
+				switch (keyValue)
+				{
+					case 0: 
+					case 1: {result.push_back (make_pair(l2,u2));break;}
+					default: return false;
+				}
+			}
 			return true;
 		}
 	}
@@ -487,7 +496,7 @@ bool Chain::substituent_m (
 	//
 	int startpos, endpos;
 	assert (l1 < c->listOfParts.size ());
-	string partRef = c->listOfParts[l1]->getDbId ();
+	string partRef = c->listOfParts[l1]->getPartRef ();
 	string partType = c->listOfParts[l1]->getPartType ();
 	if (keywords.count (partRef))
 	{

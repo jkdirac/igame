@@ -29,6 +29,7 @@ class readXMLComponent :
 		set<string> PartCtg_set;
 		set<string> partType_set;
 		set<string> speciesType_set;
+		set<string> substituentType_set;
 
 	public:
 
