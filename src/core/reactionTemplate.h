@@ -97,7 +97,7 @@ class reactionTemplate
 				reactionArrayMatch& result
 				);
 
-		void genProductBody (
+		void createProductsFromTemplate (
 				const speciesArrayMatch& reactantCandidates,
 				const speciesArrayMatch& modifierCandidates,
 				const vector<MySpecies*>& listOfMySpecies,

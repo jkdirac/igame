@@ -392,14 +392,14 @@ void MySBMLDocument::handleReactionTemplate (
 	if (role == "product") direction = false;
 
 	//	create a reaction template object
-	reactionTemplate* RT = new reactionTemplate;
-	dbreader.readReactionTemplate (RT, doc, direction); 
+	reactionTemplate* tmpR = new reactionTemplate;
+	dbreader.readReactionTemplate (tmpR, doc, direction); 
 
 	//	handle constraints
-	for (int i=0; i < RT->listOfConstraints.size (); i++)
+	for (int i=0; i < tmpR->listOfConstraints.size (); i++)
 	{
-		vector<string> vars = RT->listOfConstraints[i].first;
-		string formula = RT->listOfConstraints[i].second;
+		vector<string> vars = tmpR->listOfConstraints[i].first;
+		string formula = tmpR->listOfConstraints[i].second;
 
 		string conditions;
 		Model* m = getModel ();
@@ -428,7 +428,7 @@ void MySBMLDocument::handleReactionTemplate (
 			}
 
 			//	(2) search local parameters
-			para = RT->getParameter (varid);
+			para = tmpR->getParameter (varid);
 			if (para != NULL)
 			{
 				ostringstream oss;
@@ -447,7 +447,7 @@ void MySBMLDocument::handleReactionTemplate (
 
 		if (cacu_string_exp (conditions.c_str (), formula.c_str ()) == 0)
 		{
-			delete RT;
+			delete tmpR;
 			return;
 		}
 	}
@@ -458,46 +458,50 @@ void MySBMLDocument::handleReactionTemplate (
 	//  matching patterns described in reaction template
 	//
 	reactionArrayMatch result;
-	RT->findSpeciesMatch (
+	tmpR->findSpeciesMatch (
 			listOfMyCompartments, listOfMySpecies, 
 			speciesIndex, role, result
 			);
 
-	cout << "\nMatch Size = " << result.size () << endl;
-
-	//
-	//  create reaction objects
-	//
+	/**
+	 * create reactions from each matching result
+	 */
 	for (int i=0; i < result.size (); i++)
 	{
 		//	new reaction
 		MyReaction* myreaction = createMyReaction ();
-		myreaction->setName (RT->getName ());
-		myreaction->setFast (RT->getFast ());
+		myreaction->setName (tmpR->getName ());
+		myreaction->setFast (tmpR->getFast ());
 		myreaction->setReversible (false);
 
-		//
-		//	generate product body
-		//
-		vector<MySpecies*> newGenProducts;
-		RT->genProductBody (
-				result[i].first, result[i].second, 
-				listOfMySpecies, newGenProducts
+		/**
+		 * replace substituent-type parts in products
+		 * based on results of matching
+		 */
+		vector<MySpecies*> productsBody;
+
+		tmpR->createProductsFromTemplate (
+				result[i].first, 
+				result[i].second, 
+				listOfMySpecies, 
+				productsBody
 				);
 
 		//
 		//	generate real product
 		//
-		myreaction->completeReaction (
-				dbreader, listOfMyCompartments, listOfMySpecies, newGenProducts, 
-				result[i].first, result[i].second, RT
+		myreaction->createReactionsFromTemplate (
+				dbreader, 
+				result[i].first, 
+				result[i].second, 
+				productsBody,
+				listOfMySpecies, 
+				listOfMyCompartments, 
+				tmpR	
 				);
-
-		for (int i=0; i < newGenProducts.size (); i++)
-			delete newGenProducts[i];
 	}
 
-	delete RT;
+	delete tmpR;
 }
 
 void MySBMLDocument::searchTranscriptionReactions (

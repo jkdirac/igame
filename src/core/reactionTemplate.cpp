@@ -234,105 +234,119 @@ bool reactionTemplate::findSpeciesMatch (
 	//
 	//	find species matching for reactants 
 	//
-	bool fail1 = false; 
-	int permAll1 = 1;
+	
+	int permAll1 = 1;	//	all permutations of reactants
 
-	for (int i=0; i < listOfMyReactants.size (); i++)
+	/**
+	 *	map between species index and its matching details
+	 */
+
+	if (role == "reactant")
 	{
-		//
-		//	special handle for current species 
-		//
-		MySpecies* tmReactant = listOfMyReactants[i];
-		if (role == "reactant" && i == currSpeIndex)
+		bool fail1 = false; 
+		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
-			MySpecies* currSpe = listOfMySpecies[currSpeIndex];
-
-			cMatchsArray trym;
-			if (currSpe->match (tmReactant, trym))
+			//
+			//	special handle for current species 
+			//
+			MySpecies* tmReactant = listOfMyReactants[i];
+			if (i == currSpeIndex)
 			{
-				for (int k=0; k < trym.size (); k++)
-					reactant_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
-			}
-			else 
-			{
-				fail1 = true;
-				break;
-			}
-		}
-		else
-		{
-			for (int j=0; j <= currSpeIndex; j++)
-			{
-				MySpecies* prevSpe = listOfMySpecies[j];
+				MySpecies* currSpe = listOfMySpecies[currSpeIndex];
 
 				cMatchsArray trym;
-				if (prevSpe->match (tmReactant, trym))
+				if (currSpe->match (tmReactant, trym))
 				{
+					/**
+					 * pair relation between species index and its matching info.
+					 */
 					for (int k=0; k < trym.size (); k++)
-						reactant_sam[i].push_back (make_pair (j, trym[k]));
+						reactant_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
+				}
+				else 
+				{
+					fail1 = true;
+					break;
 				}
 			}
-			if (reactant_sam[i].empty ()) 
+			else
 			{
-				fail1 = true;
-				break;
-			}
-			else permAll1 *= reactant_sam[i].size ();
-		}
-	}
+				for (int j=0; j <= currSpeIndex; j++)
+				{
+					MySpecies* prevSpe = listOfMySpecies[j];
 
-	if (fail1) return false;
+					cMatchsArray trym;
+					if (prevSpe->match (tmReactant, trym))
+					{
+						for (int k=0; k < trym.size (); k++)
+							reactant_sam[i].push_back (make_pair (j, trym[k]));
+					}
+				}
+				if (reactant_sam[i].empty ()) 
+				{
+					fail1 = true;
+					break;
+				}
+				else permAll1 *= reactant_sam[i].size ();
+			}
+		}
+
+		if (fail1) return false;
+	}
 
 	//
 	//	find species matching for modifiers
 	//
-	bool fail2 = false; 
 	int permAll2 = 1;
 
-	for (int i=0; i < listOfMyModifiers.size (); i++)
+	if (role == "modifier")
 	{
-		MySpecies* tmModifier = listOfMyModifiers[i];
-		if (role == "modifier" && i == currSpeIndex)
+		bool fail2 = false; 
+		for (int i=0; i < listOfMyModifiers.size (); i++)
 		{
-			MySpecies* currSpe = listOfMySpecies[currSpeIndex];
-
-			cMatchsArray trym;
-			if (currSpe->match (tmModifier, trym))
+			MySpecies* tmModifier = listOfMyModifiers[i];
+			if (i == currSpeIndex)
 			{
-				for (int k=0; k < trym.size (); k++)
-				{
-					modifier_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
-				}
-			}
-			else 
-			{
-				fail2 = true;
-				break;
-			}
-		}
-		else
-		{
-			for (int j=0; j <= currSpeIndex; j++)
-			{
-				MySpecies* prevSpe = listOfMySpecies[j];
+				MySpecies* currSpe = listOfMySpecies[currSpeIndex];
 
 				cMatchsArray trym;
-				if (prevSpe->match (tmModifier, trym))
+				if (currSpe->match (tmModifier, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
-						modifier_sam[i].push_back (make_pair (j, trym[k]));
+					{
+						modifier_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
+					}
+				}
+				else 
+				{
+					fail2 = true;
+					break;
 				}
 			}
-			if (modifier_sam[i].empty ()) 
+			else
 			{
-				fail2 = true;
-				break;
-			}
-			else permAll2 *= modifier_sam[i].size ();
-		}
-	}
+				for (int j=0; j <= currSpeIndex; j++)
+				{
+					MySpecies* prevSpe = listOfMySpecies[j];
 
-	if (fail2) return false;
+					cMatchsArray trym;
+					if (prevSpe->match (tmModifier, trym))
+					{
+						for (int k=0; k < trym.size (); k++)
+							modifier_sam[i].push_back (make_pair (j, trym[k]));
+					}
+				}
+				if (modifier_sam[i].empty ()) 
+				{
+					fail2 = true;
+					break;
+				}
+				else permAll2 *= modifier_sam[i].size ();
+			}
+		}
+
+		if (fail2) return false;
+	}
 
 	//
 	//	permutation to find all possible combinations
@@ -375,10 +389,11 @@ bool reactionTemplate::findSpeciesMatch (
 	}
 	delete [] modifier_sam;
 
-	//
-	//	find possible combinations of reactants and modifiers
-	//	under constraints of compartment configuration and parameters
-	//
+	/**
+	 * all reactants/modifiers matching are obtained, in
+	 * possibleReactantMatch and possibleModifierMatch,
+	 * we need to check the compartment constraints
+	 */
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
@@ -546,7 +561,7 @@ bool reactionTemplate::compartmentConstraints (
 //	reactants and modifiers, new products by replacing 
 //	substituent parts are generated and stored in productCandidates
 //
-void reactionTemplate::genProductBody (
+void reactionTemplate::createProductsFromTemplate (
 		const speciesArrayMatch& reactantCandidates,
 		const speciesArrayMatch& modifierCandidates,
 		const vector<MySpecies*>& listOfMySpecies,

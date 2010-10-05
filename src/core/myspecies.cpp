@@ -634,8 +634,6 @@ bool MySpecies::match (
 	vector<cMatchsType> records (numc_t);
 	vector<vi> chainNum (numc_t);
 
-	cout << "\nFind Chain Match..." << endl;
-
 	//
 	// for each chain in template species, we find all matchings
 	// in this species, and records them
@@ -649,11 +647,9 @@ bool MySpecies::match (
 		for (int j = 0; j < numc_m; j++)
 		{
 			listOfChains[j]->match (c1, records[i]);
-
-			int numM = records[i].size ();
-			for (int k =0; k < numM; k++) chainNum[i].push_back (j);
-
-			found_all += numM;
+			for (int k =0; k < records[i].size (); k++)
+				chainNum[i].push_back (j);
+			found_all += records[i].size ();
 		}
 		if (found_all == 0) return false; 
 		else permuteAll *= found_all;
@@ -667,6 +663,7 @@ bool MySpecies::match (
 	for (int i = 0; i < permuteAll; i++)
 	{
 		int divide = i;
+		bool ok = true;
 
 		//	same chains in this species could not be allowed 
 		//            to match one chain in species s
@@ -676,9 +673,9 @@ bool MySpecies::match (
 		for (int j =0; j < numc_t; j++)
 		{
 			int indexperm = divide % records[j].size ();
-			int chainnum = chainNum[j][indexperm];
+			int chainnum = chainNum[j][indexperm];	// num of chain of this species
 
-			if (chainUsed.count (chainnum)) return false;
+			if (chainUsed.count (chainnum)) {ok = false;break;}
 			else 
 			{
 				tryAssemble.push_back (
@@ -691,10 +688,12 @@ bool MySpecies::match (
 			divide /= records[j].size ();
 		}
 
+		if (!ok) continue;
+
 		//
 		//	if no trees, a successful match has been found
 		//
-		if (s->getNumOfTrees ()) 
+		if (s->getNumOfTrees () > 0) 
 		{
 			//
 			//  generate s1
@@ -775,7 +774,17 @@ bool MySpecies::match (
 
 			s2->rearrange ();
 
-			if (s1->equal (s2)) trym.push_back (tryAssemble);
+			if (s1->equal (s2)) 
+			{
+				/*
+				cout << "\ns1 = " << endl;
+				s1->Output ();
+				cout << "\ns2 = " << endl;
+				s2->Output ();
+				*/
+
+				trym.push_back (tryAssemble);
+			}
 			else
 			{
 				delete s1;

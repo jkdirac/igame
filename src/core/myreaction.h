@@ -1,14 +1,14 @@
 /*************************************************************************************
-*
-*            Author: liaochen- liaochen@mail.ustc.edu.cn
-*
-*            Last modified:	2010-09-27 19:45
-*
-*            Filename:		myreaction.h
-*
-*            Description: .
-*
-************************************************************************************/
+ *
+ *            Author: liaochen- liaochen@mail.ustc.edu.cn
+ *
+ *            Last modified:	2010-09-27 19:45
+ *
+ *            Filename:		myreaction.h
+ *
+ *            Description: .
+ *
+ ************************************************************************************/
 #ifndef MY_REACTION_H
 #define MY_REACTION_H
 
@@ -17,40 +17,41 @@
 #include "myspecies.h"
 
 class MyReaction:
-  public Reaction
+	public Reaction
 {
-  public:
+	public:
 
-	MyReaction ();
-	~MyReaction ();
+		MyReaction ();
+		~MyReaction ();
 
-	//
-	//	return false if it is an intramolecular reaction
-	//
-	void completeReaction (
-		bdbXMLInterface& dbreader,
-		vector<MyCompartment*>& listOfMyCompartments,
-		vector<MySpecies*>& listOfMySpecies,
-		vector<MySpecies*>& productsBody,
-		const speciesArrayMatch& reactantsM,
-		const speciesArrayMatch& modifiersM,
-		const reactionTemplate* RT
-		);
+		/**
+		 * create reactions from template
+		 */
+		void createReactionsFromTemplate (
+				bdbXMLInterface&, 
+				const speciesArrayMatch&, 
+				const speciesArrayMatch&, 
+				vector<MySpecies*>&,
+				vector<MySpecies*>&, 
+				vector<MyCompartment*>&, 
+				const reactionTemplate*
+				);
 
-	void addSpecialReaction (
-			MySpecies* modifier,
-			MySpecies* product,
-			const string& paraId,
-			const string& paraName,
-			const double& paraValue,
-			const string& paraUnits
-			);
+		/**
+		 * transcription and translation reaction
+		 */
+		void addSpecialReaction (
+				MySpecies*, 
+				MySpecies*, 
+				const string&, 
+				const string&, 
+				const double&, 
+				const string&
+				);
 
-  private:
-	
-	vector<MySpecies*> listOfMyReactants;
-	vector<MySpecies*> listOfMyModifiers;
-	vector<MySpecies*> listOfMyProducts;
+	private:
+
+		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;
 };
 
 #endif
