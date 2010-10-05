@@ -135,29 +135,34 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	try{
 		XmlDocument the_doc = container->getDocument(docname);
 
-//        container->updateDocument(
+		//
+		container->deleteDocument(the_doc, the_context);
+
 	}
 	catch (XmlException &e)
 	{
 //                cout << "open document xml exception: " << e.what() << " file name: " << docname << endl;
-		if (e.getExceptionCode() == XmlException::DOCUMENT_NOT_FOUND)
+		if (e.getExceptionCode() != XmlException::DOCUMENT_NOT_FOUND)
 		{
-			try {
-				cout << "putting file: " << pathname << " to container " << container->getName() <<
-					" as doc " << docname << endl;
-				XmlInputStream *the_stream =
-					m_manager->createLocalFileInputStream(pathname);
-				container->putDocument(docname,
-						the_stream,
-						the_context,
-						0);
-			}
-			catch (XmlException &e)
-			{
-				cout << "xml exception: " << e.what() << endl;
 				throw e;
-			}
 		}
+	}
+
+	cout << "putting file: " << pathname << " to container " << container->getName() <<
+			" as doc " << docname << endl;
+	try
+	{
+			XmlInputStream *the_stream =
+					m_manager->createLocalFileInputStream(pathname);
+			container->putDocument(docname,
+							the_stream,
+							the_context,
+							0);
+	}
+	catch (XmlException &e)
+	{
+			cout << "xml exception: " << e.what() << endl;
+			throw e;
 	}
 
 	return no_error;

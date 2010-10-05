@@ -68,6 +68,7 @@ class bdbXMLInterface
 				string &res,
 				const string &prefix,
 				const string &uri);
+		BdRetVal get_ids_bycontainer(container_index container_type, vector<string> &res);
 };
 
 #endif
