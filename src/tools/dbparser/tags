@@ -6,214 +6,127 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 BEGIN	parserlex.c	125;"	d	file:
 CC	Makefile	/^CC = cc$/;"	m
-CCFLAGS	Makefile	/^CCFLAGS = -g$/;"	m
-DEBUG_OUTPUT	genXml.h	5;"	d
-ECHO	parserlex.c	685;"	d	file:
+CCFLAGS	Makefile	/^CCFLAGS = -g -I..\/..\/ExternalCode\/sbml -I..\/..\/ExternalCode$/;"	m
+CXX	Makefile	/^CXX = g++$/;"	m
+ECHO	parserlex.c	687;"	d	file:
 EOB_ACT_CONTINUE_SCAN	parserlex.c	168;"	d	file:
 EOB_ACT_END_OF_FILE	parserlex.c	169;"	d	file:
 EOB_ACT_LAST_MATCH	parserlex.c	170;"	d	file:
 FLEXINT_H	parserlex.c	29;"	d	file:
 FLEX_BETA	parserlex.c	13;"	d	file:
 FLEX_SCANNER	parserlex.c	8;"	d	file:
-INITIAL	parserlex.c	593;"	d	file:
+INITIAL	parserlex.c	595;"	d	file:
 INT16_MAX	parserlex.c	71;"	d	file:
 INT16_MIN	parserlex.c	62;"	d	file:
 INT32_MAX	parserlex.c	74;"	d	file:
 INT32_MIN	parserlex.c	65;"	d	file:
 INT8_MAX	parserlex.c	68;"	d	file:
 INT8_MIN	parserlex.c	59;"	d	file:
+LDFLAG	Makefile	/^LDFLAG = -static -L..\/..\/..\/ExternalLib\/linux$/;"	m
 LEX	Makefile	/^LEX = flex$/;"	m
-LIBS	Makefile	/^LIBS = $/;"	m
-MAX_DEPTH	genXml.h	36;"	d
-QSTRING	parseryac.c	/^     QSTRING = 260,$/;"	e	enum:yytokentype	file:
-QSTRING	parseryac.c	151;"	d	file:
-QSTRING	parseryac.h	/^     QSTRING = 260,$/;"	e	enum:yytokentype
-QSTRING	parseryac.h	78;"	d
-REJECT	parserlex.c	565;"	d	file:
-SSTRING	parseryac.c	/^     SSTRING = 261,$/;"	e	enum:yytokentype	file:
-SSTRING	parseryac.c	152;"	d	file:
-SSTRING	parseryac.h	/^     SSTRING = 261,$/;"	e	enum:yytokentype
-SSTRING	parseryac.h	79;"	d
-TOKEN_COMMENT	parseryac.c	/^     TOKEN_COMMENT = 262,$/;"	e	enum:yytokentype	file:
-TOKEN_COMMENT	parseryac.c	153;"	d	file:
-TOKEN_COMMENT	parseryac.h	/^     TOKEN_COMMENT = 262,$/;"	e	enum:yytokentype
-TOKEN_COMMENT	parseryac.h	80;"	d
-TOKEN_IDENTIFIER	parseryac.c	/^     TOKEN_IDENTIFIER = 263,$/;"	e	enum:yytokentype	file:
-TOKEN_IDENTIFIER	parseryac.c	154;"	d	file:
-TOKEN_IDENTIFIER	parseryac.h	/^     TOKEN_IDENTIFIER = 263,$/;"	e	enum:yytokentype
-TOKEN_IDENTIFIER	parseryac.h	81;"	d
-TOK_CLASS	parseryac.c	/^     TOK_CLASS = 269,$/;"	e	enum:yytokentype	file:
-TOK_CLASS	parseryac.c	160;"	d	file:
-TOK_CLASS	parseryac.h	/^     TOK_CLASS = 269,$/;"	e	enum:yytokentype
-TOK_CLASS	parseryac.h	87;"	d
-TOK_DIRECTION	parseryac.c	/^     TOK_DIRECTION = 287,$/;"	e	enum:yytokentype	file:
-TOK_DIRECTION	parseryac.c	178;"	d	file:
-TOK_DIRECTION	parseryac.h	/^     TOK_DIRECTION = 287,$/;"	e	enum:yytokentype
-TOK_DIRECTION	parseryac.h	105;"	d
-TOK_FILENAME	parseryac.c	/^     TOK_FILENAME = 288$/;"	e	enum:yytokentype	file:
-TOK_FILENAME	parseryac.c	179;"	d	file:
-TOK_FILENAME	parseryac.h	/^     TOK_FILENAME = 288$/;"	e	enum:yytokentype
-TOK_FILENAME	parseryac.h	106;"	d
-TOK_GROUPEND	parseryac.c	/^     TOK_GROUPEND = 265,$/;"	e	enum:yytokentype	file:
-TOK_GROUPEND	parseryac.c	156;"	d	file:
-TOK_GROUPEND	parseryac.h	/^     TOK_GROUPEND = 265,$/;"	e	enum:yytokentype
-TOK_GROUPEND	parseryac.h	83;"	d
-TOK_GROUPSTART	parseryac.c	/^     TOK_GROUPSTART = 264,$/;"	e	enum:yytokentype	file:
-TOK_GROUPSTART	parseryac.c	155;"	d	file:
-TOK_GROUPSTART	parseryac.h	/^     TOK_GROUPSTART = 264,$/;"	e	enum:yytokentype
-TOK_GROUPSTART	parseryac.h	82;"	d
-TOK_ID	parseryac.c	/^     TOK_ID = 267,$/;"	e	enum:yytokentype	file:
-TOK_ID	parseryac.c	158;"	d	file:
-TOK_ID	parseryac.h	/^     TOK_ID = 267,$/;"	e	enum:yytokentype
-TOK_ID	parseryac.h	85;"	d
-TOK_MODULE	parseryac.c	/^     TOK_MODULE = 266,$/;"	e	enum:yytokentype	file:
-TOK_MODULE	parseryac.c	157;"	d	file:
-TOK_MODULE	parseryac.h	/^     TOK_MODULE = 266,$/;"	e	enum:yytokentype
-TOK_MODULE	parseryac.h	84;"	d
-TOK_MODULE_EV_PROM_EFF	parseryac.c	/^     TOK_MODULE_EV_PROM_EFF = 275,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_EV_PROM_EFF	parseryac.c	166;"	d	file:
-TOK_MODULE_EV_PROM_EFF	parseryac.h	/^     TOK_MODULE_EV_PROM_EFF = 275,$/;"	e	enum:yytokentype
-TOK_MODULE_EV_PROM_EFF	parseryac.h	93;"	d
-TOK_MODULE_FW_PROM_EFF	parseryac.c	/^     TOK_MODULE_FW_PROM_EFF = 274,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_FW_PROM_EFF	parseryac.c	165;"	d	file:
-TOK_MODULE_FW_PROM_EFF	parseryac.h	/^     TOK_MODULE_FW_PROM_EFF = 274,$/;"	e	enum:yytokentype
-TOK_MODULE_FW_PROM_EFF	parseryac.h	92;"	d
-TOK_MODULE_FW_START_CONDON	parseryac.c	/^     TOK_MODULE_FW_START_CONDON = 280,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_FW_START_CONDON	parseryac.c	171;"	d	file:
-TOK_MODULE_FW_START_CONDON	parseryac.h	/^     TOK_MODULE_FW_START_CONDON = 280,$/;"	e	enum:yytokentype
-TOK_MODULE_FW_START_CONDON	parseryac.h	98;"	d
-TOK_MODULE_FW_STOP_CONDON	parseryac.c	/^     TOK_MODULE_FW_STOP_CONDON = 282,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_FW_STOP_CONDON	parseryac.c	173;"	d	file:
-TOK_MODULE_FW_STOP_CONDON	parseryac.h	/^     TOK_MODULE_FW_STOP_CONDON = 282,$/;"	e	enum:yytokentype
-TOK_MODULE_FW_STOP_CONDON	parseryac.h	100;"	d
-TOK_MODULE_FW_TERM_EFF	parseryac.c	/^     TOK_MODULE_FW_TERM_EFF = 276,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_FW_TERM_EFF	parseryac.c	167;"	d	file:
-TOK_MODULE_FW_TERM_EFF	parseryac.h	/^     TOK_MODULE_FW_TERM_EFF = 276,$/;"	e	enum:yytokentype
-TOK_MODULE_FW_TERM_EFF	parseryac.h	94;"	d
-TOK_MODULE_LISTOFSPECIESLINKS	parseryac.c	/^     TOK_MODULE_LISTOFSPECIESLINKS = 284,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_LISTOFSPECIESLINKS	parseryac.c	175;"	d	file:
-TOK_MODULE_LISTOFSPECIESLINKS	parseryac.h	/^     TOK_MODULE_LISTOFSPECIESLINKS = 284,$/;"	e	enum:yytokentype
-TOK_MODULE_LISTOFSPECIESLINKS	parseryac.h	102;"	d
-TOK_MODULE_RBS_EFF	parseryac.c	/^     TOK_MODULE_RBS_EFF = 278,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_RBS_EFF	parseryac.c	169;"	d	file:
-TOK_MODULE_RBS_EFF	parseryac.h	/^     TOK_MODULE_RBS_EFF = 278,$/;"	e	enum:yytokentype
-TOK_MODULE_RBS_EFF	parseryac.h	96;"	d
-TOK_MODULE_REGID	parseryac.c	/^     TOK_MODULE_REGID = 270,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_REGID	parseryac.c	161;"	d	file:
-TOK_MODULE_REGID	parseryac.h	/^     TOK_MODULE_REGID = 270,$/;"	e	enum:yytokentype
-TOK_MODULE_REGID	parseryac.h	88;"	d
-TOK_MODULE_REV_RBS_EFF	parseryac.c	/^     TOK_MODULE_REV_RBS_EFF = 279,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_REV_RBS_EFF	parseryac.c	170;"	d	file:
-TOK_MODULE_REV_RBS_EFF	parseryac.h	/^     TOK_MODULE_REV_RBS_EFF = 279,$/;"	e	enum:yytokentype
-TOK_MODULE_REV_RBS_EFF	parseryac.h	97;"	d
-TOK_MODULE_REV_START_CONDON	parseryac.c	/^     TOK_MODULE_REV_START_CONDON = 281,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_REV_START_CONDON	parseryac.c	172;"	d	file:
-TOK_MODULE_REV_START_CONDON	parseryac.h	/^     TOK_MODULE_REV_START_CONDON = 281,$/;"	e	enum:yytokentype
-TOK_MODULE_REV_START_CONDON	parseryac.h	99;"	d
-TOK_MODULE_REV_STOP_CONDON	parseryac.c	/^     TOK_MODULE_REV_STOP_CONDON = 283,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_REV_STOP_CONDON	parseryac.c	174;"	d	file:
-TOK_MODULE_REV_STOP_CONDON	parseryac.h	/^     TOK_MODULE_REV_STOP_CONDON = 283,$/;"	e	enum:yytokentype
-TOK_MODULE_REV_STOP_CONDON	parseryac.h	101;"	d
-TOK_MODULE_REV_TERM_EFF	parseryac.c	/^     TOK_MODULE_REV_TERM_EFF = 277,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_REV_TERM_EFF	parseryac.c	168;"	d	file:
-TOK_MODULE_REV_TERM_EFF	parseryac.h	/^     TOK_MODULE_REV_TERM_EFF = 277,$/;"	e	enum:yytokentype
-TOK_MODULE_REV_TERM_EFF	parseryac.h	95;"	d
-TOK_MODULE_SPECIESLINKS	parseryac.c	/^     TOK_MODULE_SPECIESLINKS = 285,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_SPECIESLINKS	parseryac.c	176;"	d	file:
-TOK_MODULE_SPECIESLINKS	parseryac.h	/^     TOK_MODULE_SPECIESLINKS = 285,$/;"	e	enum:yytokentype
-TOK_MODULE_SPECIESLINKS	parseryac.h	103;"	d
-TOK_MODULE_UR	parseryac.c	/^     TOK_MODULE_UR = 271,$/;"	e	enum:yytokentype	file:
-TOK_MODULE_UR	parseryac.c	162;"	d	file:
-TOK_MODULE_UR	parseryac.h	/^     TOK_MODULE_UR = 271,$/;"	e	enum:yytokentype
-TOK_MODULE_UR	parseryac.h	89;"	d
-TOK_NAME	parseryac.c	/^     TOK_NAME = 268,$/;"	e	enum:yytokentype	file:
-TOK_NAME	parseryac.c	159;"	d	file:
-TOK_NAME	parseryac.h	/^     TOK_NAME = 268,$/;"	e	enum:yytokentype
-TOK_NAME	parseryac.h	86;"	d
-TOK_NODENAME	parseryac.c	/^     TOK_NODENAME = 258,$/;"	e	enum:yytokentype	file:
-TOK_NODENAME	parseryac.c	149;"	d	file:
-TOK_NODENAME	parseryac.h	/^     TOK_NODENAME = 258,$/;"	e	enum:yytokentype
-TOK_NODENAME	parseryac.h	76;"	d
-TOK_PARAMETERS	parseryac.c	/^     TOK_PARAMETERS = 273,$/;"	e	enum:yytokentype	file:
-TOK_PARAMETERS	parseryac.c	164;"	d	file:
-TOK_PARAMETERS	parseryac.h	/^     TOK_PARAMETERS = 273,$/;"	e	enum:yytokentype
-TOK_PARAMETERS	parseryac.h	91;"	d
-TOK_SHORT_DESC	parseryac.c	/^     TOK_SHORT_DESC = 272,$/;"	e	enum:yytokentype	file:
-TOK_SHORT_DESC	parseryac.c	163;"	d	file:
-TOK_SHORT_DESC	parseryac.h	/^     TOK_SHORT_DESC = 272,$/;"	e	enum:yytokentype
-TOK_SHORT_DESC	parseryac.h	90;"	d
-TOK_TYPE	parseryac.c	/^     TOK_TYPE = 286,$/;"	e	enum:yytokentype	file:
-TOK_TYPE	parseryac.c	177;"	d	file:
-TOK_TYPE	parseryac.h	/^     TOK_TYPE = 286,$/;"	e	enum:yytokentype
-TOK_TYPE	parseryac.h	104;"	d
+LIBS	Makefile	/^LIBS = libsbml.a libxerces-c.a libxml2.a -lz$/;"	m
+MAX_DEPTH	genXml.h	37;"	d
+QSTRING	parseryac.c	/^     QSTRING = 259,$/;"	e	enum:yytokentype	file:
+QSTRING	parseryac.c	129;"	d	file:
+QSTRING	parseryac.h	/^     QSTRING = 259,$/;"	e	enum:yytokentype
+QSTRING	parseryac.h	55;"	d
+REJECT	parserlex.c	561;"	d	file:
+SSTRING	parseryac.c	/^     SSTRING = 260,$/;"	e	enum:yytokentype	file:
+SSTRING	parseryac.c	130;"	d	file:
+SSTRING	parseryac.h	/^     SSTRING = 260,$/;"	e	enum:yytokentype
+SSTRING	parseryac.h	56;"	d
+TOKEN_COMMENT	parseryac.c	/^     TOKEN_COMMENT = 261,$/;"	e	enum:yytokentype	file:
+TOKEN_COMMENT	parseryac.c	131;"	d	file:
+TOKEN_COMMENT	parseryac.h	/^     TOKEN_COMMENT = 261,$/;"	e	enum:yytokentype
+TOKEN_COMMENT	parseryac.h	57;"	d
+TOKEN_IDENTIFIER	parseryac.c	/^     TOKEN_IDENTIFIER = 262,$/;"	e	enum:yytokentype	file:
+TOKEN_IDENTIFIER	parseryac.c	132;"	d	file:
+TOKEN_IDENTIFIER	parseryac.h	/^     TOKEN_IDENTIFIER = 262,$/;"	e	enum:yytokentype
+TOKEN_IDENTIFIER	parseryac.h	58;"	d
+TOK_FILENAME	parseryac.c	/^     TOK_FILENAME = 265,$/;"	e	enum:yytokentype	file:
+TOK_FILENAME	parseryac.c	135;"	d	file:
+TOK_FILENAME	parseryac.h	/^     TOK_FILENAME = 265,$/;"	e	enum:yytokentype
+TOK_FILENAME	parseryac.h	61;"	d
+TOK_GROUPEND	parseryac.c	/^     TOK_GROUPEND = 264,$/;"	e	enum:yytokentype	file:
+TOK_GROUPEND	parseryac.c	134;"	d	file:
+TOK_GROUPEND	parseryac.h	/^     TOK_GROUPEND = 264,$/;"	e	enum:yytokentype
+TOK_GROUPEND	parseryac.h	60;"	d
+TOK_GROUPSTART	parseryac.c	/^     TOK_GROUPSTART = 263,$/;"	e	enum:yytokentype	file:
+TOK_GROUPSTART	parseryac.c	133;"	d	file:
+TOK_GROUPSTART	parseryac.h	/^     TOK_GROUPSTART = 263,$/;"	e	enum:yytokentype
+TOK_GROUPSTART	parseryac.h	59;"	d
+TOK_MATH	parseryac.c	/^     TOK_MATH = 266$/;"	e	enum:yytokentype	file:
+TOK_MATH	parseryac.c	136;"	d	file:
+TOK_MATH	parseryac.h	/^     TOK_MATH = 266$/;"	e	enum:yytokentype
+TOK_MATH	parseryac.h	62;"	d
 UINT16_MAX	parserlex.c	80;"	d	file:
 UINT32_MAX	parserlex.c	83;"	d	file:
 UINT8_MAX	parserlex.c	77;"	d	file:
-VALUESTRING	parseryac.c	/^     VALUESTRING = 259,$/;"	e	enum:yytokentype	file:
-VALUESTRING	parseryac.c	150;"	d	file:
-VALUESTRING	parseryac.h	/^     VALUESTRING = 259,$/;"	e	enum:yytokentype
-VALUESTRING	parseryac.h	77;"	d
+VALUESTRING	parseryac.c	/^     VALUESTRING = 258,$/;"	e	enum:yytokentype	file:
+VALUESTRING	parseryac.c	128;"	d	file:
+VALUESTRING	parseryac.h	/^     VALUESTRING = 258,$/;"	e	enum:yytokentype
+VALUESTRING	parseryac.h	54;"	d
 YACC	Makefile	/^YACC = yacc$/;"	m
-YYABORT	parseryac.c	614;"	d	file:
-YYACCEPT	parseryac.c	613;"	d	file:
-YYBACKUP	parseryac.c	626;"	d	file:
+YYABORT	parseryac.c	560;"	d	file:
+YYACCEPT	parseryac.c	559;"	d	file:
+YYBACKUP	parseryac.c	572;"	d	file:
 YYBISON	parseryac.c	46;"	d	file:
 YYBISON_VERSION	parseryac.c	49;"	d	file:
-YYCOPY	parseryac.c	388;"	d	file:
-YYCOPY	parseryac.c	391;"	d	file:
-YYDEBUG	parseryac.c	92;"	d	file:
-YYDPRINTF	parseryac.c	706;"	d	file:
-YYDPRINTF	parseryac.c	855;"	d	file:
-YYEMPTY	parseryac.c	610;"	d	file:
-YYEOF	parseryac.c	611;"	d	file:
-YYERRCODE	parseryac.c	645;"	d	file:
-YYERROR	parseryac.c	615;"	d	file:
-YYERROR_VERBOSE	parseryac.c	100;"	d	file:
-YYERROR_VERBOSE	parseryac.c	97;"	d	file:
+YYCOPY	parseryac.c	345;"	d	file:
+YYCOPY	parseryac.c	348;"	d	file:
+YYDEBUG	parseryac.c	93;"	d	file:
+YYDPRINTF	parseryac.c	652;"	d	file:
+YYDPRINTF	parseryac.c	801;"	d	file:
+YYEMPTY	parseryac.c	556;"	d	file:
+YYEOF	parseryac.c	557;"	d	file:
+YYERRCODE	parseryac.c	591;"	d	file:
+YYERROR	parseryac.c	561;"	d	file:
+YYERROR_VERBOSE	parseryac.c	101;"	d	file:
 YYERROR_VERBOSE	parseryac.c	98;"	d	file:
-YYFAIL	parseryac.c	622;"	d	file:
-YYFINAL	parseryac.c	421;"	d	file:
-YYFPRINTF	parseryac.c	703;"	d	file:
-YYFREE	parseryac.c	354;"	d	file:
+YYERROR_VERBOSE	parseryac.c	99;"	d	file:
+YYFAIL	parseryac.c	568;"	d	file:
+YYFINAL	parseryac.c	378;"	d	file:
+YYFPRINTF	parseryac.c	649;"	d	file:
+YYFREE	parseryac.c	311;"	d	file:
 YYID	parseryac.c	/^YYID (int yyi)$/;"	f	file:	signature:(int yyi)
-YYID	parseryac.c	278;"	d	file:
-YYINITDEPTH	parseryac.c	864;"	d	file:
-YYLAST	parseryac.c	423;"	d	file:
-YYLEX	parseryac.c	693;"	d	file:
-YYLEX	parseryac.c	695;"	d	file:
-YYLLOC_DEFAULT	parseryac.c	654;"	d	file:
+YYID	parseryac.c	235;"	d	file:
+YYINITDEPTH	parseryac.c	810;"	d	file:
+YYLAST	parseryac.c	380;"	d	file:
+YYLEX	parseryac.c	639;"	d	file:
+YYLEX	parseryac.c	641;"	d	file:
+YYLLOC_DEFAULT	parseryac.c	600;"	d	file:
 YYLSP_NEEDED	parseryac.c	64;"	d	file:
-YYMALLOC	parseryac.c	347;"	d	file:
-YYMAXDEPTH	parseryac.c	875;"	d	file:
-YYMAXUTOK	parseryac.c	436;"	d	file:
-YYNNTS	parseryac.c	428;"	d	file:
-YYNRULES	parseryac.c	430;"	d	file:
-YYNSTATES	parseryac.c	432;"	d	file:
-YYNTOKENS	parseryac.c	426;"	d	file:
-YYPACT_NINF	parseryac.c	566;"	d	file:
-YYPOPSTACK	parseryac.c	1215;"	d	file:
+YYMALLOC	parseryac.c	304;"	d	file:
+YYMAXDEPTH	parseryac.c	821;"	d	file:
+YYMAXUTOK	parseryac.c	393;"	d	file:
+YYNNTS	parseryac.c	385;"	d	file:
+YYNRULES	parseryac.c	387;"	d	file:
+YYNSTATES	parseryac.c	389;"	d	file:
+YYNTOKENS	parseryac.c	383;"	d	file:
+YYPACT_NINF	parseryac.c	512;"	d	file:
+YYPOPSTACK	parseryac.c	1161;"	d	file:
 YYPULL	parseryac.c	61;"	d	file:
 YYPURE	parseryac.c	55;"	d	file:
 YYPUSH	parseryac.c	58;"	d	file:
-YYRECOVERING	parseryac.c	624;"	d	file:
-YYRHSLOC	parseryac.c	652;"	d	file:
-YYSIZE_MAXIMUM	parseryac.c	255;"	d	file:
-YYSIZE_T	parseryac.c	243;"	d	file:
-YYSIZE_T	parseryac.c	245;"	d	file:
-YYSIZE_T	parseryac.c	249;"	d	file:
-YYSIZE_T	parseryac.c	251;"	d	file:
+YYRECOVERING	parseryac.c	570;"	d	file:
+YYRHSLOC	parseryac.c	598;"	d	file:
+YYSIZE_MAXIMUM	parseryac.c	212;"	d	file:
+YYSIZE_T	parseryac.c	200;"	d	file:
+YYSIZE_T	parseryac.c	202;"	d	file:
+YYSIZE_T	parseryac.c	206;"	d	file:
+YYSIZE_T	parseryac.c	208;"	d	file:
 YYSKELETON_NAME	parseryac.c	52;"	d	file:
-YYSTACK_ALLOC	parseryac.c	301;"	d	file:
-YYSTACK_ALLOC	parseryac.c	305;"	d	file:
-YYSTACK_ALLOC	parseryac.c	310;"	d	file:
-YYSTACK_ALLOC	parseryac.c	333;"	d	file:
-YYSTACK_ALLOC_MAXIMUM	parseryac.c	330;"	d	file:
-YYSTACK_ALLOC_MAXIMUM	parseryac.c	336;"	d	file:
-YYSTACK_BYTES	parseryac.c	380;"	d	file:
-YYSTACK_FREE	parseryac.c	324;"	d	file:
-YYSTACK_FREE	parseryac.c	334;"	d	file:
-YYSTACK_GAP_MAXIMUM	parseryac.c	376;"	d	file:
-YYSTACK_RELOCATE	parseryac.c	407;"	d	file:
+YYSTACK_ALLOC	parseryac.c	258;"	d	file:
+YYSTACK_ALLOC	parseryac.c	262;"	d	file:
+YYSTACK_ALLOC	parseryac.c	267;"	d	file:
+YYSTACK_ALLOC	parseryac.c	290;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parseryac.c	287;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parseryac.c	293;"	d	file:
+YYSTACK_BYTES	parseryac.c	337;"	d	file:
+YYSTACK_FREE	parseryac.c	281;"	d	file:
+YYSTACK_FREE	parseryac.c	291;"	d	file:
+YYSTACK_GAP_MAXIMUM	parseryac.c	333;"	d	file:
+YYSTACK_RELOCATE	parseryac.c	364;"	d	file:
 YYSTATE	parserlex.c	132;"	d	file:
 YYSTYPE	parseryac.c	/^typedef union YYSTYPE$/;"	u	file:
 YYSTYPE	parseryac.c	/^} YYSTYPE;$/;"	t	typeref:union:YYSTYPE	file:
@@ -223,24 +136,24 @@ YYSTYPE::integer	parseryac.c	/^    int    integer;          \/* int value *\/$/;
 YYSTYPE::integer	parseryac.h	/^    int    integer;          \/* int value *\/$/;"	m	union:YYSTYPE	access:public
 YYSTYPE::string	parseryac.c	/^ char    *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	file:	access:public
 YYSTYPE::string	parseryac.h	/^ char    *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	access:public
-YYSTYPE_IS_DECLARED	parseryac.c	200;"	d	file:
-YYSTYPE_IS_DECLARED	parseryac.h	127;"	d
-YYSTYPE_IS_TRIVIAL	parseryac.c	198;"	d	file:
-YYSTYPE_IS_TRIVIAL	parseryac.h	125;"	d
-YYTABLES_NAME	parserlex.c	1969;"	d	file:
-YYTABLE_NINF	parseryac.c	584;"	d	file:
-YYTERROR	parseryac.c	644;"	d	file:
-YYTOKENTYPE	parseryac.c	111;"	d	file:
+YYSTYPE_IS_DECLARED	parseryac.c	157;"	d	file:
+YYSTYPE_IS_DECLARED	parseryac.h	83;"	d
+YYSTYPE_IS_TRIVIAL	parseryac.c	155;"	d	file:
+YYSTYPE_IS_TRIVIAL	parseryac.h	81;"	d
+YYTABLES_NAME	parserlex.c	1981;"	d	file:
+YYTABLE_NINF	parseryac.c	530;"	d	file:
+YYTERROR	parseryac.c	590;"	d	file:
+YYTOKENTYPE	parseryac.c	112;"	d	file:
 YYTOKENTYPE	parseryac.h	38;"	d
-YYTOKEN_TABLE	parseryac.c	105;"	d	file:
-YYTRANSLATE	parseryac.c	438;"	d	file:
-YYUNDEFTOK	parseryac.c	435;"	d	file:
-YYUSE	parseryac.c	271;"	d	file:
-YYUSE	parseryac.c	273;"	d	file:
-YY_	parseryac.c	261;"	d	file:
-YY_	parseryac.c	265;"	d	file:
+YYTOKEN_TABLE	parseryac.c	106;"	d	file:
+YYTRANSLATE	parseryac.c	395;"	d	file:
+YYUNDEFTOK	parseryac.c	392;"	d	file:
+YYUSE	parseryac.c	228;"	d	file:
+YYUSE	parseryac.c	230;"	d	file:
+YY_	parseryac.c	218;"	d	file:
+YY_	parseryac.c	222;"	d	file:
 YY_AT_BOL	parserlex.c	339;"	d	file:
-YY_BREAK	parserlex.c	764;"	d	file:
+YY_BREAK	parserlex.c	766;"	d	file:
 YY_BUFFER_EOF_PENDING	parserlex.c	255;"	d	file:
 YY_BUFFER_NEW	parserlex.c	243;"	d	file:
 YY_BUFFER_NORMAL	parserlex.c	244;"	d	file:
@@ -250,51 +163,52 @@ YY_BUF_SIZE	parserlex.c	151;"	d	file:
 YY_CHAR	parserlex.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
 YY_CURRENT_BUFFER	parserlex.c	271;"	d	file:
 YY_CURRENT_BUFFER_LVALUE	parserlex.c	278;"	d	file:
-YY_DECL	parserlex.c	752;"	d	file:
-YY_DECL_IS_OURS	parserlex.c	748;"	d	file:
+YY_DECL	parserlex.c	754;"	d	file:
+YY_DECL_IS_OURS	parserlex.c	750;"	d	file:
 YY_DO_BEFORE_ACTION	parserlex.c	364;"	d	file:
 YY_END_OF_BUFFER	parserlex.c	372;"	d	file:
 YY_END_OF_BUFFER_CHAR	parserlex.c	140;"	d	file:
-YY_EXIT_FAILURE	parserlex.c	1767;"	d	file:
-YY_EXTRA_TYPE	parserlex.c	604;"	d	file:
-YY_FATAL_ERROR	parserlex.c	739;"	d	file:
+YY_EXIT_FAILURE	parserlex.c	1779;"	d	file:
+YY_EXTRA_TYPE	parserlex.c	606;"	d	file:
+YY_FATAL_ERROR	parserlex.c	741;"	d	file:
 YY_FLEX_MAJOR_VERSION	parserlex.c	9;"	d	file:
 YY_FLEX_MINOR_VERSION	parserlex.c	10;"	d	file:
 YY_FLEX_SUBMINOR_VERSION	parserlex.c	11;"	d	file:
 YY_FLUSH_BUFFER	parserlex.c	307;"	d	file:
-YY_INPUT	parserlex.c	692;"	d	file:
+YY_INPUT	parserlex.c	694;"	d	file:
 YY_INT_ALIGNED	parserlex.c	4;"	d	file:
 YY_LESS_LINENO	parserlex.c	172;"	d	file:
-YY_LOCATION_PRINT	parseryac.c	680;"	d	file:
-YY_LOCATION_PRINT	parseryac.c	685;"	d	file:
-YY_MORE_ADJ	parserlex.c	567;"	d	file:
+YY_LOCATION_PRINT	parseryac.c	626;"	d	file:
+YY_LOCATION_PRINT	parseryac.c	631;"	d	file:
+YY_MORE_ADJ	parserlex.c	563;"	d	file:
 YY_NEW_FILE	parserlex.c	138;"	d	file:
 YY_NULL	parserlex.c	112;"	d	file:
 YY_NUM_RULES	parserlex.c	371;"	d	file:
-YY_READ_BUF_SIZE	parserlex.c	674;"	d	file:
 YY_READ_BUF_SIZE	parserlex.c	676;"	d	file:
-YY_REDUCE_PRINT	parseryac.c	845;"	d	file:
-YY_REDUCE_PRINT	parseryac.c	858;"	d	file:
-YY_RESTORE_YY_MORE_OFFSET	parserlex.c	568;"	d	file:
-YY_RULE_SETUP	parserlex.c	767;"	d	file:
+YY_READ_BUF_SIZE	parserlex.c	678;"	d	file:
+YY_REDUCE_PRINT	parseryac.c	791;"	d	file:
+YY_REDUCE_PRINT	parseryac.c	804;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	parserlex.c	564;"	d	file:
+YY_RULE_SETUP	parserlex.c	769;"	d	file:
 YY_SC_TO_UI	parserlex.c	119;"	d	file:
-YY_STACK_PRINT	parseryac.c	807;"	d	file:
-YY_STACK_PRINT	parseryac.c	857;"	d	file:
+YY_STACK_PRINT	parseryac.c	753;"	d	file:
+YY_STACK_PRINT	parseryac.c	803;"	d	file:
 YY_START	parserlex.c	131;"	d	file:
-YY_START_STACK_INCR	parserlex.c	734;"	d	file:
+YY_START_STACK_INCR	parserlex.c	736;"	d	file:
 YY_STATE_BUF_SIZE	parserlex.c	157;"	d	file:
 YY_STATE_EOF	parserlex.c	135;"	d	file:
 YY_STRUCT_YY_BUFFER_STATE	parserlex.c	196;"	d	file:
-YY_SYMBOL_PRINT	parseryac.c	712;"	d	file:
-YY_SYMBOL_PRINT	parseryac.c	856;"	d	file:
+YY_SYMBOL_PRINT	parseryac.c	658;"	d	file:
+YY_SYMBOL_PRINT	parseryac.c	802;"	d	file:
 YY_TYPEDEF_YY_BUFFER_STATE	parserlex.c	160;"	d	file:
 YY_TYPEDEF_YY_SIZE_T	parserlex.c	191;"	d	file:
-YY_USER_ACTION	parserlex.c	759;"	d	file:
+YY_USER_ACTION	parserlex.c	761;"	d	file:
 YY_USE_CONST	parserlex.c	100;"	d	file:
 YY_USE_CONST	parserlex.c	93;"	d	file:
 _GEN_XML_H_	genXml.h	2;"	d
-_STDLIB_H	parseryac.c	315;"	d	file:
-_STDLIB_H	parseryac.c	343;"	d	file:
+_STDLIB_H	parseryac.c	272;"	d	file:
+_STDLIB_H	parseryac.c	300;"	d	file:
+_TRAN_H_	trans.h	2;"	d
 __STDC_LIMIT_MACROS	parserlex.c	39;"	d	file:
 _att_t	genXml.h	/^typedef struct _att_t$/;"	s
 _att_t::name	genXml.h	/^	char *name;$/;"	m	struct:_att_t	access:public
@@ -307,7 +221,7 @@ _my_stack::values	genXml.h	/^	int values[MAX_DEPTH];$/;"	m	struct:_my_stack	acce
 action	mglyac.y	/^action: EXECUTE qstring$/;"	l
 add_att	genXml.c	/^void add_att(att_t* head, const char* name, const char* value)$/;"	f	signature:(att_t* head, const char* name, const char* value)
 add_att	genXml.h	/^void add_att(att_t* head, const char* name, const char* vaule);$/;"	p	signature:(att_t* head, const char* name, const char* vaule)
-alloca	parseryac.c	308;"	d	file:
+alloca	parseryac.c	265;"	d	file:
 att_t	genXml.h	/^}att_t;$/;"	t	typeref:struct:_att_t
 attribute	mglyac.y	/^attribute: \/* empty *\/     { $$ = VISIBLE; }$/;"	l
 bool	genXml.h	/^typedef unsigned char bool;$/;"	t
@@ -315,16 +229,17 @@ close_file	genXml.c	/^void close_file(FILE *fp)$/;"	f	signature:(FILE *fp)
 close_file	genXml.h	/^void close_file(FILE *fp);$/;"	p	signature:(FILE *fp)
 command	mglyac.y	/^command: \/* empty *\/ { cmd_str = strdup(""); }$/;"	l
 cur_depth	parseryac.c	/^int cur_depth = 0;$/;"	v
-dbgToken	parserlex.c	/^	int dbgToken(int tok, char *s)$/;"	f	signature:(int tok, char *s)
-dbgToken	parserlex.c	/^	int dbgToken(int tok, char *x) {};$/;"	f	signature:(int tok, char *x)
-debug_output	genXml.h	10;"	d
+dbgToken	parserlex.c	/^int dbgToken(int tok, char *s)$/;"	f	signature:(int tok, char *s)
+debug_output	genXml.h	11;"	d
 debug_output	genXml.h	8;"	d
 depth_stack	parseryac.c	/^stack depth_stack;$/;"	v
 end_par_att	genXml.c	/^void end_par_att(att_t *head)$/;"	f	signature:(att_t *head)
 end_par_att	genXml.h	/^void end_par_att(att_t *head);$/;"	p	signature:(att_t *head)
-false	genXml.h	15;"	d
+exp_buff	trans.cpp	/^string exp_buff;$/;"	v
+false	genXml.h	16;"	d
 file_des	parser.y	/^file_des: filename_state module_statement$/;"	l
 filename_state	parser.y	/^filename_state: TOK_FILENAME '=' VALUESTRING$/;"	l
+files	parser.y	/^files:  \/*empty*\/$/;"	l
 finish_make_node_name_str	genXml.c	/^void finish_make_node_name_str(char *str, att_t **head)$/;"	f	signature:(char *str, att_t **head)
 finish_make_node_name_str	genXml.h	/^void finish_make_node_name_str(char *str, att_t **head);$/;"	p	signature:(char *str, att_t **head)
 flex_int16_t	parserlex.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
@@ -360,11 +275,12 @@ make_node_str	genXml.c	/^char* make_node_str(const char *node_name, att_t* head,
 make_node_str	genXml.h	/^char* make_node_str(const char *node_name, att_t* head, const char* value);$/;"	p	signature:(const char *node_name, att_t* head, const char* value)
 malloc	parseryac.c	/^void *malloc (YYSIZE_T); \/* INFRINGES ON USER NAME SPACE *\/$/;"	p	file:
 module_attribute	parser.y	/^module_attribute:  \/*empty*\/$/;"	l
-module_body_statement	parser.y	/^module_body_statement: \/*empty body*\/$/;"	l
+module_body_statement	parser.y	/^module_body_statement:  {}\/*empty body*\/$/;"	l
 module_name	parser.y	/^module_name: TOKEN_IDENTIFIER module_attribute $/;"	l
 module_statement	parser.y	/^module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND $/;"	l
+my_printf	parserlex.c	588;"	d	file:
+my_printf	parserlex.c	590;"	d	file:
 my_return	parserlex.c	585;"	d	file:
-my_return	parserlex.c	588;"	d	file:
 name	genXml.h	/^	char *name;$/;"	m	struct:_att_t	access:public
 next	genXml.h	/^	struct _att_t *next;$/;"	m	struct:_att_t	typeref:struct:_att_t::_att_t	access:public
 next_depth	parseryac.c	/^int next_depth = 0;$/;"	v
@@ -385,7 +301,7 @@ screen_name	mglyac.y	/^screen_name: SCREEN id { start_screen($2); }$/;"	l
 screen_terminator	mglyac.y	/^screen_terminator: END id { end_screen($2); }$/;"	l
 screens	mglyac.y	/^screens:  screen$/;"	l
 separte	parser.y	/^separte: ';'$/;"	l
-short	parseryac.c	211;"	d	file:
+short	parseryac.c	168;"	d	file:
 size	genXml.h	/^	int size;$/;"	m	struct:_att_t	access:public
 stack	genXml.h	/^} stack;$/;"	t	typeref:struct:_my_stack
 start_par_att	genXml.c	/^att_t* start_par_att()$/;"	f
@@ -397,7 +313,12 @@ titles	mglyac.y	/^titles: \/* empty *\/$/;"	l
 top	genXml.h	/^	int top;$/;"	m	struct:_my_stack	access:public
 top_stack	genXml.c	/^int top_stack(stack *s)$/;"	f	signature:(stack *s)
 top_stack	genXml.h	/^int top_stack(stack *s);$/;"	p	signature:(stack *s)
-true	genXml.h	14;"	d
+translateInfix	trans.cpp	/^translateInfix (const char* formula)$/;"	f	signature:(const char* formula)
+translateInfixCh	trans.cpp	/^translateInfixCh (const char* formula)$/;"	f	signature:(const char* formula)
+translateInfixCh	trans.h	/^char *translateInfixCh (const char* formula);$/;"	p	signature:(const char* formula)
+translateMathML	trans.cpp	/^char * translateMathML (const char* xml)$/;"	f	signature:(const char* xml)
+translateMathML	trans.h	/^char * translateMathML (const char* xml);$/;"	p	signature:(const char* xml)
+true	genXml.h	15;"	d
 unput	parserlex.c	188;"	d	file:
 value	genXml.h	/^	char *value;$/;"	m	struct:_att_t	access:public
 values	genXml.h	/^	int values[MAX_DEPTH];$/;"	m	struct:_my_stack	access:public
@@ -427,7 +348,7 @@ yy_buffer_state::yy_n_chars	parserlex.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffe
 yy_buffer_status	parserlex.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:	access:public
 yy_c_buf_p	parserlex.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
 yy_ch_buf	parserlex.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:	access:public
-yy_chk	parserlex.c	/^static yyconst flex_int16_t yy_chk[431] =$/;"	v	file:
+yy_chk	parserlex.c	/^static yyconst flex_int16_t yy_chk[403] =$/;"	v	file:
 yy_create_buffer	parserlex.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f	signature:(FILE * file, int size )
 yy_create_buffer	parserlex.c	/^YY_BUFFER_STATE yy_create_buffer (FILE *file,int size  );$/;"	p	file:	signature:(FILE *file,int size )
 yy_def	parserlex.c	/^static yyconst flex_int16_t yy_def[78] =$/;"	v	file:
@@ -462,12 +383,12 @@ yy_last_accepting_cpos	parserlex.c	/^static char *yy_last_accepting_cpos;$/;"	v	
 yy_last_accepting_state	parserlex.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
 yy_load_buffer_state	parserlex.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:	signature:(void)
 yy_load_buffer_state	parserlex.c	/^static void yy_load_buffer_state (void );$/;"	p	file:	signature:(void )
-yy_meta	parserlex.c	/^static yyconst flex_int32_t yy_meta[30] =$/;"	v	file:
+yy_meta	parserlex.c	/^static yyconst flex_int32_t yy_meta[29] =$/;"	v	file:
 yy_n_chars	parserlex.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:	access:public
 yy_n_chars	parserlex.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
 yy_new_buffer	parserlex.c	317;"	d	file:
 yy_nxt	parserlex.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:	access:public
-yy_nxt	parserlex.c	/^static yyconst flex_int16_t yy_nxt[431] =$/;"	v	file:
+yy_nxt	parserlex.c	/^static yyconst flex_int16_t yy_nxt[403] =$/;"	v	file:
 yy_reduce_print	parseryac.c	/^yy_reduce_print (YYSTYPE *yyvsp, int yyrule)$/;"	f	file:	signature:(YYSTYPE *yyvsp, int yyrule)
 yy_scan_buffer	parserlex.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f	signature:(char * base, yy_size_t size )
 yy_scan_buffer	parserlex.c	/^YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size  );$/;"	p	file:	signature:(char *base,yy_size_t size )
@@ -498,7 +419,7 @@ yyalloc::yyss_alloc	parseryac.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc
 yyalloc::yyvs_alloc	parseryac.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:	access:public
 yychar	parseryac.c	/^int yychar;$/;"	v
 yycheck	parseryac.c	/^static const yytype_int8 yycheck[] =$/;"	v	file:
-yyclearin	parseryac.c	609;"	d	file:
+yyclearin	parseryac.c	555;"	d	file:
 yyconst	parserlex.c	106;"	d	file:
 yyconst	parserlex.c	108;"	d	file:
 yydebug	parseryac.c	/^int yydebug;$/;"	v
@@ -507,7 +428,7 @@ yydefgoto	parseryac.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	file:
 yydestruct	parseryac.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	file:	signature:(const char *yymsg, int yytype, YYSTYPE *yyvaluep)
 yyensure_buffer_stack	parserlex.c	/^static void yyensure_buffer_stack (void );$/;"	p	file:	signature:(void )
 yyensure_buffer_stack	parserlex.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:	signature:(void)
-yyerrok	parseryac.c	608;"	d	file:
+yyerrok	parseryac.c	554;"	d	file:
 yyerror	parseryac.c	/^int yyerror (char *err) {$/;"	f	signature:(char *err)
 yyfree	parserlex.c	/^void yyfree (void *  );$/;"	p	file:	signature:(void * )
 yyfree	parserlex.c	/^void yyfree (void * ptr )$/;"	f	signature:(void * ptr )
@@ -529,14 +450,14 @@ yyinput	parserlex.c	/^    static int yyinput (void)$/;"	f	file:	signature:(void)
 yyinput	parserlex.c	/^static int yyinput (void );$/;"	p	file:	signature:(void )
 yyleng	parserlex.c	/^int yyleng;$/;"	v
 yyless	parserlex.c	175;"	d	file:
-yyless	parserlex.c	1778;"	d	file:
-yyless	parserlex.c	1779;"	d	file:
+yyless	parserlex.c	1790;"	d	file:
+yyless	parserlex.c	1791;"	d	file:
 yylex	parserlex.c	/^extern int yylex (void);$/;"	p	file:	signature:(void)
 yylex_destroy	parserlex.c	/^int yylex_destroy  (void)$/;"	f	signature:(void)
 yylex_destroy	parserlex.c	/^int yylex_destroy (void );$/;"	p	file:	signature:(void )
 yylineno	parserlex.c	/^int yylineno = 1;$/;"	v
 yylval	parseryac.c	/^YYSTYPE yylval;$/;"	v
-yymore	parserlex.c	566;"	d	file:
+yymore	parserlex.c	562;"	d	file:
 yynerrs	parseryac.c	/^int yynerrs;$/;"	v
 yyout	parserlex.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
 yypact	parseryac.c	/^static const yytype_int8 yypact[] =$/;"	v	file:
@@ -570,14 +491,14 @@ yyset_out	parserlex.c	/^void yyset_out (FILE *  out_str )$/;"	f	signature:(FILE 
 yyss_alloc	parseryac.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:	access:public
 yystos	parseryac.c	/^static const yytype_uint8 yystos[] =$/;"	v	file:
 yystpcpy	parseryac.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:	signature:(char *yydest, const char *yysrc)
-yystpcpy	parseryac.c	907;"	d	file:
+yystpcpy	parseryac.c	853;"	d	file:
 yystrlen	parseryac.c	/^yystrlen (const char *yystr)$/;"	f	file:	signature:(const char *yystr)
-yystrlen	parseryac.c	884;"	d	file:
-yystype	parseryac.c	199;"	d	file:
-yystype	parseryac.h	126;"	d
+yystrlen	parseryac.c	830;"	d	file:
+yystype	parseryac.c	156;"	d	file:
+yystype	parseryac.h	82;"	d
 yysyntax_error	parseryac.c	/^yysyntax_error (char *yyresult, int yystate, int yychar)$/;"	f	file:	signature:(char *yyresult, int yystate, int yychar)
 yytable	parseryac.c	/^static const yytype_uint8 yytable[] =$/;"	v	file:
-yyterminate	parserlex.c	729;"	d	file:
+yyterminate	parserlex.c	731;"	d	file:
 yytext	parserlex.c	/^char *yytext;$/;"	v
 yytext_ptr	parserlex.c	354;"	d	file:
 yytname	parseryac.c	/^static const char *const yytname[] =$/;"	v	file:

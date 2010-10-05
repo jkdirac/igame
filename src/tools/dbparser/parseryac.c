@@ -449,8 +449,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    28,    30,    33,    38,    52,    67,   120,
-     148,   149,   157,   158,   174,   180
+       0,    27,    27,    28,    30,    33,    38,    52,    67,   124,
+     152,   153,   161,   162,   178,   184
 };
 #endif
 
@@ -1421,13 +1421,13 @@ yyreduce:
 						char *pool = (char *) malloc (sizeof(char) * (len+1));
 						if (pool == NULL)
 						{
-							printf ("pool error\n");
+/*                            printf ("pool error\n");*/
 							put_string(fp_outfile, cur_depth, math);
 							put_string(fp_outfile, 0, "\n");
 						}
 						else
 						{
-							printf ("pool success: len %d\n", len);
+/*                            printf ("pool success: len %d\n", len);*/
 							int idx = 0;
 							int nsize = 0;
 							while (idx+nsize < len)
@@ -1436,7 +1436,7 @@ yyreduce:
 								{
 									memset (pool, 0, sizeof(char) * (len+1));
 									strncpy(pool, math+idx, nsize);
-									printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);
+/*                                    printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);*/
 									put_string(fp_outfile, cur_depth, pool);
 									put_string(fp_outfile, 0, "\n");
 									idx += nsize + 1;
@@ -1447,7 +1447,7 @@ yyreduce:
 							}
 							memset (pool, 0, sizeof(char) * (len+1));
 							strcpy(pool, math+idx);
-									printf ("haha there is a return: %s\n", pool);
+/*                                    printf ("haha there is a return: %s\n", pool);*/
 							put_string(fp_outfile, cur_depth, pool);
 						  	put_string(fp_outfile, 0, "\n");
 						}
@@ -1455,10 +1455,14 @@ yyreduce:
 						if (pool != NULL)
 							free(pool);
 						//将mathml串分开呀
+						if (math != NULL)
+						{
+							free(math);
+						}
 					}
-					if (math != NULL)
+					else
 					{
-						free(math);
+						fprintf(stderr, "math expression string error in line: %d\n", lineno);
 					}
 			}
     break;
@@ -1466,7 +1470,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 121 "parser.y"
+#line 125 "parser.y"
     {
 			//尾部
 			if (isempty(&depth_stack) == true)
@@ -1497,7 +1501,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 150 "parser.y"
+#line 154 "parser.y"
     { 
 				if(p_attr == NULL)
 					p_attr = start_par_att();
@@ -1508,14 +1512,14 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 157 "parser.y"
+#line 161 "parser.y"
     {}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 159 "parser.y"
+#line 163 "parser.y"
     { 
 				if (isempty(&depth_stack) == true)
 				{
@@ -1536,7 +1540,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 175 "parser.y"
+#line 179 "parser.y"
     {
 				debug_output("sub module\n");
 			}
@@ -1545,7 +1549,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1549 "y.tab.c"
+#line 1553 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1757,7 +1761,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 182 "parser.y"
+#line 186 "parser.y"
 
 
 int yyerror (char *err) {

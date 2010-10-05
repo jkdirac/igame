@@ -75,13 +75,13 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 						char *pool = (char *) malloc (sizeof(char) * (len+1));
 						if (pool == NULL)
 						{
-							printf ("pool error\n");
+/*                            printf ("pool error\n");*/
 							put_string(fp_outfile, cur_depth, math);
 							put_string(fp_outfile, 0, "\n");
 						}
 						else
 						{
-							printf ("pool success: len %d\n", len);
+/*                            printf ("pool success: len %d\n", len);*/
 							int idx = 0;
 							int nsize = 0;
 							while (idx+nsize < len)
@@ -90,7 +90,7 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 								{
 									memset (pool, 0, sizeof(char) * (len+1));
 									strncpy(pool, math+idx, nsize);
-									printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);
+/*                                    printf ("haha there is a return: %s [%d-%d]\n", pool, idx, nsize);*/
 									put_string(fp_outfile, cur_depth, pool);
 									put_string(fp_outfile, 0, "\n");
 									idx += nsize + 1;
@@ -101,7 +101,7 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 							}
 							memset (pool, 0, sizeof(char) * (len+1));
 							strcpy(pool, math+idx);
-									printf ("haha there is a return: %s\n", pool);
+/*                                    printf ("haha there is a return: %s\n", pool);*/
 							put_string(fp_outfile, cur_depth, pool);
 						  	put_string(fp_outfile, 0, "\n");
 						}
@@ -109,10 +109,14 @@ module_statement: module_name TOK_GROUPSTART module_body_statement TOK_GROUPEND
 						if (pool != NULL)
 							free(pool);
 						//将mathml串分开呀
+						if (math != NULL)
+						{
+							free(math);
+						}
 					}
-					if (math != NULL)
+					else
 					{
-						free(math);
+						fprintf(stderr, "math expression string error in line: %d\n", lineno);
 					}
 			}
 		;
