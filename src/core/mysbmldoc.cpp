@@ -2,42 +2,7 @@
 
 MySBMLDocument::MySBMLDocument ():
 	SBMLDocument (2,4)
-{
-	//complete unit map
-	unitMap["ampere"] = UNIT_KIND_AMPERE;
-	unitMap["becquerel"] = UNIT_KIND_BECQUEREL;
-	unitMap["candela"] = UNIT_KIND_CANDELA;
-	unitMap["coulomb"] = UNIT_KIND_COULOMB;
-	unitMap["dimensionless"] = UNIT_KIND_DIMENSIONLESS;
-	unitMap["farad"] = UNIT_KIND_FARAD;
-	unitMap["gram"] = UNIT_KIND_GRAM;
-	unitMap["gray"] = UNIT_KIND_GRAY;
-	unitMap["henry"] = UNIT_KIND_HENRY;
-	unitMap["hertz"] = UNIT_KIND_HERTZ;
-	unitMap["item"] = UNIT_KIND_ITEM;
-	unitMap["joule"] = UNIT_KIND_JOULE;
-	unitMap["katal"] = UNIT_KIND_KATAL;
-	unitMap["kelvin"] = UNIT_KIND_KELVIN;
-	unitMap["kilogram"] = UNIT_KIND_KILOGRAM;
-	unitMap["litre"] = UNIT_KIND_LITRE;
-	unitMap["lumen"] = UNIT_KIND_LUMEN;
-	unitMap["lux"] = UNIT_KIND_LUX;
-	unitMap["metre"] = UNIT_KIND_METRE;
-	unitMap["mole"] = UNIT_KIND_MOLE;
-	unitMap["newton"] = UNIT_KIND_NEWTON;
-	unitMap["ohm"] = UNIT_KIND_OHM;
-	unitMap["pascal"] = UNIT_KIND_PASCAL;
-	unitMap["radian"] = UNIT_KIND_RADIAN;
-	unitMap["second"] = UNIT_KIND_SECOND;
-	unitMap["siemens"] = UNIT_KIND_SIEMENS;
-	unitMap["sievert"] = UNIT_KIND_SIEVERT;
-	unitMap["steradian"] = UNIT_KIND_STERADIAN;
-	unitMap["tesla"] = UNIT_KIND_TESLA;
-	unitMap["volt"] = UNIT_KIND_VOLT;
-	unitMap["watt"] = UNIT_KIND_WATT;
-	unitMap["weber"] = UNIT_KIND_WEBER;
-	unitMap["invalid"] = UNIT_KIND_INVALID;
-}
+{}
 
 MySBMLDocument::~MySBMLDocument ()
 {
@@ -49,9 +14,58 @@ MySBMLDocument::~MySBMLDocument ()
 		delete listOfMyReactions[i];
 }
 
+//	make sure species added has never existed before
+void MySBMLDocument::addMySpecies (MySpecies* s) 
+{
+	listOfMySpecies.push_back (s);
+	MyCompartment* c = getMyCompartment (
+			s->getCompartment ()
+			);
+	if (c == NULL) throw StrCacuException (
+			"No compartment existed in compartment list"
+			" for given species!"
+			);
+	else c->addMySpeciesIn (s);
+}
+
+void MySBMLDocument::addMyCompartment (MyCompartment* c) 
+{
+	listOfMyCompartments.push_back (c);
+}
+
+void MySBMLDocument::addMyCompartmentChildren ()
+{
+	for (int i=0; i < listOfMyCompartments.size (); i++)
+	{
+		MyCompartment* child = listOfMyCompartments[i];
+		MyCompartment* parent = getMyCompartment (child->getOutside ());
+		if (parent != NULL) parent->addMyCompartmentIn (child);
+		else throw StrCacuException (
+				"No compartment existed in compartment list"
+				" for given compartment!"
+				);
+	}
+}
+
+void MySBMLDocument::addMyReaction (MyReaction* r) {
+	listOfMyReactions.push_back (r);
+}
+
 MySpecies* MySBMLDocument::createMySpecies ()
 {
 	MySpecies* s = new MySpecies;
+	listOfMySpecies.push_back (s);
+	return s;
+}
+
+MySpecies* MySBMLDocument::createMySpecies (const int& spciesNum)
+{
+	MySpecies* s = new MySpecies;
+
+	ostringstream oss;
+	oss << "[sPecIes" << speciesNum << "]";
+	s->setId (oss.str ());
+	
 	listOfMySpecies.push_back (s);
 	return s;
 }
@@ -63,28 +77,32 @@ MyCompartment* MySBMLDocument::createMyCompartment ()
 	return c;
 }
 
-MyReaction* MySBMLDocument::createMyReaction ()
+MyReaction* MySBMLDocument::createMyReaction (
+		const string& prefix, 
+		const int& reactionNum
+		)
 {
 	MyReaction* r = new MyReaction;
+
+	ostringstream oss;
+	oss << prefix << "[rEactIon" << reactionNum << "]";
+	r->setId (oss.str ());
+
 	listOfMyReactions.push_back (r);
 	return r;
 }
 
-MyCompartment* MySBMLDocument::getMyCompartment (
-		const string& label
-		)
+MyCompartment* MySBMLDocument::getMyCompartment (const string& ref)
 {
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{
 		MyCompartment* comp = listOfMyCompartments[i];
-		if (comp->getId () == label) return comp;
+		if (comp->getId () == ref) return comp;
 	}
 	return NULL;
 }
 
-const MyCompartment* MySBMLDocument::getMyCompartment (
-		const string& label
-		) const
+const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const
 {
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{
@@ -104,59 +122,48 @@ int MySBMLDocument::getNumOfMySpecies () const
 	return listOfMySpecies.size ();
 }
 
-MySpecies* MySBMLDocument::validateBackSpecies ()
+MySpecies* getMySpecies (const string& ref) 
 {
-	//
-	//	algorithm:
-	//	for two compartment-type species, in addition
-	//	to its species strucutre, we also need to compare
-	//	their corresponded compartment
-	//
-	MySpecies* myspe = listOfMySpecies.back ();
-	string compid = myspe->getCompartment ();
-	string ccid = myspe->getCCid ();
-
-	for (int i=0; i < listOfMySpecies.size ()-1; i++)
+	for (int i=0; i < listOfMySpecies.size (); i++) 
 	{
-		MySpecies* myspe1 = listOfMySpecies[i];
-		string compid1 = myspe1->getCompartment ();
-		string ccid1 = myspe1->getCCid ();
-
-		if (!myspe1->equal (myspe)) continue;
-		else if (compid != compid1) continue; 
-		else if (ccid != ccid1) continue;
-		else
-		{
-			listOfMySpecies.pop_back ();
-			delete myspe;
-			return myspe1;
-		}
+		MySpecies* s = listOfMySpecies[i];
+		if (s->getId () == ref) return s;
 	}
-	return myspe;
+	return NULL;
 }
 
-string MySBMLDocument::genSbmlId (
-		const int& t
-		) const
+const MySpecies* getMySpecies (const string& ref) const
 {
-	ostringstream oss;
-	switch (t)
+	for (int i=0; i < listOfMySpecies.size (); i++) 
 	{
-		case 0: oss << "sPecIes" << listOfMySpecies.size ();
-				break;
-		case 1: oss << "rEactIon" << listOfMyReactions.size ();
-				break;
+		MySpecies* s = listOfMySpecies[i];
+		if (s->getId () == ref) return s;
 	}
-	return string (oss.str ());
+	return NULL;
 }
 
-UnitKind_t MySBMLDocument::getUnitKind_t (
-		const string& unit
-		) const
+MySpecies* getMySpecies (const MySpecies* s)
 {
-	if (unitMap.count (unit))
-		return unitMap.find (unit)->second;
-	else return unitMap.find ("invalid")->second;
+	MySpecies* found = NULL;
+	for (int i=0; i<listOfMyCompartments.size (); i++)
+	{
+		MyCompartment* c = listOfMyCompartments[i];
+		found  = c->isMySpeciesIn (s);
+		if (found != NULL) break;
+	}
+	return found;
+}
+		
+const MySpecies* getMySpecies (const MySpecies* s) const
+{
+	MySpecies* found = NULL;
+	for (int i=0; i<listOfMyCompartments.size (); i++)
+	{
+		MyCompartment* c = listOfMyCompartments[i];
+		found  = c->isMySpeciesIn (s);
+		if (found != NULL) break;
+	}
+	return found;
 }
 
 void MySBMLDocument::run (

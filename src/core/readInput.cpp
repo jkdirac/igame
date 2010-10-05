@@ -79,7 +79,7 @@ void readInput::config (
 
 			readUnit (SYSTEM, unitDoc, unitPath2, j, kind, exponent, scale, multiplier);
 
-			UnitKind_t unitKind = mysbmldoc->getUnitKind_t (kind);
+			UnitKind_t unitKind = getUnitKind_t (kind);
 			setUnit (unit, unitKind, exponent, scale, multiplier);
 		}
 	}
@@ -249,20 +249,9 @@ void readInput::config (
 		MyCompartment* comp = mysbmldoc->createMyCompartment ();
 		setCompartment (comp, db, id, name, spatialDimensions, 
 				size, units, outside, constant);
-
-		//
-		//	add comp* to its outside compartment
-		//
-		if (outside != "ROOT")
-		{
-			MyCompartment* outComp = 
-				mysbmldoc->getMyCompartment (outside);
-			if (outComp != NULL) outComp->addMyCompartmentIn (comp);
-			else throw StrCacuException (
-					"Unrecognized Compartment Label (outside)!"
-					);
-		}
 	}
+	mysbmldoc->addMyCompartmentChildren ();
+
 
 	//	=========================================
 	//			READ listOfSpecies
@@ -286,7 +275,7 @@ void readInput::config (
 				substanceUnits, hasOnlySubstanceUnits, 
 				boundaryCondition, charge, constant);
 
-		MySpecies* s = mysbmldoc->createMySpecies ();  
+		MySpecies* s = new MySpecies;  
 		setSpecies (s, db, ccid, id, name, compartment, initialAmount, 
 				initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
 				boundaryCondition, charge, constant);
@@ -312,7 +301,7 @@ void readInput::config (
 		s->rearrange ();
 
 		//	add species in compartment
-		mysbmldoc->validateBackSpecies (); //check if this species has been existed before
+		if (mysbmldoc->getMySpecies (s) ==NULL) mysbmldoc->addMySpecies (s); 
 	}
 
 	//	=========================================

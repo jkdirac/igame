@@ -1,15 +1,24 @@
 #include "myspecies.h"
 
-	MySpecies::MySpecies () 
-:Species (2,4), isRearranged (false)
+MySpecies::MySpecies () :
+	Species (2,4), isRearranged (false)
 {}
+
+MySpecies::MySpecies (const int& speciesNum)
+{
+	ostringstream oss;
+	oss << "[sPecIes" << speciesNum << "]";
+	s->setId (oss.str ());
+}
 
 MySpecies::MySpecies (
 		const MySpecies* orig
 		): 
-	dbId (orig->dbId),
-	isRearranged (orig->isRearranged),
-	equiv (orig->equiv)
+	reference_db (orig->reference_db),
+	comp_type_id (orig->comp_type_id),
+	speciesLabel_db (orig->speciesLabel_db),
+	equiv (orig->equiv),
+	isRearranged (orig->isRearranged)
 {
 	for (int i=0; i < orig->listOfChains.size (); i++)
 		createChain (orig->listOfChains[i]);
@@ -41,8 +50,11 @@ void MySpecies::split (
 		vector<MySpecies*>& pieces
 		)
 {
-	//rearrange species
-	rearrange ();
+	//
+	//	TIPS:
+	//	(1) for species of mixed chains and trees, 
+	//	it must be rearranged before calling this function!
+	//
 
 	//container to store chainnum of species
 	vector< set<int> > cU;
@@ -225,7 +237,7 @@ Chain* MySpecies::createChain (
 
 	ostringstream oss;
 	oss << prefix << "[cHaIn" << chainnum << "]";
-	c->label  = oss.str ();
+	c->chainLabel  = oss.str ();
 	
 	listOfChains.push_back (c);
 	return c;
@@ -311,40 +323,28 @@ const Part* MySpecies::getPart (
 	return NULL;
 }
 
-void MySpecies::setDbId (
-		const string& dbid
-		)
-{
-	dbId = dbid;
+void MySpecies::setDB_ref (const string& ref) {
+	reference_db = ref;
 }
 
-void MySpecies::setLabel (
-		const string& _label
-		)
-{
-	label = _label;
+void MySpecies::setDB_Label (const string& label) {
+	speciesLabel_db = label;
 }
 
-void MySpecies::setCCid (
-		const string& _ccid
-		)
-{
-	ccid = _ccid;
+void MySpecies::setCompTypeId (const string& sid) {
+	comp_type_id = sid;
 }
 
-string MySpecies::getDbId () const
-{
-	return dbId;
+string MySpecies::getDB_ref () const {
+	return reference_db;
 }
 
-string MySpecies::getLabel () const
-{
-	return label;
+string MySpecies::getDB_Label () const {
+	return speciesLabel_db;
 }
 
-string MySpecies::getCCid () const
-{
-	return ccid;
+string MySpecies::getCompTypeId () const {
+	return comp_type_id;
 }
 
 void MySpecies::rearrange ()
@@ -353,11 +353,7 @@ void MySpecies::rearrange ()
 	if (!isRearranged)
 	{
 		for (int i =0; i < listOfChains.size (); i++)
-		{
-			Chain* c = listOfChains[i];
-			c->genUnicode ();
-			c->genChainLabel (getId (), i);
-		}
+			listOfChains[i]->genUnicode ();
 
 		stable_sort (
 				listOfChains.begin(), 
@@ -371,28 +367,26 @@ void MySpecies::rearrange ()
 	}
 
 	//generate weight for leaf nodes
-	int numC = listOfChains.size ();
-	for (int cnt1 =0; cnt1 < numC; cnt1++)
+	for (int i=0; i<listOfChains.size(); i++)
 	{
-		Chain* c = listOfChains[cnt1];
-		int numP = c->listOfParts.size ();
-		for (int cnt2 =0; cnt2 < numP; cnt2++)
+		Chain* c = listOfChains[i];
+		for (int j=0; j<c->listOfParts.size (); j++)
 		{
-			Part* p = c->listOfParts[cnt2];
+			Part* p = c->listOfParts[j];
 			if (p->getIsBinded ())
 			{
-				Node* n = findBindedNode (p->getPartLabel());
-				if (n) n->setNodeWeight (cnt1, cnt2);
+				string label = p->getPartLabel ();
+				Node* n = findBindedNode (label);
+				if (n) n->setNodeWeight (i,j);
 			}
 		}
 	}
 
 	//generate weight for all nodes
 	//generate huffman code for all nodes
-	int numT = listOfTrees.size ();
-	for (int cnt =0; cnt < numT; cnt++)
+	for (int i=0; i < listOfTrees.size (); i++)
 	{
-		Tree* t = listOfTrees[cnt];
+		Tree* t = listOfTrees[i];
 		t->genWeight ("ROOT");
 		t->genHuffman ("ROOT");
 
@@ -414,7 +408,7 @@ void MySpecies::rearrange ()
 	//return
 }
 
-void MySpecies::DeleteAndSave (
+void MySpecies::partialDup (
 		const set<int>& chainSaved,
 		const set<string>& nodeSaved
 		)

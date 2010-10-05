@@ -58,127 +58,69 @@ class MySpecies:
 	public:
 
 		MySpecies ();
-
-		MySpecies (
-				const MySpecies* orig
-				);
-
+		MySpecies (const int&);
+		MySpecies (const MySpecies*);
 		~MySpecies ();
 
-		void DeleteAndSave (
-				const set<int>& chainSaved,
-				const set<string>& nodeSaved
-				);
-
-		void split (
-				vector<MySpecies*>& pieces
-				);
-
 		void rearrange ();
-
-		bool equal (
-				const MySpecies* rhs
-				);
+		bool equal (const MySpecies*);
+		void split (vector<MySpecies*>&);
+		void partialDup (const set<int>&, const set<string>&);
 
 		Chain* createChain ();
-		Chain* createChain (const Chain* c);
+		Chain* createChain (const Chain* c); 
+		//	create chain with name (cHaIn+No.)
 		Chain* createChain (
-				const string& prefix,
-				const int& chainnum
+				const string&, const int&
 				);
 
 		Tree* createTree ();
-
-		Tree* createTree (
-				const Tree* t
-				);
+		Tree* createTree (const Tree* t);
 
 		int getNumOfChains () const;
-
 		int getNumOfTrees () const;
 
-		Chain* getChain (
-				const int& n
-				);
+		Chain* getChain (const int&);
+		const Chain* getChain (const int&) const;
 
-		const Chain* getChain (
-				const int& n
-				) const;
+		Tree* getTree (const int&);
+		const Tree* getTree (const int&) const;
 
-		Tree* getTree (
-				const int& n
-				);
+		Part* getPart (const string&);
+		const Part* getPart (const string&) const;
 
-		const Tree* getTree (
-				const int& n
-				) const;
+		void setDB_ref (const string&);
+		void setDB_Label (const string&);
+		void setCompTypeId (const string&);
 
-		Part* getPart (
-				const string& partLabel
-				);
-
-		const Part* getPart (
-				const string& partLabel
-				) const;
-
-		void setDbId (
-				const string& dbid
-				);
-
-		void setLabel (
-				const string& _label
-				);
-
-		void setCompartment (
-				const string& _ccid 
-				);
-
-		void 
-
-		string getDbId () const;
-		string getLabel () const;
+		string getDB_ref () const;
+		string getDB_Label () const;
 		string getCompTypeId () const;
 
-		bool countBindedNode (
-				const string& label
-				) const;
+		Node* findBindedNode (const string&);
+		const Node* findBindedNode (const string&) const;
+		bool countBindedNode (const string&) const;
 
-		Node* findBindedNode (
-				const string& label
-				);
-
-		bool match (
-				const MySpecies* s,
-				vector<cMatchsType2>& trym
-				) const;
+		bool match (const MySpecies*, cMatchsArray& res) const;
 
 		void Output () const;
 
 	private:
 
-		string dbId;
-		string label; //used in reaction templates
+		string reference_db; //id in database for template species 
+		string comp_type_id; //non-empty if it is a compartment-type species 
+		string speciesLabel_db; //used in reaction templates
 
-		//
-		//	compartment type id, is a compartment-type attribute
-		//	-1 means it is not a compartment-type species,
-		//	positive values gives the index of corresponded compartment
-		//	in compartment list
-		//
-		string comp_type_id;
+		vector<markType> equiv; //record block of same chains
+		bool isRearranged; //if its structure has been rearranged
 
-		bool isRearranged;
-
+		//	chain list and tree list
 		vector<Chain*> listOfChains;
 		vector<Tree*> listOfTrees;
 
-		vector< pair<int,int> > equiv;
+	private:
 
 		void findEquiv ();
-
-		void perm (
-				const int& i, 
-				const permType& permAll
-				);
+		void perm (const int&, const permType&);
 };
 #endif

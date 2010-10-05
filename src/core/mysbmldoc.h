@@ -1,14 +1,14 @@
 /*************************************************************************************
-*
-*            Author: liaochen- liaochen@mail.ustc.edu.cn
-*
-*            Last modified:	2010-09-25 22:02
-*
-*            Filename:		mysbmldoc.h
-*
-*            Description: .
-*
-************************************************************************************/
+ *
+ *            Author: liaochen- liaochen@mail.ustc.edu.cn
+ *
+ *            Last modified:	2010-09-25 22:02
+ *
+ *            Filename:		mysbmldoc.h
+ *
+ *            Description: .
+ *
+ ************************************************************************************/
 #ifndef MYSBML_DOCUMENT_H
 #define MYSBML_DOCUMENT_H
 
@@ -32,48 +32,31 @@ class MySBMLDocument:
 		MySBMLDocument ();
 		~MySBMLDocument ();
 
+		MySpecies* createMySpecies ();
+		MySpecies* createMySpecies (const string&, const int&);
+		MyReaction* createMyReaction ();
+		MyReaction* createMyReaction (const string&, const int&);
 		MyCompartment* createMyCompartment ();
 
-		MySpecies* createMySpecies ();
+		void addMySpecies (MySpecies*);
+		void addMyCompartment (MyCompartment*);
+		void addMyReaction (MyReaction*);
+		void addMyCompartmentChildren ()
 
-		MyReaction* createMyReaction ();
-
-		MyCompartment* getMyCompartment (
-				const string& label
-				);
-
-		const MyCompartment* getMyCompartment (
-				const string& label
-				) const;
- 
-
-		//
-		//	switch (t)
-		//	t=0 --> species
-		//	t=1 --> reaction
-		//
-		string genSbmlId (
-				const int& t
-				) const;
-
-		UnitKind_t getUnitKind_t (
-				const string& unit
-				) const;
+		MySpecies* getMySpecies (const string&);
+		const MySpecies* getMySpecies (const string&) const;
+		MySpecies* getMySpecies (const MySpecies*);
+		const MySpecies* getMySpecies (const MySpecies*) const;
+		
+		MyCompartment* getMyCompartment (const string&);
+		const MyCompartment* getMyCompartment (const string&) const;
 
 		int getNumOfMyCompartments () const;
 		int getNumOfMySpecies () const;
 
-		//
-		//	return species pointer 
-		//
-		MySpecies* validateBackSpecies ();
-
-		//
-		//	core programe
-		//
-		void run (
-				readDataBase& dbreader
-				);
+	public:
+		
+		void run (readDataBase&);
 
 	private:
 
@@ -100,14 +83,7 @@ class MySBMLDocument:
 	private:
 
 		vector<MyCompartment*> listOfMyCompartments;
-
 		vector<MySpecies*> listOfMySpecies;
-
 		vector<MyReaction*> listOfMyReactions;
-
-		//
-		//	map string to UnitKind_t
-		//
-		map <string, UnitKind_t> unitMap;
 };
 #endif

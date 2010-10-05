@@ -37,65 +37,30 @@ class Tree
 	public:
 
 	Tree ();
-
-	Tree (
-			const Tree* orig
-		 );
-
+	Tree (const Tree*);
 	~Tree ();
 
-	bool equal (
-			const Tree* rhs
-			) const;
+	bool equal (const Tree*) const;
 
 	Node* createNode ();
-	Node* createNode (const Node* n);
-	Node* createNode (
-			const string& child,
-			const string& parent
-			);
-
-
-	void addNodeMap (
-			Node* node
-			);
+	Node* createNode (const Node*);
+	Node* createNode (const string&, const string&);
 
 	void addNodeChildren ();
 
-	Node* getNode (
-			const string& label
-			);
+	Node* getNode (const string&);
+	const Node* getNode (const string&) const;
+	Node* getNode (const int&);
+	const Nodel* getNode (const int&) const;
 
-	Node* getNode (
-			const int& num
-			);
+	markType genWeight (const string&);
+	void genHuffman (const string&);
 
-	const Node* getNode (
-			const string& label
-			) const;
-
-	const Node* getNode (
-			const int& num
-			) const;
-
-	pair<int,int> genWeight (
-			const string& label
-			);
-
-	void genHuffman (
-			const string& label
-			);
-
-	void Output (
-			ostream& os
-			) const; 
+	void Output (ostream&) const;
 
 	private:
 
-	void Output (
-			ostream& os, 
-			const string& label
-			) const;
+	void Output (ostream&, const string&) const; 
 
 	private:
 

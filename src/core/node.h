@@ -22,52 +22,33 @@ class Node
   public:
 
 	Node ();
-
-	Node (
-		const Node* orig 
-		);
-
+	Node (const Node*);
 	~Node ();
 
-	bool equal (
-		const Node* rhs
-		) const;
+	bool equal (const Node*) const;
 
-	void setNodeLabel (
-		const string& label
-		);
-
-	void setParentNodeLabel (
-		const string& label
-		);
+	void setNodeLabel (const string&);
 
 	string getNodeLabel () const;
-
 	string getParentNodeLabel () const;
 
-	void setNodeWeight (
-		const int& cn,
-		const int& pn
-		);
-
-	pair<int,int> getNodeWeight () const;
+	void setNodeWeight (const int&, const int&);
+	markType getNodeWeight () const;
 	
-	void addChild (
-		Node* childNodePtr
-		);
-
+	void addChild (Node*);
 	bool isLeaf () const;
 
   private:
 
 	string nodeLabel;
-
 	string parentNodeLabel;
 
+	//	children pointers
 	vector<Node*> children;
 
-	pair<int,int> weight;
+  private: 
 
+	markType weight;
 	string huffman;
 
 };

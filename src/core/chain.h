@@ -22,95 +22,42 @@ class Chain
   public:
 
 	Chain ();
-
-	Chain (
-		const Chain* orig
-		);
-
+	Chain (const Chain*);
 	~Chain ();
 
-	bool equal (
-		const Chain* rhs
-		) const;
-
-	bool match ( 
-		const Chain* c, 
-		vector<cMatchType>& xyz
-		) const; 
+	string getLabel () const;
+	bool equal (const Chain*) const;
+	bool match (const Chain*, cMatchsType&) const; 
 
 	Part* createPart ();
-	Part* createPart (const Part* p);
-	Part* createPart (
-			const string& partReference,
-			const string& partLabel,
-			const string& partType,
-			const string& partCategory,
-			const bool& isBinded
-			);
+	Part* createPart (const Part*);
+	Part* createPart (const string&, const string&, const string&, const string&, const bool& =false);
 
 	void genUnicode ();
-
-	string genUnicode (
-		const int& start,
-		const int& end
-		) const;
-
-	//
-	//	return pointer of Part object, if 
-	//	not found, return NULL
-	//	
-
-	Part* getPart (
-		const int& n
-		);
-
-	const Part* getPart (
-		const int& n
-		) const;
-
-	Part* getPart (
-		const string& label
-		);
-
-	const Part* getPart (
-		const string& label
-		) const;
+	string genUnicode (const int&, const int&) const;
+	string getUnicode () const;
 
 	int getNumOfParts () const;
+	Part* getPart (const int&);
+	const Part* getPart (const int&) const;
+	Part* getPart (const string&);
+	const Part* getPart (const string&) const;
+	int getPartIndex (const string&) const;
 
-	//
-	//	return index of part with given label, if
-	//	not found, return -1
-	//
-	int getPartIndex (
-		const string& label
-		) const;
-
-	string getUnicode () const;
-	string getChainLabel () const;
-
-	void Output (
-		ostream& os
-		) const; 
+	void Output (ostream&) const; 
 
   private:
 
-	bool substituent_m (
-		const int& l1,
-		const int& u1,
-		const int& l2,
-		const int& u2,
-		const Chain* c,
-		vector<cMatchType>& pm
-		) const;
+	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; 
 
   private:
+
+	string unicode;
+	string chainLabel;
 
 	vector<Part*> listOfParts;
 
-	string unicode;
-
-	string chainLabel;
+  private:
 
 	map<string, int> keywords;
 };

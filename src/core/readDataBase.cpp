@@ -1,5 +1,54 @@
 #include "readDataBase.h"
 
+readDataBase::readDataBase ()
+{
+	//complete unit map
+	unitMap["ampere"] = UNIT_KIND_AMPERE;
+	unitMap["becquerel"] = UNIT_KIND_BECQUEREL;
+	unitMap["candela"] = UNIT_KIND_CANDELA;
+	unitMap["coulomb"] = UNIT_KIND_COULOMB;
+	unitMap["dimensionless"] = UNIT_KIND_DIMENSIONLESS;
+	unitMap["farad"] = UNIT_KIND_FARAD;
+	unitMap["gram"] = UNIT_KIND_GRAM;
+	unitMap["gray"] = UNIT_KIND_GRAY;
+	unitMap["henry"] = UNIT_KIND_HENRY;
+	unitMap["hertz"] = UNIT_KIND_HERTZ;
+	unitMap["item"] = UNIT_KIND_ITEM;
+	unitMap["joule"] = UNIT_KIND_JOULE;
+	unitMap["katal"] = UNIT_KIND_KATAL;
+	unitMap["kelvin"] = UNIT_KIND_KELVIN;
+	unitMap["kilogram"] = UNIT_KIND_KILOGRAM;
+	unitMap["litre"] = UNIT_KIND_LITRE;
+	unitMap["lumen"] = UNIT_KIND_LUMEN;
+	unitMap["lux"] = UNIT_KIND_LUX;
+	unitMap["metre"] = UNIT_KIND_METRE;
+	unitMap["mole"] = UNIT_KIND_MOLE;
+	unitMap["newton"] = UNIT_KIND_NEWTON;
+	unitMap["ohm"] = UNIT_KIND_OHM;
+	unitMap["pascal"] = UNIT_KIND_PASCAL;
+	unitMap["radian"] = UNIT_KIND_RADIAN;
+	unitMap["second"] = UNIT_KIND_SECOND;
+	unitMap["siemens"] = UNIT_KIND_SIEMENS;
+	unitMap["sievert"] = UNIT_KIND_SIEVERT;
+	unitMap["steradian"] = UNIT_KIND_STERADIAN;
+	unitMap["tesla"] = UNIT_KIND_TESLA;
+	unitMap["volt"] = UNIT_KIND_VOLT;
+	unitMap["watt"] = UNIT_KIND_WATT;
+	unitMap["weber"] = UNIT_KIND_WEBER;
+	unitMap["invalid"] = UNIT_KIND_INVALID;
+}
+
+readDataBase::~readDataBase () {}
+
+UnitKind_t readDataBase::getUnitKind_t (
+		const string& unit
+		) const
+{
+	if (unitMap.count (unit)) 
+		return unitMap.find (unit)->second;
+	eles return unitMap.find ("invalid")->second;
+}
+
 void readDataBase::read_cnModel (
 		MySpecies* s,
 		const container_index& cind,
@@ -304,7 +353,7 @@ void readDataBase::setCompartment (
 	//
 	//  setDbId 
 	//
-	comp->setDbId (db); 
+	comp->setDB_ref (db); 
 
 	//
 	//  setId 
@@ -406,19 +455,20 @@ void readDataBase::setSpecies (
 	int operation = LIBSBML_OPERATION_SUCCESS;
 
 	//
-	//  setDbId 
+	//  set database reference 
 	//
-	s->setDbId (db); 
+	if (!db.empty ()) s->setDb_ref (db); 
 
 	//
-	//	setCCid
+	//	set id of compartment-type species
 	//
-	s->setCCid (ccid);
+	if (!ccid.empty ()) s->setCompTypeId (ccid);
 
 	//
 	//  setId 
 	//
-	operation = s->setId (id);
+	string newid = string ("[") + id + "]";
+	operation = s->setId (newid);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Species..."

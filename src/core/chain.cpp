@@ -10,11 +10,10 @@ Chain::Chain ()
 	keywords["ONEUB"] = 5;
 }
 
-Chain::Chain (
-		const Chain* orig
-		):
-	unicode (orig->unicode),
-	chainLabel (orig->chainLabel)
+Chain::Chain (const Chain* orig) 
+	:
+		unicode (orig->unicode),
+		chainLabel (orig->chainLabel)
 {
 	for (int i =0; i < listOfParts.size (); i++)
 		createPart (orig->listOfParts[i]);
@@ -28,53 +27,35 @@ Chain::~Chain ()
 
 Part* Chain::createPart ()
 {
-	Part* newPart = new Part;
-	listOfParts.push_back (newPart);
-	return newPart;
+	Part* p = new Part;
+	listOfParts.push_back (p);
+	return p;
 }
 
 Part* Chain::createPart (const Part* p)
 {
-	Part* newPart = new Part (p);
-	listOfParts.push_back (newPart);
-	return newPart;
+	Part* np = new Part (p);
+	listOfParts.push_back (np);
+	return np;
 }
 
 Part* Chain::createPart (
-		const string& partReference,
-		const string& partLabel,
-		const string& partType,
-		const string& partCategory,
-		const bool& isBinded
+		const string& __ref,
+		const string& __label
+		const string& __type,
+		const string& __ctg,
+		const bool& __isb
 		)
 {
-	Part* newPart = new Part;
-
-	//	set data members
-	newPart->dbId = partReference;
-	newPart->partLabel = partLabel;
-	newPart->partType = partType;
-	newPart->partCategory = partCategory;
-	newPart->isBinded = isBinded;
-
-	//	push back in parts list
-	listOfParts.push_back (newPart);
-	return newPart;
+	Part* p = new Part;
+	p->setPart (__ref, __label, __type, __ctg, __isb);
+	listOfParts.push_back (p);
+	return p;
 }
 
 int Chain::getNumOfParts () const
 {
 	return listOfParts.size ();
-}
-
-void Chain::genChainLabel (
-		const string& slabel,
-		const int& num
-		)
-{
-	ostringstream oss;
-	oss << slabel << "cHaiN" << num;
-	chainLabel = string (oss.str ());
 }
 
 string Chain::genUnicode (
@@ -143,27 +124,15 @@ int Chain::getPartIndex (
 	return -1;
 }
 
-Part* Chain::getPart (
-		const int& n
-		)
-{
-	if (n < listOfParts.size () && n >= 0)
-		return listOfParts[n];
-	else return NULL;
+Part* Chain::getPart (const int& n) {
+	return listOfParts.at (n);
 }
 
-const Part* Chain::getPart (
-		const int& n
-		) const
-{ 
-	if (n < listOfParts.size () && n >= 0)
-		return listOfParts[n];
-	else return NULL;
+const Part* Chain::getPart (const int& n) const {
+	return listOfParts.at (n);
 }
 
-Part* Chain::getPart (
-		const string& label
-		)
+Part* Chain::getPart (const string& label)
 {
 	for (int i=0; i <listOfParts.size (); i++)
 	{
@@ -173,9 +142,7 @@ Part* Chain::getPart (
 	return NULL;
 }
 
-const Part* Chain::getPart (
-		const string& label
-		) const
+const Part* Chain::getPart (const string& label) const
 {
 	for (int i=0; i <listOfParts.size (); i++)
 	{
@@ -211,17 +178,12 @@ void Chain::Output (ostream& os) const
 	os << "3'";
 }
 
-bool Chain::equal (
-		const Chain* rhs
-		) const
+bool Chain::equal (const Chain* rhs) const
 {
 	return unicode == rhs->unicode;
 }
 
-bool Chain::match ( 
-		const Chain* c, 
-		vector<cMatchType>& xyz
-		) const 
+bool Chain::match (const Chain* c, cMatchsType& res	) const 
 {		
 
 	//
@@ -366,8 +328,8 @@ bool Chain::match (
 
 		assert (u2 >= l2);
 
-		bool mok = substituent_m (l1, u1, l2, u2, c, xyz);
-		if (mok && xyz.size() > 0) return true;
+		bool mok = substituent_m (l1, u1, l2, u2, c, res);
+		if (mok && res.size() > 0) return true;
 		else return false;
 	}
 	else
@@ -473,13 +435,13 @@ bool Chain::match (
 			else
 			{
 				for (int j=0; j < AssembleMatch.size (); j++)
-					xyz.push_back (AssembleMatch[j]);
+					res.push_back (AssembleMatch[j]);
 			}
 		}
 
-		cout << "\nall possibilities found: " << xyz.size () << endl;
+		cout << "\nall possibilities found: " << res.size () << endl;
 
-		if (xyz.empty ()) return false;
+		if (res.empty ()) return false;
 		return true;
 	}
 }

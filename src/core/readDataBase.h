@@ -21,6 +21,15 @@
 class readDataBase:
 	public readXMLComponent
 {
+	private:
+
+		//	type conversion between string to UnitKind_t
+		map <string, UnitKind_t> unitMap;
+
+	protected:
+
+		UnitKind_t getUnitKind_t (const string&) const;
+
 	public:
 
 		readDataBase () {}
