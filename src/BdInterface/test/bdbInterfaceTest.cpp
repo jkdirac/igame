@@ -165,6 +165,35 @@ void test_get_node_attr()
 	cout << "-------- test get nodes element end---------" << endl;
 }
 
+void test_get_ids()
+{
+	vector<container_index> types;
+
+	types.push_back(PART); 
+	types.push_back(COMPARTMENT); 
+	vector<string> res_str;
+
+	cout << "-------- test get ids start---------" << endl;
+	for (int i=0; i<types.size(); i++)
+	{
+		try
+		{
+			res_str.clear();
+			cout << "test: [" << i << "]" << endl;
+			test_inter.get_ids_bycontainer(types[i], res_str);
+			for (int j=0; j<res_str.size(); j++)
+			{
+				cout << "==id: " << j << " " << res_str[j] << endl;
+			}
+		}
+		catch (XmlException &se)
+		{
+			cout << "test get ids error" << se.what() << endl;
+		}
+	}
+	cout << "-------- test get ids end---------" << endl;
+}
+
 int main()
 {
 	try
@@ -179,6 +208,8 @@ int main()
 		test_get_node_attr();
 		cout << endl;
 		test_get_module_num();
+		cout << endl;
+		test_get_ids();
 		cout << endl;
 	} 
 	catch (XmlException &se)

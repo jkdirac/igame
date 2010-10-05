@@ -207,7 +207,7 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 
 	if (doc == NULL)
 	{
-		query_string += "collections('"
+		query_string += "collection('"
 			+ container_names[container_type]
 			+ ".dbxml')";
 	}
@@ -290,7 +290,7 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 
 	if (doc == NULL)
 	{
-		query_string += "collections('"
+		query_string += "collection('"
 			+ container_names[container_type]
 			+ ".dbxml')";
 	}
@@ -370,7 +370,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 
 	if (doc == NULL)
 	{
-		query_string += "collections('"
+		query_string += "collection('"
 			+ container_names[container_type]
 			+ ".dbxml')";
 	}
@@ -464,7 +464,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 
 	if (doc == NULL)
 	{
-		query_string += "collections('"
+		query_string += "collection('"
 			+ container_names[container_type]
 			+ ".dbxml')";
 	}
@@ -618,7 +618,7 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 
 	if (doc == NULL)
 	{
-		query_string += "count(collections('"
+		query_string += "count(collection('"
 			+ container_names[container_type]
 			+ ".dbxml')";
 	}
@@ -706,4 +706,36 @@ string bdbXMLInterface::strip_char(string instring)
 		}
 
 		return string (instring, pos_head, pos_tail-pos_head+1);
+}
+
+/** 
+ * @breif 
+ * 	This is a function for ui interface.
+ * 	Provide id strings of all db files in the container
+ * 
+ * @Param container_type
+ * 	should be value defined in container_index enum
+ * @Param res
+ * 	output parameter, return the ids
+ * 
+ * @Returns   
+ */
+BdRetVal bdbXMLInterface::get_ids_bycontainer(container_index container_type, vector<string> &res)
+{
+		vector<string> result;
+		string path_biobrick = "//biobrick/@id";
+		string path_compartment= "//compartment/@id";
+
+		result.clear();
+		get_node_attr(container_type, NULL, &path_biobrick, result);
+		for (int i=0; i<result.size(); i++)
+		{
+				res.push_back(result[i]);
+		}
+
+		get_node_attr(container_type, NULL, &path_compartment, result);
+		for (int i=0; i<result.size(); i++)
+		{
+				res.push_back(result[i]);
+		}
 }
