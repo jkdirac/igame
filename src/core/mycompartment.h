@@ -26,8 +26,9 @@ class MyCompartment:
 	void addMyCompartmentIn (MyCompartment*);
 
 	MySpecies* isMySpeciesIn (const string&);
-	MySpecies* isMySpeciesIn (const MySpecies*);
 	const MySpecies* isMySpeciesIn (const string&) const;
+	MySpecies* isMySpeciesIn (const MySpecies*);
+	const MySpecies* isMySpeciesIn (const MySpecies*) const;
 
 	MyCompartment* isMyCompartmentIn (const string&);
 	const MyCompartment* isMyCompartmentIn (const string&) const;

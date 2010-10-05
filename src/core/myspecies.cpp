@@ -8,7 +8,7 @@ MySpecies::MySpecies (const int& speciesNum)
 {
 	ostringstream oss;
 	oss << "[sPecIes" << speciesNum << "]";
-	s->setId (oss.str ());
+	setId (oss.str ());
 }
 
 MySpecies::MySpecies (
@@ -245,18 +245,16 @@ Chain* MySpecies::createChain (
 
 Tree* MySpecies::createTree ()
 {
-	Tree* newTree = new Tree;
-	listOfTrees.push_back (newTree);
+	Tree* t = new Tree;
+	listOfTrees.push_back (t);
 
 	//add root node with label ROOT
 	//it has no parent node
-	Node* root = newTree->createNode ();
+	Node* root = t->createNode ();
 	root->setNodeLabel ("ROOT");
+	t->mapNodes["ROOT"] = root;
 
-	//add node map
-	newTree->addNodeMap (root);
-
-	return newTree;
+	return t;
 }
 
 Tree* MySpecies::createTree (
@@ -724,7 +722,7 @@ bool MySpecies::match (
 				for (int l=0; iter_c != cm_T.end (); l++, iter_c++)
 				{
 					Part* p = c->listOfParts[l];
-					string ctg = p->getPartCategory ();
+					string ctg = p->getPartCtg ();
 					if (ctg != "substituent")
 					{
 						int start = iter_c->first;
@@ -741,7 +739,7 @@ bool MySpecies::match (
 			//
 			//  rearrange operation will be done in DeleteAndSave
 			//
-			s1->DeleteAndSave (chainUsed, nodeSaved);
+			s1->partialDup (chainUsed, nodeSaved);
 
 
 			//

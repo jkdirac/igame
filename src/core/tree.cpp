@@ -104,11 +104,11 @@ const Node* Tree::getNode (const string& label) const
 }
 
 Node* Tree::getNode (const int& n) {
-	return listOfNodes[num];
+	return listOfNodes.at(n);
 }
 
 const Node* Tree::getNode (const int& n) const {
-	return listOfNodes[n];
+	return listOfNodes.at(n);
 }
 
 markType Tree::genWeight (const string& label)

@@ -41,7 +41,7 @@ Part* Chain::createPart (const Part* p)
 
 Part* Chain::createPart (
 		const string& __ref,
-		const string& __label
+		const string& __label,
 		const string& __type,
 		const string& __ctg,
 		const bool& __isb
@@ -69,7 +69,7 @@ string Chain::genUnicode (
 		const Part* p = listOfParts[i];
 
 		//database id
-		_unicode += "[" + p->getDbId ();
+		_unicode += "[" + p->getPartRef ();
 
 		//database type
 		_unicode += ":" + p->getPartType ();
@@ -100,7 +100,7 @@ void Chain::genUnicode ()
 		//sub code to the whole 
 
 		//database id
-		unicode += "[" + p->getDbId ();
+		unicode += "[" + p->getPartRef ();
 
 		//database type
 		unicode += ":" + p->getPartType ();
@@ -157,7 +157,7 @@ string Chain::getUnicode () const
 	return unicode;
 }
 
-string Chain::getChainLabel () const
+string Chain::getLabel () const
 {
 	return chainLabel;
 }
@@ -170,7 +170,7 @@ void Chain::Output (ostream& os) const
 	for (int cnt =0; cnt < numP; cnt++)
 	{
 		Part* p = listOfParts[cnt];
-		os << p->getDbId () << "(" 
+		os << p->getPartRef () << "(" 
 			<< p->getPartType () << ","  
 			<< p->getPartLabel () << ") - " ;
 	}
@@ -196,7 +196,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 	for (int i=0; i < c->listOfParts.size (); i++)
 	{
 		Part* p = c->listOfParts[i];
-		string ctg = p->getPartCategory ();	
+		string ctg = p->getPartCtg ();	
 		if (ctg != "substituent") 
 		{
 			if (start) 
@@ -476,6 +476,7 @@ bool Chain::substituent_m (
 		if (l1 == u1 + 1) return true;	
 		else 
 		{
+			cMatchType res;
 			for (int i=l1; i <= u1; i++) 
 			{
 				string partRef = c->listOfParts[i]->getPartRef ();
@@ -483,10 +484,11 @@ bool Chain::substituent_m (
 				switch (keyValue)
 				{
 					case 0: 
-					case 1: {result.push_back (make_pair(l2,u2));break;}
+					case 1: {res.push_back (make_pair(l2,u2));break;}
 					default: return false;
 				}
 			}
+			result.push_back (res);
 			return true;
 		}
 	}

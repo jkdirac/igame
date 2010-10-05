@@ -39,7 +39,7 @@ class MySBMLDocument:
 		void addMySpecies (MySpecies*);
 		void addMyCompartment (MyCompartment*);
 		void addMyReaction (MyReaction*);
-		void addMyCompartmentChildren ()
+		void addMyCompartmentChildren ();
 
 		MySpecies* getMySpecies (const string&);
 		const MySpecies* getMySpecies (const string&) const;

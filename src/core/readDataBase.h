@@ -32,8 +32,8 @@ class readDataBase:
 
 	public:
 
-		readDataBase () {}
-		~readDataBase () {}
+		readDataBase ();
+		~readDataBase (); 
 
 		/**
 		 * read cnModel of Species 

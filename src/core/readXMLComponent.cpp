@@ -233,7 +233,7 @@ void readXMLComponent::readSpecies (
 	//
 	//	read attribute relation
 	//
-	const string path_rel = prefix + "compartmentLabel/@ccid";
+	const string path_rel = prefix + "compartmentLabel/@itself";
 	get_node_attr (cind, &doc, &path_rel, temp);
 	if (!temp.empty ()) ccid = temp[0];
 }

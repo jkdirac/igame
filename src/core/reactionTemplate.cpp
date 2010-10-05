@@ -87,21 +87,21 @@ string reactionTemplate::getCompartment (
 	for (int i=0; i<listOfMyReactants.size (); i++)
 	{
 		MySpecies* s = listOfMyReactants[i];
-		if (s->getLabel () == speciesLabel) 
+		if (s->getDB_Label () == speciesLabel) 
 			return s->getCompartment ();
 	}
 
 	for (int i=0; i<listOfMyModifiers.size (); i++)
 	{
 		MySpecies* s = listOfMyModifiers[i];
-		if (s->getLabel () == speciesLabel) 
+		if (s->getDB_Label () == speciesLabel) 
 			return s->getCompartment ();
 	}
 
 	for (int i=0; i<listOfMyProducts.size (); i++)
 	{
 		MySpecies* s = listOfMyProducts[i];
-		if (s->getLabel () == speciesLabel) 
+		if (s->getDB_Label () == speciesLabel) 
 			return s->getCompartment ();
 	}
 
@@ -114,20 +114,20 @@ const MySpecies* reactionTemplate::getSpecies (
 	for (int i=0; i<listOfMyReactants.size (); i++)
 	{
 		MySpecies* s = listOfMyReactants[i];
-		if (s->getLabel () == speciesLabel) return s;
+		if (s->getDB_Label () == speciesLabel) return s;
 	}
 
 	for (int i=0; i<listOfMyModifiers.size (); i++)
 	{
 		MySpecies* s = listOfMyModifiers[i];
-		cout << "\nlabel = " << s->getLabel () << endl;
-		if (s->getLabel () == speciesLabel) return s;
+		cout << "\nlabel = " << s->getDB_Label () << endl;
+		if (s->getDB_Label () == speciesLabel) return s;
 	}
 
 	for (int i=0; i<listOfMyProducts.size (); i++)
 	{
 		MySpecies* s = listOfMyProducts[i];
-		if (s->getLabel () == speciesLabel) return s; 
+		if (s->getDB_Label () == speciesLabel) return s; 
 	}
 
 	return NULL;
@@ -464,7 +464,7 @@ bool reactionTemplate::compartmentConstraints (
 
 	  string parent = fixedComp->getOutside ();
 	  if (parentComp != "ROOT" && parent != parentComp) return false;
-	  if (fixedComp->getDbId () != searchCompDbId) return false;
+	  if (fixedComp->getDB_ref () != searchCompDbId) return false;
 	}
 	else if (currComp->getId () != fixedComp->getId ()) return false;
   }
@@ -515,7 +515,7 @@ bool reactionTemplate::compartmentConstraints (
 
 	  string parent = fixedComp->getOutside ();
 	  if (parentComp != "ROOT" && parent != parentComp) return false;
-	  if (fixedComp->getDbId () != searchCompDbId) return false;
+	  if (fixedComp->getDB_ref () != searchCompDbId) return false;
 	}
   }
 
@@ -556,7 +556,7 @@ void reactionTemplate::genProductBody (
   for (int i=0; i < listOfMyProducts.size (); i++)
   {
 	MySpecies* origproduct = listOfMyProducts[i];
-	string productLabel = origproduct->getLabel ();
+	string productLabel = origproduct->getDB_Label ();
 
 	MySpecies* newproduct = new MySpecies;
 
@@ -568,7 +568,7 @@ void reactionTemplate::genProductBody (
 	  for (int k=0; k < origchain->getNumOfParts (); k++)
 	  {
 		Part* origpart = origchain->getPart (k);
-		if (origpart->getPartCategory () == "substituent")
+		if (origpart->getPartCtg () == "substituent")
 		{
 		  string subLabel = origpart->getPartLabel ();
 		  pair<string,string> destine = make_pair (
@@ -686,7 +686,7 @@ int reactionTemplate::searchSpecies (
   while (first != last)
   {
 	MySpecies* s = *first;
-	if (s->getLabel () == speciesLabel) return cnt;
+	if (s->getDB_Label () == speciesLabel) return cnt;
 	else {first++;cnt++;}
   }
   

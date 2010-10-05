@@ -11,7 +11,7 @@ void MyCompartment::setDB_ref (const string& ref) {
 	reference_db = ref;
 }
 
-string MyCompartment::setDB_ref () const {
+string MyCompartment::getDB_ref () const {
 	return reference_db;
 }
 
@@ -23,8 +23,7 @@ void MyCompartment::addMyCompartmentIn (MyCompartment* comp) {
 	listOfMyCompartmentsIn.push_back (comp);
 }
 
-MySpecies* MyCompartment::isMySpeciesIn (
-		const string& ref) 
+MySpecies* MyCompartment::isMySpeciesIn (const string& ref) 
 {
 	for (int i=0; i < listOfMySpeciesIn.size (); i++)
 	{
@@ -34,6 +33,15 @@ MySpecies* MyCompartment::isMySpeciesIn (
 	return NULL;
 }
 
+const MySpecies* MyCompartment::isMySpeciesIn (const string& ref) const 
+{
+	for (int i=0; i < listOfMySpeciesIn.size (); i++)
+	{
+		MySpecies* s = listOfMySpeciesIn[i];
+		if (s->getId () == ref) return s;
+	}
+	return NULL;
+}
 MySpecies* MyCompartment::isMySpeciesIn (
 		const MySpecies* rhs
 		)
@@ -54,7 +62,7 @@ MySpecies* MyCompartment::isMySpeciesIn (
 		string compTypeIdLHS = lhs->getCompTypeId ();
 		
 		//	is compartment same?
-		compRHS = rhs->getCompartment(); 
+		string compRHS = rhs->getCompartment(); 
 		if (compLHS != compRHS) continue; 
 
 		//	if same cnModel Strucutrue
@@ -71,7 +79,7 @@ MySpecies* MyCompartment::isMySpeciesIn (
 }
 
 const MySpecies* MyCompartment::isMySpeciesIn (
-		const string& sbmlid
+		const MySpecies* rhs
 		) const
 {
 
@@ -89,7 +97,7 @@ const MySpecies* MyCompartment::isMySpeciesIn (
 		string compTypeIdLHS = lhs->getCompTypeId ();
 		
 		//	is compartment same?
-		compRHS = rhs->getCompartment(); 
+		string compRHS = rhs->getCompartment(); 
 		if (compLHS != compRHS) continue; 
 
 		//	if same cnModel Strucutrue

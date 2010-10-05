@@ -17,7 +17,7 @@ void Part::setPart (
 		const string& __label, 
 		const string& __type, 
 		const string& __ctg, 
-		const string& __isb 
+		const bool& __isb 
 		)
 {
 	partRef = __ref;
@@ -28,7 +28,7 @@ void Part::setPart (
 }
 
 void Part::setPartRef (const string& __ref) {
-	partRef = __ref
+	partRef = __ref;
 }
 
 void Part::setPartLabel (const string& __label) {
@@ -40,14 +40,14 @@ void Part::setPartType (const string& __type) {
 }
 
 void Part::setPartCtg (const string& __ctg) {
-  	partCtg = _ctg;
+  	partCtg = __ctg;
 }
 
 void Part::setIsBinded (const bool& isb) {
 	isBinded = isb;
 }
 
-string Part::getPartRef () const {return dbId;}
+string Part::getPartRef () const {return partRef;}
 
 string Part::getPartLabel () const {return partLabel;}
 

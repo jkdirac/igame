@@ -46,7 +46,7 @@ UnitKind_t readDataBase::getUnitKind_t (
 {
 	if (unitMap.count (unit)) 
 		return unitMap.find (unit)->second;
-	eles return unitMap.find ("invalid")->second;
+	else return unitMap.find ("invalid")->second;
 }
 
 void readDataBase::read_cnModel (
@@ -70,7 +70,7 @@ void readDataBase::read_cnModel (
 	for (int ichain = 1; ichain <= numOfChains; ichain++)
 	{
 		//create an empty chain
-		Chain* c = s->createChain (s->getLabel (), ichain);
+		Chain* c = s->createChain (s->getId (), ichain);
 
 		//read parts 
 		ostringstream oss;
@@ -81,7 +81,7 @@ void readDataBase::read_cnModel (
 		for (int ipart = 1; ipart <= numOfParts; ipart++)
 		{
 			string __ref, __label, __type, __ctg;
-			readPart (cind, doc, qpp, ipart, 
+			readPart (cind, doc, pathPart, ipart, 
 					__ref, __label, __type, __ctg); 
 
 			//
@@ -93,7 +93,7 @@ void readDataBase::read_cnModel (
 			//
 
 			//	regenerate part label
-			__label_new = c->getLabel () + "[" + __label + "]";
+			string __label_new = s->getId () + "[" + __label + "]";
 			if (newLabel.count (__label))
 				throw StrCacuException (
 						"Species: partLabel should be unique within"
@@ -103,16 +103,16 @@ void readDataBase::read_cnModel (
 
 			//	it is not allow species with substituent-type part
 			//	if it is not a template species
-			if (partCtg == "substituent" && !isTemplate)
+			if (__ctg == "substituent" && !isTemplate)
 				throw StrCacuException (
 						"Reading Block cnModel..."
 						"Non-Template species is required!"
 						);
 			else
 			{
-				bool __isb = s->countBindedNode (__label);
+				//	attribute isBinded will be set after tree nodes have been read in
 				Part* p = c->createPart ();
-				p->setPart (__ref, __label_new, __type, __ctg, __isb);
+				p->setPart (__ref, __label_new, __type, __ctg);
 			}
 		}
 	}
@@ -135,7 +135,7 @@ void readDataBase::read_cnModel (
 		for (int inode = 1; inode <= numOfNodes; inode++)
 		{
 			string child, parent;
-			readNode (cind, doc, qpn, inode, child, parent);
+			readNode (cind, doc, pathNode, inode, child, parent);
 
 			if (!newLabel.count (child))
 			{
@@ -154,12 +154,23 @@ void readDataBase::read_cnModel (
 			else parent = newLabel[parent];
 
 			//create an empty node
-			Node* n = t->createNode (child, parent);
-			t->addNodeMap (n);
+			t->createNode (child, parent);
 		}
 
 		//add Children of each node
 		t->addNodeChildren ();	
+	}
+
+	//	find binded part
+	for (int ichain=0; ichain < s->getNumOfChains (); ichain++)
+	{
+		Chain* c = s->getChain (ichain);
+		for (int ipart = 0; ipart < c->getNumOfParts (); ipart++)
+		{
+			Part* p = c->getPart (ipart);
+			bool __isb = s->countBindedNode (p->getPartLabel ());
+			p->setIsBinded (__isb);
+		}
 	}
 }
 
@@ -457,7 +468,7 @@ void readDataBase::setSpecies (
 	//
 	//  set database reference 
 	//
-	if (!db.empty ()) s->setDb_ref (db); 
+	if (!db.empty ()) s->setDB_ref (db); 
 
 	//
 	//	set id of compartment-type species
@@ -793,9 +804,10 @@ void readDataBase::readReactionTemplate (
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
-		s->setDbId (speciesReference);
-		s->setLabel (speciesLabel);
-		if (!ccid.empty ()) s->setCCid (compartmentLabel);
+		s->setDB_ref (speciesReference);
+		s->setDB_Label (speciesLabel);
+		s->setCompartment (compartmentLabel);
+		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
 		if (direction) RT->addReactant (s, compartmentLabel);
@@ -820,9 +832,10 @@ void readDataBase::readReactionTemplate (
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
-		s->setDbId (speciesReference);
-		s->setLabel (speciesLabel);
-		if (!ccid.empty ()) s->setCCid (compartmentLabel);
+		s->setDB_ref (speciesReference);
+		s->setDB_Label (speciesLabel);
+		s->setCompartment (compartmentLabel);
+		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
 		if (direction) RT->addProduct (s, compartmentLabel);
@@ -844,10 +857,12 @@ void readDataBase::readReactionTemplate (
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
-		s->setDbId (speciesReference);
-		s->setLabel (speciesLabel);
-		if (!ccid.empty ()) s->setCCid (compartmentLabel);
+		s->setDB_ref (speciesReference);
+		s->setDB_Label (speciesLabel);
+		s->setCompartment (compartmentLabel);
+		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
+
 		RT->addModifier (s, compartmentLabel);
 	}
 
@@ -936,7 +951,7 @@ void readDataBase::readReactionTemplate (
 
 		const Part* p = s->getPart (partLabel);
 		readConditionalParameter (
-				PART, p->getPartCategory (),
+				PART, p->getPartCtg (),
 				p->getPartLabel (), parameterLabel,
 			    compartmentLabel, value, units, name
 				);

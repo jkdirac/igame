@@ -26,7 +26,7 @@ class readXMLComponent :
 
 	protected:
 
-		set<string> PartCtg_set;
+		set<string> partCtg_set;
 		set<string> partType_set;
 		set<string> speciesType_set;
 		set<string> substituentType_set;
@@ -42,7 +42,7 @@ class readXMLComponent :
 				string& __label,
 				string& __type,
 				string& __ctg 
-				)
+				);
 
 		void readNode (
 				const container_index& cind,

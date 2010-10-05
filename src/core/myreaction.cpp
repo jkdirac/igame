@@ -36,7 +36,7 @@ void MyReaction::completeReaction (
 	MySpecies* mr = listOfMySpecies[sind];
 	listOfMyModifiers.push_back (mr);
 
-	string Label = RT->listOfMyModifiers[i]->getLabel ();
+	string Label = RT->listOfMyModifiers[i]->getDB_Label ();
 	replaceTable[Label] = mr->getId ();
   }
 
@@ -65,7 +65,7 @@ void MyReaction::completeReaction (
 	for (int j=0; j < sr->getNumOfTrees (); j++)
 	  sMix->createTree (sr->getTree (j));
 
-	string Label = RT->listOfMyReactants[i]->getLabel ();
+	string Label = RT->listOfMyReactants[i]->getDB_Label ();
 	replaceTable[Label] = sr->getId ();
   }
 
@@ -99,7 +99,7 @@ void MyReaction::completeReaction (
 
 	set<string> chainLabel;
 	for (int j =0; j < s->getNumOfChains (); j++)
-	  chainLabel.insert (s->getChain (j)->getChainLabel ());
+	  chainLabel.insert (s->getChain (j)->getLabel ());
 
 	vector<int> degenerate;
 	for (int j =0; j < listOfMyProducts.size (); j++)
@@ -107,7 +107,7 @@ void MyReaction::completeReaction (
 	  MySpecies* tmS = listOfMyProducts[i];
 	  for (int k=0; k < tmS->getNumOfChains (); k++)
 	  {
-		string label = tmS->getChain (k)->getChainLabel ();
+		string label = tmS->getChain (k)->getLabel ();
 		if (chainLabel.count (label))
 		{
 		  degenerate.push_back (j);
@@ -142,7 +142,7 @@ void MyReaction::completeReaction (
 	  newsp->setId (oss.str ());
 
 	  //  set compartment
-	  string oldLabel = tmS->getLabel ();
+	  string oldLabel = tmS->getDB_Label ();
 	  if (RT->mmapIndexReactants.count (oldLabel))
 	  {
 		int index = RT->mmapIndexReactants.find(oldLabel)->second;
@@ -188,7 +188,7 @@ void MyReaction::completeReaction (
 	  //
 	  //  add replacement
 	  //
-	  replaceTable[tmS->getLabel ()] = newsp->getId ();
+	  replaceTable[tmS->getDB_Label ()] = newsp->getId ();
 
 
 	  //  delete old species and replaced with new one

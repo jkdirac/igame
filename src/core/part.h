@@ -35,7 +35,7 @@ class Part
 			const string&, 
 			const string&, 
 			const string&, 
-			const string& = false
+			const bool& = false
 			);
 
 	string getPartRef () const;

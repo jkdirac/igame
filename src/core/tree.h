@@ -51,7 +51,7 @@ class Tree
 	Node* getNode (const string&);
 	const Node* getNode (const string&) const;
 	Node* getNode (const int&);
-	const Nodel* getNode (const int&) const;
+	const Node* getNode (const int&) const;
 
 	markType genWeight (const string&);
 	void genHuffman (const string&);

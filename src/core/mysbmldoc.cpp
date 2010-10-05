@@ -97,7 +97,7 @@ const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{
 		MyCompartment* comp = listOfMyCompartments[i];
-		if (comp->getId () == label) return comp;
+		if (comp->getId () == ref) return comp;
 	}
 	return NULL;
 }
@@ -112,7 +112,7 @@ int MySBMLDocument::getNumOfMySpecies () const
 	return listOfMySpecies.size ();
 }
 
-MySpecies* getMySpecies (const string& ref) 
+MySpecies* MySBMLDocument::getMySpecies (const string& ref) 
 {
 	for (int i=0; i < listOfMySpecies.size (); i++) 
 	{
@@ -122,7 +122,7 @@ MySpecies* getMySpecies (const string& ref)
 	return NULL;
 }
 
-const MySpecies* getMySpecies (const string& ref) const
+const MySpecies* MySBMLDocument::getMySpecies (const string& ref) const
 {
 	for (int i=0; i < listOfMySpecies.size (); i++) 
 	{
@@ -132,7 +132,7 @@ const MySpecies* getMySpecies (const string& ref) const
 	return NULL;
 }
 
-MySpecies* getMySpecies (const MySpecies* s)
+MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s)
 {
 	MySpecies* found = NULL;
 	for (int i=0; i<listOfMyCompartments.size (); i++)
@@ -144,7 +144,7 @@ MySpecies* getMySpecies (const MySpecies* s)
 	return found;
 }
 
-const MySpecies* getMySpecies (const MySpecies* s) const
+const MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s) const
 {
 	MySpecies* found = NULL;
 	for (int i=0; i<listOfMyCompartments.size (); i++)
@@ -191,7 +191,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 
 				//	read species containing this part 
 				string speciesLinkPath =
-					"/MoDeL/part/" + p->getPartCtg + 
+					"/MoDeL/part/" + p->getPartCtg () + 
 					"/listOfReferencedSpecies/"
 					"referencedSpecies";
 				string doc_1 = p->getPartRef ();
@@ -464,8 +464,7 @@ void MySBMLDocument::handleReactionTemplate (
 	for (int i=0; i < result.size (); i++)
 	{
 		//	new reaction
-		MyReaction* myreaction = new MyReaction;
-		myreaction->setId (genSbmlId (1));
+		MyReaction* myreaction = createMyReaction ();
 		myreaction->setName (RT->getName ());
 		myreaction->setFast (RT->getFast ());
 		myreaction->setReversible (false);
@@ -521,9 +520,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 	string PE_fw ("forwardPromoterEfficiency");
 	if (ptype == "ReverseDNA") PE_fw = "reversePromoterEfficiency";
 
-	string db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+	string db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 	dbreader.readConditionalParameter (
-			PART, p->getPartCategory (), p->getDbId (),
+			PART, p->getPartCtg (), p->getPartRef (),
 			PE_fw, db_comp, value, units, name
 			);
 
@@ -553,9 +552,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 					{
 						string TE_fw ("forwardTerminatorEfficiency");
 						if (ptype == "ReverseDNA") TE_fw = "reverseTerminatorEfficiency";
-						db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+						db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 						dbreader.readConditionalParameter (
-								PART, p->getPartCategory (), p->getDbId (),
+								PART, p->getPartCtg (), p->getPartRef (),
 								TE_fw, db_comp, termeff, termUnits, termName
 								);
 						if (termeff <0 || termeff > 1) throw StrCacuException (
@@ -599,7 +598,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 						{
 							vector<string> tmp;
 							const string doc = tm->getPartRef ();
-							const string path ("/MoDeL/part/");
+							string path ("/MoDeL/part/");
 							path += tm->getPartCtg () + "/@originalConformation";
 							dbreader.get_node_attr (PART, &doc, &path, tmp);
 							if (!tmp.empty ()) mrna_part->setPartRef (tmp[0]);
@@ -635,9 +634,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 	string PE_rev ("reversePromoterEfficiency");
 	if (ptype == "ReverseDNA") PE_rev = "forwardPromoterEfficiency";
-	db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+	db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 	dbreader.readConditionalParameter (
-			PART, p->getPartCategory (), p->getDbId (),
+			PART, p->getPartCtg (), p->getPartRef (),
 			PE_rev, db_comp, value, units, name
 			);
 	if (value <0) throw StrCacuException (
@@ -666,9 +665,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 					{
 						string TE_rev ("reverseTerminatorEfficiency");
 						if (ptype == "ReverseDNA") TE_rev = "forwardTerminatorEfficiency";
-						db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+						db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 						dbreader.readConditionalParameter (
-								PART, p->getPartCategory (), p->getDbId (),
+								PART, p->getPartCtg (), p->getPartRef (),
 								TE_rev, db_comp, termeff, termUnits, termName
 								);
 						if (termeff <0 || termeff > 1) throw StrCacuException (
@@ -710,7 +709,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 						{
 							vector<string> tmp;
 							const string doc = tm->getPartRef ();
-							const string path ("/MoDeL/part/");
+							string path ("/MoDeL/part/");
 							path += tm->getPartCtg () + "/@originalConformation";
 							dbreader.get_node_attr (PART, &doc, &path, tmp);
 							if (!tmp.empty ()) mrna_part->setPartRef (tmp[0]);
@@ -762,9 +761,9 @@ void MySBMLDocument::searchTranslationReactions (
 	//	forward transcription reaction
 	string RE_fw ("forwardRbsEfficiency");
 	if (ptype == "ReverseRNA") RE_fw = "reverseRbsEfficiency";
-	string db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+	string db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 	dbreader.readConditionalParameter (
-			PART, p->getPartCategory (), p->getDbId (),
+			PART, p->getPartCtg (), p->getPartRef (),
 			RE_fw, db_comp, value, units, name
 			);
 
@@ -789,9 +788,9 @@ void MySBMLDocument::searchTranslationReactions (
 			string StartC_fw ("forwardStartCodonEfficiency");
 			if (ptype == "ReverseRNA") 
 				StartC_fw = "reverseStartCodonEfficiency";
-			db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+			db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 			dbreader.readConditionalParameter (
-					PART, p->getPartCategory (), p->getDbId (),
+					PART, p->getPartCtg (), p->getPartRef (),
 					StartC_fw, db_comp, codonEff, codonUnits, codonName
 					);
 			if (codonEff <0 || codonEff > 1) throw StrCacuException (
@@ -812,9 +811,9 @@ void MySBMLDocument::searchTranslationReactions (
 						{
 							string StopC_fw ("forwardStopCodonEfficiency");
 							if (ptype == "ReverseRNA") StopC_fw = "reverseStopCodonEfficiency";
-							db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
+							db_comp = getMyCompartment (s->getCompartment ())->getDB_ref ();
 							dbreader.readConditionalParameter (
-									PART, p->getPartCategory (), p->getDbId (),
+									PART, p->getPartCtg (), p->getPartRef (),
 									StopC_fw, db_comp, codonEff, codonUnits, codonName
 									);
 							if (codonEff <0 || codonEff > 1) throw StrCacuException (
@@ -857,7 +856,7 @@ void MySBMLDocument::searchTranslationReactions (
 							{
 								vector<string> tmp;
 								const string doc = tm->getPartRef ();
-								const string path ("/MoDeL/part/");
+								string path ("/MoDeL/part/");
 								path += tm->getPartCtg () + "/@originalConformation";
 								dbreader.get_node_attr (PART, &doc, &path, tmp);
 								if (!tmp.empty ()) prot_part->setPartRef (tmp[0]);
