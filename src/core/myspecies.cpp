@@ -50,42 +50,36 @@ void MySpecies::split (
 		vector<MySpecies*>& pieces
 		)
 {
-	//
-	//	TIPS:
-	//	(1) for species of mixed chains and trees, 
-	//	it must be rearranged before calling this function!
-	//
 
-	//container to store chainnum of species
-	vector< set<int> > cU;
+	//	container to store chainnum of species
+	//	chainUsed[species][chainnum set]
+	vector< set<int> > chainUsed;
 
-	int numT = listOfTrees.size ();
-	for (int cnt =0; cnt < numT; cnt++)
+	for (int i=0; i < listOfTrees.size (); i++)
 	{
-		Tree* t = listOfTrees[cnt];
+		Tree* t = listOfTrees[i];
 
 		//int not species associated, found = -1,
 		//else found = species index in cU;
 		int found = -1;
 		bool exit = false;
 
-		//search leaf nodes
-		int numN = t->listOfNodes.size ();
-		for (int cnt2 =0; cnt2 < numN; cnt2++)
+		//	traverse all leaf nodes of tree t
+		//	to find chains that associated with the tree
+		for (int j =0; j< t->listOfNodes.size (); j++)
 		{
-			Node* n = t->getNode (cnt2);
+			Node* n = t->getNode (j);
 			if (n->isLeaf ())
 			{
+				//	if it a leaf node
 				int chainnum = n->getNodeWeight ().first;
 
-				//search for species added if this chainnum
-				//has been added yet
-				int numV = cU.size ();
-				for (int cnt3 =0; cnt3 < numV; cnt3++)
+				//	search for species containing this chain
+				for (int k=0; k < chainUsed.size (); k++)
 				{
-					if (cU[cnt3].count (chainnum)) 
+					if (chainUsed[k].count (chainnum)) 
 					{
-						found = cnt3;
+						found = k; 
 						exit = true;
 						break;
 					}
@@ -95,95 +89,88 @@ void MySpecies::split (
 			if (exit) break;
 		}
 
-		//if found = -1; create new species
-		//containing this tree and associated chains
-		//if found >=0; merge this tree and associated 
-		//chains to that species
+		//	if found = -1; create new species
+		//	containing this tree and associated chains
+
+		//	if found >=0; merge this tree and associated 
+		//	chains to that species
+
 		if (found == -1)
 		{
 			MySpecies* s = new MySpecies ();
 
-			bool GENok = true;
-			set <int> cU1;
-
 			//add tree
 			s->createTree (t);
 
+			set<int> newset;
+
 			//add associated chains
-			int numN = t->listOfNodes.size ();
-			for (int cnt2 =0; cnt2 < numN; cnt2++)
+			for (int j=0; j < t->listOfNodes.size (); j++)
 			{
-				Node* n = t->getNode (cnt2);
+				Node* n = t->getNode (j);
 				if (n->isLeaf ())
 				{
 					int chainnum = n->getNodeWeight ().first;
-					if (chainnum == -1)
-					{
-						GENok = false;
-						break;
-					}
-					else
-					{
-						s->createChain (listOfChains[chainnum]);
-						cU1.insert (chainnum);
-					}
+					assert (chainnum >= 0);
+
+					s->createChain (listOfChains[chainnum]);
+					newset.insert (chainnum);
 				}
 			}
 
-			if (!GENok) delete s;
-			else
-			{
-				pieces.push_back (s);
-				cU.push_back (cU1);
-			}
+			pieces.push_back (s);
+			chainUsed.push_back (newset);
 		}
 		else
 		{
 			//merge
 			MySpecies* s = pieces[found];
-
-			bool GENok = true;
-			set<int> cU1;
+			set<int>& oldset = chainUsed[found];
 
 			//add tree
 			s->createTree (t);
 
 			//add associated chains
-			int numN = t->listOfNodes.size ();
-			for (int cnt2 =0; cnt2 < numN; cnt2++)
+			for (int j=0; j< t->listOfNodes.size (); j++)
 			{
-				Node* n = t->getNode (cnt2);
+				Node* n = t->getNode (j);
 				if (n->isLeaf ())
 				{
 					int chainnum = n->getNodeWeight ().first;
-					if (chainnum == -1)
-					{
-						GENok = false;
-						break;
-					}
-					else
+					if (!oldset.count (chainnum))
 					{
 						s->createChain (listOfChains[chainnum]);
-						cU1.insert (chainnum);
+						oldset.insert (chainnum);
 					}
 				}
-			}
-
-			if (GENok)
-			{
-				s->createTree (t);
-
-				set<int>::const_iterator itset =  cU1.begin ();
-				while (itset != cU1.end ()) cU[found].insert (*itset++);
 			}
 		}
 
 		//merge over, go to next tree
 	}
 
-	//rearrange all species
-	for (int cnt =0; cnt < pieces.size (); cnt++)
-		pieces[cnt]->rearrange ();
+	//	handle chains remained
+	for (int i=0; i < listOfChains.size (); i++)
+	{
+		bool found = false;
+		for (int j=0; j < chainUsed.size (); j++)
+			if (chainUsed[j].count (i)) found = true;
+		if (!found)	//	not found
+		{
+			MySpecies* s = new MySpecies ();
+			s->createChain (listOfChains[i]);
+			pieces.push_back (s);
+
+			//	chainUsed
+			set<int> cU;
+			cU.insert (i);
+			chainUsed.push_back (cU);
+		}
+	}
+
+	//	rearrange all species
+	//	remain problems
+	for (int i=0; i<pieces.size (); i++) pieces[i]->rearrange ();
 }
 
 bool MySpecies::countBindedNode (
@@ -234,12 +221,12 @@ Chain* MySpecies::createChain (
 		)
 {
 	Chain* c = new Chain;
-//    cout << "\nprefix = " << prefix << endl;
+	//    cout << "\nprefix = " << prefix << endl;
 
 	ostringstream oss;
 	oss << prefix << "[cHaIn" << chainnum << "]";
 	c->chainLabel  = oss.str ();
-	
+
 	listOfChains.push_back (c);
 	return c;
 }
@@ -460,13 +447,13 @@ void MySpecies::Output () const
 {
 	cout << "\n------Begin (MySpeices)------" << endl;
 
-	int numC = listOfChains.size ();
-	cout << "\nCHAINs (" << numC << "):" << endl;
+	cout << "\nCHAINs (" << listOfChains.size () << "):" << endl;
 
-	for (int cnt =0; cnt < numC; cnt++)
+	for (int cnt =0; cnt < listOfChains.size (); cnt++)
 	{
-		cout << "\nchain " << cnt << " :"; 
-		listOfChains[cnt]->Output (cout);
+		Chain* c = listOfChains[cnt];
+		cout << "\nchain (" << cnt << ", " << c->chainLabel <<  ") :"; 
+		c->Output (cout);
 	}
 
 	int numT = listOfTrees.size ();
@@ -799,4 +786,115 @@ bool MySpecies::match (
 	}
 
 	return !(trym.size () == 0);
+}
+
+void MySpecies::trim (bdbXMLInterface& dbreader)
+{
+	//	
+	//	(1) leaf nodes that are not any site on chains,
+	//		the tree will be erased and leaf nodes are 
+	//		conformed to its original state
+	//	(2) binded part could not find any leaf node in 
+	//		trees, the part will also be conformed to 
+	//		its original state
+
+	//	search binded parts first
+	map < string, pair<int,int> > bindsites;
+
+	for (int i=0; i<listOfChains.size(); i++)
+	{
+		Chain* c = listOfChains[i];
+		for (int j=0; j < c->listOfParts.size (); j++)
+		{
+			Part* p = c->listOfParts[j];
+			if (p->getIsBinded ()) 
+			{
+				string partLabel = p->getPartLabel ();
+				if (bindsites.count (partLabel)) throw StrCacuException (
+						"Part Labels must be different in one species!"
+						);
+				else bindsites[partLabel] = make_pair (i,j);
+			}
+		}
+	}
+
+	//	trim
+	for (int i=0; i <listOfTrees.size (); i++)
+	{
+		bool DelTree = false;
+		Tree* t = listOfTrees[i];
+		for (int j=0; j < t->listOfNodes.size (); j++)
+		{
+			Node* n = t->listOfNodes[j];
+			if (n->isLeaf ())
+			{
+				string nodeLabel = n->getNodeLabel ();
+				//	find nodeLabel in bindsites
+				if (!bindsites.count (nodeLabel)) 
+				{
+					DelTree = true;
+					break;
+				}
+			}
+		}
+
+		if (DelTree == false) continue;
+
+		//	delete tree
+		for (int j=0; j< t->listOfNodes.size (); j++)
+		{
+			Node* n = t->listOfNodes[j];
+			if (n->isLeaf ())
+			{
+				string nodeLabel = n->getNodeLabel ();
+				if (bindsites.count (nodeLabel))
+				{
+					int cn = bindsites[nodeLabel].first;
+					int pn = bindsites[nodeLabel].second;
+
+					assert (cn >= 0);
+					assert (pn >= 0);
+
+					Part* p = listOfChains[cn]->listOfParts[pn];
+
+					//	change to its original conformation
+					vector<string> tmp;
+					const string doc = p->getPartRef ();
+					string path ("/MoDeL/part/");
+					path += p->getPartCtg () + "/@originalConformation";
+					dbreader.get_node_attr (PART, &doc, &path, tmp);
+					if (!tmp.empty ()) p->setPartRef (tmp[0]);
+					p->setIsBinded (false);
+
+					//	erase bindsites
+					bindsites.erase (nodeLabel);
+				}
+			}
+		}
+
+		delete t;
+		vector<Tree*>::iterator iter_tree = listOfTrees.begin () + i;
+		listOfTrees.erase (iter_tree);
+	}	
+
+	map< string, pair<int,int> >::iterator first = bindsites.begin ();
+	for (int i=0; first != bindsites.end (); i++, first++)
+	{
+		int cn = first->second.first;
+		int pn = first->second.second;
+
+		assert (cn >= 0);
+		assert (pn >= 0);
+
+		Part* p = listOfChains[cn]->listOfParts[pn];
+
+		//	change to its original conformation
+		vector<string> tmp;
+		const string doc = p->getPartRef ();
+		string path ("/MoDeL/part/");
+		path += p->getPartCtg () + "/@originalConformation";
+		dbreader.get_node_attr (PART, &doc, &path, tmp);
+		if (!tmp.empty ()) p->setPartRef (tmp[0]);
+		p->setIsBinded (false);
+	}
 }

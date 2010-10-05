@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoDeL>
+	<part>
+		<listOfValueDefaults>
+			<valueDefault id="forwardPromoterEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="reversePromoterEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="forwardRbsEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="reverseRbsEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="forwardTerminatorEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="reverseTerminatorEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="forwardStartCodon"> 0 </valueDefault>
+			<valueDefault id="reverseStartCodon"> 0 </valueDefault>
+			<valueDefault id="forwardSartCodon"> 0 </valueDefault>
+			<valueDefault id="reverseStopCodon"> 0 </valueDefault>
+			<valueDefault id="copyNumber"> 0 </valueDefault>
+			<valueDefault id="sNumberUL"> 0 </valueDefault>
+			<valueDefault id="sNumberLL"> 0 </valueDefault>
+			<valueDefault id="growthRate"> 0.0 </valueDefault>
+			<valueDefault id="maxConcentration"> 1E99 </valueDefault>
+		</listOfValueDefaults>
+	</part>
+</MoDeL>

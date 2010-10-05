@@ -60,7 +60,7 @@
 						</listOfChains>
 					</cnModel>
 				</species>
-				<species db="IPTG_molecule">
+				<species db="IPTG_compound">
 					<id>sPecIes1</id>
 					<compartment>Flask</compartment>
 					<initialConcentration>1E-14</initialConcentration>
@@ -71,7 +71,7 @@
 					<cnModel>
 					</cnModel>
 				</species>
-				<species db="ampicillin_molecule">
+				<species db="ampicillin_compound">
 					<id>sPecIes2</id>
 					<compartment>Flask</compartment>
 					<initialConcentration>2E-14</initialConcentration>

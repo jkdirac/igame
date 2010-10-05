@@ -18,8 +18,8 @@ Chain::Chain (const Chain* orig)
 		unicode (orig->unicode),
 		chainLabel (orig->chainLabel)
 {
-	for (int i =0; i < listOfParts.size (); i++)
-		createPart (orig->listOfParts[i]);
+	for (int i =0; i < orig->listOfParts.size (); i++)
+		this->createPart (orig->listOfParts[i]);
 }
 
 Chain::~Chain ()

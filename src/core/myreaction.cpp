@@ -26,11 +26,11 @@ void MyReaction::completeReaction (
 	)
 {
   //(1) mix species 
-  MySpecies* sMix = new MySpecies;
+  MySpecies* speciesMixing = new MySpecies;
   map<string,string> replaceTable;
 
   //  (1.1) copy modifiers
-  cout << "\nmodifiers = " << modifiersM.size () << endl;
+//  cout << "\nmodifiers = " << modifiersM.size () << endl;
   for (int i=0; i < modifiersM.size (); i++)
   {
 	int sind = modifiersM[i].first;
@@ -42,7 +42,7 @@ void MyReaction::completeReaction (
   }
 
   //  (1.2) copy and mix reactants
-  cout << "\nreactants = " << reactantsM.size () << endl;
+//  cout << "\nreactants = " << reactantsM.size () << endl;
   for (int i=0; i < reactantsM.size (); i++)
   {
 	int sind = reactantsM[i].first;
@@ -60,12 +60,12 @@ void MyReaction::completeReaction (
 	for (int j=0; j < sr->getNumOfChains (); j++)
 	{
 	  if (!chainUsed.count (j)) 
-		sMix->createChain (sr->getChain (j));
+		speciesMixing->createChain (sr->getChain (j));
 	}
 
 	//	copy all trees
 	for (int j=0; j < sr->getNumOfTrees (); j++)
-	  sMix->createTree (sr->getTree (j));
+	  speciesMixing->createTree (sr->getTree (j));
 
 	string Label = RT->listOfMyReactants[i]->getDB_Label ();
 	replaceTable[Label] = sr->getId ();
@@ -73,24 +73,38 @@ void MyReaction::completeReaction (
 
   //  (1.3) copy and mix products
   int numProd = listOfMyProducts.size ();
+//  cout << "\nproducts = " << productsBody.size () << endl;
   for (int i=0; i < productsBody.size () ; i++)
   {
 	MySpecies* sp = productsBody[i];
-	listOfMyProducts.push_back (sp);
+//    cout << "\nproductsBody: " << i;
+	listOfMyProducts.push_back (sp);	//push product body into products list
 
+//    cout << "\nchain number = " << sp->getNumOfChains () << endl;
 	for (int j=0; j< sp->getNumOfChains (); j++)
-	  sMix->createChain (sp->getChain (j));
+	  speciesMixing->createChain (sp->getChain (j));
 
+//    cout << "\ntree number = " << sp->getNumOfTrees () << endl;
 	for (int j=0; j< sp->getNumOfTrees (); j++)
-	  sMix->createTree (sp->getTree (j));
+	  speciesMixing->createTree (sp->getTree (j));
   }
+
+  //	mixed species
+  speciesMixing->Output ();
 
   //  split species
   vector<MySpecies*> realProducts; 
-  sMix->split (realProducts);
+  speciesMixing->rearrange ();
+  speciesMixing->split (realProducts);
+
+  //	check realProducts
+  cout << "\nCheck products after mixing...";
+  for (int i=0; i < realProducts.size (); i++)
+	  realProducts[i]->Output ();
+  cout << "Done!" << endl;
 
   //  readProducts are just copies
-  delete sMix;
+  delete speciesMixing;
 
   //  add products
   vector<int>* dGp = new vector<int> [realProducts.size ()];

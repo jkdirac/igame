@@ -165,12 +165,25 @@ void readDataBase::read_cnModel (
 	//	find binded part
 	for (int ichain=0; ichain < s->getNumOfChains (); ichain++)
 	{
+		bool alone = false;
+
 		Chain* c = s->getChain (ichain);
 		for (int ipart = 0; ipart < c->getNumOfParts (); ipart++)
 		{
 			Part* p = c->getPart (ipart);
 			bool __isb = s->countBindedNode (p->getPartLabel ());
+			if (__isb) alone = true;
+
 			p->setIsBinded (__isb);
+		}
+
+		if (!alone)
+		{
+			//	a unbinded chain
+			if (s->getNumOfChains () > 1)
+				throw StrCacuException (
+						"Not a species ALONE!"
+						);
 		}
 	}
 }

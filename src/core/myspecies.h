@@ -16,6 +16,8 @@
 #include "tree.h"
 #include "imath.h"
 
+#include "../BdInterface/bdbInterface.h"
+
 class IsLess_c
 {
 	public:
@@ -122,5 +124,7 @@ class MySpecies:
 
 		void findEquiv ();
 		void perm (const int&, const permType&);
+
+		void trim (bdbXMLInterface& dbreader);
 };
 #endif
