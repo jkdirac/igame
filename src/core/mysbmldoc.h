@@ -33,10 +33,8 @@ class MySBMLDocument:
 		~MySBMLDocument ();
 
 		MySpecies* createMySpecies ();
-		MySpecies* createMySpecies (const string&, const int&);
-		MyReaction* createMyReaction ();
-		MyReaction* createMyReaction (const string&, const int&);
 		MyCompartment* createMyCompartment ();
+		MyReaction* createMyReaction ();
 
 		void addMySpecies (MySpecies*);
 		void addMyCompartment (MyCompartment*);

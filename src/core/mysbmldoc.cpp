@@ -54,18 +54,11 @@ void MySBMLDocument::addMyReaction (MyReaction* r) {
 MySpecies* MySBMLDocument::createMySpecies ()
 {
 	MySpecies* s = new MySpecies;
-	listOfMySpecies.push_back (s);
-	return s;
-}
-
-MySpecies* MySBMLDocument::createMySpecies (const int& spciesNum)
-{
-	MySpecies* s = new MySpecies;
 
 	ostringstream oss;
-	oss << "[sPecIes" << speciesNum << "]";
+	oss << "[sPecIes" << listOfMySpecies.size () << "]";
 	s->setId (oss.str ());
-	
+
 	listOfMySpecies.push_back (s);
 	return s;
 }
@@ -77,15 +70,12 @@ MyCompartment* MySBMLDocument::createMyCompartment ()
 	return c;
 }
 
-MyReaction* MySBMLDocument::createMyReaction (
-		const string& prefix, 
-		const int& reactionNum
-		)
+MyReaction* MySBMLDocument::createMyReaction ()
 {
 	MyReaction* r = new MyReaction;
 
 	ostringstream oss;
-	oss << prefix << "[rEactIon" << reactionNum << "]";
+	oss << "[rEactIon" << listOfMyReactions.size() << "]";
 	r->setId (oss.str ());
 
 	listOfMyReactions.push_back (r);
@@ -153,7 +143,7 @@ MySpecies* getMySpecies (const MySpecies* s)
 	}
 	return found;
 }
-		
+
 const MySpecies* getMySpecies (const MySpecies* s) const
 {
 	MySpecies* found = NULL;
@@ -166,9 +156,7 @@ const MySpecies* getMySpecies (const MySpecies* s) const
 	return found;
 }
 
-void MySBMLDocument::run (
-		readDataBase& dbreader
-		)
+void MySBMLDocument::run (readDataBase& dbreader)
 {
 	//
 	//  listOfMySpecies size may be updated while 
@@ -219,7 +207,7 @@ void MySBMLDocument::run (
 					cout << "\nHandling the First Referenced Species...";
 
 					string speciesReference, partType;
-					
+
 					cout << "\ndb = " << p->getDbId () << endl;
 
 					dbreader.readSpeciesLink (
@@ -253,8 +241,8 @@ void MySBMLDocument::run (
 							sLink, SPECIES, speciesReference,
 							"/MoDeL/species", true
 							);
-//                    cout << "\nspeciesReference = " <<
-//                        speciesReference << endl;
+					//                    cout << "\nspeciesReference = " <<
+					//                        speciesReference << endl;
 
 					cout << "\n=============Species Referred...=================\n";
 					sLink->Output ();
@@ -468,7 +456,7 @@ void MySBMLDocument::handleReactionTemplate (
 			return;
 		}
 	}
-	
+
 
 	//
 	//  find species and compartment configuration that
@@ -536,13 +524,13 @@ void MySBMLDocument::searchTranscriptionReactions (
 
 	//	if p is a forward element, query its forward attribute
 	//	if p is a reverse element, query its reverse attribute
-	
+
 	//	===============================
 	//	forward transcription reaction
 	//	===============================
 	string PE_fw ("forwardPromoterEfficiency");
 	if (ptype == "ReverseDNA") PE_fw = "reversePromoterEfficiency";
-	
+
 	string db_comp = getMyCompartment (s->getCompartment ())->getDbId ();
 	dbreader.readConditionalParameter (
 			PART, p->getPartCategory (), p->getDbId (),
@@ -592,25 +580,22 @@ void MySBMLDocument::searchTranscriptionReactions (
 					//	the biobrick next to promoter is not a valid sequence
 					if (!isvalidseq && ci == k + 1) break;	
 
-					MySpecies* mrna = new MySpecies;
-
-					if (mrna->setId (genSbmlId (0)) 
-							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
-						throw StrCacuException (
-								"Transcription: Invalid Attribute Value: id!"
-								);
+					MySpecies* mrna = new MySpecies (listOfMySpecies.size ());
 					mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
 
-					Chain* mrna_chain = mrna->createChain ();
 					assert (k+1 <= ci-1);
+					Chain* mrna_chain = mrna->createChain (mrna->getId (), 0);
 
 					for (int j=k+1; j < ci; j++)
 					{
 						Part* tm = c->getPart (j);
 						Part* mrna_part = mrna_chain->createPart (tm);
 
+						//	partLabel and partCategory are keeped not changed
+
+						//	partType
 						if (tm->getPartType () == "ForwardDNA")
 							mrna_part->setPartType ("ForwardRNA");
 						else if (tm->getPartType () == "ReverseDNA")
@@ -618,23 +603,29 @@ void MySBMLDocument::searchTranscriptionReactions (
 						else throw StrCacuException (
 								"Invalid Transcriptional Unit!"
 								);
+
+						//	isbinded and partRef
+						if (tm->getIsBinded ())
+						{
+							vector<string> tmp;
+							const string doc = tm->getPartRef ();
+							const string path ("/MoDeL/part/");
+							path += tm->getPartCtg () + "/@originalConformation";
+							dbreader.get_node_attr (PART, &doc, &path, tmp);
+							if (!tmp.empty ()) mrna_part->setPartRef (tmp[0]);
+							mrna_part->setIsBinded (false);
+						}
 					}
 					mrna->rearrange ();
 
 					//	check existance of myspecies
-					listOfMySpecies.push_back (mrna);
-					mrna = validateBackSpecies ();
-//                    cout << "\nmrna = ";
-//                    mrna->Output ();
+					if (getMySpecies (mrna) ==NULL) addMySpecies (mrna); 
 
 					//	record a reaction
-					MyReaction* transcription = new MyReaction;
-					transcription->setId (genSbmlId (1));
+					MyReaction* transcription = createMyReaction ();
 					transcription->setName ("transcription");
 					transcription->setReversible (false);
-
 					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
-					listOfMyReactions.push_back (transcription);
 
 					if (!isvalidseq) break;
 					if (fabs (1-termeff) < TINY) break;
@@ -648,7 +639,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 	//	==============================
 	//	reverse transcription reaction
 	//	==============================
-	
+
 	if (!units.empty ()) units.clear ();
 	if (!name.empty ()) name.clear ();
 
@@ -702,18 +693,12 @@ void MySBMLDocument::searchTranscriptionReactions (
 					//	the biobrick next to promoter is not a valid sequence
 					if (!isvalidseq && ci == k-1) break;	
 
-					MySpecies* mrna = new MySpecies;
-
-					if (mrna->setId (genSbmlId (0)) 
-							== LIBSBML_INVALID_ATTRIBUTE_VALUE)
-						throw StrCacuException (
-								"Transcription: Invalid Attribute Value: id!"
-								);
+					MySpecies* mrna = new MySpecies (listOfMySpecies.size());
 					mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
 
-					Chain* mrna_chain = mrna->createChain ();
+					Chain* mrna_chain = mrna->createChain (mrna->getId (), 0);
 					assert (k-1 >= ci+1);
 
 					for (int j=k-1; j > ci; j--)
@@ -721,6 +706,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 						Part* tm = c->getPart (j);
 						Part* mrna_part = mrna_chain->createPart (tm);
 
+						//	partType
 						if (tm->getPartType () == "ForwardDNA")
 							mrna_part->setPartType ("ReverseRNA");
 						else if (tm->getPartType () == "ReverseDNA")
@@ -728,21 +714,29 @@ void MySBMLDocument::searchTranscriptionReactions (
 						else throw StrCacuException (
 								"Invalid Transcriptional Unit!"
 								);
+
+						//	isbinded and partRef
+						if (tm->getIsBinded ())
+						{
+							vector<string> tmp;
+							const string doc = tm->getPartRef ();
+							const string path ("/MoDeL/part/");
+							path += tm->getPartCtg () + "/@originalConformation";
+							dbreader.get_node_attr (PART, &doc, &path, tmp);
+							if (!tmp.empty ()) mrna_part->setPartRef (tmp[0]);
+							mrna_part->setIsBinded (false);
+						}
 					}
 					mrna->rearrange ();
 
 					//	check existance of myspecies
-					listOfMySpecies.push_back (mrna);
-					mrna = validateBackSpecies ();
+					if (getMySpecies (mrna) ==NULL) addMySpecies (mrna); 
 
 					//	record a reaction
-					MyReaction* transcription = new MyReaction;
-					transcription->setId (genSbmlId (1));
+					MyReaction* transcription = createMyReaction ();
 					transcription->setName ("transcription");
 					transcription->setReversible (false);
-
 					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
-					listOfMyReactions.push_back (transcription);
 
 					if (!isvalidseq) break;
 					if (fabs (1-termeff) < TINY) break;
@@ -842,22 +836,20 @@ void MySBMLDocument::searchTranslationReactions (
 
 					if (codonEff > TINY || !isvalidseq)
 					{
-						//	the biobrick next to rbs is not a valid sequence
-						MySpecies* prot = new MySpecies;
+						if (ci == k+1 && !isvalidseq)  break;
 
-						if (prot->setId (genSbmlId (0)) 
-								== LIBSBML_INVALID_ATTRIBUTE_VALUE)
-							throw StrCacuException (
-									"Translation: Invalid Attribute Value: id!"
-									);
+						//	the biobrick next to rbs is not a valid sequence
+						MySpecies* prot = new MySpecies (listOfMySpecies.size ());
 						prot->setName ("prot");
 						prot->setCompartment (s->getCompartment ());
 						prot->setInitialAmount (0.0);
 
-						Chain* prot_chain = prot->createChain ();
+						Chain* prot_chain = prot->createChain (prot->getId (), 0);
 						assert (k+1 <= ci);
 
-						for (int j=k+1; j <= ci; j++)
+						int newci = ci;
+						if (!isvalidseq) newci = ci-1; 
+						for (int j=k+1; j <= newci; j++)
 						{
 							Part* tm = c->getPart (j);
 							Part* prot_part = prot_chain->createPart (tm);
@@ -869,21 +861,29 @@ void MySBMLDocument::searchTranslationReactions (
 							else throw StrCacuException (
 									"Invalid Translation Unit!"
 									);
+							
+							//	isbinded and partRef
+							if (tm->getIsBinded ())
+							{
+								vector<string> tmp;
+								const string doc = tm->getPartRef ();
+								const string path ("/MoDeL/part/");
+								path += tm->getPartCtg () + "/@originalConformation";
+								dbreader.get_node_attr (PART, &doc, &path, tmp);
+								if (!tmp.empty ()) prot_part->setPartRef (tmp[0]);
+								prot_part->setIsBinded (false);
+							}
 						}
 						prot->rearrange ();
 
 						//	check existance of myspecies
-						listOfMySpecies.push_back (prot);
-						prot = validateBackSpecies ();
+						if (getMySpecies (prot) ==NULL) addMySpecies (prot); 
 
 						//	record a reaction
-						MyReaction* translation = new MyReaction;
-						translation->setId (genSbmlId (1));
+						MyReaction* translation = createMyReaction ();
 						translation->setName ("translation");
 						translation->setReversible (false);
-
 						translation->addSpecialReaction (s, prot, "k_tl", name, value, units);
-						listOfMyReactions.push_back (translation);
 
 						break;
 					}

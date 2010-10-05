@@ -555,41 +555,38 @@ void MySpecies::findEquiv ()
 	//clear if there are element left
 	if (!equiv.empty ()) equiv.clear ();
 
-	int numC = listOfChains.size ();
-	for (int cnt =0; cnt < numC-1; )
+	int i =0;
+	while (i < listOfChains.size ()-1)
 	{
-		Chain* c1 = listOfChains[cnt];
+		Chain* c1 = listOfChains[i];
 
 		int offset = 1;
 		do
 		{
-			int curp = cnt + offset;
+			int curp = i + offset;
 			Chain* c2 = listOfChains[curp];
 
 			if (&c1 == &c2) 
 			{
 				offset++;
-				if (curp+1 == numC) //last element
+				if (curp+1 == listOfChains.size ()) //last element
 				{
 					equiv.push_back (
-							make_pair(cnt, numC-1)
+							make_pair(i, listOfChains.size ()-1)
 							);
-					cnt = numC;
+					i = listOfChains.size ();
+					break;
 				}
 			}
 			else
 			{
 				if (offset > 1)
-					equiv.push_back (
-							make_pair(cnt, curp-1)
-							);
-				cnt += offset;
+					equiv.push_back (make_pair(i, curp-1));
+				i += offset;
 				break;
 			}
 		} while (1);
 	}
-
-	//return
 }
 
 void MySpecies::perm (
