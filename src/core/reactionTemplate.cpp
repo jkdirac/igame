@@ -437,11 +437,11 @@ bool reactionTemplate::compartmentConstraints (
 	//	find compartment where it locates in
 	//
 	MyCompartment* currComp = NULL;
-	cout << "\nsize = " << listOfMyCompartments.size () << endl;
+//    cout << "\nsize = " << listOfMyCompartments.size () << endl;
 	for (int icomp =0; icomp < listOfMyCompartments.size (); icomp++)
 	{
 	  MyCompartment* mycomp = listOfMyCompartments[icomp];
-	  cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
+//      cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
 	  if (mycomp->isMySpeciesIn (speciesLabel) != NULL) currComp = mycomp;
 	}
 

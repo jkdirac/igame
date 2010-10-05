@@ -7,7 +7,7 @@ MySpecies::MySpecies () :
 MySpecies::MySpecies (const int& speciesNum)
 {
 	ostringstream oss;
-	oss << "[sPecIes" << speciesNum << "]";
+	oss << "sPecIes" << speciesNum;
 	setId (oss.str ());
 }
 
@@ -234,6 +234,7 @@ Chain* MySpecies::createChain (
 		)
 {
 	Chain* c = new Chain;
+//    cout << "\nprefix = " << prefix << endl;
 
 	ostringstream oss;
 	oss << prefix << "[cHaIn" << chainnum << "]";

@@ -30,6 +30,7 @@ void MyReaction::completeReaction (
   map<string,string> replaceTable;
 
   //  (1.1) copy modifiers
+  cout << "\nmodifiers = " << modifiersM.size () << endl;
   for (int i=0; i < modifiersM.size (); i++)
   {
 	int sind = modifiersM[i].first;
@@ -41,6 +42,7 @@ void MyReaction::completeReaction (
   }
 
   //  (1.2) copy and mix reactants
+  cout << "\nreactants = " << reactantsM.size () << endl;
   for (int i=0; i < reactantsM.size (); i++)
   {
 	int sind = reactantsM[i].first;
@@ -199,7 +201,7 @@ void MyReaction::completeReaction (
 	delete s;
   }
 
-  delete dGp;
+  delete [] dGp;
 
   //
   //  complete components of Reaction object needed for SBML

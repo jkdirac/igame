@@ -38,12 +38,15 @@ void MySBMLDocument::addMyCompartmentChildren ()
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{
 		MyCompartment* child = listOfMyCompartments[i];
-		MyCompartment* parent = getMyCompartment (child->getOutside ());
-		if (parent != NULL) parent->addMyCompartmentIn (child);
-		else throw StrCacuException (
-				"No compartment existed in compartment list"
-				" for given compartment!"
-				);
+		if (child->getOutside () != "ROOT")
+		{
+			MyCompartment* parent = getMyCompartment (child->getOutside ());
+			if (parent != NULL) parent->addMyCompartmentIn (child);
+			else throw StrCacuException (
+					"No compartment existed in compartment list"
+					" for given compartment!"
+					);
+		}
 	}
 }
 
@@ -56,7 +59,7 @@ MySpecies* MySBMLDocument::createMySpecies ()
 	MySpecies* s = new MySpecies;
 
 	ostringstream oss;
-	oss << "[sPecIes" << listOfMySpecies.size () << "]";
+	oss << "sPecIes" << listOfMySpecies.size ();
 	s->setId (oss.str ());
 
 	listOfMySpecies.push_back (s);
@@ -75,7 +78,7 @@ MyReaction* MySBMLDocument::createMyReaction ()
 	MyReaction* r = new MyReaction;
 
 	ostringstream oss;
-	oss << "[rEactIon" << listOfMyReactions.size() << "]";
+	oss << "rEactIon" << listOfMyReactions.size();
 	r->setId (oss.str ());
 
 	listOfMyReactions.push_back (r);
@@ -167,6 +170,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
+		if (i == 1) break;
+
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
@@ -457,6 +462,8 @@ void MySBMLDocument::handleReactionTemplate (
 			listOfMyCompartments, listOfMySpecies, 
 			speciesIndex, role, result
 			);
+
+	cout << "\nMatch Size = " << result.size () << endl;
 
 	//
 	//  create reaction objects

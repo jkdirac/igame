@@ -30,19 +30,19 @@
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X2</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>lacI153</partReference>
 							<partLabel>lacI_0</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X3</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -52,19 +52,19 @@
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X4</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>lacI153</partReference>
 							<partLabel>lacI_1</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X5</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -74,19 +74,19 @@
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X6</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>lacI153</partReference>
 							<partLabel>lacI_2</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X7</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -96,19 +96,19 @@
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X8</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>lacI153</partReference>
 							<partLabel>lacI_3</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
 							<partReference>X</partReference>
 							<partLabel>X9</partLabel>
-							<partType>Protein</partType>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>

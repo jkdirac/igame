@@ -93,7 +93,8 @@ void readDataBase::read_cnModel (
 			//
 
 			//	regenerate part label
-			string __label_new = s->getId () + "[" + __label + "]";
+			string __label_new (__label);
+			if (!isTemplate) __label_new = s->getId () + "[" + __label + "]";
 			if (newLabel.count (__label))
 				throw StrCacuException (
 						"Species: partLabel should be unique within"
@@ -362,7 +363,7 @@ void readDataBase::setCompartment (
 	int operation = LIBSBML_OPERATION_SUCCESS;
 
 	//
-	//  setDbId 
+	//  setDB_ref
 	//
 	comp->setDB_ref (db); 
 
@@ -478,13 +479,15 @@ void readDataBase::setSpecies (
 	//
 	//  setId 
 	//
-	string newid = string ("[") + id + "]";
-	operation = s->setId (newid);
+	operation = s->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+	{
+		cout << "\nid = " << id << endl;
 		throw StrCacuException (
 				"Reading Block Species..."
 				"Invalid Attribute Value: id!"
 				);
+	}
 
 	//
 	//  setName 
@@ -715,6 +718,8 @@ void readDataBase::readReactionTemplate (
 		const bool& direction
 		)
 {
+	cout << "\nreading reaction	...\n" << doc << endl;
+
 	string head ("/MoDeL/reaction");
 
 	if (doc.empty ())
@@ -950,9 +955,10 @@ void readDataBase::readReactionTemplate (
 		double value;
 
 		const Part* p = s->getPart (partLabel);
+		if (p == NULL) cout << "asdfasdf" << endl;
 		readConditionalParameter (
 				PART, p->getPartCtg (),
-				p->getPartLabel (), parameterLabel,
+				p->getPartRef (), parameterLabel,
 			    compartmentLabel, value, units, name
 				);
 

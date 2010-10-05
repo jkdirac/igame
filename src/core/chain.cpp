@@ -2,12 +2,15 @@
 
 Chain::Chain ()
 {
+	keywords["X"] = 0;
+	/*
 	keywords["ANY"] = 0;
 	keywords["ANYUB"] = 1;
 	keywords["NZ"] = 2;
 	keywords["NZUB"] = 3;
 	keywords["ONE"] = 4;
 	keywords["ONEUB"] = 5;
+	*/
 }
 
 Chain::Chain (const Chain* orig) 

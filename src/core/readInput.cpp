@@ -19,6 +19,8 @@ void readInput::config (
 	Model* m = mysbmldoc->createModel ();
 	m->setId ("iGameModel");
 
+	cout << "\nread unit defs (db) ..." << endl;
+
 	//===================================================
 	//	PART1:	LOADING UNITDEFS AND FUNCTIONDEFS FROM DB
 	//===================================================
@@ -84,6 +86,8 @@ void readInput::config (
 		}
 	}
 
+	cout << "\nread function defs (db) ..." << endl;
+
 	//  (1.2) load functionDefinitions
 	const string pathFunc = 
 		"/MoDeL/system/"
@@ -107,6 +111,8 @@ void readInput::config (
 	//		PART2:	READ INPUT FILE
 	//	===================================================
 	const string DOC ("input");
+
+	cout << "\nread parameters (input) ..." << endl;
 
 	//	===================================================
 	//  (1) read listOfParameters 
@@ -150,6 +156,8 @@ void readInput::config (
 		Parameter* para = m->createParameter ();
 		setParameter (para, id, name, value, units, constant);
 	}
+
+	cout << "\nread rules (input) ..." << endl;
 
 	//	======================================================
 	//  (2) read listOfRules
@@ -225,6 +233,7 @@ void readInput::config (
 		setRateRule (rater, variable, math);
 	}
 
+	cout << "\nread compartments (input)	..." << endl;
 
 	//	==================================
 	//  (3) read listOfCompartments
@@ -252,6 +261,7 @@ void readInput::config (
 	}
 	mysbmldoc->addMyCompartmentChildren ();
 
+	cout << "\nread species	(input)	..." << endl;
 
 	//	=========================================
 	//			READ listOfSpecies
@@ -280,6 +290,8 @@ void readInput::config (
 				initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
 				boundaryCondition, charge, constant);
 
+//        cout << "\ncompartment = " << s->getCompartment ();
+
 		//
 		//	read species container if db attr has been specified
 		//	or read chain-node model component to complete its structure
@@ -304,6 +316,7 @@ void readInput::config (
 		if (mysbmldoc->getMySpecies (s) ==NULL) mysbmldoc->addMySpecies (s); 
 	}
 
+	cout << "\nread parameters (db)	..." << endl;
 	//	=========================================
 	//	PART3: LOADING PARAMETERS AND RULES IN DB
 	//	=========================================
@@ -334,6 +347,8 @@ void readInput::config (
 			setParameter (para, id, name, value, units, constant);
 		}
 	}
+
+	cout << "\nread rules (db)	..." << endl;
 
 	//  (3.2) read listOfRules
 	//	rule definition in input file will shade that in db
