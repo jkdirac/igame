@@ -232,10 +232,11 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
+		cout <<"get node element: " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
-		cout << query_string << endl;
+		cout <<"get node element: " << query_string << endl;
 		cout << "get_node_element in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
@@ -315,10 +316,11 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
+		cout << "get node attr " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
-		cout << query_string << endl;
+		cout << "get node attr: " << query_string << endl;
 		cout << "get_node_attr in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
@@ -395,10 +397,11 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
+		cout << "get node: " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
-		cout << query_string << endl;
+		cout << "get node query string: " << query_string << endl;
 		cout << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
@@ -435,6 +438,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
  * 	return no_error for success
  * 	otherwise an XmlException was throwed
  */
+/*
 BdRetVal bdbXMLInterface::get_node(container_index container_type, 
 		const string *doc, 
 		const string *node_path, 
@@ -516,6 +520,7 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 
 	return no_error;
 }
+*/
 
 //BdRetVal bdbXMLInterface::get_math(container_index container_type, 
 //                const string *doc, 
@@ -646,7 +651,7 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout << query_string << endl;
+		cout << "get_node_element_num: " << query_string << endl;
 		cout << "get_node_element_num exception: " << xe.what() << endl;
 		throw xe;
 	}

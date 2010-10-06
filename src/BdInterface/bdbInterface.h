@@ -62,12 +62,12 @@ class bdbXMLInterface
 				const string *doc, 
 				const string *node_path, 
 				string &res);
-		BdRetVal get_node(container_index container_type, 
-				const string *doc, 
-				const string *node_path, 
-				string &res,
-				const string &prefix,
-				const string &uri);
+//        BdRetVal get_node(container_index container_type, 
+//                const string *doc, 
+//                const string *node_path, 
+//                string &res,
+//                const string &prefix,
+//                const string &uri);
 		BdRetVal get_ids_bycontainer(container_index container_type, vector<string> &res);
 };
 

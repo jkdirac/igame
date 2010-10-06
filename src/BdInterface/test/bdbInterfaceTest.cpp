@@ -114,7 +114,9 @@ void test_get_node()
 	vector<container_index> types;
 
 	types.push_back(DBINTERFACE); docs.push_back("input"); paths.push_back("/MoDeL/math");
-	types.push_back(SYSTEM); docs.push_back("rules"); paths.push_back("/MoDeL/system/listOfRules/assignmentRule/math");
+	types.push_back(SYSTEM); docs.push_back("rules"); paths.push_back("/MoDeL/system/listOfRules/assignmentRule");
+	types.push_back(SYSTEM); docs.push_back("rules"); paths.push_back("/MoDeL/system/listOfRules/assignmentRule[1]/math");
+	
 	string res_str;
 
 	cout << "-------- test get nodes start---------" << endl;
