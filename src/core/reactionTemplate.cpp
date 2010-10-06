@@ -260,7 +260,6 @@ bool reactionTemplate::findSpeciesMatch (
 		}
 	}
 
-	cout << "\nNumber of Options = " << options.size () << endl;
 	vector< map<string, int> > compConfig;	//	important
 
 	for (int i=0; i < permALL_DB; i++)
@@ -278,6 +277,9 @@ bool reactionTemplate::findSpeciesMatch (
 					);
 			else conf.insert (make_pair (__comp_label, __comp_index));
 			divide /= options[j].size ();
+
+			cout << "\n__comp_label = " << __comp_label 
+				 << "; __comp_index = " << __comp_index << endl;
 		}
 
 		//	validate relations between compartments
@@ -288,9 +290,13 @@ bool reactionTemplate::findSpeciesMatch (
 			int __parent_index = conf[__parent];
 			MyCompartment* parentComp = listOfMyCompartments[__parent_index];
 
-			int entries = mapComps.count (__parent);
+			int entries = mmapComps.count (__parent);
 			multimap<string,string>::iterator iter = 
-				mapComps.find (__parent);
+				mmapComps.find (__parent);
+			
+			cout << "\nparent = " << __parent 
+				 << "  j = " << j 
+				 << "  entries = " << entries << endl;
 
 			for (int cnt=0; cnt != entries; cnt++, iter++)
 			{
@@ -348,12 +354,19 @@ bool reactionTemplate::findSpeciesMatch (
 		//	special handle for current species 
 		//
 		MySpecies* tmReactant = listOfMyReactants[i];
+
 		if (tmReactant->getDB_ref () == dbref)
 		{
 			MySpecies* currSpe = listOfMySpecies[index];
 
 			cMatchsArray trym;
-			if (currSpe->match (tmReactant, trym))
+
+			//	is two species both/both not of compartment-type 
+			bool same = isSameType (
+					currSpe->getCompTypeId (), tmReactant->getCompTypeId ()
+					);
+						
+			if (same && currSpe->match (tmReactant, trym))
 			{
 				/**
 				 * pair relation between species index and its matching info.
@@ -374,7 +387,13 @@ bool reactionTemplate::findSpeciesMatch (
 				MySpecies* prevSpe = listOfMySpecies[j];
 
 				cMatchsArray trym;
-				if (prevSpe->match (tmReactant, trym))
+
+				//	is two species both/both not of compartment-type 
+				bool same = isSameType (
+					prevSpe->getCompTypeId (), tmReactant->getCompTypeId ()
+					);
+
+				if (same && prevSpe->match (tmReactant, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
 						reactant_sam[i].push_back (make_pair (j, trym[k]));
@@ -391,7 +410,9 @@ bool reactionTemplate::findSpeciesMatch (
 
 	//	no reactant match
 	if (fail1) return false;
+	else cout << "\npermALL1 = " << permAll1 << endl;
 
+	
 	//
 	//	find species matching for modifiers
 	//
@@ -401,17 +422,34 @@ bool reactionTemplate::findSpeciesMatch (
 	for (int i=0; i < listOfMyModifiers.size (); i++)
 	{
 		MySpecies* tmModifier = listOfMyModifiers[i];
+		
+		cout << "\ngetDB_ref = " << tmModifier->getDB_ref () 
+			 << "  dbref =  "<< dbref << endl;
+
 		if (tmModifier->getDB_ref () == dbref)
 		{
 			MySpecies* currSpe = listOfMySpecies[index];
 
 			cMatchsArray trym;
-			if (currSpe->match (tmModifier, trym))
+
+			//	is two species both/both not of compartment-type 
+			bool same = isSameType (
+					currSpe->getCompTypeId (), tmModifier->getCompTypeId ()
+					);
+			bool mok = currSpe->match (tmModifier, trym);
+
+			//	TEST
+			cout << "\ncurrSpe = " << endl;
+			currSpe->Output ();
+			cout << "\ntmModifier = " << endl;
+			tmModifier->Output ();
+			cout << "\nmok = " << mok << endl;
+			//	TEST OVER
+
+			if (same && mok) 
 			{
 				for (int k=0; k < trym.size (); k++)
-				{
 					modifier_sam[i].push_back (make_pair (index, trym[k]));
-				}
 			}
 			else 
 			{
@@ -426,7 +464,13 @@ bool reactionTemplate::findSpeciesMatch (
 				MySpecies* prevSpe = listOfMySpecies[j];
 
 				cMatchsArray trym;
-				if (prevSpe->match (tmModifier, trym))
+
+				//	is two species both/both not of compartment-type 
+				bool same = isSameType (
+						prevSpe->getCompTypeId (), tmModifier->getCompTypeId ()
+						);
+
+				if (same && prevSpe->match (tmModifier, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
 						modifier_sam[i].push_back (make_pair (j, trym[k]));
@@ -442,6 +486,7 @@ bool reactionTemplate::findSpeciesMatch (
 	}
 
 	if (fail2) return false;
+	else cout << "\npermALL2 = " << permAll2 << endl;
 
 	//
 	//	permutation to find all possible combinations
@@ -544,6 +589,8 @@ bool reactionTemplate::findSpeciesMatch (
 					//	parameter about template spcies
 					string __compLabel_tm = listOfMyModifiers[n2]->getCompartment ();
 					string __compid_tm;
+
+					//	LIAOCHEN MARK ... TAKE CARE!
 					if (compConfig[n1].count (__compLabel_tm))
 					{
 						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
@@ -795,4 +842,11 @@ void reactionTemplate::createProductsFromTemplate (
 
 		products.push_back (__spe_new_p);
 	}
+}
+
+bool isSameType (const string& lhs, const string& rhs)
+{
+	if (lhs.empty () && !rhs.empty ()) return false;
+	if (!lhs.empty () && rhs.empty ()) return false;
+	else return true;
 }

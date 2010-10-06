@@ -593,7 +593,7 @@ void readXMLComponent::readSpecies (
 	//
 	const string path_ccid = 
 		prefix + "compartment/@itself";
-	get_node_attr (cind, &doc, &path_db, temp);
+	get_node_attr (cind, &doc, &path_ccid, temp);
 	if (!temp.empty ()) ccid = temp[0];
 
 	//
