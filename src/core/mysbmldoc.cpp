@@ -241,8 +241,11 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					MySpecies* sLink = new MySpecies;
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (
-							sLink, SPECIES, speciesReference,
-							"/MoDeL/species", true
+							sLink, 
+							SPECIES, 
+							speciesReference, 
+							"/MoDeL/species", 
+							true
 							);
 					//                    cout << "\nspeciesReference = " <<
 					//                        speciesReference << endl;
@@ -267,123 +270,45 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//  read reaction Links
 					//
 					string reactionLinkPath =
-						"/MoDeL/species/listOfReferencedReactions/referencedReaction";
+						"/MoDeL/species/"
+						"listOfReferencedReactions/"
+						"referencedReaction";
 
-					int numOfReactionLinks = dbreader.get_node_element_num (
-							SPECIES, &speciesReference, &reactionLinkPath
+					int numOfReactionLinks = 
+						dbreader.get_node_element_num (
+							SPECIES, 
+							&speciesReference, 
+							&reactionLinkPath
 							);
 
 					for (int r=1; r <= numOfReactionLinks; r++)
 					{
 						string reactionReference, speciesRole;
 						dbreader.readReactionLink (
-								SPECIES, speciesReference, reactionLinkPath, 
-								r, reactionReference, speciesRole
+								SPECIES, 
+								speciesReference, 
+								reactionLinkPath, 
+								r, 
+								reactionReference, 
+								speciesRole
 								);
 						handleReactionTemplate (
-								dbreader, reactionReference, speciesReference,speciesRole, i
+								dbreader, 
+								reactionReference, 
+								speciesReference,
+								speciesRole, 
+								i
 								);
 					}
 				}
 			}
 		}
 
-		//
-		//	update!
-		//
 		numOfSpecies = listOfMySpecies.size ();
 	}
 
-	//  add species, compartment and reaction to SBML file
-
-	cout << "\n=========================================================";
-	cout << "\n	 COPY MYOBJECTS TO SBML COMPONENTS... 		";
-	cout << "\n=========================================================";
-	cout <<	endl;
-
-	Model* m = getModel ();
-
-	for (int i=0; i < listOfMySpecies.size (); i++)
-	{
-		int operation = m->addSpecies (listOfMySpecies[i]);
-		if (operation == LIBSBML_LEVEL_MISMATCH)
-			throw StrCacuException (
-					"Add Species to Model: Level Mismatch!"
-					);
-		if (operation == LIBSBML_VERSION_MISMATCH)
-			throw StrCacuException (
-					"Add Species to Model: Version Mismatch!"
-					);
-		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
-			throw StrCacuException (
-					"Add Species to Model: Duplicate Object Id!"
-					);
-		if (operation == LIBSBML_OPERATION_FAILED)
-			throw StrCacuException (
-					"Add Species to Model: Failed!"
-					);
-	}
-
-	for (int i=0; i < listOfMyCompartments.size (); i++)
-	{
-		MyCompartment* comp = listOfMyCompartments[i];
-		if (comp->getOutside () == "ROOT") 
-		{
-			int operation = comp->unsetOutside ();
-			if (operation == LIBSBML_OPERATION_FAILED)
-				throw StrCacuException (
-						"Operation Failed: Unable to unset Outside"
-						" attribute of compartment!"
-						);
-		}
-		int operation = m->addCompartment (comp);
-		if (operation == LIBSBML_LEVEL_MISMATCH)
-			throw StrCacuException (
-					"Add Compartment to Model: Level Mismatch!"
-					);
-		if (operation == LIBSBML_VERSION_MISMATCH)
-			throw StrCacuException (
-					"Add Compartment to Model: Version Mismatch!"
-					);
-		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
-			throw StrCacuException (
-					"Add Compartment to Model: Duplicate Object Id!"
-					);
-		if (operation == LIBSBML_OPERATION_FAILED)
-			throw StrCacuException (
-					"Add Compartment to Model: Failed!"
-					);
-	}
-
-	for (int i=0; i < listOfMyReactions.size (); i++)
-	{
-		int operation = m->addReaction (listOfMyReactions[i]);
-
-		if (operation == LIBSBML_LEVEL_MISMATCH)
-			throw StrCacuException (
-					"Add Reaction to Model: Level Mismatch!"
-					);
-		if (operation == LIBSBML_VERSION_MISMATCH)
-			throw StrCacuException (
-					"Add Reaction to Model: Version Mismatch!"
-					);
-		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
-			throw StrCacuException (
-					"Add Reaction to Model: Duplicate Object Id!"
-					);
-		if (operation == LIBSBML_OPERATION_FAILED)
-			throw StrCacuException (
-					"Add Reaction to Model: Failed!"
-					);
-	}
-
-	cout << "\nREAL RULEs Number: " << m->getNumRules () << endl;
-	cout << "\nREAL FUNCTIONDEFINITIONs Number: " << m->getNumFunctionDefinitions () << endl;
-	cout << "\nREAL PARAMETERs Number: " << m->getNumParameters () << endl;
-	cout << "\nREAL UNITs Number: " << m->getNumUnitDefinitions () << endl;
-	cout << "\nREAL SPECIES Number: " << m->getNumSpecies () << endl;
-	cout << "\nREAL COMPARTMENTs Number: " << m->getNumCompartments () << endl;
-	cout << "\nREAL REACTIONs Number: " << m->getNumReactions () << endl;
+	//	update
+	write ();
 }
 
 void MySBMLDocument::handleReactionTemplate (
@@ -468,7 +393,11 @@ void MySBMLDocument::handleReactionTemplate (
 
 	reactionArrayMatch result;
 	tmpR->findSpeciesMatch (
-			dbref, index, listOfMySpecies, listOfMyCompartments, result
+			dbref, 
+			index, 
+			listOfMySpecies, 
+			listOfMyCompartments, 
+			result
 			);
 
 	/**
@@ -514,6 +443,7 @@ void MySBMLDocument::handleReactionTemplate (
 				dbreader, 
 				listOfMySpecies, 
 				listOfMyCompartments, 
+				result[i].first.first,
 				tmpR	
 				);
 	}
@@ -912,4 +842,119 @@ void MySBMLDocument::searchTranslationReactions (
 	}
 
 	return;
+}
+
+void MySBMLDocument::write ()
+{
+	//  add species, compartment and reaction to SBML file
+	cout << "\n=========================================================";
+	cout << "\n	 COPY MYOBJECTS TO SBML COMPONENTS... 		";
+	cout << "\n=========================================================";
+	cout <<	endl;
+
+	Model* m = getModel ();
+
+	for (int i=0; i < listOfMySpecies.size (); i++)
+	{
+		int operation = m->addSpecies (listOfMySpecies[i]);
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Species to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Species to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Species to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Species to Model: Failed!"
+					);
+	}
+
+	for (int i=0; i < listOfMyCompartments.size (); i++)
+	{
+		MyCompartment* comp = listOfMyCompartments[i];
+		if (comp->getOutside () == "ROOT") 
+		{
+			int operation = comp->unsetOutside ();
+			if (operation == LIBSBML_OPERATION_FAILED)
+				throw StrCacuException (
+						"Operation Failed: Unable to unset Outside"
+						" attribute of compartment!"
+						);
+		}
+		int operation = m->addCompartment (comp);
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Compartment to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Compartment to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Compartment to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Compartment to Model: Failed!"
+					);
+	}
+
+	for (int i=0; i < listOfMyReactions.size (); i++)
+	{
+		int operation = m->addReaction (listOfMyReactions[i]);
+
+		if (operation == LIBSBML_LEVEL_MISMATCH)
+			throw StrCacuException (
+					"Add Reaction to Model: Level Mismatch!"
+					);
+		if (operation == LIBSBML_VERSION_MISMATCH)
+			throw StrCacuException (
+					"Add Reaction to Model: Version Mismatch!"
+					);
+		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
+			throw StrCacuException (
+					"Add Reaction to Model: Duplicate Object Id!"
+					);
+		if (operation == LIBSBML_OPERATION_FAILED)
+			throw StrCacuException (
+					"Add Reaction to Model: Failed!"
+					);
+	}
+
+	cout << "\nREAL RULEs Number: " 
+		 << m->getNumRules () 
+		 << endl;
+
+	cout << "\nREAL FUNCTIONDEFINITIONs Number: " 
+		 << m->getNumFunctionDefinitions () 
+		 << endl;
+
+	cout << "\nREAL PARAMETERs Number: " 
+		 << m->getNumParameters () 
+		 << endl;
+
+	cout << "\nREAL UNITs Number: " 
+		 << m->getNumUnitDefinitions () 
+		 << endl;
+
+	cout << "\nREAL SPECIES Number: " 
+		 << m->getNumSpecies () 
+		 << endl;
+
+	cout << "\nREAL COMPARTMENTs Number: " 
+		 << m->getNumCompartments () 
+		 << endl;
+
+	cout << "\nREAL REACTIONs Number: " 
+		 << m->getNumReactions () 
+		 << endl;
+
+	cout << "\nDONE!..." << endl;
 }

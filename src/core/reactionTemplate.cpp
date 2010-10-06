@@ -284,8 +284,8 @@ bool reactionTemplate::findSpeciesMatch (
 		bool fail = false;
 		for (int j=0; j < n; j++)
 		{
-			string __prent = compLabels[j];
-			string __parent_index = conf[__parent];
+			string __parent = compLabels[j];
+			int __parent_index = conf[__parent];
 			MyCompartment* parentComp = listOfMyCompartments[__parent_index];
 
 			int entries = mapComps.count (__parent);
@@ -577,7 +577,7 @@ bool reactionTemplate::findSpeciesMatch (
 
 						if (!itself.count (__species_itself)) 
 							itself[__species_itself] = __comp_id;
-						else if (itself[__species_itself] != __species_id) {
+						else if (itself[__species_itself] != __comp_id) {
 							possible.erase (n1); break;
 						}
 					}
@@ -670,9 +670,9 @@ void reactionTemplate::createProductsFromTemplate (
 {
 
 	//	configure 
-	speciesArrayMatch& __cand_reactatns =  table.first.first;
-	speciesArrayMatch& __cand_modifiers =  table.first.second;
-	map<string, int>& config = table.second;
+	const map<string, int>& config = table.second;
+	const speciesArrayMatch& __cand_reactants =  table.first.first;
+	const speciesArrayMatch& __cand_modifiers =  table.first.second;
 
 	/**
 	 * core programme to generate products
@@ -693,7 +693,8 @@ void reactionTemplate::createProductsFromTemplate (
 				);
 		else 
 		{
-			MyCompartment* mycomp = listOfMyCompartments[config[__comp_p]];
+			const MyCompartment* mycomp = 
+				listOfMyCompartments[config.find (__comp_p)->second];
 			__spe_new_p->setCompartment (mycomp->getId ());
 		}
 
@@ -787,6 +788,6 @@ void reactionTemplate::createProductsFromTemplate (
 		for (int j=0; j < __orig_p->getNumOfTrees (); j++)
 			__spe_new_p->createTree (__orig_p->getTree (j));
 
-		productCandidates.push_back (__spe_new_p);
+		products.push_back (__spe_new_p);
 	}
 }

@@ -25,7 +25,7 @@ void MyReaction::init (
 			);
 
 	//	set name
-	if (!name.empty ())
+	if (!tmpR->name.empty ())
 	{
 		operation = setName (tmpR->name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
@@ -41,17 +41,17 @@ void MyReaction::init (
 	 * set listOfMyReactants/listOfMyModifiers/listOfMyProducts
 	 */
 
-	speciesArrayMatch& __reactants = __reaction_match.first;
-	speciesArrayMatch& __modifiers = __reaction_match.second;
+	const speciesArrayMatch& __reactants = __reaction_match.first;
+	const speciesArrayMatch& __modifiers = __reaction_match.second;
 
-	for (int i=0; i < __reactants_m.size (); i++)
+	for (int i=0; i < __reactants.size (); i++)
 	{
-		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
+		MySpecies* sr = listOfMySpecies[__reactants[i].first];
 		listOfMyReactants.push_back (sr);
 	}
-	for (int i=0; i < __modifiers_m.size (); i++)
+	for (int i=0; i < __modifiers.size (); i++)
 	{
-		MySpecies* mr = listOfMySpecies[__modifiers_m[i].first];
+		MySpecies* mr = listOfMySpecies[__modifiers[i].first];
 		listOfMyModifiers.push_back (mr);
 	}
 	for (int i=0; i < products.size (); i++)
@@ -69,6 +69,7 @@ void MyReaction::createReactionsFromTemplate (
 		bdbXMLInterface& dbreader,
 		vector<MySpecies*>& listOfMySpecies,
 		vector<MyCompartment*>& listOfMyCompartments,
+		const speciesArrayMatch& __reactants_m,
 		const reactionTemplate* tmpR
 		)
 {
@@ -78,21 +79,29 @@ void MyReaction::createReactionsFromTemplate (
 	 */
 	map <string, string> replaceTable;
 
-	for (int i=0; i < __reactants_m.size (); i++)
+	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
-		string __tm_label = tmpR->listOfMyReactants[i]->getDB_Label ();
-		if (!replaceTable.count (__tm_label)) replaceTable[__tm_label] = sr->getId ();
+		MySpecies* s = tmpR->listOfMyReactants[i];
+		string __tm_label = s->getDB_Label ();
+
+		if (!replaceTable.count (__tm_label)) 
+			replaceTable[__tm_label] = s->getId ();
 		else throw StrCacuException (
-				"Labels of species within one reactions should be different!"
+				"Labels of species within one "
+			    "reactions should be different!"
 				);
 	}
 
-	for (int i=0; i < __modifiers_m.size (); i++)
+	for (int i=0; i < listOfMyModifiers.size (); i++)
 	{
-		string __tm_label = tmpR->listOfMyModifiers[i]->getDB_Label ();
-		if (!replaceTable.count (__tm_label)) replaceTable[__tm_label] = mr->getId ();
+		MySpecies* s = tmpR->listOfMyModifiers[i];
+		string __tm_label = s->getDB_Label ();
+
+		if (!replaceTable.count (__tm_label)) 
+			replaceTable[__tm_label] = s->getId ();
 		else throw StrCacuException (
-				"Labels of species within one reactions should be different!"
+				"Labels of species within one "
+			    "reactions should be different!"
 				);
 	}
 
@@ -137,15 +146,13 @@ void MyReaction::createReactionsFromTemplate (
 	}
 
 	//  (1.2) mix products
-	for (int i=0; i < __products_body.size () ; i++)
+	for (int i=0; i < listOfMyProducts.size () ; i++)
 	{
-		MySpecies* prodBody = __products_body[i];
-		//	copy chains
-		for (int j=0; j< prodBody->getNumOfChains (); j++)
-			mixture->createChain (prodBody->getChain (j));
-		//	copy trees
-		for (int j=0; j< prodBody->getNumOfTrees (); j++)
-			mixture->createTree (prodBody->getTree (j));
+		MySpecies* s = listOfMyProducts[i];
+		for (int j=0; j< s->getNumOfChains (); j++)
+			mixture->createChain (s->getChain (j));
+		for (int j=0; j< s->getNumOfTrees (); j++)
+			mixture->createTree (s->getTree (j));
 	}
 
 	//	mixed species

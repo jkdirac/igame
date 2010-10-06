@@ -41,6 +41,7 @@ class MyReaction:
 				bdbXMLInterface&, 
 				vector<MySpecies*>&, 
 				vector<MyCompartment*>&, 
+				const speciesArrayMatch&,
 				const reactionTemplate*
 				);
 

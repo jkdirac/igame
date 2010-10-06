@@ -59,10 +59,11 @@ class MySBMLDocument:
 	private:
 
 		void handleReactionTemplate (
-				readDataBase& dbreader,
-				const string& doc,
-				const string& role,
-				const int& speciesIndex
+				readDataBase&,
+				const string&,
+				const string&,
+				const string&,
+				const int&
 				);
 
 		void searchTranscriptionReactions (
@@ -78,6 +79,11 @@ class MySBMLDocument:
 				const int& k,
 				readDataBase& dbreader
 				);
+
+	private:
+		
+		void write ();
+
 	private:
 
 		vector<MyCompartment*> listOfMyCompartments;
