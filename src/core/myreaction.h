@@ -25,13 +25,20 @@ class MyReaction:
 		~MyReaction ();
 
 		/**
+		 * init myreaction with all but id elements
+		 */
+		void init (
+				vector<MySpecies*>&, 
+				const vector<MySpecies*>&,
+				const reactionMatch&,
+				const reactionTemplate* 
+				);
+
+		/**
 		 * create reactions from template
 		 */
 		void createReactionsFromTemplate (
 				bdbXMLInterface&, 
-				const speciesArrayMatch&, 
-				const speciesArrayMatch&, 
-				vector<MySpecies*>&,
 				vector<MySpecies*>&, 
 				vector<MyCompartment*>&, 
 				const reactionTemplate*

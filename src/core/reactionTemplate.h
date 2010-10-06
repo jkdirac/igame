@@ -38,80 +38,31 @@ class reactionTemplate
 		bool getReversible () const;
 		string getMath () const;
 
-		string getCompartment (
-				const string& speciesLabel
-				) const;
+		string getCompartment (const string&) const;
+		const MySpecies* getSpecies (const string&_) const;
+		Parameter* getParameter (const string&);
 
-		const MySpecies* getSpecies (
-				const string& speciesLabel
-				) const;
+		void setMath (const string&);
+		void addParameter (Parameter*);
 
-		Parameter* getParameter (
-				const string& sid
-				);
+		void addReactant (MySpecies*, const string&);
+		void addProduct (MySpecies*, const string&);
+		void addModifier (MySpecies*, const string&);
 
-		void addCompartment (
-				const string& _compRef,
-				const string& _currComp,
-				const string& _parComp
-				);
-
-		void addParameter (
-				Parameter* para
-				);
-
-		void addConstraint (
-				const vector<string>& vars,
-				const string& formula
-				);
-
-		void addReactant (
-				MySpecies* s,
-				const string& compLabel
-				);
-
-		void addProduct (
-				MySpecies* s,
-				const string& compLabel
-				);
-
-		void addModifier (
-				MySpecies* s,
-				const string& compLabel
-				);
-
-		void addSubstituentTransfer (
-				const pair<string,string>& from,
-				const pair<string,string>& to
-				);
-
-		void setMath (
-				const string& math
-				);
+		void addCompartment (const string&, const string&, const string&);
+		void addConstraint (const vector<string>&, const string&);
+		void addSubstituentTransfer (const subsp&, const subsp&);
 
 		bool findSpeciesMatch (
-				const vector<MyCompartment*>& listOfMyCompartments,
-				const vector<MySpecies*>& listOfMySpecies,
-				const int& currSpeIndex,
-				const string& role,
-				reactionArrayMatch& result
-				);
+				const string&, const int&, const vector<MySpecies*>&, 
+				const vector<MyCompartment*>&, reactionArrayMatch&	
+				); 
 
 		void createProductsFromTemplate (
-				const speciesArrayMatch& reactantCandidates,
-				const speciesArrayMatch& modifierCandidates,
 				const vector<MySpecies*>& listOfMySpecies,
-				vector<MySpecies*>& productCandidates
-				);
-
-	private:
-
-		//
-		//	return -1 if not found
-		//
-		int searchSpecies (
-				const char& role,
-				const string& speciesLabel
+				const vector<MyCompartment*>& listOfMyCompartments,
+				const reactionPairMatch& table,
+				vector<MySpecies*>& products
 				);
 
 	private:

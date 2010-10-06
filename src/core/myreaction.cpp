@@ -7,11 +7,66 @@ MyReaction::MyReaction ():
 MyReaction::~MyReaction () 
 {}
 
+void MyReaction::init (
+		vector<MySpecies*>& products, 
+		const vector<MySpecies*>& listOfMySpecies,
+		const reactionMatch& __reaction_match,
+		const reactionTemplate* tmpR
+		)	
+{
+	int operation;
+
+	/**
+	 * since id has been set when the reaction generates,
+	 * we need only check if it is not empty
+	 */
+	if (getId ().empty ()) throw StrCacuException (
+			"Empty Id in MyReaction Object!"
+			);
+
+	//	set name
+	if (!name.empty ())
+	{
+		operation = setName (tmpR->name);
+		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+			throw StrCacuException (
+					"Invalid Attribute Value: Reaction name!"
+					);
+	}
+
+	setFast (tmpR->fast);
+	setReversible (tmpR->reversible);
+
+	/**
+	 * set listOfMyReactants/listOfMyModifiers/listOfMyProducts
+	 */
+
+	speciesArrayMatch& __reactants = __reaction_match.first;
+	speciesArrayMatch& __modifiers = __reaction_match.second;
+
+	for (int i=0; i < __reactants_m.size (); i++)
+	{
+		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
+		listOfMyReactants.push_back (sr);
+	}
+	for (int i=0; i < __modifiers_m.size (); i++)
+	{
+		MySpecies* mr = listOfMySpecies[__modifiers_m[i].first];
+		listOfMyModifiers.push_back (mr);
+	}
+	for (int i=0; i < products.size (); i++)
+	{
+		/**
+		 * !!! big question !!!
+		 */ 
+		products[i]->genUniqueLabel (i);
+		listOfMyProducts.push_back (products[i]);
+	}
+		
+}
+
 void MyReaction::createReactionsFromTemplate (
 		bdbXMLInterface& dbreader,
-		const speciesArrayMatch& __reactants_m,
-		const speciesArrayMatch& __modifiers_m,
-		vector<MySpecies*>& __products_body,
 		vector<MySpecies*>& listOfMySpecies,
 		vector<MyCompartment*>& listOfMyCompartments,
 		const reactionTemplate* tmpR
@@ -23,17 +78,10 @@ void MyReaction::createReactionsFromTemplate (
 	 */
 	map <string, string> replaceTable;
 
-	/**
-	 * copy reactants/modifiers/products/ to local lists
-	 */
 	for (int i=0; i < __reactants_m.size (); i++)
 	{
-		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
-		listOfMyReactants.push_back (sr);
-		
 		string __tm_label = tmpR->listOfMyReactants[i]->getDB_Label ();
-		if (!replaceTable.count (__tm_label)) 
-			replaceTable[__tm_label] = sr->getId ();
+		if (!replaceTable.count (__tm_label)) replaceTable[__tm_label] = sr->getId ();
 		else throw StrCacuException (
 				"Labels of species within one reactions should be different!"
 				);
@@ -41,31 +89,12 @@ void MyReaction::createReactionsFromTemplate (
 
 	for (int i=0; i < __modifiers_m.size (); i++)
 	{
-		MySpecies* mr = listOfMySpecies[__modifiers_m[i].first];
-		listOfMyModifiers.push_back (mr);
-		
 		string __tm_label = tmpR->listOfMyModifiers[i]->getDB_Label ();
-		if (!replaceTable.count (__tm_label)) 
-			replaceTable[__tm_label] = mr->getId ();
+		if (!replaceTable.count (__tm_label)) replaceTable[__tm_label] = mr->getId ();
 		else throw StrCacuException (
 				"Labels of species within one reactions should be different!"
 				);
 	}
-
-	for (int i=0; i < __products_body.size (); i++)
-	{
-		MySpecies* prodBody = __products_body[i];
-		
-		//  compartment of prodBody must have been set previously
-		assert (!prodBody->getCompartment ().empty ());
-
-		//	generate unique label for each chain of __products_body
-		prodBody->genUniqueLabel (i);
-
-		//	push product body into products list
-		listOfMyProducts.push_back (prodBody);	
-	}
-
 
 	/**
 	 * mix species:

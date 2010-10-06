@@ -216,10 +216,10 @@ void reactionTemplate::setMath (
 }
 
 bool reactionTemplate::findSpeciesMatch (
-		const vector<MyCompartment*>& listOfMyCompartments,
+		const string& dbref, 
+		const int& index,
 		const vector<MySpecies*>& listOfMySpecies,
-		const int& currSpeIndex,
-		const string& role,
+		const vector<MyCompartment*>& listOfMyCompartments,
 		reactionArrayMatch& result	
 		) 
 {
@@ -239,13 +239,13 @@ bool reactionTemplate::findSpeciesMatch (
 
 	vector<string> compLabels;
 	vector< vector<int> > options;
-	
+
 	map<string,string>::const_iterator first = mapComps.begin ();
 	for (int i=0; first != mapComps.end (); i++, first ++)
 	{
 		string comp_id_db = first->second;
 		compLabels.push_back (first->first);
-		
+
 		vector<int> __opt;
 		for (int j=0; j<listOfMyCompartments.size (); j++)
 		{
@@ -260,7 +260,7 @@ bool reactionTemplate::findSpeciesMatch (
 			permALL_DB *= __opt.size ();
 		}
 	}
-	
+
 	vector< map<string, int> > compConfig;	//	important
 
 	for (int i=0; i < permALL_DB; i++)
@@ -272,12 +272,12 @@ bool reactionTemplate::findSpeciesMatch (
 		{
 			string __comp_label = compLabels[j];
 			int __comp_index = options[j][divide % options[j].size ()];
-			
+
 			if (conf.count (__comp_label)) throw StrCacuException (
 					"Compartments in Reaction Definition should have different LABELs!"
 					);
 			else conf.insert (make_pair (__comp_label, __comp_index));
-			divide /= kind[j].size ();
+			divide /= options[j].size ();
 		}
 
 		//	validate relations between compartments
@@ -298,16 +298,14 @@ bool reactionTemplate::findSpeciesMatch (
 				if (conf.count (__child))
 				{
 					int __child_index = conf[__child];
-					
+
 					/**
 					 * check if compartment __child_index is the child
 					 * of compartment __parent_index in biological system
 					 */
 					MyCompartment* childComp = listOfMyCompartments[__child_index];
 					MyCompartment* found = parentComp->isMyCompartmentIn (childComp->getId ());
-					if (found == NULL) {
-						fail = true; break;
-					}
+					if (found == NULL) {fail = true; break;}
 				}
 			}
 
@@ -331,119 +329,114 @@ bool reactionTemplate::findSpeciesMatch (
 	//
 	//	find species matching for reactants 
 	//
-	
+
 	int permAll1 = 1;	//	all permutations of reactants
 
 	/**
 	 *	map between species index and its matching details
 	 */
 
-	if (role == "reactant")
+	bool fail1 = false; 
+	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
-		bool fail1 = false; 
-		for (int i=0; i < listOfMyReactants.size (); i++)
+		//
+		//	special handle for current species 
+		//
+		MySpecies* tmReactant = listOfMyReactants[i];
+		if (tmReactant->getDB_ref () == dbref)
 		{
-			//
-			//	special handle for current species 
-			//
-			MySpecies* tmReactant = listOfMyReactants[i];
-			if (i == currSpeIndex)
-			{
-				MySpecies* currSpe = listOfMySpecies[currSpeIndex];
+			MySpecies* currSpe = listOfMySpecies[index];
 
-				cMatchsArray trym;
-				if (currSpe->match (tmReactant, trym))
-				{
-					/**
-					 * pair relation between species index and its matching info.
-					 */
-					for (int k=0; k < trym.size (); k++)
-						reactant_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
-				}
-				else 
-				{
-					fail1 = true;
-					break;
-				}
+			cMatchsArray trym;
+			if (currSpe->match (tmReactant, trym))
+			{
+				/**
+				 * pair relation between species index and its matching info.
+				 */
+				for (int k=0; k < trym.size (); k++)
+					reactant_sam[i].push_back (make_pair (index, trym[k]));
 			}
-			else
+			else 
 			{
-				for (int j=0; j <= currSpeIndex; j++)
-				{
-					MySpecies* prevSpe = listOfMySpecies[j];
-
-					cMatchsArray trym;
-					if (prevSpe->match (tmReactant, trym))
-					{
-						for (int k=0; k < trym.size (); k++)
-							reactant_sam[i].push_back (make_pair (j, trym[k]));
-					}
-				}
-				if (reactant_sam[i].empty ()) 
-				{
-					fail1 = true;
-					break;
-				}
-				else permAll1 *= reactant_sam[i].size ();
+				fail1 = true;
+				break;
 			}
 		}
+		else
+		{
+			for (int j=0; j <= index; j++)
+			{
+				MySpecies* prevSpe = listOfMySpecies[j];
 
-		if (fail1) return false;
+				cMatchsArray trym;
+				if (prevSpe->match (tmReactant, trym))
+				{
+					for (int k=0; k < trym.size (); k++)
+						reactant_sam[i].push_back (make_pair (j, trym[k]));
+				}
+			}
+			if (reactant_sam[i].empty ()) 
+			{
+				fail1 = true;
+				break;
+			}
+			else permAll1 *= reactant_sam[i].size ();
+		}
 	}
+
+	//	no reactant match
+	if (fail1) return false;
 
 	//
 	//	find species matching for modifiers
 	//
 	int permAll2 = 1;
 
-	if (role == "modifier")
+	bool fail2 = false; 
+	for (int i=0; i < listOfMyModifiers.size (); i++)
 	{
-		bool fail2 = false; 
-		for (int i=0; i < listOfMyModifiers.size (); i++)
+		MySpecies* tmModifier = listOfMyModifiers[i];
+		if (tmModifier->getDB_ref () == dbref)
 		{
-			MySpecies* tmModifier = listOfMyModifiers[i];
-			if (i == currSpeIndex)
-			{
-				MySpecies* currSpe = listOfMySpecies[currSpeIndex];
+			MySpecies* currSpe = listOfMySpecies[index];
 
-				cMatchsArray trym;
-				if (currSpe->match (tmModifier, trym))
+			cMatchsArray trym;
+			if (currSpe->match (tmModifier, trym))
+			{
+				for (int k=0; k < trym.size (); k++)
 				{
-					for (int k=0; k < trym.size (); k++)
-					{
-						modifier_sam[i].push_back (make_pair (currSpeIndex, trym[k]));
-					}
-				}
-				else 
-				{
-					fail2 = true;
-					break;
+					modifier_sam[i].push_back (make_pair (index, trym[k]));
 				}
 			}
-			else
+			else 
 			{
-				for (int j=0; j <= currSpeIndex; j++)
-				{
-					MySpecies* prevSpe = listOfMySpecies[j];
-
-					cMatchsArray trym;
-					if (prevSpe->match (tmModifier, trym))
-					{
-						for (int k=0; k < trym.size (); k++)
-							modifier_sam[i].push_back (make_pair (j, trym[k]));
-					}
-				}
-				if (modifier_sam[i].empty ()) 
-				{
-					fail2 = true;
-					break;
-				}
-				else permAll2 *= modifier_sam[i].size ();
+				fail2 = true;
+				break;
 			}
 		}
+		else
+		{
+			for (int j=0; j <= index; j++)
+			{
+				MySpecies* prevSpe = listOfMySpecies[j];
 
-		if (fail2) return false;
+				cMatchsArray trym;
+				if (prevSpe->match (tmModifier, trym))
+				{
+					for (int k=0; k < trym.size (); k++)
+						modifier_sam[i].push_back (make_pair (j, trym[k]));
+				}
+			}
+			if (modifier_sam[i].empty ()) 
+			{
+				fail2 = true;
+				break;
+			}
+			else permAll2 *= modifier_sam[i].size ();
+		}
 	}
+
+	if (fail2) return false;
 
 	//
 	//	permutation to find all possible combinations
@@ -496,9 +489,10 @@ bool reactionTemplate::findSpeciesMatch (
 	 * survived in compartment configuration validation
 	 * *************************************************
 	 */
-	
+
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
+	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
 			//	find all possible compartment configuration
@@ -568,180 +562,231 @@ bool reactionTemplate::findSpeciesMatch (
 			for (int n1=0; n1 < n; n1++)
 			{
 				if (!possible.count (n1)) continue;
-				
+
 				map<string, string> itself;
+
+				//	for reactants
 				for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
 				{
 					string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
 					if (!__species_itself.empty ())
 					{
 						int __species_index = possibleReactantMatch[i][n2].first;
-						string __species_id = listOfMySpecies[__species_index]->getId ();
+						string __comp_id = listOfMySpecies[__species_index]->getCompTypeId ();
+						assert (!__comp_id.empty ());
+
 						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __species_id;
+							itself[__species_itself] = __comp_id;
 						else if (itself[__species_itself] != __species_id) {
-							possible.erase (n1);
-							break;
+							possible.erase (n1); break;
+						}
+					}
+				}
+
+				//	for modifiers
+				for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
+				{
+					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
+					if (!__species_itself.empty ())
+					{
+						int __species_index = possibleModifierMatch[i][n2].first;
+						string __comp_id = listOfMySpecies[__species_index]->getCompTypeId ();
+						assert (!__comp_id.empty ());
+
+						if (!itself.count (__species_itself)) 
+							itself[__species_itself] = __comp_id;
+						else if (itself[__species_itself] != __comp_id) {
+							possible.erase (n1); break;
+						}
+					}
+				}
+
+				//	for products
+				for (int n2= 0; n2 < listOfMyProducts.size (); n2++)
+				{
+					string __species_itself = listOfMyProducts[n2]->getCompTypeId ();
+					if (!__species_itself.empty ())
+					{
+						string compLabel = listOfMyProducts[n2]->getCompartment ();
+						if (!compConfig[n1].count(compLabel)) throw StrCacuException (
+								"No compartment Label found!"
+								);
+						else 
+						{
+							int compIndex = compConfig[n1][compLabel];
+							string __comp_id = listOfMyCompartments[compIndex]->getId ();
+							assert (!__comp_id.empty ());
+
+							if (!itself.count (__species_itself)) 
+								itself[__species_itself] = __comp_id;
+							else if (itself[__species_itself] != __comp_id) {
+								possible.erase (n1); break;
+							}
 						}
 					}
 				}
 			}
+
 			if (possible.empty ()) continue;
 
-			if (notfail) result.push_back (
-				make_pair (possibleReactantMatch[i], possibleModifierMatch[j])
-				);
+			/**
+			 * output result, it includes two components:
+			 * (1) matching result of modifiers and reactants 
+			 * (2) associated product compartment attribution
+			 */
+
+			for (int i=0; i < compConfig.size (); i++)
+			{
+				if (possible.count (i))
+				{
+					reactionMatch tmp = make_pair (
+							possibleReactantMatch[i], 
+							possibleModifierMatch[j]
+							);
+					map<string, int>& conf = compConfig[i];
+					result.push_back (make_pair(tmp, conf));
+				}
+			}
+
+			//	go to next pair of reactants and modifiers
 		}
 	}
-
+	
 	return result.size () > 0;
 }
 
-//
-//	Based on products templates and pattern matchings of
-//	reactants and modifiers, new products by replacing 
-//	substituent parts are generated and stored in productCandidates
-//
+/**
+ * Based on products templates and pattern matchings of
+ * reactants and modifiers, new products by replacing 
+ * substituent parts are generated and stored in productCandidates
+ */
+
 void reactionTemplate::createProductsFromTemplate (
-		const speciesArrayMatch& reactantCandidates,
-		const speciesArrayMatch& modifierCandidates,
 		const vector<MySpecies*>& listOfMySpecies,
-		vector<MySpecies*>& productCandidates
+		const vector<MyCompartment*>& listOfMyCompartments,
+		const reactionPairMatch& table,
+		vector<MySpecies*>& products
 		)
 {
+
+	//	configure 
+	speciesArrayMatch& __cand_reactatns =  table.first.first;
+	speciesArrayMatch& __cand_modifiers =  table.first.second;
+	map<string, int>& config = table.second;
+
+	/**
+	 * core programme to generate products
+	 */
 	for (int i=0; i < listOfMyProducts.size (); i++)
 	{
-		MySpecies* origproduct = listOfMyProducts[i];
-		string productLabel = origproduct->getDB_Label ();
-
-		MySpecies* newproduct = new MySpecies;
-		newproduct->setDB_Label (productLabel);
-
-		for (int j=0; j< origproduct->getNumOfChains(); j++)
+		MySpecies* __orig_p = listOfMyProducts[i];
+		MySpecies* __spe_new_p = new MySpecies;
+		
+		//	set DB Label
+		string __label_p = __orig_p->getDB_Label ();
+		__spe_new_p->setDB_Label (__label_p);
+		
+		//	set compartment
+		string __comp_p = __orig_p->getCompartment ();
+		if (!config.count (__comp_p)) throw StrCacuException (
+				"No map for compartment DB Label!"
+				);
+		else 
 		{
-			Chain* origchain = origproduct->getChain (j);
-			Chain* newchain = newproduct->createChain ();
+			MyCompartment* mycomp = listOfMyCompartments[config[__comp_p]];
+			__spe_new_p->setCompartment (mycomp->getId ());
+		}
 
-			for (int k=0; k < origchain->getNumOfParts (); k++)
+		for (int j=0; j< __orig_p->getNumOfChains(); j++)
+		{
+			Chain* __orig_c = __orig_p->getChain (j);
+			Chain* __new_c = __spe_new_p->createChain ();
+
+			for (int k=0; k < __orig_c->getNumOfParts (); k++)
 			{
-				Part* origpart = origchain->getPart (k);
-				if (origpart->getPartCtg () == "substituent")
+				Part* __orig_part = __orig_c->getPart (k);
+				if (__orig_part->getPartCtg () == "substituent")
 				{
-					string subLabel = origpart->getPartLabel ();
-					pair<string,string> destine = make_pair (
-							productLabel, subLabel
-							);
+					string subLabel = __orig_part->getPartLabel ();
+					subsp destine = make_pair (__label_p, subLabel);
+
+					//	read chain transfer table
 					if (!transferTable.count (destine))
-						throw StrCacuException (
-								"Lack Info. for Substituent Transfer!"
-								);
+						throw StrCacuException ("Lack Info. for Substituent Transfer!");
 					else
 					{
-						pair<string,string> source = transferTable[destine];
+						subsp source = transferTable[destine];
 
-						//reactant or modifier?
-						MySpecies* tmps = NULL;
-
-						int ridx = searchSpecies ('r', source.first);
-						if (ridx >= 0)
+						MySpecies* found = NULL;
+						bool isr = false;
+						int localindex = -1;
+						
+						/**
+						 * find species with Label source.first
+						 * it must be a reactant or a modifier
+						 */
+						for (int i=0; i < listOfMyReactants.size (); i++)
 						{
-							tmps = listOfMySpecies[reactantCandidates[ridx].first];
-							int chain_lst = reactantCandidates[ridx].second[j].second;
-							Chain* ck = tmps->getChain (chain_lst);
-
-							cMatchType cmt = reactantCandidates[ridx].second[j].first;
-							list< pair<int,int> >::const_iterator cmtf = cmt.begin ();
-
-							int cnt = 0;
-							while (cnt++ == k) cmtf++;
-
-							int start, end;
-							start = cmtf->first; 
-							end = cmtf->second;
-
-							for (int t = start; t <= end; t++)
+							MySpecies* species = listOfMyReactants[i];
+							if (species->getDB_Label () == source.first) 
 							{
-								Part* pk = ck->getPart (t);
-								newchain->createPart (pk);
+								int index = __cand_reactants[i].first;
+								found = listOfMySpecies[index];
+								isr = true;
+								localindex = i;
+								break;
 							}
 						}
 
-						int midx = searchSpecies ('m', source.first);
-						if (midx >= 0)
+						if (!isr)
 						{
-							tmps = listOfMySpecies[modifierCandidates[midx].first];
-							int chain_lst = modifierCandidates[midx].second[j].second;
-							Chain* ck = tmps->getChain (chain_lst);
-
-							cMatchType cmt = modifierCandidates[midx].second[j].first;
-							list< pair<int,int> >::const_iterator cmtf = cmt.begin ();
-
-							int cnt = 0;
-							while (cnt++ == k) cmtf++;
-
-							int start, end;
-							start = cmtf->first; 
-							end = cmtf->second;
-
-							for (int t = start; t <= end; t++)
+							for (int i=0; i < listOfMyModifiers.size (); i++)
 							{
-								Part* pk = ck->getPart (t);
-								newchain->createPart (pk);
+								MySpecies* species = listOfMyModifiers[i];
+								if (species->getDB_Label () == source.first)
+								{
+									int index = __cand_modifiers[i].first;
+									found = listOfMySpecies[index];
+									isr = false;
+									localindex = i;
+									break;
+								}
 							}
 						}
-
-						if (tmps == NULL) throw StrCacuException (
-								"Fail in search  species with label "
+						
+						if (found == NULL) throw StrCacuException (
+								"species Label NOT found!"
 								);
+
+						/**
+						 * replace substituent-part 
+						 */
+						int chain_lst = -1;
+						if (isr) chain_lst = __cand_reactants[localindex].second[j].second;
+						else chain_lst = __cand_modifiers[localindex].second[j].second;
+
+						cMatchType cmt;
+						Chain* ck = found->getChain (chain_lst);
+						if (isr) cmt = __cand_reactants[localindex].second[j].first;
+						else cmt = __cand_modifiers[localindex].second[j].first;
+
+						cMatchType::const_iterator cmtf = cmt.begin ();
+						for (int cnt =0; cnt != k; cnt++) cmtf ++;
+
+						for (int t = cmtf->first; t <= cmtf->second; t++)
+						{
+							Part* pk = ck->getPart (t);
+							__new_c->createPart (pk);
+						}
 					}
 				}
-				else newchain->createPart (origpart);
+				else __new_c->createPart (__orig_part);
 			}
 		}
 
-		for (int j=0; j < origproduct->getNumOfTrees (); j++)
-			newproduct->createTree (origproduct->getTree (j));
+		for (int j=0; j < __orig_p->getNumOfTrees (); j++)
+			__spe_new_p->createTree (__orig_p->getTree (j));
 
-		productCandidates.push_back (newproduct);
+		productCandidates.push_back (__spe_new_p);
 	}
-}
-
-int reactionTemplate::searchSpecies (
-		const char& role,
-		const string& speciesLabel
-		)
-{
-	vector<MySpecies*>::const_iterator first, last;
-	switch (role)
-	{
-		case 'r': 
-			{
-				first = listOfMyReactants.begin ();
-				last = listOfMyReactants.end ();
-				break;
-			}
-		case 'm': 
-			{
-				first = listOfMyModifiers.begin ();
-				last = listOfMyModifiers.end ();
-				break;
-			}
-		case 'p': 
-			{
-				first = listOfMyProducts.begin ();
-				last = listOfMyProducts.end ();
-				break;
-			}
-		default: return -1;
-	}
-
-	int cnt =0;
-	while (first != last)
-	{
-		MySpecies* s = *first;
-		if (s->getDB_Label () == speciesLabel) return cnt;
-		else {first++;cnt++;}
-	}
-
-	return -1;	
 }

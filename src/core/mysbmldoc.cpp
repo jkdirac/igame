@@ -77,9 +77,15 @@ MyReaction* MySBMLDocument::createMyReaction ()
 {
 	MyReaction* r = new MyReaction;
 
+	int operation;
 	ostringstream oss;
-	oss << "rEactIon" << listOfMyReactions.size();
+	oss << "rEactIon" << listOfMyReactions.size ();
+
 	r->setId (oss.str ());
+	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
+		throw StrCacuException (
+				"Invalid Attribute Value: Reaction id!"
+				);
 
 	listOfMyReactions.push_back (r);
 	return r;
@@ -275,7 +281,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								r, reactionReference, speciesRole
 								);
 						handleReactionTemplate (
-								dbreader, reactionReference, speciesRole, i
+								dbreader, reactionReference, speciesReference,speciesRole, i
 								);
 					}
 				}
@@ -384,7 +390,8 @@ void MySBMLDocument::handleReactionTemplate (
 		readDataBase& dbreader,
 		const string& doc,
 		const string& role,
-		const int& speciesIndex
+		const string& dbref,
+		const int& index
 		)
 {
 	//  reaction direction
@@ -452,15 +459,16 @@ void MySBMLDocument::handleReactionTemplate (
 		}
 	}
 
+	/**
+	 * ================================================
+	 * find species and compartment configuration that
+	 * matching patterns described in reaction template
+	 * ================================================
+	 */
 
-	//
-	//  find species and compartment configuration that
-	//  matching patterns described in reaction template
-	//
 	reactionArrayMatch result;
 	tmpR->findSpeciesMatch (
-			listOfMyCompartments, listOfMySpecies, 
-			speciesIndex, role, result
+			dbref, index, listOfMySpecies, listOfMyCompartments, result
 			);
 
 	/**
@@ -468,23 +476,35 @@ void MySBMLDocument::handleReactionTemplate (
 	 */
 	for (int i=0; i < result.size (); i++)
 	{
-		//	new reaction
+		/**
+		 * only set id, name, fast, reversible,
+		 * other elements such as math, listOfParameters 
+		 * will be initialized in myreaction::init function
+		 */
 		MyReaction* myreaction = createMyReaction ();
-		myreaction->setName (tmpR->getName ());
-		myreaction->setFast (tmpR->getFast ());
-		myreaction->setReversible (false);
 
 		/**
-		 * replace substituent-type parts in products
+		 * generate products (main body) by
+		 * replacing substituent-type parts in products
 		 * based on results of matching
+		 * *
 		 */
-		vector<MySpecies*> productsBody;
-
+		vector<MySpecies*> products;
 		tmpR->createProductsFromTemplate (
-				result[i].first, 
-				result[i].second, 
 				listOfMySpecies, 
-				productsBody
+				listOfMyCompartments, 
+				result[i], 
+				products
+				);
+
+		/**
+		 * init species of new reaction 
+		 */
+		myreaction->init (
+				products,
+				listOfMySpecies, 
+				result[i].first, 
+				tmpR
 				);
 
 		//
@@ -492,9 +512,6 @@ void MySBMLDocument::handleReactionTemplate (
 		//
 		myreaction->createReactionsFromTemplate (
 				dbreader, 
-				result[i].first, 
-				result[i].second, 
-				productsBody,
 				listOfMySpecies, 
 				listOfMyCompartments, 
 				tmpR	
@@ -861,7 +878,7 @@ void MySBMLDocument::searchTranslationReactions (
 							else throw StrCacuException (
 									"Invalid Translation Unit!"
 									);
-							
+
 							//	isbinded and partRef
 							if (tm->getIsBinded ())
 							{
