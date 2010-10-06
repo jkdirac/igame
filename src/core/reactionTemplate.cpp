@@ -208,10 +208,24 @@ void reactionTemplate::addSubstituentTransfer (
 }
 
 void reactionTemplate::setMath (
-		const string& _math
+		const string& __math
 		)
 {
-	math = _math;
+	/**
+	 * validate math formula
+	 * no products labels are allowed to appear
+	 */
+	for (int i=0; i < listOfMyProducts.size (); i++)
+	{
+		string label = listOfMyProducts[i]->getDB_Label ();
+
+		if (__math.find (label) != string::npos) 
+			throw StrCacuException (
+					"Products labels are not allowed "
+				    "to be used in math expression!  "
+					);
+	}
+	math = __math;
 }
 
 bool reactionTemplate::findSpeciesMatch (
@@ -234,7 +248,7 @@ bool reactionTemplate::findSpeciesMatch (
 	 */
 
 	int permALL_DB = 1;
-	int n = mapComps.size ();
+	int n = mapComps.size (); 
 
 	vector<string> compLabels;
 	vector< vector<int> > options;
@@ -540,6 +554,8 @@ bool reactionTemplate::findSpeciesMatch (
 	 * *************************************************
 	 */
 
+	cout << "\npossible reactants assembles = " << possibleReactantMatch.size ();
+	cout << "\npossible modifiers assembles = " << possibleModifierMatch.size ();
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
@@ -550,7 +566,7 @@ bool reactionTemplate::findSpeciesMatch (
 
 			//	reactant constraints
 			assert (possibleReactantMatch[i].size () == listOfMyReactants.size ());
-			for (int n1 = 0; n1 < n; n1++)
+			for (int n1 = 0; n1 < compConfig.size (); n1++)
 			{
 				bool fail = false;
 				for (int n2=0; n2 < possibleReactantMatch[i].size (); n2++)
@@ -577,9 +593,11 @@ bool reactionTemplate::findSpeciesMatch (
 			}
 			if (possible.empty ()) continue;
 
+			cout << "\npossible_size after reactant constraints = " << possible.size();
+
 			//	modifier constraints
 			assert (possibleModifierMatch[j].size () == listOfMyModifiers.size ());
-			for (int n1 = 0; n1 < n; n1++)
+			for (int n1 = 0; n1 < compConfig.size (); n1++)
 			{
 				if (!possible.count (n1)) continue;
 
@@ -591,6 +609,7 @@ bool reactionTemplate::findSpeciesMatch (
 					string __compid_tm;
 
 					//	LIAOCHEN MARK ... TAKE CARE!
+					assert (n1 < compConfig.size ());
 					if (compConfig[n1].count (__compLabel_tm))
 					{
 						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
@@ -609,13 +628,15 @@ bool reactionTemplate::findSpeciesMatch (
 				if (fail) possible.erase (n1);
 			}
 			if (possible.empty ()) continue;
+			
+			cout << "\npossible_size after modifier constraints = " << possible.size();
 
 			//	compartment-type species constraints
-			for (int n1=0; n1 < n; n1++)
+			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
 				if (!possible.count (n1)) continue;
 
-				map<string, string> itself;
+				map<string, int> itself;
 
 				//	for reactants
 				for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
@@ -624,16 +645,15 @@ bool reactionTemplate::findSpeciesMatch (
 					if (!__species_itself.empty ())
 					{
 						int __species_index = possibleReactantMatch[i][n2].first;
-						string __comp_id = listOfMySpecies[__species_index]->getCompTypeId ();
-						assert (!__comp_id.empty ());
-
 						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __comp_id;
-						else if (itself[__species_itself] != __comp_id) {
+							itself[__species_itself] = __species_index;
+						else if (itself[__species_itself] != __species_index) {
 							possible.erase (n1); break;
 						}
 					}
 				}
+
+				cout << "\npossible1 = " << possible.size ();
 
 				//	for modifiers
 				for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
@@ -642,41 +662,15 @@ bool reactionTemplate::findSpeciesMatch (
 					if (!__species_itself.empty ())
 					{
 						int __species_index = possibleModifierMatch[i][n2].first;
-						string __comp_id = listOfMySpecies[__species_index]->getCompTypeId ();
-						assert (!__comp_id.empty ());
-
 						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __comp_id;
-						else if (itself[__species_itself] != __comp_id) {
+							itself[__species_itself] = __species_index;
+						else if (itself[__species_itself] != __species_index) {
 							possible.erase (n1); break;
 						}
 					}
 				}
 
-				//	for products
-				for (int n2= 0; n2 < listOfMyProducts.size (); n2++)
-				{
-					string __species_itself = listOfMyProducts[n2]->getCompTypeId ();
-					if (!__species_itself.empty ())
-					{
-						string compLabel = listOfMyProducts[n2]->getCompartment ();
-						if (!compConfig[n1].count(compLabel)) throw StrCacuException (
-								"No compartment Label found!"
-								);
-						else 
-						{
-							int compIndex = compConfig[n1][compLabel];
-							string __comp_id = listOfMyCompartments[compIndex]->getId ();
-							assert (!__comp_id.empty ());
-
-							if (!itself.count (__species_itself)) 
-								itself[__species_itself] = __comp_id;
-							else if (itself[__species_itself] != __comp_id) {
-								possible.erase (n1); break;
-							}
-						}
-					}
-				}
+				cout << "\npossible2 = " << possible.size ();
 			}
 
 			if (possible.empty ()) continue;
@@ -750,6 +744,21 @@ void reactionTemplate::createProductsFromTemplate (
 			__spe_new_p->setCompartment (mycomp->getId ());
 		}
 
+		//	set compTypeId
+		string __comp_tid = __orig_p->getCompTypeId ();
+		if (!__comp_tid.empty ())
+		{
+			if (!config.count (__comp_tid)) throw StrCacuException (
+					"No map for compartment DB Label!"
+					);
+			else 
+			{
+				const MyCompartment* mycomp = 
+					listOfMyCompartments[config.find (__comp_tid)->second];
+				__spe_new_p->setCompTypeId (mycomp->getId ());
+			}
+		}
+			
 		for (int j=0; j< __orig_p->getNumOfChains(); j++)
 		{
 			Chain* __orig_c = __orig_p->getChain (j);

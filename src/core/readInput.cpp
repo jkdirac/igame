@@ -188,7 +188,7 @@ void readInput::config (
 		else variableUsed.insert (variable);
 
 		AlgebraicRule* alger = m->createAlgebraicRule ();
-		setAlgebraicRule (alger, variable, math);
+		setAlgebraicRule (alger, variable, math, true);
 	}
 
 	//  2.2 read assignment rule
@@ -209,7 +209,7 @@ void readInput::config (
 		else variableUsed.insert (variable);
 
 		AssignmentRule* assr = m->createAssignmentRule ();
-		setAssignmentRule (assr, variable, math);
+		setAssignmentRule (assr, variable, math, true);
 	}
 
 	//  2.3 read rate rule
@@ -230,7 +230,7 @@ void readInput::config (
 		else variableUsed.insert (variable);
 
 		RateRule* rater = m->createRateRule ();
-		setRateRule (rater, variable, math);
+		setRateRule (rater, variable, math, true);
 	}
 
 	cout << "\nread compartments (input)	..." << endl;
@@ -371,7 +371,7 @@ void readInput::config (
 		else
 		{
 			AlgebraicRule* alger = m->createAlgebraicRule ();
-			setAlgebraicRule (alger, variable, math);
+			setAlgebraicRule (alger, variable, math, false);
 		}
 	}
 
@@ -389,7 +389,7 @@ void readInput::config (
 		else
 		{
 			AssignmentRule* assr = m->createAssignmentRule ();
-			setAssignmentRule (assr, variable, math);
+			setAssignmentRule (assr, variable, math, false);
 		}
 	}
 
@@ -407,7 +407,7 @@ void readInput::config (
 		else
 		{
 			RateRule* rater = m->createRateRule ();
-			setRateRule (rater, variable, math);
+			setRateRule (rater, variable, math, false);
 		}
 	}
 	

@@ -77,15 +77,14 @@ void MyReaction::createReactionsFromTemplate (
 	 * replace table: used to map reactants/modifiers/products 
 	 * label to that of matched species already in the system
 	 */
-	map <string, string> replaceTable;
+	map <string, string> replacement;
 
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
-		MySpecies* s = tmpR->listOfMyReactants[i];
-		string __tm_label = s->getDB_Label ();
+		string __old = tmpR->listOfMyReactants[i]->getDB_Label ();
+		string __new = listOfMyReactants[i]->getId ();
 
-		if (!replaceTable.count (__tm_label)) 
-			replaceTable[__tm_label] = s->getId ();
+		if (!replacement.count (__old)) replacement[__old] = __new;
 		else throw StrCacuException (
 				"Labels of species within one "
 			    "reactions should be different!"
@@ -94,11 +93,10 @@ void MyReaction::createReactionsFromTemplate (
 
 	for (int i=0; i < listOfMyModifiers.size (); i++)
 	{
-		MySpecies* s = tmpR->listOfMyModifiers[i];
-		string __tm_label = s->getDB_Label ();
+		string __old = tmpR->listOfMyModifiers[i]->getDB_Label ();
+		string __new = listOfMyModifiers[i]->getId ();
 
-		if (!replaceTable.count (__tm_label)) 
-			replaceTable[__tm_label] = s->getId ();
+		if (!replacement.count (__old)) replacement[__old] = __new;
 		else throw StrCacuException (
 				"Labels of species within one "
 			    "reactions should be different!"
@@ -192,6 +190,9 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
+				
+				cout << "\nchain label = " << c->getLabel () << endl;
+
 				if (__CU_splits.count (c->getLabel ())) {
 					__deg.push_back (j); break;
 				}
@@ -223,6 +224,7 @@ void MyReaction::createReactionsFromTemplate (
 	 * create products for each product template
 	 */
 
+	cout << "\nsplits_size = " << splits.size ();
 	for (int i=0; i < splits.size (); i++)
 	{
 		MySpecies* splitted = splits[i];
@@ -230,15 +232,16 @@ void MyReaction::createReactionsFromTemplate (
 		//	for each species in listOfMyProducts
 		for (int j=0; j < degenerate[i].size (); j++)
 		{
+			cout << "\nj = " << j << " deg = " << degenerate[i].size () << endl;
 			/**
 			 * new species 
 			 * create and set its id and compartment, and initialAmount
 			 * *
 			 * Attention!
 			 * 1. name is omitted
-			 * 2. comp_type_id should be set previously if it is empty
+			 * 2. comp_type_id should be set previously if it is not empty
 			 */
-			MySpecies* __product (splitted);
+			MySpecies* __product = new MySpecies (splitted);
 			MySpecies* __product_tm = listOfMyProducts[degenerate[i][j]];
 
 			ostringstream oss;
@@ -246,6 +249,9 @@ void MyReaction::createReactionsFromTemplate (
 			//	set Id
 			oss << "sPecIes" << listOfMySpecies.size ();
 			__product->setId (oss.str ());
+
+			//	set compTypeId
+			__product->setCompTypeId (__product_tm->getCompTypeId ());
 
 			//	set Compartment	
 			__product->setCompartment (__product_tm->getCompartment ());
@@ -263,30 +269,31 @@ void MyReaction::createReactionsFromTemplate (
 				{
 					compIndex = k;
 					MySpecies* prev = mycomp->isMySpeciesIn (__product);
+
 					if (prev != NULL) {
 						found = true; delete __product; __product = prev;
 					}
+					cout << "\nfound = " << found << endl;
 					break;
 				}
 			}	
 			if (!found) 
 			{
-				listOfMySpecies.push_back (__product);
-				listOfMyCompartments[compIndex]->addMySpeciesIn (__product);
+				if (compIndex == -1) throw StrCacuException (
+						"No compartment found in listOfMyCompartments!"
+						);
+				else
+				{
+					listOfMySpecies.push_back (__product);
+					listOfMyCompartments[compIndex]->addMySpeciesIn (__product);
+				}
 			}
 
-			//
-			//  add replacement
-			//
-			string oldLabel = __product_tm->getDB_Label ();
-			assert (!replaceTable.count (oldLabel));
-			replaceTable[oldLabel] = __product->getId ();
-
 			//  delete old species and replaced with new one
+			listOfMyProducts[degenerate[i][j]] = __product;
 			delete __product_tm;
-		   	__product_tm = __product;	
 		}
-		
+
 		delete splitted;
 	}
 
@@ -338,9 +345,10 @@ void MyReaction::createReactionsFromTemplate (
 		kl->addParameter (tmpR->listOfParameters[i]);
 
 	//  setMath
+	
 	string mathXMLString = tmpR->math;
-	map<string,string>::const_iterator itMath = replaceTable.begin ();
-	while (itMath != replaceTable.end ())
+	map<string,string>::const_iterator itMath = replacement.begin ();
+	while (itMath != replacement.end ())
 	{
 		string __old = itMath->first;
 		string __new = itMath->second;
@@ -354,7 +362,7 @@ void MyReaction::createReactionsFromTemplate (
 
 	ASTNode* astMath = readMathMLFromString(mathXMLString.c_str());
 	if (astMath == NULL) 
-		throw StrCacuException ("Invalid MathML string convetmpRed!");
+		throw StrCacuException ("Invalid MathML string converted!");
 	operation = kl->setMath (astMath);
 	if (operation == LIBSBML_INVALID_OBJECT)
 		throw StrCacuException (

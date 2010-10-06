@@ -305,6 +305,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		}
 
 		numOfSpecies = listOfMySpecies.size ();
+		cout << "\nnumOfSpecies = " << listOfMySpecies.size () << endl;
 	}
 
 	//	update
@@ -857,6 +858,8 @@ void MySBMLDocument::write ()
 
 	for (int i=0; i < listOfMySpecies.size (); i++)
 	{
+		listOfMySpecies[i]->Output ();
+
 		int operation = m->addSpecies (listOfMySpecies[i]);
 		if (operation == LIBSBML_LEVEL_MISMATCH)
 			throw StrCacuException (

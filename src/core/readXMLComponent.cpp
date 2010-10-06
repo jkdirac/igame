@@ -677,7 +677,7 @@ void readXMLComponent::readSpecies (
 	//
 	const string path_const = prefix + "constant";
 	get_node_element (cind, &doc, &path_const, temp); 
-	if (temp.empty ()) constant = true;
+	if (temp.empty ()) constant = false;
 	else constant = (temp[0] == "true");
 
 	//
@@ -712,7 +712,6 @@ void readXMLComponent::readRule (
 	string prefix = qpath + string(oss.str ());
 
 	vector<string> temp;
-	string temp1;
 
 	//
 	//  read attribute variable
@@ -733,17 +732,30 @@ void readXMLComponent::readRule (
 	//
 	const string path_math = prefix + "math";
 	if (text)
-		get_node_element (cind, &doc, &path_math, temp);
-	else get_node (cind, &doc, &path_math, temp1);
-	if ((temp.empty () && text)
-			|| (temp1.empty () && !text))
 	{
-		string errno = string (
-				"RULE: empty node math in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		get_node_element (cind, &doc, &path_math, temp);
+		if (temp.empty ())
+		{
+			string errno = string (
+					"RULE: empty node math in "
+					) + doc + ".xml!";
+			throw StrCacuException (errno);
+		}
+		else math = temp[0];
 	}
-	else math = temp[0];
+	else
+	{
+		string res;
+		get_node (cind, &doc, &path_math, res);
+		if (res.empty ())
+		{
+			string errno = string (
+					"RULE: empty node math in "
+					) + doc + ".xml!";
+			throw StrCacuException (errno);
+		}
+		else math = res;
+	}
 }
 
 void readXMLComponent::readSpeciesLink (
@@ -1066,8 +1078,7 @@ void readXMLComponent::readConditionalParameter (
 		nodepath = string ("/MoDeL/part/") + dir +
 			"/listOfConditionalParameters/"
 			"conditionalParameter[@id=\""
-			+ para + "\"][parameterValue/@compartment=\""
-			+ comp + "\"]/@commonValue";
+			+ para + "\"]/@commonValue";
 
 		get_node_attr (cind, &doc, &nodepath, temp);
 		if (temp.empty ())
@@ -1099,8 +1110,7 @@ void readXMLComponent::readConditionalParameter (
 	nodepath = string ("/MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
-		+ para + "\"][parameterValue[@compartment=\""
-		+ comp + "\"]]/@units";
+		+ para + "\"]/@units";
 
 //    cout << "\nnodepath = " << nodepath << endl;
 	get_node_attr (cind, &doc, &nodepath, temp);
@@ -1112,8 +1122,7 @@ void readXMLComponent::readConditionalParameter (
 	nodepath = string ("/MoDeL/part/") + dir +
 		"/listOfConditionalParameters/"
 		"conditionalParameter[@id=\""
-		+ para + "\"][parameterValue[@compartment=\""
-		+ comp + "\"]]/@name";
+		+ para + "\"]/@name";
 
 	get_node_attr (cind, &doc, &nodepath, temp);
 	if (!temp.empty ()) name = temp[0];

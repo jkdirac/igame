@@ -256,7 +256,8 @@ void readDataBase::setParameter (
 void readDataBase::setAlgebraicRule (
 		AlgebraicRule* alger,
 		const string& variable,
-		const string& math
+		const string& math,
+		const bool& text
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
@@ -279,12 +280,26 @@ void readDataBase::setAlgebraicRule (
 	//
 	//  setFormula
 	//
-	operation = alger->setFormula (math);
-	if (operation == LIBSBML_INVALID_OBJECT)
-		throw StrCacuException (
-				"Reading Block AlgebraicRule..."
-				"Invalid Object: math!"
-				);
+	if (text)
+	{
+		operation = alger->setFormula (math);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Reading Block AlgebraicRule..."
+					"Invalid Object: math!"
+					);
+	}
+	else 
+	{
+		ASTNode* astMath = readMathMLFromString(math.c_str());
+		if (astMath == NULL) 
+			throw StrCacuException ("Invalid MathML string converted!");
+		operation = alger->setMath (astMath);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Writing Block Reaction...Invalid object: astMath!"
+					);
+	}
 
 	return;
 }
@@ -292,7 +307,8 @@ void readDataBase::setAlgebraicRule (
 void readDataBase::setAssignmentRule (
 		AssignmentRule* assr,
 		const string& variable,
-		const string& math
+		const string& math,
+		const bool& text
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
@@ -315,12 +331,26 @@ void readDataBase::setAssignmentRule (
 	//
 	//  setFormula
 	//
-	operation = assr->setFormula (math);
-	if (operation == LIBSBML_INVALID_OBJECT)
-		throw StrCacuException (
-				"Reading Block AssignmentRule..."
-				"Invalid Object: math!"
-				);
+	if (text)
+	{
+		operation = assr->setFormula (math);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Reading Block AssignmentRule..."
+					"Invalid Object: math!"
+					);
+	}
+	else 
+	{
+		ASTNode* astMath = readMathMLFromString(math.c_str());
+		if (astMath == NULL) 
+			throw StrCacuException ("Invalid MathML string converted!");
+		operation = assr->setMath (astMath);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Writing Block Reaction...Invalid object: astMath!"
+					);
+	}
 
 	return;
 }
@@ -328,7 +358,8 @@ void readDataBase::setAssignmentRule (
 void readDataBase::setRateRule (
 		RateRule* rater,
 		const string& variable,
-		const string& math
+		const string& math,
+		const bool& text
 		) const
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
@@ -351,12 +382,26 @@ void readDataBase::setRateRule (
 	//
 	//  setFormula
 	//
-	operation = rater->setFormula (math);
-	if (operation == LIBSBML_INVALID_OBJECT)
-		throw StrCacuException (
-				"Reading Block RateRule..."
-				"Invalid Object: math!"
-				);
+	if (text)
+	{
+		operation = rater->setFormula (math);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Reading Block RateRule..."
+					"Invalid Object: math!"
+					);
+	}
+	else 
+	{
+		ASTNode* astMath = readMathMLFromString(math.c_str());
+		if (astMath == NULL) 
+			throw StrCacuException ("Invalid MathML string converted!");
+		operation = rater->setMath (astMath);
+		if (operation == LIBSBML_INVALID_OBJECT)
+			throw StrCacuException (
+					"Writing Block Reaction...Invalid object: astMath!"
+					);
+	}
 
 	return;
 }
@@ -916,8 +961,7 @@ void readDataBase::readReactionTemplate (
 				"Reading Reaction...No Math Specified!"
 				);
 	}
-
-	RT->setMath (math);
+	else RT->setMath (math);
 
 	//	read local parameters
 	const string pathLocalPara = 

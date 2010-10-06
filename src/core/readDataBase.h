@@ -69,19 +69,22 @@ class readDataBase:
 		void setAlgebraicRule (
 				AlgebraicRule* alger,
 				const string& variable,
-				const string& math
+				const string& math,
+				const bool& text
 				) const;
 
 		void setAssignmentRule (
 				AssignmentRule* assr,
 				const string& variable,
-				const string& math
+				const string& math,
+				const bool& text
 				) const ;
 
 		void setRateRule (
 				RateRule* rater,
 				const string& variable,
-				const string& math
+				const string& math,
+				const bool& text
 				) const;
 
 		void setCompartment (
