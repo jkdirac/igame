@@ -28,6 +28,7 @@ TARGET_LINK_LIBRARIES( igame
   qwt5
   sbml_solver
   dbxml
+  sbml
   bdinterface
   utility
   str_cacu
