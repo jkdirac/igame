@@ -106,18 +106,6 @@ class reactionTemplate
 
 	private:
 
-		bool compartmentConstraints (
-				const string& searchComp,
-				const string& parentComp,
-				set<string>& compUsed,
-				const vector<MyCompartment*>& listOfMyCompartments,
-				const vector<MySpecies*>& listOfMySpecies,
-				const speciesArrayMatch& reactantCandidates,
-				const speciesArrayMatch& modifierCandidates
-				);
-
-	private:
-
 		//
 		//	return -1 if not found
 		//
@@ -141,7 +129,7 @@ class reactionTemplate
 		bool fast;
 
 		//
-		//	map compartment labels to its database id
+		//	map compartment labels to its database id (ignores Node "ROOT")
 		//
 		map <string, string> mapComps;
 
@@ -151,6 +139,8 @@ class reactionTemplate
 		//	//
 		//	say, if Flask is the outside compartment of E_coli,
 		//	it has mmapComps[Flask] = E_coli
+		//	//
+		//	contains Node "ROOT"
 		//
 		multimap <string,string> mmapComps;
 

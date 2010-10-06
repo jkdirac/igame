@@ -223,6 +223,103 @@ bool reactionTemplate::findSpeciesMatch (
 		reactionArrayMatch& result	
 		) 
 {
+	/**
+	 * Generate a set of compartment configurations
+	 * *
+	 * Each configuration requires correction of  
+	 * (1) compartment database identifiers
+	 * (2) relations between compartments
+	 * *
+	 * Results are stored in a vector<map<string,int>> 
+	 * map<string,int> maps the compartment db label to the index in reality
+	 */
+
+	int permALL_DB = 1;
+	int n = mapComps.size ();
+
+	vector<string> compLabels;
+	vector< vector<int> > options;
+	
+	map<string,string>::const_iterator first = mapComps.begin ();
+	for (int i=0; first != mapComps.end (); i++, first ++)
+	{
+		string comp_id_db = first->second;
+		compLabels.push_back (first->first);
+		
+		vector<int> __opt;
+		for (int j=0; j<listOfMyCompartments.size (); j++)
+		{
+			MyCompartment* mycomp = listOfMyCompartments[j];
+			if (mycomp->getDB_ref () == comp_id_db) __opt.push_back (j);
+		}
+
+		if (__opt.size () == 0) return false;
+		else 
+		{
+			options.push_back (__opt); 
+			permALL_DB *= __opt.size ();
+		}
+	}
+	
+	vector< map<string, int> > compConfig;	//	important
+
+	for (int i=0; i < permALL_DB; i++)
+	{
+		map<string,int> conf;
+		int divide = i;
+
+		for (int j=0; j < n; j++)
+		{
+			string __comp_label = compLabels[j];
+			int __comp_index = options[j][divide % options[j].size ()];
+			
+			if (conf.count (__comp_label)) throw StrCacuException (
+					"Compartments in Reaction Definition should have different LABELs!"
+					);
+			else conf.insert (make_pair (__comp_label, __comp_index));
+			divide /= kind[j].size ();
+		}
+
+		//	validate relations between compartments
+		bool fail = false;
+		for (int j=0; j < n; j++)
+		{
+			string __prent = compLabels[j];
+			string __parent_index = conf[__parent];
+			MyCompartment* parentComp = listOfMyCompartments[__parent_index];
+
+			int entries = mapComps.count (__parent);
+			multimap<string,string>::iterator iter = 
+				mapComps.find (__parent);
+
+			for (int cnt=0; cnt != entries; cnt++, iter++)
+			{
+				string __child = iter->second;
+				if (conf.count (__child))
+				{
+					int __child_index = conf[__child];
+					
+					/**
+					 * check if compartment __child_index is the child
+					 * of compartment __parent_index in biological system
+					 */
+					MyCompartment* childComp = listOfMyCompartments[__child_index];
+					MyCompartment* found = parentComp->isMyCompartmentIn (childComp->getId ());
+					if (found == NULL) {
+						fail = true; break;
+					}
+				}
+			}
+
+			if (fail) break;
+		}
+
+		if (fail) continue;
+		else compConfig.push_back (conf);
+	}
+
+	if (compConfig.empty ()) return false;
+
 	//
 	//  temporary variables
 	//
@@ -390,170 +487,114 @@ bool reactionTemplate::findSpeciesMatch (
 	delete [] modifier_sam;
 
 	/**
+	 * *************************************************
 	 * all reactants/modifiers matching are obtained, in
 	 * possibleReactantMatch and possibleModifierMatch,
 	 * we need to check the compartment constraints
+	 * *************************************************
+	 * record possible compartment configuration 
+	 * survived in compartment configuration validation
+	 * *************************************************
 	 */
+	
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
-	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
-			//
-			//  compartment constraints
-			//
-			set<string> compUsed;
-			bool ok1 = compartmentConstraints (
-					"ROOT", "", compUsed, listOfMyCompartments, listOfMySpecies,
-					possibleReactantMatch[i], possibleModifierMatch[j]
-					);
+			//	find all possible compartment configuration
+			set<int> possible;
 
-			if (ok1) 
-				result.push_back (make_pair (
-							possibleReactantMatch[i],
-							possibleModifierMatch[j]
-							)
-						);
+			//	reactant constraints
+			assert (possibleReactantMatch[i].size () == listOfMyReactants.size ());
+			for (int n1 = 0; n1 < n; n1++)
+			{
+				bool fail = false;
+				for (int n2=0; n2 < possibleReactantMatch[i].size (); n2++)
+				{
+					//	parameter about template spcies
+					string __compLabel_tm = listOfMyReactants[n2]->getCompartment ();
+					string __compid_tm;
+					if (compConfig[n1].count (__compLabel_tm))
+					{
+						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
+						__compid_tm = c->getId ();
+					}
+					else throw StrCacuException (
+							"No compartment read for species in reaction template!"
+							);
+
+					//	parameter about real species
+					int __species_index = possibleReactantMatch[i][n2].first;
+					string __compid = listOfMySpecies[__species_index]->getCompartment ();
+
+					if (__compid_tm != __compid) {fail = true;break;}
+				}
+				if (!fail) possible.insert (n1);
+			}
+			if (possible.empty ()) continue;
+
+			//	modifier constraints
+			assert (possibleModifierMatch[j].size () == listOfMyModifiers.size ());
+			for (int n1 = 0; n1 < n; n1++)
+			{
+				if (!possible.count (n1)) continue;
+
+				bool fail = false;
+				for (int n2=0; n2 < possibleModifierMatch[j].size (); n2++)
+				{
+					//	parameter about template spcies
+					string __compLabel_tm = listOfMyModifiers[n2]->getCompartment ();
+					string __compid_tm;
+					if (compConfig[n1].count (__compLabel_tm))
+					{
+						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
+						__compid_tm = c->getId ();
+					}
+					else throw StrCacuException (
+							"No compartment read for species in reaction template!"
+							);
+
+					//	parameter about real species
+					int __species_index = possibleModifierMatch[j][n2].first;
+					string __compid = listOfMySpecies[__species_index]->getCompartment ();
+
+					if (__compid_tm != __compid) {fail = true;break;}
+				}
+				if (fail) possible.erase (n1);
+			}
+			if (possible.empty ()) continue;
+
+			//	compartment-type species constraints
+			for (int n1=0; n1 < n; n1++)
+			{
+				if (!possible.count (n1)) continue;
+				
+				map<string, string> itself;
+				for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
+				{
+					string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
+					if (!__species_itself.empty ())
+					{
+						int __species_index = possibleReactantMatch[i][n2].first;
+						string __species_id = listOfMySpecies[__species_index]->getId ();
+						if (!itself.count (__species_itself)) 
+							itself[__species_itself] = __species_id;
+						else if (itself[__species_itself] != __species_id) {
+							possible.erase (n1);
+							break;
+						}
+					}
+				}
+			}
+			if (possible.empty ()) continue;
+
+			if (notfail) result.push_back (
+				make_pair (possibleReactantMatch[i], possibleModifierMatch[j])
+				);
 		}
 	}
 
 	return result.size () > 0;
-}
-
-bool reactionTemplate::compartmentConstraints (
-		const string& searchComp, //Rlabel 
-		const string& parentComp, //sbml id of parent compartment
-		set<string>& compUsed,
-		const vector<MyCompartment*>& listOfMyCompartments,
-		const vector<MySpecies*>& listOfMySpecies,
-		const speciesArrayMatch& reactantCandidates,
-		const speciesArrayMatch& modifierCandidates
-		) 
-{ 
-	string searchCompDbId;  //db id of Rlabel
-	if (mapComps.count (searchComp))
-		searchCompDbId = mapComps.find (searchComp)->second; 
-
-	//
-	//	FOR REACTANTS
-	//
-	int entries = mmapIndexReactants.count (searchComp);
-	multimap<string,int>::iterator iter = 
-		mmapIndexReactants.find (searchComp);
-
-	MyCompartment* fixedComp = NULL;
-
-	for (int cnt=0; cnt != entries; cnt++, iter++)
-	{
-		int speciesIndex = reactantCandidates[iter->second].first; //index in listOfMySpecies
-		string speciesLabel = listOfMySpecies[speciesIndex]->getId ();
-
-		//
-		//	find compartment where it locates in
-		//
-		MyCompartment* currComp = NULL;
-		//    cout << "\nsize = " << listOfMyCompartments.size () << endl;
-		for (int icomp =0; icomp < listOfMyCompartments.size (); icomp++)
-		{
-			MyCompartment* mycomp = listOfMyCompartments[icomp];
-			//      cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
-			if (mycomp->isMySpeciesIn (speciesLabel) != NULL) currComp = mycomp;
-		}
-
-		//	check
-		if (currComp == NULL) 
-		{
-			string errno (
-					"\nNo Compartment Found for Species with Label "
-					);
-			errno += speciesLabel;
-			throw StrCacuException (errno);
-		}
-
-		if (cnt == 0) 
-		{
-			fixedComp = currComp;
-
-			if (compUsed.count (fixedComp->getId ())) return false;
-			else compUsed.insert (fixedComp->getId ());
-
-			string parent = fixedComp->getOutside ();
-			if (parentComp != "ROOT" && parent != parentComp) return false;
-			if (fixedComp->getDB_ref () != searchCompDbId) return false;
-		}
-		else if (currComp->getId () != fixedComp->getId ()) return false;
-	}
-
-	//
-	//	FOR MODIFIERS
-	//
-	entries = mmapIndexModifiers.count (searchComp);
-	iter = mmapIndexModifiers.find (searchComp);
-
-	for (int cnt=0; cnt != entries; cnt++, iter++)
-	{
-		int speciesIndex = modifierCandidates[iter->second].first;
-		string speciesLabel = listOfMySpecies[speciesIndex]->getId ();
-
-		//
-		//	find compartment where it locates in
-		//
-		MyCompartment* currComp = NULL;
-		cout << "\nsize = " << listOfMyCompartments.size () << endl;
-		for (int icomp =0; icomp < listOfMyCompartments.size (); icomp++)
-		{
-			MyCompartment* mycomp = listOfMyCompartments[icomp];
-			cout << "\nmycomp == " << mycomp->getId () << "\n speicesLabel = " << speciesLabel << endl;
-			if (mycomp->isMySpeciesIn (speciesLabel) != NULL) currComp = mycomp; 
-		}
-
-		//	check
-		if (currComp == NULL) 
-		{
-			string errno (
-					"\nNo Compartment Found for Species with Label "
-					);
-			errno += speciesLabel;
-			throw StrCacuException (errno);
-		}
-
-		if (fixedComp != NULL)
-		{
-			if (currComp->getId () != fixedComp->getId ()) return false;
-		}
-		else 
-		{
-			fixedComp = currComp;
-
-			if (compUsed.count (fixedComp->getId ())) return false;
-			else compUsed.insert (fixedComp->getId ());
-
-			string parent = fixedComp->getOutside ();
-			if (parentComp != "ROOT" && parent != parentComp) return false;
-			if (fixedComp->getDB_ref () != searchCompDbId) return false;
-		}
-	}
-
-	//
-	//	CHECK CHILDREN COMPARTMENTS RECURSIVELY
-	//
-	entries = mmapComps.count (searchComp);
-	multimap<string,string>::iterator iter_c = mmapComps.find (searchComp);
-
-	string corresComp;
-	if (fixedComp == NULL) corresComp = "ROOT";
-	else corresComp = fixedComp->getId ();
-
-	for (int cnt=0; cnt != entries; cnt++, iter_c++)
-	{
-		string child = iter_c->second;
-		bool ism = compartmentConstraints (
-				child, corresComp, compUsed, listOfMyCompartments, listOfMySpecies, 
-				reactantCandidates, modifierCandidates
-				);
-		if (!ism) return false;
-	}
-	return true;
 }
 
 //

@@ -622,6 +622,17 @@ bool MySpecies::match (
 		vector<cMatchsType2>& trym
 		) const
 {
+	/**
+	 * (1) if real and template speceies should be 
+	 * both compartment-type or non-compartment type
+	 */
+	if (s->comp_type_id.empty () 
+			&& !comp_type_id.empty ()) 
+		return false;
+	if (!s->comp_type_id.empty () 
+			&& comp_type_id.empty ()) 
+		return false;
+
 	//  template chain length
 	int numc_t = s->listOfChains.size ();
 
