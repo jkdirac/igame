@@ -25,7 +25,12 @@ readXMLComponent::readXMLComponent ()
 	speciesType_set.insert ("product");
 
 	//	set substituentType 
-	substituentType_set.insert ("X");
+	substituentType_set.insert ("ANY");
+	substituentType_set.insert ("ANYUB");
+	substituentType_set.insert ("NZ");
+	substituentType_set.insert ("NZUB");
+	substituentType_set.insert ("ONE");
+	substituentType_set.insert ("ONEUB");
 }
 
 readXMLComponent::~readXMLComponent ()

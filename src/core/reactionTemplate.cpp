@@ -120,7 +120,6 @@ const MySpecies* reactionTemplate::getSpecies (
 	for (int i=0; i<listOfMyModifiers.size (); i++)
 	{
 		MySpecies* s = listOfMyModifiers[i];
-		cout << "\nlabel = " << s->getDB_Label () << endl;
 		if (s->getDB_Label () == speciesLabel) return s;
 	}
 
@@ -261,6 +260,7 @@ bool reactionTemplate::findSpeciesMatch (
 		}
 	}
 
+	cout << "\nNumber of Options = " << options.size () << endl;
 	vector< map<string, int> > compConfig;	//	important
 
 	for (int i=0; i < permALL_DB; i++)
@@ -317,6 +317,11 @@ bool reactionTemplate::findSpeciesMatch (
 	}
 
 	if (compConfig.empty ()) return false;
+	else 
+	{
+		cout << "\nNumber of Compartment Configurations = " 
+			 << compConfig.size () << endl;
+	}
 
 	//
 	//  temporary variables

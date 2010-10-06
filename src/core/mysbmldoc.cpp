@@ -403,6 +403,7 @@ void MySBMLDocument::handleReactionTemplate (
 	/**
 	 * create reactions from each matching result
 	 */
+	cout << "\nMatching Result Size = " << result.size () << endl;
 	for (int i=0; i < result.size (); i++)
 	{
 		/**
