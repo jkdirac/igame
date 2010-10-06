@@ -15,6 +15,8 @@
 #include "myspecies.h"
 #include "mycompartment.h"
 
+bool isSameType (const string&, const string&);
+
 class reactionTemplate
 {
 	public:

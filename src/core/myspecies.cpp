@@ -622,16 +622,7 @@ bool MySpecies::match (
 		vector<cMatchsType2>& trym
 		) const
 {
-	/**
-	 * (1) if real and template speceies should be 
-	 * both compartment-type or non-compartment type
-	 */
-	if (s->comp_type_id.empty () 
-			&& !comp_type_id.empty ()) 
-		return false;
-	if (!s->comp_type_id.empty () 
-			&& comp_type_id.empty ()) 
-		return false;
+	cout << "\nSPECIES: MATCHING ......" << endl;
 
 	//  template chain length
 	int numc_t = s->listOfChains.size ();
@@ -746,12 +737,6 @@ bool MySpecies::match (
 			//
 			//  generate s2
 			//
-			set<string> subs_t;
-			subs_t.insert ("X");
-			subs_t.insert ("Y");
-			subs_t.insert ("Z");
-			subs_t.insert ("T");
-
 			MySpecies* s2 = new MySpecies;
 			for (int k=0; k < numc_t; k++)
 			{
@@ -766,9 +751,7 @@ bool MySpecies::match (
 				for (int l=0; iter_c != cm_T.end (); l++, iter_c++)
 				{
 					Part* p = c->listOfParts[l];
-					string partLabel = p->getPartLabel ();
-
-					if (subs_t.count (partLabel))
+					if (p->getPartCtg () == "substituent")
 					{
 						int start = iter_c->first;
 						int end = iter_c->second;

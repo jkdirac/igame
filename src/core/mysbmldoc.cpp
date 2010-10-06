@@ -295,8 +295,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 						handleReactionTemplate (
 								dbreader, 
 								reactionReference, 
-								speciesReference,
 								speciesRole, 
+								speciesReference,
 								i
 								);
 					}
