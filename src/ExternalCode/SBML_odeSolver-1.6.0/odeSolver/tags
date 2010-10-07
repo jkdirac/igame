@@ -1,0 +1,319 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ACLOCAL	Makefile	/^ACLOCAL = aclocal$/;"	m
+ACLOCAL_M4	Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
+AMDEP_FALSE	Makefile	/^AMDEP_FALSE = #$/;"	m
+AMDEP_TRUE	Makefile	/^AMDEP_TRUE = $/;"	m
+AMTAR	Makefile	/^AMTAR = ${SHELL} \/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/SBML_odeSolver-1.6.0\/config\/missing --run tar$/;"	m
+AM_CFLAGS	Makefile	/^AM_CFLAGS =  --pedantic$/;"	m
+AM_LDFLAGS	Makefile	/^AM_LDFLAGS =   -Wl,-rpath,\/usr\/local\/lib$/;"	m
+AR	Makefile	/^AR = \/usr\/bin\/ar$/;"	m
+AUTOCONF	Makefile	/^AUTOCONF = autoconf$/;"	m
+AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/SBML_odeSolver-1.6.0\/config\/missing --run autoheader$/;"	m
+AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/SBML_odeSolver-1.6.0\/config\/missing --run automake-1.9$/;"	m
+AWK	Makefile	/^AWK = mawk$/;"	m
+CC	Makefile	/^CC = gcc$/;"	m
+CCDEPMODE	Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+CCLD	Makefile	/^CCLD = $(CC)$/;"	m
+CFLAGS	Makefile	/^CFLAGS = $/;"	m
+COMPILE	Makefile	/^COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \\$/;"	m
+CONFIG_CLEAN_FILES	Makefile	/^CONFIG_CLEAN_FILES =$/;"	m
+CONFIG_HEADER	Makefile	/^CONFIG_HEADER = $(top_builddir)\/src\/sbmlsolver\/config.h$/;"	m
+CPP	Makefile	/^CPP = gcc -E$/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS = $/;"	m
+CTAGS	Makefile	/^CTAGS = ctags$/;"	m
+CVODE_CFLAGS	Makefile	/^CVODE_CFLAGS = -I\/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/sundials-2.1.1\/include$/;"	m
+CVODE_LDFLAGS	Makefile	/^CVODE_LDFLAGS = -L\/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/sundials-2.1.1\/lib$/;"	m
+CVODE_LIBS	Makefile	/^CVODE_LIBS = -lsundials_kinsol -lsundials_cvodes -lsundials_cvode -lsundials_nvecserial -lsundials_shared$/;"	m
+CXX	Makefile	/^CXX = g++$/;"	m
+CXXDEPMODE	Makefile	/^CXXDEPMODE = depmode=gcc3$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -g -O2$/;"	m
+CYGPATH_W	Makefile	/^CYGPATH_W = echo$/;"	m
+DEFAULT_INCLUDES	Makefile	/^DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)\/src\/sbmlsolver$/;"	m
+DEFS	Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEPDIR	Makefile	/^DEPDIR = .deps$/;"	m
+DISTFILES	Makefile	/^DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)$/;"	m
+DIST_COMMON	Makefile	/^DIST_COMMON = $(srcdir)\/Makefile.am $(srcdir)\/Makefile.in$/;"	m
+DIST_SOURCES	Makefile	/^DIST_SOURCES = $(odeSolver_SOURCES)$/;"	m
+DOT	Makefile	/^DOT = $/;"	m
+Determinant	options.h	/^  int Determinant;      \/* Calculate and print determinant of the$/;"	m	struct:_Options	access:public
+DrawJacobian	options.h	/^  int DrawJacobian;     \/* Calculate a graph of species interaction$/;"	m	struct:_Options	access:public
+DrawReactions	options.h	/^  int DrawReactions;    \/* Calculate a graph of the reaction network *\/$/;"	m	struct:_Options	access:public
+ECHO_C	Makefile	/^ECHO_C = $/;"	m
+ECHO_N	Makefile	/^ECHO_N = -n$/;"	m
+ECHO_T	Makefile	/^ECHO_T = $/;"	m
+EGREP	Makefile	/^EGREP = grep -E$/;"	m
+ETAGS	Makefile	/^ETAGS = etags$/;"	m
+EXEEXT	Makefile	/^EXEEXT = $/;"	m
+Error	options.h	/^  double Error;         \/* absolute tolerance in Cvode integration *\/$/;"	m	struct:_Options	access:public
+ExeName	options.h	/^  char ExeName[256];    \/* name of executable *\/$/;"	m	struct:_Options	access:public
+GRACE_CFLAGS	Makefile	/^GRACE_CFLAGS = $/;"	m
+GRACE_LDFLAGS	Makefile	/^GRACE_LDFLAGS = $/;"	m
+GRACE_LIBS	Makefile	/^GRACE_LIBS = $/;"	m
+GRACE_RPATH	Makefile	/^GRACE_RPATH = $/;"	m
+GRAPHVIZ_CFLAGS	Makefile	/^GRAPHVIZ_CFLAGS = $/;"	m
+GRAPHVIZ_LDFLAGS	Makefile	/^GRAPHVIZ_LDFLAGS = $/;"	m
+GRAPHVIZ_LIBS	Makefile	/^GRAPHVIZ_LIBS = $/;"	m
+GRAPHVIZ_RPATH	Makefile	/^GRAPHVIZ_RPATH = $/;"	m
+GvFormat	options.h	/^  char GvFormat[64];    \/* output format for graph drawings *\/$/;"	m	struct:_Options	access:public
+HOST_TYPE	Makefile	/^HOST_TYPE = linux$/;"	m
+HaltOnEvent	options.h	/^  int HaltOnEvent;      \/* stop integration if event is detected *\/$/;"	m	struct:_Options	access:public
+INCLUDES	Makefile	/^INCLUDES = -I. -I..\/src -I\/usr\/local\/include -I\/usr\/local\/include -I\/usr\/local\/include\/sbml -I\/usr\/local\/include -I\/usr\/local\/include\/sbml\/sbml  -I\/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/sundials-2.1.1\/include$/;"	m
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_HEADER	Makefile	/^INSTALL_HEADER = $(INSTALL_DATA)$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+INSTALL_SCRIPT	Makefile	/^INSTALL_SCRIPT = ${INSTALL}$/;"	m
+INSTALL_STRIP_PROGRAM	Makefile	/^INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s$/;"	m
+InterActive	options.h	/^  int InterActive;      \/* Start program in interactive mode *\/$/;"	m	struct:_Options	access:public
+Jacobian	options.h	/^  int Jacobian;         \/* Do not use jacobian matrix for integration *\/$/;"	m	struct:_Options	access:public
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LIBOBJS	Makefile	/^LIBOBJS = $/;"	m
+LIBS	Makefile	/^LIBS = -lm $/;"	m
+LINK	Makefile	/^LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@$/;"	m
+LTLIBOBJS	Makefile	/^LTLIBOBJS = $/;"	m
+MAKE	Makefile	/^MAKE = \/usr\/bin\/make$/;"	m
+MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/SBML_odeSolver-1.6.0\/config\/missing --run makeinfo$/;"	m
+MAKE_BINDINGS_FALSE	Makefile	/^MAKE_BINDINGS_FALSE = $/;"	m
+MAKE_BINDINGS_TRUE	Makefile	/^MAKE_BINDINGS_TRUE = #$/;"	m
+ModelFile	options.h	/^  char ModelFile[256];  \/* model file name *\/$/;"	m	struct:_Options	access:public
+ModelPath	options.h	/^  char ModelPath[256];  \/* path to the model file *\/$/;"	m	struct:_Options	access:public
+Mxstep	options.h	/^  double Mxstep;        \/* maximum step number for CVode integration *\/$/;"	m	struct:_Options	access:public
+NORMAL_INSTALL	Makefile	/^NORMAL_INSTALL = :$/;"	m
+NORMAL_UNINSTALL	Makefile	/^NORMAL_UNINSTALL = :$/;"	m
+OBJEXT	Makefile	/^OBJEXT = o$/;"	m
+OLD_LIBSBML	Makefile	/^OLD_LIBSBML = $/;"	m
+Opt	options.h	/^Options Opt;$/;"	v
+Options	options.h	/^} Options;$/;"	t	typeref:struct:_Options
+PACKAGE	Makefile	/^PACKAGE = SBML_odeSolver$/;"	m
+PACKAGE_BUGREPORT	Makefile	/^PACKAGE_BUGREPORT = {raim,xtof}@tbi.univie.ac.at$/;"	m
+PACKAGE_NAME	Makefile	/^PACKAGE_NAME = odeSolver$/;"	m
+PACKAGE_STRING	Makefile	/^PACKAGE_STRING = odeSolver 1.6.0$/;"	m
+PACKAGE_TARNAME	Makefile	/^PACKAGE_TARNAME = SBML_odeSolver$/;"	m
+PACKAGE_VERSION	Makefile	/^PACKAGE_VERSION = 1.6.0$/;"	m
+PATH_SEPARATOR	Makefile	/^PATH_SEPARATOR = :$/;"	m
+PERL	Makefile	/^PERL = \/usr\/bin\/perl$/;"	m
+POST_INSTALL	Makefile	/^POST_INSTALL = :$/;"	m
+POST_UNINSTALL	Makefile	/^POST_UNINSTALL = :$/;"	m
+PRE_INSTALL	Makefile	/^PRE_INSTALL = :$/;"	m
+PRE_UNINSTALL	Makefile	/^PRE_UNINSTALL = :$/;"	m
+PROGRAMS	Makefile	/^PROGRAMS = $(bin_PROGRAMS)$/;"	m
+Parameter	options.h	/^  char Parameter[64];   \/* Paramter for variation in batch process$/;"	m	struct:_Options	access:public
+PrintAll	options.h	/^  int PrintAll;         \/* Print all given results instead of only one *\/$/;"	m	struct:_Options	access:public
+PrintJacobian	options.h	/^  int PrintJacobian;    \/* Print out time course of the jacobian matrix *\/$/;"	m	struct:_Options	access:public
+PrintMessage	options.h	/^  int PrintMessage;     \/* Print messages of integration procedure *\/$/;"	m	struct:_Options	access:public
+PrintModel	options.h	/^  int PrintModel;       \/* Print out model, ODEs and jacobian expressions *\/$/;"	m	struct:_Options	access:public
+PrintODEsToSBML	options.h	/^  int PrintODEsToSBML;  \/* Construct ODE model and print out SBML *\/$/;"	m	struct:_Options	access:public
+PrintOnTheFly	options.h	/^  int PrintOnTheFly;    \/* Print species concentration during integration *\/$/;"	m	struct:_Options	access:public
+PrintRates	options.h	/^  int PrintRates;       \/* Print time course of the ODE values *\/$/;"	m	struct:_Options	access:public
+PrintReactions	options.h	/^  int PrintReactions;   \/* Print out time course of the reaction rates *\/$/;"	m	struct:_Options	access:public
+PrintStep	options.h	/^  double PrintStep;     \/* Number of output steps from 0 to 'Time' *\/$/;"	m	struct:_Options	access:public
+RANLIB	Makefile	/^RANLIB = ranlib$/;"	m
+RError	options.h	/^  double RError;        \/* relative tolerance in Cvode integration *\/$/;"	m	struct:_Options	access:public
+SBML_CFLAGS	Makefile	/^SBML_CFLAGS = -I\/usr\/local\/include -I\/usr\/local\/include\/sbml -I\/usr\/local\/include -I\/usr\/local\/include\/sbml\/sbml$/;"	m
+SBML_LDFLAGS	Makefile	/^SBML_LDFLAGS = -L\/usr\/local\/lib$/;"	m
+SBML_LIBS	Makefile	/^SBML_LIBS = -lsbml$/;"	m
+SBML_RPATH	Makefile	/^SBML_RPATH = -Wl,-rpath,\/usr\/local\/lib$/;"	m
+SET_MAKE	Makefile	/^SET_MAKE = $/;"	m
+SHAREDLIBEXT	Makefile	/^SHAREDLIBEXT = so$/;"	m
+SHELL	Makefile	/^SHELL = \/bin\/bash$/;"	m
+SOURCES	Makefile	/^SOURCES = $(odeSolver_SOURCES)$/;"	m
+STRIP	Makefile	/^STRIP = $/;"	m
+SWIG	Makefile	/^SWIG = swig$/;"	m
+Schema11	options.h	/^  char Schema11[64];    \/* name of schema L1v1 file *\/$/;"	m	struct:_Options	access:public
+Schema12	options.h	/^  char Schema12[64];    \/* name of schema L1v2 file *\/$/;"	m	struct:_Options	access:public
+Schema21	options.h	/^  char Schema21[64];    \/* name of schema L1v3 file *\/$/;"	m	struct:_Options	access:public
+SchemaPath	options.h	/^  char SchemaPath[256]; \/* path to schema files *\/$/;"	m	struct:_Options	access:public
+Sensitivity	options.h	/^  int Sensitivity;      \/* Activate Sensitivity Analysis *\/$/;"	m	struct:_Options	access:public
+SteadyState	options.h	/^  int SteadyState;      \/* Check for steady states during integration *\/$/;"	m	struct:_Options	access:public
+TestDataDirectory	Makefile	/^TestDataDirectory = $(srcdir)$/;"	m
+Time	options.h	/^  double Time;          \/* Time to which model is integrated *\/$/;"	m	struct:_Options	access:public
+USE_GRACE	Makefile	/^USE_GRACE = 0$/;"	m
+USE_GRAPHVIZ	Makefile	/^USE_GRAPHVIZ = 0$/;"	m
+USE_SBML	Makefile	/^USE_SBML = 1$/;"	m
+USE_SUNDIALS_CVODE	Makefile	/^USE_SUNDIALS_CVODE = 1$/;"	m
+VERSION	Makefile	/^VERSION = 1.6.0$/;"	m
+Validate	options.h	/^  int Validate;         \/* Validate SBML model before doing anything else *\/$/;"	m	struct:_Options	access:public
+Wheel	options.h	/^  int Wheel;            \/* Print progress wheel *\/$/;"	m	struct:_Options	access:public
+Write	options.h	/^  int Write;            \/* Print results to file instead of stdout *\/$/;"	m	struct:_Options	access:public
+Xmgrace	options.h	/^  int Xmgrace;          \/* Print results to XMGrace instead of stdout *\/$/;"	m	struct:_Options	access:public
+_COMMANDLINE_H_	commandLine.h	37;"	d
+_INTERACTIVE_H_	interactive.h	37;"	d
+_OPTIONS_H_	options.h	6;"	d
+_Options	options.h	/^typedef struct _Options {$/;"	s
+_Options::Determinant	options.h	/^  int Determinant;      \/* Calculate and print determinant of the$/;"	m	struct:_Options	access:public
+_Options::DrawJacobian	options.h	/^  int DrawJacobian;     \/* Calculate a graph of species interaction$/;"	m	struct:_Options	access:public
+_Options::DrawReactions	options.h	/^  int DrawReactions;    \/* Calculate a graph of the reaction network *\/$/;"	m	struct:_Options	access:public
+_Options::Error	options.h	/^  double Error;         \/* absolute tolerance in Cvode integration *\/$/;"	m	struct:_Options	access:public
+_Options::ExeName	options.h	/^  char ExeName[256];    \/* name of executable *\/$/;"	m	struct:_Options	access:public
+_Options::GvFormat	options.h	/^  char GvFormat[64];    \/* output format for graph drawings *\/$/;"	m	struct:_Options	access:public
+_Options::HaltOnEvent	options.h	/^  int HaltOnEvent;      \/* stop integration if event is detected *\/$/;"	m	struct:_Options	access:public
+_Options::InterActive	options.h	/^  int InterActive;      \/* Start program in interactive mode *\/$/;"	m	struct:_Options	access:public
+_Options::Jacobian	options.h	/^  int Jacobian;         \/* Do not use jacobian matrix for integration *\/$/;"	m	struct:_Options	access:public
+_Options::ModelFile	options.h	/^  char ModelFile[256];  \/* model file name *\/$/;"	m	struct:_Options	access:public
+_Options::ModelPath	options.h	/^  char ModelPath[256];  \/* path to the model file *\/$/;"	m	struct:_Options	access:public
+_Options::Mxstep	options.h	/^  double Mxstep;        \/* maximum step number for CVode integration *\/$/;"	m	struct:_Options	access:public
+_Options::Parameter	options.h	/^  char Parameter[64];   \/* Paramter for variation in batch process$/;"	m	struct:_Options	access:public
+_Options::PrintAll	options.h	/^  int PrintAll;         \/* Print all given results instead of only one *\/$/;"	m	struct:_Options	access:public
+_Options::PrintJacobian	options.h	/^  int PrintJacobian;    \/* Print out time course of the jacobian matrix *\/$/;"	m	struct:_Options	access:public
+_Options::PrintMessage	options.h	/^  int PrintMessage;     \/* Print messages of integration procedure *\/$/;"	m	struct:_Options	access:public
+_Options::PrintModel	options.h	/^  int PrintModel;       \/* Print out model, ODEs and jacobian expressions *\/$/;"	m	struct:_Options	access:public
+_Options::PrintODEsToSBML	options.h	/^  int PrintODEsToSBML;  \/* Construct ODE model and print out SBML *\/$/;"	m	struct:_Options	access:public
+_Options::PrintOnTheFly	options.h	/^  int PrintOnTheFly;    \/* Print species concentration during integration *\/$/;"	m	struct:_Options	access:public
+_Options::PrintRates	options.h	/^  int PrintRates;       \/* Print time course of the ODE values *\/$/;"	m	struct:_Options	access:public
+_Options::PrintReactions	options.h	/^  int PrintReactions;   \/* Print out time course of the reaction rates *\/$/;"	m	struct:_Options	access:public
+_Options::PrintStep	options.h	/^  double PrintStep;     \/* Number of output steps from 0 to 'Time' *\/$/;"	m	struct:_Options	access:public
+_Options::RError	options.h	/^  double RError;        \/* relative tolerance in Cvode integration *\/$/;"	m	struct:_Options	access:public
+_Options::Schema11	options.h	/^  char Schema11[64];    \/* name of schema L1v1 file *\/$/;"	m	struct:_Options	access:public
+_Options::Schema12	options.h	/^  char Schema12[64];    \/* name of schema L1v2 file *\/$/;"	m	struct:_Options	access:public
+_Options::Schema21	options.h	/^  char Schema21[64];    \/* name of schema L1v3 file *\/$/;"	m	struct:_Options	access:public
+_Options::SchemaPath	options.h	/^  char SchemaPath[256]; \/* path to schema files *\/$/;"	m	struct:_Options	access:public
+_Options::Sensitivity	options.h	/^  int Sensitivity;      \/* Activate Sensitivity Analysis *\/$/;"	m	struct:_Options	access:public
+_Options::SteadyState	options.h	/^  int SteadyState;      \/* Check for steady states during integration *\/$/;"	m	struct:_Options	access:public
+_Options::Time	options.h	/^  double Time;          \/* Time to which model is integrated *\/$/;"	m	struct:_Options	access:public
+_Options::Validate	options.h	/^  int Validate;         \/* Validate SBML model before doing anything else *\/$/;"	m	struct:_Options	access:public
+_Options::Wheel	options.h	/^  int Wheel;            \/* Print progress wheel *\/$/;"	m	struct:_Options	access:public
+_Options::Write	options.h	/^  int Write;            \/* Print results to file instead of stdout *\/$/;"	m	struct:_Options	access:public
+_Options::Xmgrace	options.h	/^  int Xmgrace;          \/* Print results to XMGrace instead of stdout *\/$/;"	m	struct:_Options	access:public
+_PRINTMODEL_H_	printModel.h	37;"	d
+ac_ct_CC	Makefile	/^ac_ct_CC = gcc$/;"	m
+ac_ct_CXX	Makefile	/^ac_ct_CXX = g++$/;"	m
+ac_ct_RANLIB	Makefile	/^ac_ct_RANLIB = ranlib$/;"	m
+ac_ct_STRIP	Makefile	/^ac_ct_STRIP = $/;"	m
+am__aclocal_m4_deps	Makefile	/^am__aclocal_m4_deps = $(top_srcdir)\/config\/grace.m4 \\$/;"	m
+am__cd	Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+am__configure_deps	Makefile	/^am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \\$/;"	m
+am__depfiles_maybe	Makefile	/^am__depfiles_maybe = depfiles$/;"	m
+am__fastdepCC_FALSE	Makefile	/^am__fastdepCC_FALSE = #$/;"	m
+am__fastdepCC_TRUE	Makefile	/^am__fastdepCC_TRUE = $/;"	m
+am__fastdepCXX_FALSE	Makefile	/^am__fastdepCXX_FALSE = #$/;"	m
+am__fastdepCXX_TRUE	Makefile	/^am__fastdepCXX_TRUE = $/;"	m
+am__include	Makefile	/^am__include = include$/;"	m
+am__installdirs	Makefile	/^am__installdirs = "$(DESTDIR)$(bindir)"$/;"	m
+am__leading_dot	Makefile	/^am__leading_dot = .$/;"	m
+am__quote	Makefile	/^am__quote = $/;"	m
+am__tar	Makefile	/^am__tar = ${AMTAR} chof - "$$tardir"$/;"	m
+am__untar	Makefile	/^am__untar = ${AMTAR} xf -$/;"	m
+am_odeSolver_OBJECTS	Makefile	/^am_odeSolver_OBJECTS = main.$(OBJEXT) commandLine.$(OBJEXT) \\$/;"	m
+binPROGRAMS_INSTALL	Makefile	/^binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)$/;"	m
+bin_PROGRAMS	Makefile	/^bin_PROGRAMS = odeSolver$(EXEEXT)$/;"	m
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+build	Makefile	/^build = i686-pc-linux-gnu$/;"	m
+build_alias	Makefile	/^build_alias = $/;"	m
+build_cpu	Makefile	/^build_cpu = i686$/;"	m
+build_os	Makefile	/^build_os = linux-gnu$/;"	m
+build_triplet	Makefile	/^build_triplet = i686-pc-linux-gnu$/;"	m
+build_vendor	Makefile	/^build_vendor = pc$/;"	m
+callIntegrator	interactive.c	/^static integratorInstance_t *callIntegrator(odeModel_t *, cvodeSettings_t *);$/;"	p	file:	signature:(odeModel_t *, cvodeSettings_t *)
+callIntegrator	interactive.c	/^static integratorInstance_t *callIntegrator(odeModel_t *om,$/;"	f	file:	signature:(odeModel_t *om, cvodeSettings_t *set)
+closeXMGrace	printModel.c	/^static int closeXMGrace(cvodeData_t *data, char *name);$/;"	p	file:	signature:(cvodeData_t *data, char *name)
+closeXMGrace	printModel.c	/^static int closeXMGrace(cvodeData_t *data, char *safename)$/;"	f	file:	signature:(cvodeData_t *data, char *safename)
+datadir	Makefile	/^datadir = ${prefix}\/share$/;"	m
+decodeCML	options.c	/^decodeCML (int argc, char *argv[])$/;"	f	signature:(int argc, char *argv[])
+decodeCML	options.h	/^decodeCML(int argc, char *argv[]);$/;"	p	signature:(int argc, char *argv[])
+depcomp	Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/config\/depcomp$/;"	m
+exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
+grace_error	printModel.c	/^static void grace_error(const char *msg)$/;"	f	file:	signature:(const char *msg)
+grace_error	printModel.c	/^static void grace_error(const char *msg);$/;"	p	file:	signature:(const char *msg)
+host	Makefile	/^host = i686-pc-linux-gnu$/;"	m
+host_alias	Makefile	/^host_alias = $/;"	m
+host_cpu	Makefile	/^host_cpu = i686$/;"	m
+host_os	Makefile	/^host_os = linux-gnu$/;"	m
+host_triplet	Makefile	/^host_triplet = i686-pc-linux-gnu$/;"	m
+host_vendor	Makefile	/^host_vendor = pc$/;"	m
+includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
+infodir	Makefile	/^infodir = ${prefix}\/info$/;"	m
+initializeOptions	options.c	/^initializeOptions (void)$/;"	f	signature:(void)
+initializeOptions	options.c	/^void initializeOptions (void);$/;"	p	file:	signature:(void)
+initializeOptions	options.h	/^initializeOptions(void);$/;"	p	signature:(void)
+install_sh	Makefile	/^install_sh = \/home\/jkdirac\/Develop\/igem\/hello_ustc_2010\/ExternalCode\/SBML_odeSolver-1.6.0\/config\/install-sh$/;"	m
+install_sh_DATA	Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
+install_sh_PROGRAM	Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
+install_sh_SCRIPT	Makefile	/^install_sh_SCRIPT = $(install_sh) -c$/;"	m
+integrator	commandLine.c	/^int integrator(integratorInstance_t *engine,$/;"	f	signature:(integratorInstance_t *engine, int PrintMessage, int PrintOnTheFly, FILE *outfile)
+integrator	commandLine.h	/^int integrator(integratorInstance_t *engine, int PrintMessage,$/;"	p	signature:(integratorInstance_t *engine, int PrintMessage, int PrintOnTheFly, FILE *outfile)
+interactive	interactive.c	/^interactive() {$/;"	f
+interactive	interactive.h	/^void interactive();$/;"	p	signature:()
+libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+libexecdir	Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
+loadFile	interactive.c	/^static SBMLDocument_t *loadFile()$/;"	f	file:
+loadFile	interactive.c	/^static SBMLDocument_t *loadFile();$/;"	p	file:
+localstatedir	Makefile	/^localstatedir = ${prefix}\/var$/;"	m
+long_options	options.c	/^static struct option const long_options[] =$/;"	v	file:
+main	main.c	/^main (int argc, char *argv[]) {  $/;"	f	signature:(int argc, char *argv[])
+mandir	Makefile	/^mandir = ${prefix}\/man$/;"	m
+mkdir_p	Makefile	/^mkdir_p = mkdir -p --$/;"	m
+mkinstalldirs	Makefile	/^mkinstalldirs = $(install_sh) -d$/;"	m
+odeSolver	commandLine.c	/^odeSolver (int argc, char *argv[])$/;"	f	signature:(int argc, char *argv[])
+odeSolver	commandLine.h	/^int odeSolver (int argc, char *argv[]);$/;"	p	signature:(int argc, char *argv[])
+odeSolver_DEPENDENCIES	Makefile	/^odeSolver_DEPENDENCIES =$/;"	m
+odeSolver_LDADD	Makefile	/^odeSolver_LDADD = -L..\/src -L\/\/usr\/local\/lib -lODES \\$/;"	m
+odeSolver_OBJECTS	Makefile	/^odeSolver_OBJECTS = $(am_odeSolver_OBJECTS)$/;"	m
+odeSolver_SOURCES	Makefile	/^odeSolver_SOURCES = main.c \\$/;"	m
+oldincludedir	Makefile	/^oldincludedir = \/usr\/include$/;"	m
+openXMGrace	printModel.c	/^static int openXMGrace(cvodeData_t *data)$/;"	f	file:	signature:(cvodeData_t *data)
+openXMGrace	printModel.c	/^static int openXMGrace(cvodeData_t *data);$/;"	p	file:	signature:(cvodeData_t *data)
+parseModelWithArguments	commandLine.c	/^parseModelWithArguments (char *file)$/;"	f	signature:(char *file)
+parseModelWithArguments	commandLine.h	/^SBMLDocument_t* parseModelWithArguments(char *file);$/;"	p	signature:(char *file)
+pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/SBML_odeSolver$/;"	m
+pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/SBML_odeSolver$/;"	m
+pkglibdir	Makefile	/^pkglibdir = $(libdir)\/SBML_odeSolver$/;"	m
+prefix	Makefile	/^prefix = \/usr\/local$/;"	m
+printConcentrationTimeCourse	printModel.c	/^void printConcentrationTimeCourse(cvodeData_t *data, FILE *f)$/;"	f	signature:(cvodeData_t *data, FILE *f)
+printConcentrationTimeCourse	printModel.h	/^void printConcentrationTimeCourse(cvodeData_t *, FILE *);$/;"	p	signature:(cvodeData_t *, FILE *)
+printDeterminantTimeCourse	printModel.c	/^void printDeterminantTimeCourse(cvodeData_t *data, ASTNode_t *det, FILE *f)$/;"	f	signature:(cvodeData_t *data, ASTNode_t *det, FILE *f)
+printDeterminantTimeCourse	printModel.h	/^void printDeterminantTimeCourse(cvodeData_t *, ASTNode_t *, FILE *);$/;"	p	signature:(cvodeData_t *, ASTNode_t *, FILE *)
+printJacobian	printModel.c	/^void printJacobian(odeModel_t *om, FILE *f)$/;"	f	signature:(odeModel_t *om, FILE *f)
+printJacobian	printModel.h	/^void printJacobian(odeModel_t *, FILE *);$/;"	p	signature:(odeModel_t *, FILE *)
+printJacobianTimeCourse	printModel.c	/^void printJacobianTimeCourse(cvodeData_t *data, FILE *f)$/;"	f	signature:(cvodeData_t *data, FILE *f)
+printJacobianTimeCourse	printModel.h	/^void printJacobianTimeCourse(cvodeData_t *, FILE *);$/;"	p	signature:(cvodeData_t *, FILE *)
+printMenu	interactive.c	/^static void printMenu(void)$/;"	f	file:	signature:(void)
+printMenu	interactive.c	/^static void printMenu(void);$/;"	p	file:	signature:(void)
+printModel	printModel.c	/^void printModel(Model_t *m, FILE *f)$/;"	f	signature:(Model_t *m, FILE *f)
+printModel	printModel.h	/^void printModel(Model_t *, FILE *);$/;"	p	signature:(Model_t *, FILE *)
+printODEs	printModel.c	/^void printODEs(odeModel_t *model, FILE *f)$/;"	f	signature:(odeModel_t *model, FILE *f)
+printODEs	printModel.h	/^void printODEs(odeModel_t *, FILE *);$/;"	p	signature:(odeModel_t *, FILE *)
+printODEsToSBML	printModel.c	/^void printODEsToSBML(Model_t *ode, FILE *f)$/;"	f	signature:(Model_t *ode, FILE *f)
+printODEsToSBML	printModel.h	/^void printODEsToSBML(Model_t *ode, FILE *);$/;"	p	signature:(Model_t *ode, FILE *)
+printOdeTimeCourse	printModel.c	/^void printOdeTimeCourse(cvodeData_t *data, FILE *f)$/;"	f	signature:(cvodeData_t *data, FILE *f)
+printOdeTimeCourse	printModel.h	/^void printOdeTimeCourse(cvodeData_t *, FILE *);$/;"	p	signature:(cvodeData_t *, FILE *)
+printPhase	printModel.c	/^void printPhase(cvodeData_t *data)$/;"	f	signature:(cvodeData_t *data)
+printPhase	printModel.h	/^void printPhase(cvodeData_t *);$/;"	p	signature:(cvodeData_t *)
+printReactionTimeCourse	printModel.c	/^void printReactionTimeCourse(cvodeData_t *data, Model_t *m, FILE *f)$/;"	f	signature:(cvodeData_t *data, Model_t *m, FILE *f)
+printReactionTimeCourse	printModel.h	/^void printReactionTimeCourse(cvodeData_t *, Model_t *, FILE *);$/;"	p	signature:(cvodeData_t *, Model_t *, FILE *)
+printReactions	printModel.c	/^void printReactions(Model_t *m, FILE *f)$/;"	f	signature:(Model_t *m, FILE *f)
+printReactions	printModel.h	/^void printReactions(Model_t *, FILE *);$/;"	p	signature:(Model_t *, FILE *)
+printSpecies	printModel.c	/^void printSpecies(Model_t *m, FILE *f)$/;"	f	signature:(Model_t *m, FILE *f)
+printSpecies	printModel.h	/^void printSpecies(Model_t *, FILE *);$/;"	p	signature:(Model_t *, FILE *)
+printXMGConcentrationTimeCourse	printModel.c	/^static int printXMGConcentrationTimeCourse(cvodeData_t *data)$/;"	f	file:	signature:(cvodeData_t *data)
+printXMGConcentrationTimeCourse	printModel.c	/^static int printXMGConcentrationTimeCourse(cvodeData_t *data);$/;"	p	file:	signature:(cvodeData_t *data)
+printXMGJacobianTimeCourse	printModel.c	/^static int printXMGJacobianTimeCourse ( cvodeData_t *data )$/;"	f	file:	signature:( cvodeData_t *data )
+printXMGJacobianTimeCourse	printModel.c	/^static int printXMGJacobianTimeCourse(cvodeData_t *data);$/;"	p	file:	signature:(cvodeData_t *data)
+printXMGLegend	printModel.c	/^static int printXMGLegend(cvodeData_t *data, int nvalues)$/;"	f	file:	signature:(cvodeData_t *data, int nvalues)
+printXMGLegend	printModel.c	/^static int printXMGLegend(cvodeData_t *data, int nvalues);$/;"	p	file:	signature:(cvodeData_t *data, int nvalues)
+printXMGOdeTimeCourse	printModel.c	/^static int printXMGOdeTimeCourse(cvodeData_t *data)$/;"	f	file:	signature:(cvodeData_t *data)
+printXMGOdeTimeCourse	printModel.c	/^static int printXMGOdeTimeCourse(cvodeData_t *data);$/;"	p	file:	signature:(cvodeData_t *data)
+printXMGReactionTimeCourse	printModel.c	/^static int printXMGReactionTimeCourse ( cvodeData_t *data )$/;"	f	file:	signature:( cvodeData_t *data )
+printXMGReactionTimeCourse	printModel.c	/^static int printXMGReactionTimeCourse(cvodeData_t *data);$/;"	p	file:	signature:(cvodeData_t *data)
+processOptions	options.c	/^processOptions (int argc, char *argv[])$/;"	f	file:	signature:(int argc, char *argv[])
+processOptions	options.c	/^static void processOptions (int argc, char *argv[]);$/;"	p	file:	signature:(int argc, char *argv[])
+program_transform_name	Makefile	/^program_transform_name = s,x,x,$/;"	m
+sbindir	Makefile	/^sbindir = ${exec_prefix}\/sbin$/;"	m
+setFormat	interactive.c	/^static void setFormat(void)$/;"	f	file:	signature:(void)
+setFormat	interactive.c	/^static void setFormat(void);$/;"	p	file:	signature:(void)
+setValues	interactive.c	/^static void setValues(Model_t *);$/;"	p	file:	signature:(Model_t *)
+setValues	interactive.c	/^static void setValues(Model_t *m) {$/;"	f	file:	signature:(Model_t *m)
+sharedstatedir	Makefile	/^sharedstatedir = ${prefix}\/com$/;"	m
+srcdir	Makefile	/^srcdir = .$/;"	m
+subdir	Makefile	/^subdir = odeSolver$/;"	m
+sysconfdir	Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
+target_alias	Makefile	/^target_alias = $/;"	m
+top_builddir	Makefile	/^top_builddir = ..$/;"	m
+top_srcdir	Makefile	/^top_srcdir = ..$/;"	m
+transform	Makefile	/^transform = $(program_transform_name)$/;"	m
+usage	options.c	/^usage (int status)$/;"	f	signature:(int status)
+usage	options.h	/^usage (int status);$/;"	p	signature:(int status)
