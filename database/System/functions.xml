@@ -3,7 +3,7 @@
 	<system>
 		<listOfFunctionDefinitions>
 			<functionDefinition id="impulse">
-				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<lambda>
 						<bvar>
 							<ci>impulse_height</ci>
@@ -58,7 +58,7 @@
 				</math>
 			</functionDefinition>
 			<functionDefinition id="step">
-				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<lambda>
 						<bvar>
 							<ci>value1</ci>
@@ -96,7 +96,7 @@
 				</math>
 			</functionDefinition>
 			<functionDefinition id="wave">
-				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<math>
 					<lambda>
 						<bvar>
 							<ci>wave_amplitude</ci>
