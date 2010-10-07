@@ -56,7 +56,10 @@ void test_init()
 			cur_filename.remove(str_len - 4, 4);
 		}
 
-		BdRetVal bsucc = db_interface.add_files(cur_pathname.toStdString(), cur_filename.toStdString());
+		BdRetVal bsucc = db_interface.add_files(
+				cur_pathname.toStdString(), 
+				cur_filename.toStdString()
+				);
 		//add to directory
 	}
 }
