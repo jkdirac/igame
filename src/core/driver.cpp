@@ -9,7 +9,7 @@ Driver::~Driver ()
 bool Driver::beginSimulation ()
 {
 	readInput dbreader;
-	const string DB_PATH = "../../../database";
+	const string DB_PATH = "../../../example0";
 	bool SBMLok =	false;
 
 	//

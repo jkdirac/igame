@@ -4,24 +4,6 @@
 <MoDeL>
 	<dbInterface>
 		<input>
-			<listOfParameters>
-				<parameter db="temperature">
-					<id>temperature</id>
-					<value>300.0</value>
-					<units>kelvin</units>
-					<constant>false</constant>
-				</parameter>
-			</listOfParameters>
-			<listOfRules>
-				<assignmentRule>
-					<variable>temperature</variable>
-					<math>exp(t/unit_time)*unit_temperature</math>
-				</assignmentRule>
-				<rateRule>
-					<variable>sPecIes1</variable>
-					<math>sin(t/unit_time)*unit_mls</math>
-				</rateRule>
-			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">
 					<id>Flask</id>
