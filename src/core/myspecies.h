@@ -102,7 +102,6 @@ class MySpecies:
 
 		Node* findBindedNode (const string&);
 		const Node* findBindedNode (const string&) const;
-		bool countBindedNode (const string&) const;
 
 		bool match (const MySpecies*, cMatchsArray& res) const;
 

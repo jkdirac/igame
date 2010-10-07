@@ -176,27 +176,25 @@ void MySpecies::split (
 	for (int i=0; i<pieces.size (); i++) pieces[i]->rearrange ();
 }
 
-bool MySpecies::countBindedNode (
+const Node* MySpecies::findBindedNode (
 		const string& label
-		) const
+		) const 
 {
-	int numT = listOfTrees.size ();
-	for (int cnt =0; cnt < numT; cnt++)
+	for (int i= 0; i<listOfTrees.size(); i++)
 	{
-		Node* n = listOfTrees[cnt]->getNode (label);
-		if (!n) return true;
+		Node* n = listOfTrees[i]->getNode (label);
+		if (!n) return n;
 	}
-	return false;
+	return 0;
 }
 
 Node* MySpecies::findBindedNode (
 		const string& label
 		) 
 {
-	int numT = listOfTrees.size ();
-	for (int cnt = 0; cnt < numT; cnt++)
+	for (int i= 0; i<listOfTrees.size(); i++)
 	{
-		Node* n = listOfTrees[cnt]->getNode (label);
+		Node* n = listOfTrees[i]->getNode (label);
 		if (!n) return n;
 	}
 	return 0;

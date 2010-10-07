@@ -41,6 +41,7 @@ class Tree
 	~Tree ();
 
 	bool equal (const Tree*) const;
+	void checkIntegrated () const;
 
 	Node* createNode ();
 	Node* createNode (const Node*);
@@ -52,6 +53,7 @@ class Tree
 	const Node* getNode (const string&) const;
 	Node* getNode (const int&);
 	const Node* getNode (const int&) const;
+	int getNumOfNodes () const;
 
 	markType genWeight (const string&);
 	void genHuffman (const string&);
@@ -61,6 +63,7 @@ class Tree
 	private:
 
 	void Output (ostream&, const string&) const; 
+	Node* __label_collection (set<string>&, const Node*) const;
 
 	private:
 

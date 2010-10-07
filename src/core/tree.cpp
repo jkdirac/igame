@@ -35,6 +35,50 @@ Tree::~Tree ()
 		delete listOfNodes[i];
 }
 
+int Tree::getNumOfNodes () const {
+	return listOfNodes.size ();
+}
+
+void Tree::checkIntegrated () const
+{
+	set<int> __index_root;
+
+	for (int i=0; i < listOfNodes.size (); i++)
+	{
+		Node* n = listOfNodes[i];
+		if (n->parentNodeLabel == "ROOT") __index_root.insert (i);
+	}
+
+	if (__index_root.size () == 0) throw StrCacuException (
+			"No tree ROOT is found!"
+			);
+	if (__index_root.size () > 1) throw StrCacuException (
+			"More than one tree ROOT is found!"
+			);
+
+	set<string> collection;
+	Node* n = listOfNodes[*__index_root.begin ()];
+	__label_collection (collection, n);
+
+	if (collection.size () < listOfNodes.size ())
+		throw StrCacuException (
+				"Incompleted Tree: unrelated nodes are found!"
+				);
+}
+
+Node* Tree::__label_collection (
+		set<string>& collection,
+		const Node* n
+		) const
+{
+	for (int i=0; i < n->children.size (); i++)
+	{
+		Node* __child = n->children[i];
+		collection.insert (__child->nodeLabel);
+		__label_collection (collection, n->children[i]); 
+	}
+}
+
 Node* Tree::createNode ()
 {
 	Node* newNode = new Node;

@@ -57,9 +57,6 @@ void readDataBase::read_cnModel (
 		const bool& isTemplate
 		)
 {
-	//	temporary map
-	map <string, string> newLabel;
-
 	//	============
 	//	read chains
 	//	============
@@ -67,10 +64,20 @@ void readDataBase::read_cnModel (
 	string pathChain = nodepath + "/cnModel/listOfChains/chain";
 	int numOfChains = get_node_element_num (cind, &doc, &pathChain);
 
+	//
+	//	some examinations is needed
+	//	(1) partLabel on chains should be unique
+	//	(2) nodeLabel of leaf nodes shuold be defined previously 
+	//
+	set<string> __label_set;
+
 	for (int ichain = 1; ichain <= numOfChains; ichain++)
 	{
-		//create an empty chain
-		Chain* c = s->createChain (s->getId (), ichain);
+		/**
+		 * create an empty chain
+		 * !no need to generate chain label here
+		 */
+		Chain* c = s->createChain ();
 
 		//read parts 
 		ostringstream oss;
@@ -92,15 +99,15 @@ void readDataBase::read_cnModel (
 			//	2. __type is mandatory if it is not a substituent-type part
 			//
 
-			//	regenerate part label
-			string __label_new (__label);
-			if (!isTemplate) __label_new = s->getId () + "[" + __label + "]";
-			if (newLabel.count (__label))
+			if (__label_set.count (__label))
 				throw StrCacuException (
 						"Species: partLabel should be unique within"
 						"one species cnModel definition!"
 						);
-			else newLabel[__label] = __label_new;
+			else if (__label == "ROOT") throw StrCacuException (
+					"partLabel could not be \"ROOT\""
+					);
+			else __label_set.insert (__label);
 
 			//	it is not allow species with substituent-type part
 			//	if it is not a template species
@@ -113,7 +120,7 @@ void readDataBase::read_cnModel (
 			{
 				//	attribute isBinded will be set after tree nodes have been read in
 				Part* p = c->createPart ();
-				p->setPart (__ref, __label_new, __type, __ctg);
+				p->setPart (__ref, __label, __type, __ctg);
 			}
 		}
 	}
@@ -122,44 +129,99 @@ void readDataBase::read_cnModel (
 	string pathTree = nodepath + "/cnModel/listOfTrees/tree";
 	int numOfTrees = get_node_element_num (cind, &doc, &pathTree);
 
+	//	all parent nodes at least have two children
+	set<string> __leaf;
+	set<string> __all;	// "ROOT" node would not be added
+
 	for (int itree = 1; itree <= numOfTrees; itree++)
 	{
-		//create an empty tree
+		//	create an empty tree
 		Tree* t = s->createTree ();
 
-		//read nodes 
+		//	read nodes 
 		ostringstream oss;
 		oss << pathTree << "[" << itree << "]/listOfNodes/node";
 		string pathNode (oss.str ());
 		int numOfNodes = get_node_element_num (cind, &doc, &pathNode);
+
+		//	Node labels of the tree should never be the same to nodes in
+		//	other trees
+		set<string> __prev (__all);
+		map<string, int> __parent;
 
 		for (int inode = 1; inode <= numOfNodes; inode++)
 		{
 			string child, parent;
 			readNode (cind, doc, pathNode, inode, child, parent);
 
-			if (!newLabel.count (child))
-			{
-				string errno ("No Label: ");
-				errno += child + " found defined in Part Definition!";
-				throw StrCacuException (errno);
-			}
-			else child = newLabel[child];
+			//	ROOT could not be child
+			if (child == "ROOT") throw StrCacuException (
+					"\"ROOT\" could not be a child!"
+					);
 
-			if (!newLabel.count (parent))
+			if (!__label_set.count (child))
 			{
-				string errno ("No Label: ");
-				errno += parent + " found defined in Part Definition!";
+				string errno ("No corresponded part found for Node: ");
+				errno += child + "with same Label!";
 				throw StrCacuException (errno);
 			}
-			else parent = newLabel[parent];
+
+			if (__label_set.count (parent))
+			{
+				string errno ("Invalid Parent Node; ");
+				errno += parent + ", conflict with partLabel!";
+				throw StrCacuException (errno);
+			}
 
 			//create an empty node
-			t->createNode (child, parent);
+			if (__all.count (child))
+			{
+				string errno ("\nNode Label: ");
+				errno += child + " has been defined already!";
+				throw StrCacuException (errno);
+			}
+			else if (__prev.count (parent))
+			{
+				string errno ("\nNode Label: ");
+				errno += parent + " has been defined already!";
+				throw StrCacuException (errno);
+			}
+			else
+			{
+				//	insert child
+				__leaf.insert (child);
+				__all.insert (child);
+
+				//	insert parent (ROOT will not be added)
+				if (parent != "ROOT")
+				{
+					if (__parent.count (parent)) __parent[parent]++;
+					else {__parent[parent] = 1;	__all.insert (parent);}
+				}
+
+				//	create Node
+				t->createNode (child, parent);
+			}
+		}
+
+		//	check if all parents have more than one children (except "ROOT")
+		map<string, int>::iterator first= __parent.begin ();
+		while (first != __parent.end ())
+		{
+			if (first->second == 1) 
+			{
+				string errno ("Invalid Parent Node: ");
+				errno += first->first + ". At least 2 children are required!";
+				throw StrCacuException (errno);
+			}
+			first ++;
 		}
 
 		//add Children of each node
 		t->addNodeChildren ();	
+
+		//	check if the tree is itself as a whole 
+		t->checkIntegrated ();
 	}
 
 	//	find binded part
@@ -171,21 +233,18 @@ void readDataBase::read_cnModel (
 		for (int ipart = 0; ipart < c->getNumOfParts (); ipart++)
 		{
 			Part* p = c->getPart (ipart);
-			bool __isb = s->countBindedNode (p->getPartLabel ());
-			if (__isb) alone = true;
-
-			p->setIsBinded (__isb);
+			string __part_label = p->getPartLabel ();
+			if (__leaf.count (__part_label)) p->setIsBinded (true);
+			else p->setIsBinded (false);
 		}
 
-		if (!alone)
-		{
-			//	a unbinded chain
-			if (s->getNumOfChains () > 1)
-				throw StrCacuException (
-						"Not a species ALONE!"
-						);
-		}
+		//	any chain must be 
+		if (!alone && s->getNumOfChains () >1) 
+			throw StrCacuException ("Not a species ALONE!");
 	}
+
+	//	ok, fine strcuture
+	return;
 }
 
 void readDataBase::setParameter (
@@ -1015,7 +1074,6 @@ void readDataBase::readReactionTemplate (
 		double value;
 
 		const Part* p = s->getPart (partLabel);
-		if (p == NULL) cout << "asdfasdf" << endl;
 		readConditionalParameter (
 				PART, p->getPartCtg (),
 				p->getPartRef (), parameterLabel,
