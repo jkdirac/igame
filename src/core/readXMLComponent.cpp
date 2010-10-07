@@ -642,7 +642,7 @@ void readXMLComponent::readSpecies (
 	//
 	//  read node initialConcentration
 	//
-	const string path_initC = prefix + "initialConcentrationt";
+	const string path_initC = prefix + "initialConcentration";
 	get_node_element (cind, &doc, &path_initC, temp); 
 	if (temp.empty ()) initialConcentration = -1;
 	else initialConcentration = atof (temp[0].c_str ());

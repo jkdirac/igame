@@ -640,7 +640,7 @@ void readDataBase::setSpecies (
 	//
 	if (initialConcentration >= 0.0) 
 	{
-		operation = s->setInitialConcentration (initialAmount);
+		operation = s->setInitialConcentration (initialConcentration);
 		if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
 			throw StrCacuException (
 					"Reading Block Species..."
