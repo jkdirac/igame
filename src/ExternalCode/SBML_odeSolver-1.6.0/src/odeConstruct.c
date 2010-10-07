@@ -60,7 +60,6 @@
 #include "sbmlsolver/processAST.h"
 #include "sbmlsolver/solverError.h"
 
-#include "cheat.h"
 
 static void ODE_replaceFunctionDefinitions(Model_t *m);
 static Model_t *Model_copyInits(Model_t *old);
