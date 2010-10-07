@@ -97,8 +97,6 @@ SBML_odeSolver(SBMLDocument_t *d, cvodeSettings_t *set) {
 			return NULL;
 		}
 
-		//debug by jkdirac
-		p = Model_getListOfReactions (m);
 	}  
 	RETURN_ON_FATALS_WITH(NULL);
 	/** Call Model_odeSolver */

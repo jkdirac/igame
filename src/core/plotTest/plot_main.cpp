@@ -52,13 +52,12 @@ public:
     }
 };
 
-bool analys(QString fileName, intgrtOutData ode_res)
+bool analys(char* fileName, intgrtOutData& ode_res)
 {
-	if (fileName.isNull())
-		return false;
-
+		if (fileName == NULL)
+				return false;
 	//获取结果
-	bool bRes = integrate(fileName.toAscii().data(), 1000, 10000, ode_res);
+	bool bRes = integrate(fileName, 1000, 10000, ode_res);
 
 	if (bRes == EXIT_FAILURE)
 	{
@@ -73,10 +72,15 @@ int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
 
-	QString fileName = "network.xml";
+	if (argc <= 1)
+	{
+			fprintf(stderr, "please input src file\n");
+			return 0;
+	}
+
 	intgrtOutData ode_res;
 
-	bool res = analys(fileName, ode_res);
+	bool res = analys(argv[1], ode_res);
 	cout << "analys succ: " << res << endl;
 
 	PlotInputData plotInputData(ode_res.test_y, ode_res.test_x, ode_res.get_labels());
