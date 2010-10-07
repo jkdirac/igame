@@ -232,7 +232,6 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
-		cout <<"get node element: " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
@@ -316,7 +315,6 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
-		cout << "get node attr " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
@@ -397,7 +395,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	{
 		qe = m_manager->prepare(query_string, context);
 		results = qe.execute(context);
-		cout << "get node: " << query_string << endl;
 	}
 	catch (XmlException &xe)
 	{
@@ -580,7 +577,8 @@ BdRetVal bdbXMLInterface::add_directory(const string &directory)
 		}
 		catch (XmlException &se)
 		{
-			cout << "cannot get right container for file " << cur_pathname.toStdString() << endl;
+			cout << "add files exception" << cur_pathname.toStdString() << endl;
+			throw se;
 		}
 
 		//add to directory
