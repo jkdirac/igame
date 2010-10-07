@@ -176,7 +176,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 2) break;
+		if (i == 1) break;
 
 		//for each species
 		MySpecies* s = listOfMySpecies[i];

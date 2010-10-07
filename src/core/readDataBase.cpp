@@ -141,7 +141,7 @@ void readDataBase::read_cnModel (
 			if (!newLabel.count (child))
 			{
 				string errno ("No Label: ");
-				errno += child + " found defined in Part!";
+				errno += child + " found defined in Part Definition!";
 				throw StrCacuException (errno);
 			}
 			else child = newLabel[child];
@@ -149,7 +149,7 @@ void readDataBase::read_cnModel (
 			if (!newLabel.count (parent))
 			{
 				string errno ("No Label: ");
-				errno += parent + " found defined in Part!";
+				errno += parent + " found defined in Part Definition!";
 				throw StrCacuException (errno);
 			}
 			else parent = newLabel[parent];
@@ -756,10 +756,13 @@ void readDataBase::setFunction (
 	//
 	ASTNode* astMath = readMathMLFromString(math.c_str());
 	if (astMath == NULL) 
+	{
+		cout << "\nmath = " << math << endl;
 		throw StrCacuException (
 				"Reading Block FunctionDefinition..."
 				"Null or Invalid Attribute Value: math!"
 				);
+	}
 
 	operation = fdef->setMath(astMath);
 	if (operation == LIBSBML_INVALID_OBJECT)
