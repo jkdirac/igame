@@ -13,12 +13,8 @@ MoDeL
 			}
 			listOfConditionalParameters
 			{
-				conditionalParameter id = [growthRate], name = [growth rate of cell], commonValue = [5.766E-4], units = [per_second]
-				{
-				}
-				conditionalParameter id = [maxConcentration], name = [max concentration of cell], commonValue = [1.66E-12], units = [per_second]
-				{
-				}
+				conditionalParameter:[] id = [growthRate], name = [growth rate], commonValue = [5.766E-4], units = [per_second];
+				conditionalParameter:[] id = [maxConcentration], name = [max concentration], commonValue = [1.66E-12], units = [mole_per_litre];
 			}
 			listOfReferencedSpecies
 			{
