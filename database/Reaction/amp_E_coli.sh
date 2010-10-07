@@ -50,7 +50,7 @@ MoDeL
 		}
 		kineticLaw
 		{
-			forwardKineticlaw
+			forwardKineticLaw
 			{
 				math:[kgrowth*(1-(E_coli_cell_0/macx))*E_coli_cell_0*Flask];
 				listOfLocalParameters

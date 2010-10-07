@@ -2,14 +2,126 @@
 <MoDeL>
 	<system>
 		<listOfFunctionDefinitions>
-			<functionDefinition id="pow3">
-				<math>
+			<functionDefinition id="impulse">
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
 					<lambda>
-						<bvar><ci> x </ci></bvar>
+						<bvar>
+							<ci>impulse_height</ci>
+						</bvar>
+						<bvar>
+							<ci>impulse_time</ci>
+						</bvar>
+						<bvar>
+							<ci>impulse_width</ci>
+						</bvar>	
 						<apply>
-							<power/>
-							<ci> x </ci>
-							<cn> 3 </cn>
+							<times/>
+							<apply>
+								<divide/>
+								<ci> impulse_height </ci>
+								<apply>
+									<times/>
+									<ci> impulse_width </ci>
+									<apply>
+										<root/>
+										<degree>
+											<cn type="integer"> 2 </cn>
+										</degree>
+										<pi/>
+									</apply>
+								</apply>
+							</apply>
+							<apply>
+								<exp/>
+								<apply>
+									<minus/>
+									<apply>
+										<power/>
+										<apply>
+											<divide/>
+											<apply>
+												<minus/>
+												<csymbol encoding="text" 
+													definitionURL="http://www.sbml.org/sbml/symbols/time">
+													t
+												</csymbol>
+												<ci> impulse_time </ci>
+											</apply>
+											<ci> impulse_width </ci>
+										</apply>
+										<cn type="integer"> 2 </cn>
+									</apply>
+								</apply>
+							</apply>
+						</apply>
+					</lambda>
+				</math>
+			</functionDefinition>
+			<functionDefinition id="step">
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
+					<lambda>
+						<bvar>
+							<ci>value1</ci>
+						</bvar>
+						<bvar>
+							<ci>value2</ci>
+						</bvar>
+						<bvar>
+							<ci>variable1</ci>
+						</bvar>
+						<bvar>
+							<ci>variable2</ci>
+						</bvar>
+						<apply>
+							<piecewise>
+								<piece>
+									<ci>value1</ci>
+									<apply>
+										<lt/>
+										<ci>variable1</ci>
+										<ci>variable2</ci>
+									</apply>
+								</piece>
+								<piece>
+									<ci>value2</ci>
+									<apply>
+										<geq/>
+										<ci>variable1</ci>
+										<ci>variable2</ci>
+									</apply>
+								</piece>
+							</piecewise>
+						</apply>
+					</lambda>
+				</math>
+			</functionDefinition>
+			<functionDefinition id="wave">
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
+					<lambda>
+						<bvar>
+							<ci>wave_amplitude</ci>
+						</bvar>	
+						<bvar>
+							<ci>wave_frequency</ci>
+						</bvar>	
+						<apply>
+							<plus/>
+							<ci>wave_amplitude</ci>
+							<apply>
+								<times/>
+								<ci>wave_amplitude</ci>
+								<apply>
+									<sin/>
+									<apply>
+										<times/>
+										<csymbol encoding="text" 
+											definitionURL="http://www.sbml.org/sbml/symbols/time">
+											t
+										</csymbol>
+										<ci>impulse_frequency</ci>
+									</apply>
+								</apply>
+							</apply>
 						</apply>
 					</lambda>
 				</math>

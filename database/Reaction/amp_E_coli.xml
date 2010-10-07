@@ -49,7 +49,7 @@
 				      <apply>
 				        <divide/>
 				        <ci> E_coli_cell_0 </ci>
-				        <ci> maxc </ci>
+				        <ci> macx </ci>
 				      </apply>
 				    </apply>
 				    <ci> E_coli_cell_0 </ci>

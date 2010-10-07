@@ -198,10 +198,10 @@ MoDeL
 					}
 				}
 			}
-			listOfReferencedReactions
-			{
-				referencedReaction:[bid_placI185_lacI153_4] speciesType = [product];
-			}
+		}
+		listOfReferencedReactions
+		{
+			referencedReaction:[bid_placI185_lacI153_4] speciesType = [product];
 		}
 	}
 }
