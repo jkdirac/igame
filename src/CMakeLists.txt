@@ -69,6 +69,8 @@ INCLUDE_DIRECTORIES( BEFORE
 	${IGAME_SOURCE_DIR}/ExternalCode/bdbxml/include/
 	${IGAME_SOURCE_DIR}/ExternalCode/bdbxml/include/dbxml
 	${IGAME_SOURCE_DIR}/BdInterface
+	${IGAME_SOURCE_DIR}/QwtPlot
+	${IGAME_SOURCE_DIR}/core
 	${IGAME_SOURCE_DIR}/ExternalCode/SBML_odeSolver-1.6.0/src
 	${IGAME_SOURCE_DIR}/ExternalCode/SBML_odeSolver-1.6.0/src/sbmlsolver
 	${IGAME_SOURCE_DIR}/ExternalCode/sundials-2.1.1/include
@@ -80,8 +82,9 @@ INCLUDE_DIRECTORIES( BEFORE
 add_subdirectory (ExternalCode)
 add_subdirectory (BdInterface)
 add_subdirectory (utility)
-add_subdirectory (tools)
+add_subdirectory (QwtPlot)
 add_subdirectory (core)
+#add_subdirectory (tools)
 #add_subdirectory (ExternalLib)
 #add_subdirectory (SimTool)
 

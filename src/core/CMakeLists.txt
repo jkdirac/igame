@@ -9,6 +9,8 @@ FILE( GLOB PRO_CORE_HDRS *.h )
 FILE( GLOB PRO_INT_HDRS strcacu/*.h)
 FILE( GLOB PRO_CORE_SRC *.cpp )
 FILE( GLOB PRO_TEST_SRC strcacu/*.cpp )
+FILE( GLOB PRO_PLOT_TEST_SRC plotTest/*.cpp )
+FILE( GLOB PRO_PLOT_TEST_H plotTest/*.h)
 
 ADD_EXECUTABLE( test_strcacu
 	${PRO_TEST_SRC}
@@ -32,4 +34,18 @@ TARGET_LINK_LIBRARIES( igame
   bdinterface
   utility
   str_cacu
+  )
+
+ADD_EXECUTABLE( helloplot
+	${PRO_PLOT_TEST_SRC}
+	${PRO_PLOT_TEST_H}
+	)
+
+TARGET_LINK_LIBRARIES( helloplot
+  ${QT_LIBRARIES}
+  qwt5
+  plot
+  sbml
+  sbml_solver
+  utility
   )
