@@ -68,14 +68,10 @@ class MySpecies:
 		bool equal (const MySpecies*);
 		void split (bdbXMLInterface&, vector<MySpecies*>&);
 		void partialDup (const set<int>&, const set<string>&);
-		void genUniqueLabel (const int&);	// for unique chain label in reaction template
+		void addPrefix (const string&);
 
 		Chain* createChain ();
 		Chain* createChain (const Chain* c); 
-		//	create chain with name (cHaIn+No.)
-		Chain* createChain (
-				const string&, const int&
-				);
 
 		Tree* createTree ();
 		Tree* createTree (const Tree* t);
@@ -124,7 +120,6 @@ class MySpecies:
 
 		void findEquiv ();
 		void perm (const int&, const permType&);
-
-		void trim (bdbXMLInterface& dbreader);
+		void trim (bdbXMLInterface* dbreader = NULL);
 };
 #endif

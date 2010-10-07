@@ -79,6 +79,22 @@ Node* Tree::__label_collection (
 	}
 }
 
+void Tree::__add_tree_prefix (const string& prefix)
+{
+	if (!mapNodes.empty ()) mapNodes.clear ();
+
+	for (int i=0; i<listOfNodes.size (); i++)
+	{
+		Node* n = listOfNodes[i];
+
+		n->nodeLabel = prefix + n->nodeLabel;
+		if (n->parentNodeLabel != "ROOT")
+			n->parentNodeLabel = prefix + n->parentNodeLabel;
+
+		mapNodes.insert (make_pair(n->nodeLabel, n));
+	}
+}
+
 Node* Tree::createNode ()
 {
 	Node* newNode = new Node;

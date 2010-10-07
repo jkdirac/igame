@@ -56,13 +56,8 @@ void MyReaction::init (
 	}
 	for (int i=0; i < products.size (); i++)
 	{
-		/**
-		 * !!! big question !!!
-		 */ 
-		products[i]->genUniqueLabel (i);
 		listOfMyProducts.push_back (products[i]);
 	}
-		
 }
 
 void MyReaction::createReactionsFromTemplate (
@@ -74,7 +69,7 @@ void MyReaction::createReactionsFromTemplate (
 		)
 {
 	/**
-	 * replace table: used to map reactants/modifiers/products 
+	 * replacement: used to map reactants/modifiers/products 
 	 * label to that of matched species already in the system
 	 */
 	map <string, string> replacement;
@@ -110,8 +105,7 @@ void MyReaction::createReactionsFromTemplate (
 	 * those defined in the template) will be mixed
 	 * *
 	 * some extra work needs to be done:
-	 * 1. chain-label should be reset: we use species db label +
-	 * [cHaIn + num] to set the chain label
+	 * 1. chain-label should be set.
 	 * 2. species mixed should be trimmed before splitting
 	 * 3. splits should be rearranged and generated new labels
 	 * *
@@ -119,13 +113,18 @@ void MyReaction::createReactionsFromTemplate (
 	MySpecies* mixture  = new MySpecies;
 
 	//  (1.1) mix reactants
-	for (int i=0; i < __reactants_m.size (); i++)
+	assert (__reactants_m.size () == listOfMyReactants.size ());
+
+	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
 
-		/**
-		 *	template chains are not allowed to be mixed into the mixture
-		 */
+		//	prefix to be added for part labels and node labels
+		ostringstream oss;
+		string prefix = "__MoDeL_REACTANT_CXX";
+		oss << prefix << i << "::"; 
+
+		//	find chains that are defined in reactant template
 		set<int> chainUsed;
 		cMatchsType2 speciesM = __reactants_m[i].second;
 		for (int j=0; j < speciesM.size ();j++) 
@@ -135,21 +134,35 @@ void MyReaction::createReactionsFromTemplate (
 		for (int j=0; j < sr->getNumOfChains (); j++)
 		{
 			if (!chainUsed.count (j)) 
-				mixture->createChain (sr->getChain (j));
+			{
+				Chain* c = mixture->createChain (sr->getChain (j));
+				c->__add_chain_prefix (oss.str ());
+			}
 		}
 
 		//	copy all trees
 		for (int j=0; j < sr->getNumOfTrees (); j++)
-			mixture->createTree (sr->getTree (j));
+		{
+			Tree* t = mixture->createTree (sr->getTree (j));
+			t->__add_tree_prefix (oss.str ());
+		}
 	}
 
 	//  (1.2) mix products
 	for (int i=0; i < listOfMyProducts.size () ; i++)
 	{
 		MySpecies* s = listOfMyProducts[i];
-		for (int j=0; j< s->getNumOfChains (); j++)
-			mixture->createChain (s->getChain (j));
-		for (int j=0; j< s->getNumOfTrees (); j++)
+		for (int j=0; j< s->getNumOfChains (); j++) 
+		{
+			Chain* c = mixture->createChain (s->getChain (j));
+			
+			//	generate chain label
+			ostringstream oss;
+			oss << "__MoDeL_CHAIN_CXX_" << i << "_" << j;
+			c->setLabel (oss.str ());
+			s->getChain (j)->setLabel (oss.str ());
+		}
+		for (int j=0; j< s->getNumOfTrees (); j++) 
 			mixture->createTree (s->getTree (j));
 	}
 
@@ -179,14 +192,24 @@ void MyReaction::createReactionsFromTemplate (
 	{
 		MySpecies* split = splits[i];
 
+		//	gather chainLabels of split
 		set<string> __CU_splits;
 		for (int j =0; j < split->getNumOfChains (); j++)
-			__CU_splits.insert (split->getChain (j)->getLabel ());
+		{
+			Chain* c = split->getChain (j);
+			if (!c->getLabel ().empty ())
+			{
+//                cout << "\nc->getLabel = " << c->getLabel () << endl;
+				__CU_splits.insert (c->getLabel ());
+			}
+		}
 
 		vector<int> __deg;
 		for (int j =0; j < listOfMyProducts.size (); j++)
 		{
 			MySpecies* __prod = listOfMyProducts[i];
+			__prod->Output ();
+			
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
@@ -314,6 +337,9 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i<listOfMyProducts.size (); i++)
 	{
 		SpeciesReference* spr = createProduct ();
+
+		cout << "\nid = " << listOfMyProducts[i]->getId ();
+
 		operation = spr->setSpecies (listOfMyProducts[i]->getId ());
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (

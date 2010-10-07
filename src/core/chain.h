@@ -26,6 +26,8 @@ class Chain
 	~Chain ();
 
 	string getLabel () const;
+	void setLabel (const string&);
+
 	bool equal (const Chain*) const;
 	bool match (const Chain*, cMatchsType&) const; 
 
@@ -44,6 +46,7 @@ class Chain
 	const Part* getPart (const string&) const;
 	int getPartIndex (const string&) const;
 
+	void __add_chain_prefix (const string&);
 	void Output (ostream&) const; 
 
   private:
@@ -53,12 +56,15 @@ class Chain
   private:
 
 	string unicode;
+
+	//	only used when generating products by splitting the spcies mixure
 	string chainLabel;
 
 	vector<Part*> listOfParts;
 
   private:
 
+	//	keywords for substituent type part
 	map<string, int> keywords;
 };
 

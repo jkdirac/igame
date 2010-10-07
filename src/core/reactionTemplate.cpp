@@ -308,9 +308,9 @@ bool reactionTemplate::findSpeciesMatch (
 			multimap<string,string>::iterator iter = 
 				mmapComps.find (__parent);
 			
-			cout << "\nparent = " << __parent 
-				 << "  j = " << j 
-				 << "  entries = " << entries << endl;
+//            cout << "\nparent = " << __parent 
+//                 << "  j = " << j 
+//                 << "  entries = " << entries << endl;
 
 			for (int cnt=0; cnt != entries; cnt++, iter++)
 			{
@@ -437,8 +437,8 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		MySpecies* tmModifier = listOfMyModifiers[i];
 		
-		cout << "\ngetDB_ref = " << tmModifier->getDB_ref () 
-			 << "  dbref =  "<< dbref << endl;
+//        cout << "\ngetDB_ref = " << tmModifier->getDB_ref () 
+//             << "  dbref =  "<< dbref << endl;
 
 		if (tmModifier->getDB_ref () == dbref)
 		{
@@ -725,8 +725,8 @@ void reactionTemplate::createProductsFromTemplate (
 	 */
 	for (int i=0; i < listOfMyProducts.size (); i++)
 	{
-		MySpecies* __orig_p = listOfMyProducts[i];
-		MySpecies* __spe_new_p = new MySpecies;
+		MySpecies* __orig_p = listOfMyProducts[i];	//	template product
+		MySpecies* __spe_new_p = new MySpecies;	//	product new body
 		
 		//	set DB Label
 		string __label_p = __orig_p->getDB_Label ();
@@ -759,6 +759,9 @@ void reactionTemplate::createProductsFromTemplate (
 			}
 		}
 			
+		/**
+		 * copy chains
+		 */	
 		for (int j=0; j< __orig_p->getNumOfChains(); j++)
 		{
 			Chain* __orig_c = __orig_p->getChain (j);
@@ -838,11 +841,24 @@ void reactionTemplate::createProductsFromTemplate (
 						for (int t = cmtf->first; t <= cmtf->second; t++)
 						{
 							Part* pk = ck->getPart (t);
-							__new_c->createPart (pk);
+							Part* __new_p = __new_c->createPart (pk);
+
+							//	change its part label
+							string prefix;
+							if (isr) string prefix = "__MoDeL_REACTANT_CXX";
+							else string prefix = "__MoDeL_MODIFIER_CXX";
+
+							ostringstream oss;
+							oss << prefix << localindex << "::" 
+								<< __new_p->getPartLabel ();
+							__new_p->setPartLabel (oss.str ());
 						}
 					}
 				}
-				else __new_c->createPart (__orig_part);
+				else
+				{
+					__new_c->createPart (__orig_part);
+				}
 			}
 		}
 

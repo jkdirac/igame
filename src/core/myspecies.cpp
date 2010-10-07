@@ -52,7 +52,7 @@ void MySpecies::split (
 		)
 {
 	//	first trim the species
-	trim (dbreader);
+	trim (&dbreader);
 
 	//	container to store chainnum of species
 	//	chainUsed[species][chainnum set]
@@ -171,8 +171,6 @@ void MySpecies::split (
 		}
 	}
 
-	//	rearrange all species
-	//	remain problems
 	for (int i=0; i<pieces.size (); i++) pieces[i]->rearrange ();
 }
 
@@ -212,22 +210,6 @@ Chain* MySpecies::createChain (
 		)
 {
 	Chain* c = new Chain (orig);
-	listOfChains.push_back (c);
-	return c;
-}
-
-Chain* MySpecies::createChain (
-		const string& prefix,
-		const int& chainnum
-		)
-{
-	Chain* c = new Chain;
-	//    cout << "\nprefix = " << prefix << endl;
-
-	ostringstream oss;
-	oss << prefix << "[cHaIn" << chainnum << "]";
-	c->chainLabel  = oss.str ();
-
 	listOfChains.push_back (c);
 	return c;
 }
@@ -364,6 +346,7 @@ void MySpecies::rearrange ()
 			{
 				string label = p->getPartLabel ();
 				Node* n = findBindedNode (label);
+				assert (!n);
 				if (n) n->setNodeWeight (i,j);
 			}
 		}
@@ -615,6 +598,14 @@ void MySpecies::perm (
 	//return
 }
 
+void MySpecies::addPrefix (const string& prefix)
+{
+	for (int i=0; i<listOfChains.size (); i++) 
+		listOfChains[i]->__add_chain_prefix (prefix);
+	for (int i=0; i<listOfTrees.size (); i++)
+		listOfTrees[i]->__add_tree_prefix (prefix);
+}
+
 bool MySpecies::match (
 		const MySpecies* s,
 		vector<cMatchsType2>& trym
@@ -695,104 +686,69 @@ bool MySpecies::match (
 		//
 		if (s->getNumOfTrees () > 0) 
 		{
-			//
-			//  generate s1
-			//
-			MySpecies* s1 = new MySpecies (this);
+			//	============
+			//	generate lhs
+			//	============
+			MySpecies* lhs = new MySpecies;
+			
+			//	copy chains that are matched
+			for (int j=0; j<numc_t; j++) lhs->createChain (listOfChains[tryAssemble[j].second]);
+			for (int j=0; j<listOfTrees.size (); j++) lhs->createTree (listOfTrees[j]);
+			lhs->addPrefix ("__MoDeL_CXX_1::");	//	add a prefix to all partLabel and nodeLabel
 
-			set<string> nodeSaved;
-			for (int k=0; k < numc_t; k++)
+			//	============
+			//	generate rhs
+			//	============
+			MySpecies* rhs = new MySpecies (s);
+			rhs->addPrefix ("__MoDeL_CXX_2::");
+
+			//	generate new chain to replace
+			for (int j=0; j<numc_t; j++)
 			{
-				Chain* c = s->listOfChains[k];
-				cMatchType& cm_T = tryAssemble[k].first;
-				int cn_m = tryAssemble[k].second;
-				Chain* mc = listOfChains[cn_m];
+				//	replace chain with a new generated one
+				Chain* __matched = lhs->getChain (j);
+				Chain* __template = rhs->listOfChains[j];
+				Chain* __replace = new Chain;
 
-				cMatchType::const_iterator iter_c = cm_T.begin ();
-				for (int l=0; iter_c != cm_T.end (); l++, iter_c++)
+				const cMatchType& detail = tryAssemble[j].first;
+				cMatchType::const_iterator iter_c = detail.begin ();
+				assert (detail.size () == __template->listOfParts.size ());
+
+				for (int k=0; iter_c != detail.end ();k++, iter_c++)
 				{
-					Part* p = c->listOfParts[l];
-					string ctg = p->getPartCtg ();
-					if (ctg != "substituent")
-					{
-						int start = iter_c->first;
-						int end = iter_c->second;
-						assert (start == end);
-
-						Part* mp = mc->getPart (start);
-						if (mp->getIsBinded ()) 
-							nodeSaved.insert (mp->getPartLabel ());
-					}
-				}
-			}
-
-			//
-			//  rearrange operation will be done in DeleteAndSave
-			//
-			s1->partialDup (chainUsed, nodeSaved);
-
-
-			//
-			//  generate s2
-			//
-			MySpecies* s2 = new MySpecies;
-			for (int k=0; k < numc_t; k++)
-			{
-				Chain* c = s->listOfChains[k];
-				Chain* nc = s2->createChain ();
-
-				cMatchType& cm_T = tryAssemble[k].first;
-				int cn_m = tryAssemble[k].second;
-				Chain* mc = listOfChains[cn_m];
-
-				cMatchType::const_iterator iter_c = cm_T.begin ();
-				for (int l=0; iter_c != cm_T.end (); l++, iter_c++)
-				{
-					Part* p = c->listOfParts[l];
+					Part* p = __template->listOfParts[k];
 					if (p->getPartCtg () == "substituent")
 					{
 						int start = iter_c->first;
 						int end = iter_c->second;
 
-						for (int r = start; r <= end; r++)
-							nc->createPart (mc->getPart (r));
+						for (int l=start; l <= end; l++) 
+							__replace->createPart (__matched->getPart (l));
 					}
-					else nc->createPart (p); 
+					else __replace->createPart (p); 
 				}
+
+				//	update
+				rhs->listOfChains[j] = __replace;
+				delete __template;
 			}
 
-			for (int k=0; k < s->listOfTrees.size (); k++)
-				s2->createTree (s->listOfTrees[k]);
+			//	copy trees as well
+			for (int j=0; j<listOfTrees.size (); j++) rhs->createTree (listOfTrees[j]);
 
-			s2->rearrange ();
+			//	trim both species
+			lhs->trim (); rhs->trim ();
 
-			if (s1->equal (s2)) 
-			{
-				/*
-				cout << "\ns1 = " << endl;
-				s1->Output ();
-				cout << "\ns2 = " << endl;
-				s2->Output ();
-				*/
-
-				trym.push_back (tryAssemble);
-			}
-			else
-			{
-				delete s1;
-				delete s2;
-			}
+			if (lhs->equal (rhs)) trym.push_back (tryAssemble);
+			delete lhs;	delete rhs;
 		}
-		else
-		{
-			trym.push_back (tryAssemble);
-		}
+		else trym.push_back (tryAssemble);
 	}
 
 	return !(trym.size () == 0);
 }
 
-void MySpecies::trim (bdbXMLInterface& dbreader)
+void MySpecies::trim (bdbXMLInterface* dbreader)
 {
 	//	
 	//	(1) leaf nodes that are not any site on chains,
@@ -802,7 +758,7 @@ void MySpecies::trim (bdbXMLInterface& dbreader)
 	//		trees, the part will also be conformed to 
 	//		its original state
 
-	//	search binded parts first
+	//	search binded parts first (part with isBinded attribute: true)
 	map < string, pair<int,int> > bindsites;
 
 	for (int i=0; i<listOfChains.size(); i++)
@@ -822,9 +778,23 @@ void MySpecies::trim (bdbXMLInterface& dbreader)
 		}
 	}
 
-	//	trim
+	//	trim condition 1
+	
+	/**
+	 * if label of leaf nodes in trees could not be found in all
+	 * parts with isBinded attribute, then this tree will be removed
+	 */
+
 	for (int i=0; i <listOfTrees.size (); i++)
 	{
+		//	find if there are leaf nodes that are not in bindsites set
+		//	if any, then remove this tree
+
+		//	however, it all node labels could be found in the set,
+		//	then all of them should be removed
+		set<string> nodes;
+
+		//	finding...	
 		bool DelTree = false;
 		Tree* t = listOfTrees[i];
 		for (int j=0; j < t->listOfNodes.size (); j++)
@@ -834,53 +804,70 @@ void MySpecies::trim (bdbXMLInterface& dbreader)
 			{
 				string nodeLabel = n->getNodeLabel ();
 				//	find nodeLabel in bindsites
-				if (!bindsites.count (nodeLabel)) 
-				{
-					DelTree = true;
-					break;
+				if (!bindsites.count (nodeLabel)) {
+					DelTree = true; break;
 				}
+				else nodes.insert (nodeLabel);
 			}
 		}
 
-		if (DelTree == false) continue;
-
-		//	delete tree
-		for (int j=0; j< t->listOfNodes.size (); j++)
+		if (DelTree == false) 
 		{
-			Node* n = t->listOfNodes[j];
-			if (n->isLeaf ())
+			set<string>::iterator iter = nodes.begin ();
+			while (iter != nodes.end ()) bindsites.erase (*iter++);
+		}
+		else
+		{
+
+			//
+			//	delete tree
+			//	if dbreader != NULL, then 
+			//	restore original conformation of binded parts
+			//	
+			for (int j=0; j< t->listOfNodes.size (); j++)
 			{
-				string nodeLabel = n->getNodeLabel ();
-				if (bindsites.count (nodeLabel))
+				Node* n = t->listOfNodes[j];
+				if (n->isLeaf ())
 				{
-					int cn = bindsites[nodeLabel].first;
-					int pn = bindsites[nodeLabel].second;
+					string nodeLabel = n->getNodeLabel ();
+					if (bindsites.count (nodeLabel))
+					{
+						int cn = bindsites[nodeLabel].first;
+						int pn = bindsites[nodeLabel].second;
 
-					assert (cn >= 0);
-					assert (pn >= 0);
+						assert (cn >= 0);
+						assert (pn >= 0);
 
-					Part* p = listOfChains[cn]->listOfParts[pn];
+						Part* p = listOfChains[cn]->listOfParts[pn];
 
-					//	change to its original conformation
-					vector<string> tmp;
-					const string doc = p->getPartRef ();
-					string path ("/MoDeL/part/");
-					path += p->getPartCtg () + "/@originalConformation";
-					dbreader.get_node_attr (PART, &doc, &path, tmp);
-					if (!tmp.empty ()) p->setPartRef (tmp[0]);
-					p->setIsBinded (false);
+						if (dbreader != NULL)
+						{
+							//	change to its original conformation
+							vector<string> tmp;
+							const string doc = p->getPartRef ();
+							string path ("/MoDeL/part/");
+							path += p->getPartCtg () + "/@originalConformation";
+							dbreader->get_node_attr (PART, &doc, &path, tmp);
+							if (!tmp.empty ()) p->setPartRef (tmp[0]);
+						}
+						p->setIsBinded (false);
 
-					//	erase bindsites
-					bindsites.erase (nodeLabel);
+						//	erase bindsites
+						bindsites.erase (nodeLabel);
+					}
 				}
 			}
 		}
 
+		listOfTrees.erase (listOfTrees.begin ()+i);
 		delete t;
-		vector<Tree*>::iterator iter_tree = listOfTrees.begin () + i;
-		listOfTrees.erase (iter_tree);
 	}	
 
+
+//     trim condition 2
+//	if labels in the set could not be mapped to any node in the tree
+//	it will also be replaced by its original conformation
+	
 	map< string, pair<int,int> >::iterator first = bindsites.begin ();
 	for (int i=0; first != bindsites.end (); i++, first++)
 	{
@@ -892,29 +879,20 @@ void MySpecies::trim (bdbXMLInterface& dbreader)
 
 		Part* p = listOfChains[cn]->listOfParts[pn];
 
-		//	change to its original conformation
-		vector<string> tmp;
-		const string doc = p->getPartRef ();
-		string path ("/MoDeL/part/");
-		path += p->getPartCtg () + "/@originalConformation";
-		dbreader.get_node_attr (PART, &doc, &path, tmp);
-		if (!tmp.empty ()) p->setPartRef (tmp[0]);
+		if (dbreader != NULL)
+		{
+			//	change to its original conformation
+			vector<string> tmp;
+			const string doc = p->getPartRef ();
+			string path ("/MoDeL/part/");
+			path += p->getPartCtg () + "/@originalConformation";
+			dbreader->get_node_attr (PART, &doc, &path, tmp);
+			if (!tmp.empty ()) p->setPartRef (tmp[0]);
+		}
 		p->setIsBinded (false);
 	}
 
 	//	rearrange
-	rearrange ();
-}
-
-void MySpecies::genUniqueLabel (const int& i)
-{
-	ostringstream oss;
-
-	for (int i=0; i<listOfChains.size (); i++)
-	{
-		oss.str ("");
-		oss << speciesLabel_db << "[cHaIn" << i << "]";
-		listOfChains[i]->chainLabel = oss.str ();
-	} 
+	isRearranged = false; rearrange ();
 }
 

@@ -157,9 +157,23 @@ string Chain::getUnicode () const
 	return unicode;
 }
 
-string Chain::getLabel () const
-{
+string Chain::getLabel () const {
 	return chainLabel;
+}
+
+void Chain::setLabel (const string& label) {
+	chainLabel = label;
+}
+
+void Chain::__add_chain_prefix (
+		const string& prefix
+		)
+{
+	for (int i=0; i<listOfParts.size (); i++) {
+		Part* p = listOfParts[i]; 
+		p->partLabel = prefix + p->partLabel;
+	}
+	genUnicode ();
 }
 
 void Chain::Output (ostream& os) const 

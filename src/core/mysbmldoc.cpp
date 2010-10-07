@@ -181,7 +181,9 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\nSPECIES	" << i << "\n";
+		cout << "\n\n+++++++++++++++++++++++++++++=++++++++++++++++++++++++++";
+		cout << "	SPECIES		" << i;
+		cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -405,6 +407,20 @@ void MySBMLDocument::handleReactionTemplate (
 			);
 
 	/**
+	 * add prefix to products
+	 */
+	ostringstream oss;
+	if (result.size () > 0) 
+	{
+		string prefix = "__MoDeL_PRODUCT_CXX_";
+		for (int i=0; i<tmpR->listOfMyProducts.size(); i++) 
+		{
+			oss.str (""); oss << prefix << i << "::";
+			tmpR->listOfMyProducts[i]->addPrefix (oss.str ());
+		}
+	}
+
+	/**
 	 * create reactions from each matching result
 	 */
 	cout << "\nMatching Result Size = " << result.size () << endl;
@@ -538,7 +554,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setInitialAmount (0.0);
 
 					assert (k+1 <= ci-1);
-					Chain* mrna_chain = mrna->createChain (mrna->getId (), 0);
+					Chain* mrna_chain = mrna->createChain ();
 
 					for (int j=k+1; j < ci; j++)
 					{
@@ -650,7 +666,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
 
-					Chain* mrna_chain = mrna->createChain (mrna->getId (), 0);
+					Chain* mrna_chain = mrna->createChain ();
 					assert (k-1 >= ci+1);
 
 					for (int j=k-1; j > ci; j--)
@@ -796,7 +812,7 @@ void MySBMLDocument::searchTranslationReactions (
 						prot->setCompartment (s->getCompartment ());
 						prot->setInitialAmount (0.0);
 
-						Chain* prot_chain = prot->createChain (prot->getId (), 0);
+						Chain* prot_chain = prot->createChain ();
 						assert (k+1 <= ci);
 
 						int newci = ci;

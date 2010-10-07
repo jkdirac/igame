@@ -901,11 +901,21 @@ void readDataBase::readReactionTemplate (
 	//readReactionCompartments
 	const string pathComp = head + "/listOfCompartments/compartment";
 	int numOfComps = get_node_element_num (REACTION, &doc, &pathComp);
+
+	set<string> __read_in_comps;
 	for (int cnt =1; cnt <= numOfComps; cnt++)
 	{
 		string compartmentRef, currComp, parComp;
 		readCompartment (REACTION, doc, pathComp, cnt, compartmentRef, currComp, parComp);
-		RT->addCompartment (compartmentRef, currComp, parComp);
+
+		if (__read_in_comps.count (currComp)) throw StrCacuException (
+				"REACTION: Different compartments should have different labels!"
+				);
+		else 
+		{
+			__read_in_comps.insert (currComp);
+			RT->addCompartment (compartmentRef, currComp, parComp);
+		}
 	}
 
 	//readReactionSpecies

@@ -58,6 +58,7 @@ class Tree
 	markType genWeight (const string&);
 	void genHuffman (const string&);
 
+	void __add_tree_prefix (const string&);
 	void Output (ostream&) const;
 
 	private:
