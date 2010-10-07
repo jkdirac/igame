@@ -11,8 +11,8 @@
 			<listOfConditionalParameters>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="SmallMolecule">IPTG_molecule</referencedSpecies>
-				<referencedSpecies partType="SmallMolecule">IPTGlacI153_4</referencedSpecies>
+				<referencedSpecies partType="Compound">IPTG_molecule</referencedSpecies>
+				<referencedSpecies partType="Compound">IPTGlacI153_4</referencedSpecies>
 			</listOfReferencedSpecies>
 		</compound>
 	</part>

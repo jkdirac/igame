@@ -176,12 +176,12 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 1) break;
+		if (i == 2) break;
 
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n************* SPECIES	" << i << "	****************\n";
+		cout << "\nSPECIES	" << i << "\n";
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -212,9 +212,12 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							PART, &doc_1, &speciesLinkPath
 							);
 
+				cout << "\nnumber of referenced species = " << numOfSpeciesLinks << endl;
+
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
-					cout << "\nHandling the First Referenced Species...";
+					cout << "\nHandling Referenced Species	" 
+						 << t << "	..." << endl;
 
 					string speciesReference, partType;
 					dbreader.readSpeciesLink (
@@ -236,7 +239,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//	read searched species
 					//
 
-					cout << "\nReading Species...";
+					cout << "\nReading Species..." << endl;;
 
 					MySpecies* sLink = new MySpecies;
 					sLink->setDB_ref (speciesReference);  
@@ -250,7 +253,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//                    cout << "\nspeciesReference = " <<
 					//                        speciesReference << endl;
 
-					cout << "\n=============Species Referred...=================\n";
+					cout << "\nSpecies Referred..." << endl;
 					sLink->Output ();
 
 					//

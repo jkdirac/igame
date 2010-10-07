@@ -190,9 +190,6 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
-				
-				cout << "\nchain label = " << c->getLabel () << endl;
-
 				if (__CU_splits.count (c->getLabel ())) {
 					__deg.push_back (j); break;
 				}
