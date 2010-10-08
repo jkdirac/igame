@@ -206,28 +206,35 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 	vector<markType> ns_t;
 	vector<cMatchType> asmb; 
 
-	bool start = true;
-	for (int i=0; i < c->listOfParts.size (); i++)
+	for (int i=0; i < c->listOfParts.size ();)
 	{
 		Part* p = c->listOfParts[i];
 		string ctg = p->getPartCtg ();	
-		if (ctg != "substituent") 
+
+		int startpos = i;
+		if (ctg != "substituent")
 		{
-			if (start) 
+			bool found = false;
+			int j = i+1;
+			for (; j < c->listOfParts.size (); j++)
 			{
-				ns_t.push_back (make_pair (i, 0));
-				start = false;
+				Part* p1 = c->listOfParts[j];
+				string ctg1 = p1->getPartCtg ();
+				if (ctg1 == "substituent") {found = true;break;}
 			}
+			if (j == c->listOfParts.size ()) found = true;
+			if (found)
+			{
+				ns_t.push_back (make_pair(i, j-1));
+				i = j+1;
+			}
+
 		}
-		else 
-		{
-			ns_t.back ().second = i-1;
-			start = true;
-		}
+		else i++;
 	}
 
-	//	check block searching!
-	cout << "\nNon-Substituent Parts Block: " << endl;
+//        check block searching!
+    cout << "\n<!--		Non-Substituent Parts Block: 	-->" << endl;
 	for (int i=0; i < ns_t.size (); i++)
 		cout << "(" << ns_t[i].first << "," << ns_t[i].second << ") ";
 
@@ -249,8 +256,8 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 
 			string mkey = c->genUnicode (start, end);
 
-			cout << "\nunicode = " << unicode;
-			cout << "\nmkey = " << mkey;
+//            cout << "\nunicode = " << unicode;
+//            cout << "\nmkey = " << mkey;
 
 			for (string::size_type pos = 0;
 					(pos = unicode.find (mkey, pos)) 
@@ -259,7 +266,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 				int spos = count (unicode.begin (), unicode.begin ()+pos, ']');
 				int epos = spos + diff;
 
-				cout << "\nspos = " << spos << " epos = " << epos;
+//                cout << "\nspos = " << spos << " epos = " << epos;
 
 				m_pos[cnt].push_back (make_pair (spos, epos));
 			}
@@ -272,7 +279,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			else permAll *= m_pos[cnt].size ();
 		}
 
-		cout << "\npermAll = " << permAll << endl;
+		cout << "\n<--	permAll for all non-substituent blocks	=	\n" << permAll << endl;
 
 		//
 		//	find possible matching combinations
@@ -310,9 +317,11 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 	//	take care if only substituent-type species exits
 
 	//	check asmb
+		
+	cout << "\n<--	all possible matchings for non-substituent blocks	-->\n";
 	for (int i=0; i < asmb.size (); i++)
 	{
-		cout << "\nMatch " << i << " : ";
+		cout << "\n<--	match		" << i << " : \n";
 
 		cMatchType tmp = asmb[i];
 		cMatchType::const_iterator first
@@ -370,7 +379,25 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 				bool mok = substituent_m (
 						0, ns_t[0].first-1, 0, it->first-1, c, tmp
 						);
-				//                cout << "\nmok = " << boolalpha << mok << endl;
+				
+				//	TEST
+				cout << "\nmok = " << boolalpha << mok 
+					 << "	tmp.size = " << tmp.size () << endl;
+
+				for (int i=0; i < tmp.size (); i++)
+				{
+					cout << "\ni = " << i << endl;
+					list<markType>::iterator first = tmp[i].begin ();
+					while (first != tmp[i].end() )
+					{
+						cout << "(" << first->first << "," << 
+							first->second << ") ";
+						first ++;
+					}
+
+				}
+				//	END
+
 				if (mok && tmp.size () > 0)
 				{
 					for (int j = 0; j < tmp.size (); j++)
@@ -419,10 +446,15 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 				if (j == ns_t.size ()-1)
 					if (u1 < l1 && u2 < l2) continue;
 
-				cout << "\nl1 = " << l1 << " u1 = " << u1 <<
-					" l2 = " << l2 << " u2 = " << u2 << endl;
+//                cout << "\nl1 = " << l1 << " u1 = " << u1 <<
+//                    " l2 = " << l2 << " u2 = " << u2 << endl;
 
 				bool mok = substituent_m (l1, u1, l2, u2, c, tmp);
+				
+				//	TEST
+//                cout << "\nmok = " << boolalpha << mok << "	tmp.size = " << tmp.size () << endl;
+				//	TEST	OVER
+		
 				if (mok && tmp.size () > 0)
 				{
 					for (int k =0; k < AssembleMatch.size ();k++)
@@ -469,8 +501,8 @@ bool Chain::substituent_m (
 		vector<cMatchType>& result	//result
 		) const
 {
-	cout << "\nl1 = "<< l1 << " u1 = "<< u1 <<
-		" l2 = " << l2 << " u2 = " << u2 << endl;
+//    cout << "\nl1 = "<< l1 << " u1 = "<< u1 <<
+//        " l2 = " << l2 << " u2 = " << u2 << endl;
 
 	if (!result.empty ()) result.clear ();
 
@@ -619,17 +651,38 @@ bool Chain::substituent_m (
 	}
 
 	bool rVal = false;
+//    cout << "\nstartpos	= " << startpos << " endpos = " << endpos << endl;
 	for (int i = startpos; i <= endpos; i++)
 	{
 		vector< list< pair<int,int> > > recursive;
 		bool mok = substituent_m (l1+1, u1, i, u2, c, recursive); 
 
+		//	TEST
+		/*
+		cout << "\n i = " << i 
+			 << "\nmok = " << mok 
+			 << " recursive.size = " 
+			 << recursive.size () 
+			 << endl;
+			 */
+		//	TEST	OVER
+
 		if (mok)
 		{
-			for (int j=0; j < recursive.size (); j++)
+			if (recursive.size () == 0)
 			{
-				recursive[j].push_front (make_pair (l2, i-1));
-				result.push_back (recursive[j]);
+				//	only push back in matchings of current part
+				cMatchType only_one;
+				only_one.push_back (make_pair (l2, i-1));
+				result.push_back (only_one);
+			}
+			else
+			{
+				for (int j=0; j < recursive.size (); j++)
+				{
+					recursive[j].push_front (make_pair (l2, i-1));
+					result.push_back (recursive[j]);
+				}
 			}
 			rVal = true;
 		}

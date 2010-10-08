@@ -52,7 +52,7 @@ class reactionTemplate
 
 		void addCompartment (const string&, const string&, const string&);
 		void addConstraint (const vector<string>&, const string&);
-		void addSubstituentTransfer (const subsp&, const subsp&);
+		void addSubstituentTransfer (const subsp&, const subsp&);	//attention! it maps subsp to --> subsp from
 		void addProductPrefix (const string&);
 
 		bool findSpeciesMatch (

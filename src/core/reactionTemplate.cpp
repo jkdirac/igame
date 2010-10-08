@@ -452,18 +452,18 @@ bool reactionTemplate::findSpeciesMatch (
 					);
 			bool mok = currSpe->match (tmModifier, trym);
 
-			//	TEST
-			cout << "\ncurrSpe = " << endl;
-			currSpe->Output ();
-			cout << "\ntmModifier = " << endl;
-			tmModifier->Output ();
-			cout << "\nmok = " << mok << endl;
-			//	TEST OVER
-
 			if (same && mok) 
 			{
 				for (int k=0; k < trym.size (); k++)
+				{
 					modifier_sam[i].push_back (make_pair (index, trym[k]));
+
+					//	test
+					cout << "\nTESTING OF SPECIES MATCH...	" << endl;
+					cout << "\nmodifier index = " << i 
+						 << " number of chains = " << 
+						 trym[k].size () << endl;
+				}
 			}
 			else 
 			{
@@ -536,6 +536,14 @@ bool reactionTemplate::findSpeciesMatch (
 		{
 			int indperm = divide % modifier_sam[j].size ();
 			tryMS.push_back (modifier_sam[j][indperm]);
+
+			cout << "\nmodifier index = " << j 
+				 << "	chain num  = " << 
+				 modifier_sam[j][indperm].second.size ()
+				 << " 	should be " << 
+				 listOfMyModifiers[j]->getNumOfChains ()
+				 << endl;
+
 			divide /= modifier_sam[j].size ();
 		}
 
@@ -554,8 +562,8 @@ bool reactionTemplate::findSpeciesMatch (
 	 * *************************************************
 	 */
 
-	cout << "\npossible reactants assembles = " << possibleReactantMatch.size ();
-	cout << "\npossible modifiers assembles = " << possibleModifierMatch.size ();
+//    cout << "\npossible reactants assembles = " << possibleReactantMatch.size ();
+//    cout << "\npossible modifiers assembles = " << possibleModifierMatch.size ();
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
@@ -695,6 +703,70 @@ bool reactionTemplate::findSpeciesMatch (
 							);
 					map<string, int>& conf = compConfig[i];
 					result.push_back (make_pair(tmp, conf));
+
+					/**
+					 * it is important to check tmp
+					 */
+					cout << "\n^^^^^^^^^^	REACTANTS	:	^^^^^^^^^^" << endl;
+					cout << "\nspeciesArrayMatch: reactant num = " 
+						 << possibleReactantMatch[i].size () << endl;
+					for (int cnt = 0; cnt < possibleReactantMatch[i].size (); cnt++)
+					{
+						cout << "\nreactant : " << cnt;
+						cout << "\nspecies matched in the system : " 
+							 << possibleReactantMatch[i][cnt].first;
+						cMatchsType2& details = possibleReactantMatch[i][cnt].second;
+						cout << "\nchains of reactant = " << details.size ();
+						for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
+						{
+							cout << "\nmatched chain of species in reality: " << 
+								 details[cnt2].second;
+							cout << "\n<--	details	-->";
+							cMatchType& __match = details[cnt2].first;
+						    
+							cout << "\nnumber of parts to be matched:	" 
+								 << __match.size () << endl;
+							cMatchType::iterator first = __match.begin ();
+							for (; first != __match.end (); first++)
+							{
+								cout << "(" << first->first << ", " << first->second << ") " << endl; 
+							}	
+						}
+					}	
+
+					cout << "\n^^^^^^^^^^^^^^^^^^^^^	MODIFIERS	:	^^^^^^^^^^^^^^^^^" << endl;
+					cout << "\nspeciesArrayMatch: modifier num = " 
+						 << possibleModifierMatch[j].size () << endl;
+					for (int cnt = 0; cnt < possibleModifierMatch[j].size (); cnt++)
+					{
+						cout << "\nmodifier : " << cnt;
+						listOfMyModifiers[cnt]->Output ();
+
+						cout << "\nspecies matched in the system : " 
+							 << possibleModifierMatch[j][cnt].first;
+						listOfMySpecies[possibleModifierMatch[j][cnt].first]->Output ();
+
+						cMatchsType2& details = possibleModifierMatch[j][cnt].second;
+						cout << "\nchains of modifier = " << details.size () 
+							 << " should be : " << listOfMyModifiers[cnt]->getNumOfChains () << endl;
+						for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
+						{
+							cout << "\nmatched chain of species in reality: " << 
+								 details[cnt2].second;
+							cout << "\n\n<-------			details			-------->";
+							cMatchType& __match = details[cnt2].first;
+						    
+							cout << "\nnumber of parts to be matched:	" 
+								 << __match.size () << endl;
+							cMatchType::iterator first = __match.begin ();
+							for (; first != __match.end (); first++)
+							{
+								cout << "(" << first->first << ", " << first->second << ") "; 
+							}	
+						}
+					}	
+
+					//	check over
 				}
 			}
 
@@ -762,7 +834,7 @@ void reactionTemplate::createProductsFromTemplate (
 				__spe_new_p->setCompTypeId (mycomp->getId ());
 			}
 		}
-			
+
 		/**
 		 * copy chains
 		 */	
@@ -780,83 +852,105 @@ void reactionTemplate::createProductsFromTemplate (
 					subsp destine = make_pair (__label_p, subLabel);
 
 					//	read chain transfer table
+					//	transferTabel [to] = from
 					if (!transferTable.count (destine))
-						throw StrCacuException ("Lack Info. for Substituent Transfer!");
-					else
 					{
-						subsp source = transferTable[destine];
+						cout << "\ndestine	:	(" 
+							 << destine.first 
+							 << ", " 
+							 << destine.second 
+							 << ")" 
+							 << endl;
+						throw StrCacuException (
+								"Lack Info. for Substituent Transfer!"
+								);
+					}
 
-						MySpecies* found = NULL;
-						bool isr = false;
-						int localindex = -1;
-						
-						/**
-						 * find species with Label source.first
-						 * it must be a reactant or a modifier
-						 */
-						for (int i=0; i < listOfMyReactants.size (); i++)
+					cout << "\nj = " << j << "k = " << k << endl;
+					subsp source = transferTable[destine];
+
+					MySpecies* found = NULL;
+					bool isr = false;
+					int localindex = -1;
+
+					/**
+					 * find species with Label source.first
+					 * it must be a reactant or a modifier
+					 */
+					for (int i=0; i < listOfMyReactants.size (); i++)
+					{
+						MySpecies* species = listOfMyReactants[i];
+						if (species->getDB_Label () == source.first) 
 						{
-							MySpecies* species = listOfMyReactants[i];
-							if (species->getDB_Label () == source.first) 
+							int index = __cand_reactants[i].first;
+							found = listOfMySpecies[index];
+							isr = true;
+							localindex = i;
+							break;
+						}
+					}
+
+					if (!isr)
+					{
+						for (int i=0; i < listOfMyModifiers.size (); i++)
+						{
+							MySpecies* species = listOfMyModifiers[i];
+							if (species->getDB_Label () == source.first)
 							{
-								int index = __cand_reactants[i].first;
+								int index = __cand_modifiers[i].first;
 								found = listOfMySpecies[index];
-								isr = true;
+								isr = false;
 								localindex = i;
 								break;
 							}
 						}
+					}
 
-						if (!isr)
-						{
-							for (int i=0; i < listOfMyModifiers.size (); i++)
-							{
-								MySpecies* species = listOfMyModifiers[i];
-								if (species->getDB_Label () == source.first)
-								{
-									int index = __cand_modifiers[i].first;
-									found = listOfMySpecies[index];
-									isr = false;
-									localindex = i;
-									break;
-								}
-							}
-						}
-						
-						if (found == NULL) throw StrCacuException (
-								"species Label NOT found!"
-								);
+					if (found == NULL) throw StrCacuException (
+							"species Label NOT found!"
+							);
 
-						/**
-						 * replace substituent-part 
-						 */
-						int chain_lst = -1;
-						if (isr) chain_lst = __cand_reactants[localindex].second[j].second;
-						else chain_lst = __cand_modifiers[localindex].second[j].second;
+					/**
+					 * replace substituent-part 
+					 */
+					int chain_lst = -1;
+					if (isr) chain_lst = __cand_reactants[localindex].second[j].second;
+					else chain_lst = __cand_modifiers[localindex].second[j].second;
 
-						cMatchType cmt;
-						Chain* ck = found->getChain (chain_lst);
-						if (isr) cmt = __cand_reactants[localindex].second[j].first;
-						else cmt = __cand_modifiers[localindex].second[j].first;
+					cout << "\nchain_lst = " << chain_lst << endl;
 
-						cMatchType::const_iterator cmtf = cmt.begin ();
-						for (int cnt =0; cnt != k; cnt++) cmtf ++;
+					cMatchType cmt;
+					Chain* ck = found->getChain (chain_lst);
+					assert (ck != NULL);
 
-						for (int t = cmtf->first; t <= cmtf->second; t++)
-						{
-							Part* pk = ck->getPart (t);
-							Part* __new_p = __new_c->createPart (pk);
+					cout << "\n__cand_modifiers[localindex].second.size = " 
+						 << __cand_modifiers[localindex].second.size ();
 
-							//	change its part label
-							string prefix;
-							if (isr) string prefix = "__MoDeL_REACTANT_CXX";
-							else string prefix = "__MoDeL_MODIFIER_CXX";
+					if (isr) cmt = __cand_reactants[localindex].second[j].first;
+					else cmt = __cand_modifiers[localindex].second[j].first;
 
-							ostringstream oss;
-							oss << prefix << localindex << "::" 
-								<< __new_p->getPartLabel ();
-							__new_p->setPartLabel (oss.str ());
-						}
+					cMatchType::const_iterator cmtf = cmt.begin ();
+					cout << "\nk = " << k << " cmt.size = " << cmt.size () << endl;
+					for (int cnt =0; cnt != k; cnt++) {
+						cmtf ++; assert (cmtf != cmt.end ());
+					}
+
+					for (int t = cmtf->first; t <= cmtf->second; t++)
+					{
+						Part* pk = ck->getPart (t);
+						assert (pk != NULL);
+
+						Part* __new_p = __new_c->createPart (pk);
+
+						//	change its part label
+						string prefix;
+						if (isr) string prefix = "__MoDeL_REACTANT_CXX";
+						else string prefix = "__MoDeL_MODIFIER_CXX";
+
+						ostringstream oss;
+						oss << prefix << localindex << "::" 
+							<< __new_p->getPartLabel ();
+						__new_p->setPartLabel (oss.str ());
 					}
 				}
 				else

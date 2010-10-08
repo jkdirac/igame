@@ -167,8 +167,8 @@ void MyReaction::createReactionsFromTemplate (
 	}
 
 	//	mixed species
-	cout << "\nMixture Before Splitting:" << endl;
-	mixture->Output ();
+//    cout << "\nMixture Before Splitting:" << endl;
+//    mixture->Output ();
 
 	/**
 	 * split mixed species and store results in splits
@@ -179,8 +179,8 @@ void MyReaction::createReactionsFromTemplate (
 	/**
 	 * check splits
 	 */
-	cout << "\nChecking Species Spliting ...";
-	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+//    cout << "\nChecking Species Spliting ...";
+//    for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 
 	// 	splits are only partial copies of mixture 
 	delete mixture;
@@ -244,7 +244,7 @@ void MyReaction::createReactionsFromTemplate (
 	 * create products for each product template
 	 */
 
-	cout << "\nsplits_size = " << splits.size ();
+//    cout << "\nsplits_size = " << splits.size ();
 	for (int i=0; i < splits.size (); i++)
 	{
 		MySpecies* splitted = splits[i];
@@ -252,7 +252,7 @@ void MyReaction::createReactionsFromTemplate (
 		//	for each species in listOfMyProducts
 		for (int j=0; j < degenerate[i].size (); j++)
 		{
-			cout << "\nj = " << j << " deg = " << degenerate[i].size () << endl;
+//            cout << "\nj = " << j << " deg = " << degenerate[i].size () << endl;
 			/**
 			 * new species 
 			 * create and set its id and compartment, and initialAmount
@@ -293,7 +293,7 @@ void MyReaction::createReactionsFromTemplate (
 					if (prev != NULL) {
 						found = true; delete __product; __product = prev;
 					}
-					cout << "\nfound = " << found << endl;
+//                    cout << "\nfound = " << found << endl;
 					break;
 				}
 			}	
@@ -338,7 +338,7 @@ void MyReaction::createReactionsFromTemplate (
 	{
 		SpeciesReference* spr = createProduct ();
 
-		cout << "\nid = " << listOfMyProducts[i]->getId ();
+//        cout << "\nid = " << listOfMyProducts[i]->getId ();
 
 		operation = spr->setSpecies (listOfMyProducts[i]->getId ());
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)

@@ -12,21 +12,19 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
-							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>pSB1A3</partReference>
 							<partLabel>pSB1A3</partLabel>
 							<partType>ForwardDNA</partType>
-							<partCategory>ForwardDNA</partCategory>
+							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
-							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -36,7 +34,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="modifier">deg_ampicillin_by_pSB1A3</referencedReaction>
+			<referencedReaction speciesType="modifier">amp_tm_pSB1A3</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

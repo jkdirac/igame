@@ -242,28 +242,36 @@ Chain* MySpecies::getChain (
 		const int& n
 		) 
 {
-	return listOfChains.at(n);
+	if (n >=0 && n < listOfChains.size ()) 
+		return listOfChains[n];
+	else return NULL;
 }
 
 const Chain* MySpecies::getChain (
 		const int& n
 		) const
 {
-	return listOfChains.at(n);
+	if (n >=0 && n < listOfChains.size ()) 
+		return listOfChains[n];
+	else return NULL;
 }
 
 Tree* MySpecies::getTree (
 		const int& n
 		)
 {
-	return listOfTrees.at(n);
+	if (n >=0 && n < listOfTrees.size ())
+		return listOfTrees[n];
+	else return NULL;
 }
 
 const Tree* MySpecies::getTree (
 		const int& n
 		) const
 { 
-	return listOfTrees.at(n);
+	if (n >=0 && n < listOfTrees.size ())
+		return listOfTrees[n];
+	else return NULL;
 }
 
 Part* MySpecies::getPart (
@@ -611,7 +619,7 @@ bool MySpecies::match (
 		vector<cMatchsType2>& trym
 		) const
 {
-	cout << "\nSPECIES: MATCHING ......" << endl;
+	cout << "\nSPECIES: MATCHING 	......" << endl;
 
 	//  template chain length
 	int numc_t = s->listOfChains.size ();
@@ -659,7 +667,12 @@ bool MySpecies::match (
 		//	same chains in this species could not be allowed 
 		//            to match one chain in species s
 		set <int> chainUsed;
-		vector<cMatchType2> tryAssemble (numc_t);
+
+		//	cMatchType2 only records details of one chain match
+		//	and vector<cMatchType2> have a complete set of chain match
+		cout << "\nnumc_t = " << numc_t << endl;
+		vector<cMatchType2> tryAssemble;
+		cout << "\ntryAssemble.size () = " << tryAssemble.size () << endl;
 
 		for (int j =0; j < numc_t; j++)
 		{
@@ -679,6 +692,7 @@ bool MySpecies::match (
 			divide /= records[j].size ();
 		}
 
+		cout << "\ntryAssemble.size () = " << tryAssemble.size () << endl;
 		if (!ok) continue;
 
 		//

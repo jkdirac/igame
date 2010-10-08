@@ -5,7 +5,7 @@
 	<reaction id="amp_tm_pSB1A3" name="amplification of tm_pSB1A3" reversible="false" fast="false">
 		<interface>
 			<url>http://2010.igem.org/Team:USTC_Software</url>
-			<short_desc>amplification of plasmid template pSB1A3</short_desc>
+			<shortDesc>amplification of plasmid template pSB1A3</shortDesc>
 		</interface>
 		<listOfCompartments>
 			<compartment>
@@ -36,9 +36,17 @@
 			</product>
 		</listOfProducts>
 		<listOfSubstituentTransfers>
+			<substituentTransfer>
+				<from speciesLabel="tm_pSB1A3_0">X0</from>
+				<to speciesLabel="tm_pSB1A3_1">X0</to>
+			</substituentTransfer>
+			<substituentTransfer>
+				<from speciesLabel="tm_pSB1A3_0">X1</from>
+				<to speciesLabel="tm_pSB1A3_1">X1</to>
+			</substituentTransfer>
 		</listOfSubstituentTransfers>
 		<kineticLaw>
-			<forwardKineticlaw>
+			<forwardKineticLaw>
 				<math>
 				  <apply>
 				    <times/>
@@ -60,7 +68,7 @@
 				</listOfReferencedParameters>
 				<listOfConstraints>
 				</listOfConstraints>
-			</forwardKineticlaw>
+			</forwardKineticLaw>
 			<reverseKineticLaw>
 			</reverseKineticLaw>
 		</kineticLaw>

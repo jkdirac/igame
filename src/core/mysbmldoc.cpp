@@ -176,14 +176,12 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 1) break;
+		if (i == 2) break;
 
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n\n+++++++++++++++++++++++++++++=++++++++++++++++++++++++++";
-		cout << "	SPECIES		" << i;
-		cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+		cout << "\n===========	SPECIES		" << i << "		=============" << endl;
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -191,10 +189,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 
 		for (int j =0; j < s->getNumOfChains (); j++)
 		{
+			cout << "\n===========	Chain	  " << j << "		=============" << endl;
+
 			Chain* c = s->getChain (j);
 			for (int k=0; k < c->getNumOfParts (); k++)
 			{
 				Part* p = c->getPart (k);
+				cout << "\n===========	Part	  " << k << "	(" << p->getPartRef () << ")	============\n";
+				if (i == 1 && k == 1) goto DAODAO;
 
 				//	search transcription reactions
 				searchTranscriptionReactions (i, j, k, dbreader);
@@ -214,12 +216,11 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							PART, &doc_1, &speciesLinkPath
 							);
 
-				cout << "\nnumber of referenced species = " << numOfSpeciesLinks << endl;
+				cout << "\nnumber of referenced species 	= 	" << numOfSpeciesLinks << endl;
 
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
-					cout << "\nHandling Referenced Species	" 
-						 << t << "	..." << endl;
+					cout << "\nHandling Referenced Species	" << t << "	..." << endl;
 
 					string speciesReference, partType;
 					dbreader.readSpeciesLink (
@@ -241,8 +242,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//	read searched species
 					//
 
-					cout << "\nReading Species..." << endl;;
-
 					MySpecies* sLink = new MySpecies;
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (
@@ -255,7 +254,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					//                    cout << "\nspeciesReference = " <<
 					//                        speciesReference << endl;
 
-					cout << "\nSpecies Referred..." << endl;
+					cout << "\nSpecies Referred	...	" << endl;
 					sLink->Output ();
 
 					//
@@ -268,7 +267,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 						terminate ();
 						continue;
 					}
-					else cout << "\nMATCH! Continue...";
+					else cout << "\nMATCH! Continue..." << endl;
 
 
 					//
@@ -286,6 +285,9 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							&reactionLinkPath
 							);
 
+					cout << "\n********		reactions related = " 
+						 << numOfReactionLinks << endl;
+
 					for (int r=1; r <= numOfReactionLinks; r++)
 					{
 						string reactionReference, speciesRole;
@@ -297,6 +299,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								reactionReference, 
 								speciesRole
 								);
+
+						cout << "\n<--	Read Referenced Reactions	"
+							 << "---	...	---	DONE! " << endl;	
+
 						handleReactionTemplate (
 								dbreader, 
 								reactionReference, 
@@ -304,6 +310,9 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesReference,
 								i
 								);
+
+						cout << "\n<--  Handl Reaction Template	  "
+							 << "---	...	---	DONE! " << endl;
 					}
 				}
 			}
@@ -313,6 +322,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		cout << "\nnumOfSpecies = " << listOfMySpecies.size () << endl;
 	}
 
+DAODAO:
 	//	update
 	write ();
 }
@@ -333,6 +343,9 @@ void MySBMLDocument::handleReactionTemplate (
 	reactionTemplate* tmpR = new reactionTemplate;
 	dbreader.readReaction (doc, dbref, type, tmpR);
 
+	cout << "\n<--  READ Reaction Template	  "
+		 << "---	...	---	DONE! " << endl;
+
 	/**
 	 * ===============================
 	 * HANDLE CONSTRAINTS OF PARAMTERS
@@ -342,6 +355,9 @@ void MySBMLDocument::handleReactionTemplate (
 		= getModel ()->getListOfParameters ();
 	bool expr = tmpR->handle_constraints (listOfMyParameters);
 	if (!expr) {delete tmpR; return;}
+
+	cout << "\n<--  Caculate Reaction Constraints " 
+		 << "---	...	---	DONE! " << endl;
 
 	/**
 	 * ================================================
@@ -361,9 +377,8 @@ void MySBMLDocument::handleReactionTemplate (
 			);
 
 	//----------------------------------
-	cout << "\nMatching Result Size = " 
-		 << result.size () 
-		 << endl;
+	cout << "\n<--	Matching Result Size = " 
+		 << result.size () << endl;
 	//----------------------------------
 
 	/**
@@ -371,6 +386,8 @@ void MySBMLDocument::handleReactionTemplate (
 	 */
 	for (int i=0; i < result.size (); i++)
 	{
+		cout << "\n======	new reaction	i=	" 
+			 << i << "	=========" <<	endl;
 		/**
 		 * only set id, name, fast, reversible,
 		 * other elements such as math, listOfParameters 
@@ -391,6 +408,8 @@ void MySBMLDocument::handleReactionTemplate (
 				result[i], 
 				products
 				);
+		
+		cout << "\n<--	Create PRODUCTS	---	...	---	DONE!" << endl;
 
 		/**
 		 * init species of new reaction 

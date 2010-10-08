@@ -842,6 +842,9 @@ void readDataBase::readReaction (
 		reactionTemplate* tmpR
 		)
 {
+	cout << "\n##############	READING REACTION TEMPLATE:	" 
+		 << doc << "	..." << endl;
+
 	string head ("/MoDeL/reaction");
 
 	if (doc.empty ()) throw StrCacuException (
@@ -1048,6 +1051,9 @@ void readDataBase::readReaction (
 	}
 
 	//(2) read products
+	map <string, int> prodIndex;
+
+	//	begin
 	string pathProducts (head);
 	if (direction) pathProducts += "/listOfProducts/product";
 	else pathProducts += "/listOfReactants/reactant";
@@ -1073,6 +1079,8 @@ void readDataBase::readReaction (
 
 		if (direction) tmpR->addProduct (s, compartmentLabel);
 		else tmpR->addReactant (s, compartmentLabel);
+
+		prodIndex[speciesLabel] = cnt-1;
 	}
 
 	//(3) read Modifier
@@ -1120,10 +1128,27 @@ void readDataBase::readReaction (
 
 	for (int cnt= 1; cnt <= numOfTrans; cnt++)
 	{
+		//	need validation here
+		//	from must be part of reactants/modifiers
+		//	to must be part of products
+		//	for reverse reaction, roles of from/to will be exchanged
+		//	BIG PROBLEM!
+
 		pair<string,string> from, to;
 		readTransfer (REACTION, doc, pathTransfer, cnt, from, to);
+
+		cout << "\nto.first = " <<to.first << "to.second = " << to.second << endl;
+
+		//	reset partLabel of "to" element
+		oss.str (""); 
+		oss << prefix << prodIndex[to.first] << "::";
+		to.second = oss.str () + to.second;
+		cout << "\nto.second = " << to.second << endl;
+
 		tmpR->addSubstituentTransfer (from, to);
 	}
+
+	cout << "\nbegin read kineticlaw " << endl;
 
 	/**
 	 *	read KineticLaw
@@ -1142,7 +1167,10 @@ void readDataBase::readReaction (
 
 	if (math.empty ())
 	{
-		cout << "\npath = " << pathMath << endl;
+		cout << "\ndoc = " << doc 
+			 << "	path = " << pathMath 
+			 << endl;
+
 		throw StrCacuException (
 				"Reading Reaction...No Math Specified!"
 				);

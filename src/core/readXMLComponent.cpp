@@ -99,6 +99,7 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: Invalid partCategory value in "
 				) + doc + ".xml!";
+		cout << "\n__ctg = " << __ctg << endl;
 		throw StrCacuException (errno);
 	}
 
@@ -308,7 +309,7 @@ void readXMLComponent::readTransfer (
 		)
 {
 	ostringstream oss;
-	oss << qpath << "/[" << i << "]/";
+	oss << qpath << "[" << i << "]/";
 	string prefix (oss.str ());
 
 	vector<string> temp; 
@@ -316,45 +317,48 @@ void readXMLComponent::readTransfer (
 	//
 	//  read component from
 	//
-	const string path_from = prefix + "from/";
+	const string path_from = prefix + "from";
 	
 	//
 	//	read attribute speciesLabel
-	const string path_from_sl = path_from + "@speciesLabel";
-	get_node_element (cind, &doc, &path_from_sl, temp); 
+	const string path_from_sl = path_from + "/@speciesLabel";
+	get_node_attr (cind, &doc, &path_from_sl, temp); 
 	if (temp.empty ())
 	{
 		string errno = string (
 				"TRANSFER: empty attribute speciesLabel in "
-				) + doc + ".xml!";
-		throw StrCacuException (errno);
-	}
-	else from.second = temp[0];
-
-	//
-	//  read node from
-	//
-	const string path_from_pl = path_from + "partLabel";
-	get_node_element (cind, &doc, &path_from_pl, temp); 
-	if (temp.empty ())
-	{
-		string errno = string (
-				"TRANSFER: empty node from in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
 	else from.first = temp[0];
 
 	//
+	//  read node from
+	//
+	get_node_element (cind, &doc, &path_from, temp); 
+	if (temp.empty ())
+	{
+		cout << "\nnodepath = " 
+			 << path_from 
+			 << endl;
+
+		string errno = string (
+				"TRANSFER: empty node from in "
+				) + doc + ".xml!";
+		throw StrCacuException (errno);
+	}
+	else from.second = temp[0];
+
+	//
 	//  read component to
 	//
-	const string path_to = prefix + "to/";
+	const string path_to = prefix + "to";
 	
 	//
 	//	read attribute speciesLabel
 	//
-	const string path_to_sl = path_to + "@speciesLabel";
-	get_node_element (cind, &doc, &path_to_sl, temp); 
+	const string path_to_sl = path_to + "/@speciesLabel";
+	get_node_attr (cind, &doc, &path_to_sl, temp); 
 	if (temp.empty ())
 	{
 		string errno = string (
@@ -362,21 +366,24 @@ void readXMLComponent::readTransfer (
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
-	else to.second = temp[0];
+	else to.first = temp[0];
 
 	//
 	//  read node to
 	//
-	const string path_to_pl = path_to + "partLabel";
-	get_node_element (cind, &doc, &path_to_pl, temp); 
+	get_node_element (cind, &doc, &path_to, temp); 
 	if (temp.empty ())
 	{
+		cout << "\nnodepath = " 
+			 << path_to 
+			 << endl;
+
 		string errno = string (
 				"TRANSFER: empty node to in "
 				) + doc + ".xml!";
 		throw StrCacuException (errno);
 	}
-	else to.first = temp[0];
+	else to.second = temp[0];
 
 }
 
