@@ -197,7 +197,7 @@ int integrate(char *model, double time, double printstep, intgrtOutData &res)
   SBMLDocument_free(d);
 
   /* print results */
-//  printf("### RESULTS \n");  
+  printf("### RESULTS \n");  
 //  SBMLResults_dump(results);
 
   //get time points

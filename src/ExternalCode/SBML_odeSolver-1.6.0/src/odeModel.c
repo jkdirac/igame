@@ -334,10 +334,16 @@ SBML_ODESOLVER_API odeModel_t *ODEModel_createFromFile(char *sbmlFileName)
     SBMLDocument_t *d;
     odeModel_t *om;
 
-    d =  parseModel(sbmlFileName,
-		    0 /* print message */,
-		    0 /* don't validate */,
-		    0, 0, 0, 0 /* empty validation parameters */);
+    SBMLReader_t *sr;
+
+/*    d =  parseModel(sbmlFileName,*/
+/*            0 |+ print message +|,*/
+/*            0 |+ don't validate +|,*/
+/*            0, 0, 0, 0 |+ empty validation parameters +|);*/
+
+	sr = SBMLReader_create();
+    d = SBMLReader_readSBML(sr, sbmlFileName);
+    SBMLReader_free(sr);
     
     RETURN_ON_ERRORS_WITH(NULL);
     
