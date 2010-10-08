@@ -57,7 +57,7 @@ bool analys(char* fileName, intgrtOutData& ode_res)
 		if (fileName == NULL)
 				return false;
 	//获取结果
-	bool bRes = integrate(fileName, 1000, 10000, ode_res);
+	bool bRes = integrate(fileName, 500000, 5000, ode_res);
 
 	if (bRes == EXIT_FAILURE)
 	{
@@ -66,6 +66,66 @@ bool analys(char* fileName, intgrtOutData& ode_res)
 	}
 	else
 			return true;
+}
+
+void printOdes_fromFile(char* filename)
+{
+		if (filename == NULL)
+				return;
+
+    int i;
+    char *formula;
+    variableIndex_t *vi = NULL;
+
+    odeModel_t *model =
+      ODEModel_createFromFile(filename);
+
+	if (model == NULL)
+	{
+			printf("create odemodel fails:\n");
+			return;
+	}
+
+    /* Get some information from constructed odeModel */
+    printf("\n\n");
+    printf("ODE Model Statistics:\n");
+    printf("Number of ODEs:               %d\n",
+	   ODEModel_getNeq(model));
+    printf("Number of Assignments:        %d\n",
+	   ODEModel_getNumAssignments(model));
+    printf("Number of Constants:          %d\n",
+	   ODEModel_getNumConstants(model));
+    printf("                            ____\n");
+    printf("Total number of values:       %d\n",
+	   ODEModel_getNumValues(model));
+    
+    printf("\n");
+    printf("ODEs:\n");
+    for ( i=0; i<ODEModel_getNeq(model); i++ ){
+      vi = ODEModel_getOdeVariableIndex(model, i);
+      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
+      printf("d[%s]/dt = %s \n", ODEModel_getVariableName(model, vi), formula);
+      free(formula);
+      VariableIndex_free(vi);
+    }
+    printf("Assigned Variables:\n");
+    for ( i=0; i<ODEModel_getNumAssignments(model); i++ ){
+      vi = ODEModel_getAssignedVariableIndex(model, i);
+      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
+      printf("%s = %s \n", ODEModel_getVariableName(model, vi), formula);
+      free(formula);
+      VariableIndex_free(vi);
+    }
+    printf("Constants:\n");
+    for ( i=0; i<ODEModel_getNumConstants(model); i++ ){
+      vi = ODEModel_getConstantIndex(model, i);
+      printf("%s\n", ODEModel_getVariableName(model, vi));
+      VariableIndex_free(vi);
+    }
+    printf("\n\n");
+
+    
+    ODEModel_free(model);
 }
 
 int main(int argc, char **argv)
@@ -82,6 +142,7 @@ int main(int argc, char **argv)
 
 	bool res = analys(argv[1], ode_res);
 	cout << "analys succ: " << res << endl;
+	printOdes_fromFile(argv[1]);
 
 	PlotInputData plotInputData(ode_res.test_y, ode_res.test_x, ode_res.get_labels());
 
