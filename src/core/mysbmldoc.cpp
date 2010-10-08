@@ -325,71 +325,18 @@ void MySBMLDocument::handleReactionTemplate (
 		const int& index
 		)
 {
-	//  reaction direction
-	bool direction = true;
-	if (role == "product") direction = false;
-
-	//	create a reaction template object
+	/**
+	 * create a reaction template object
+	 */
 	reactionTemplate* tmpR = new reactionTemplate;
-	dbreader.readReactionTemplate (tmpR, doc, direction); 
+	dbreader.readReaction (doc, dbref, role, tmpR);
 
-	//	handle constraints
-	for (int i=0; i < tmpR->listOfConstraints.size (); i++)
-	{
-		vector<string> vars = tmpR->listOfConstraints[i].first;
-		string formula = tmpR->listOfConstraints[i].second;
-
-		string conditions;
-		Model* m = getModel ();
-
-		//	find values of vars
-		for (int j=0; j < vars.size (); j++)
-		{
-			string varid = vars[j];
-
-			//	(1) search global parameters
-			Parameter* para = m->getParameter (varid);		
-			if (para != NULL)
-			{
-				if (!para->getConstant ())
-					throw StrCacuException (
-							"Constant parameter is needed in" 
-							"calculation of constraint expression!"
-							);
-				else 
-				{
-					ostringstream oss;
-					oss << varid << "=" << para->getValue () << ",";
-					conditions += oss.str ();
-					continue;
-				}
-			}
-
-			//	(2) search local parameters
-			para = tmpR->getParameter (varid);
-			if (para != NULL)
-			{
-				ostringstream oss;
-				oss << varid << "=" << para->getValue () << ",";
-				conditions += oss.str ();
-				continue;
-			}
-
-			//	not found
-			throw StrCacuException (
-					string ("Unrecognized parameter id: ")
-					+ varid + "!"
-					);
-		}
-		conditions.substr (0, conditions.size ()-1);
-
-		if (cacu_string_exp (conditions.c_str (), formula.c_str ()) == 0)
-		{
-			delete tmpR;
-			return;
-		}
-	}
-
+	/**
+	 * handle constraints partially
+	 */
+	bool val = tmpR->handle_expression_1 (getModel ());
+	if (!val) return;
+	
 	/**
 	 * ================================================
 	 * find species and compartment configuration that
@@ -398,32 +345,19 @@ void MySBMLDocument::handleReactionTemplate (
 	 */
 
 	reactionArrayMatch result;
-	tmpR->findSpeciesMatch (
-			dbref, 
-			index, 
-			listOfMySpecies, 
-			listOfMyCompartments, 
-			result
+	bool found = tmpR->findSpeciesMatch (
+			dbref, index, listOfMySpecies, listOfMyCompartments, result
 			);
 
-	/**
-	 * add prefix to products
-	 */
-	ostringstream oss;
-	if (result.size () > 0) 
-	{
-		string prefix = "__MoDeL_PRODUCT_CXX_";
-		for (int i=0; i<tmpR->listOfMyProducts.size(); i++) 
-		{
-			oss.str (""); oss << prefix << i << "::";
-			tmpR->listOfMyProducts[i]->addPrefix (oss.str ());
-		}
-	}
+	//----------------------------------
+	cout << "\nMatching Result Size = " 
+		 << result.size () 
+		 << endl;
+	//----------------------------------
 
 	/**
 	 * create reactions from each matching result
 	 */
-	cout << "\nMatching Result Size = " << result.size () << endl;
 	for (int i=0; i < result.size (); i++)
 	{
 		/**

@@ -33,6 +33,7 @@ class reactionTemplate
 		void setName (const string&);
 		void setReversible (const bool&);
 		void setFast (const bool&);
+		void setMath (const string&);
 
 		string getId () const;
 		string getName () const;
@@ -44,9 +45,7 @@ class reactionTemplate
 		const MySpecies* getSpecies (const string&_) const;
 		Parameter* getParameter (const string&);
 
-		void setMath (const string&);
 		void addParameter (Parameter*);
-
 		void addReactant (MySpecies*, const string&);
 		void addProduct (MySpecies*, const string&);
 		void addModifier (MySpecies*, const string&);
@@ -54,18 +53,24 @@ class reactionTemplate
 		void addCompartment (const string&, const string&, const string&);
 		void addConstraint (const vector<string>&, const string&);
 		void addSubstituentTransfer (const subsp&, const subsp&);
+		void addProductPrefix (const string&);
 
 		bool findSpeciesMatch (
-				const string&, const int&, const vector<MySpecies*>&, 
-				const vector<MyCompartment*>&, reactionArrayMatch&	
+				const string&, 
+				const int&, 
+				const vector<MySpecies*>&, 
+				const vector<MyCompartment*>&, 
+				reactionArrayMatch&	
 				); 
 
 		void createProductsFromTemplate (
-				const vector<MySpecies*>& listOfMySpecies,
-				const vector<MyCompartment*>& listOfMyCompartments,
-				const reactionPairMatch& table,
-				vector<MySpecies*>& products
+				const vector<MySpecies*>&,
+				const vector<MyCompartment*>&, 
+				const reactionPairMatch&,
+				vector<MySpecies*>&
 				);
+
+		bool handle_expression_1 (const Model* m);
 
 	private:
 
@@ -127,7 +132,8 @@ class reactionTemplate
 		//
 		//	constraints
 		//
-		vector< pair<vector<string>, string> > listOfConstraints;
+		vector<constraintType> listOfConstraints;
+		vector<string> conditions;
 };
 
 

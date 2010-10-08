@@ -869,9 +869,83 @@ void reactionTemplate::createProductsFromTemplate (
 	}
 }
 
+void reactionTemplate::addProductPrefix (const string& prefix) {
+	for (int i=0; i<listOfMyProducts.size (); i++) listOfMyProducts[i]->addPrefix (prefix);
+}
+
 bool isSameType (const string& lhs, const string& rhs)
 {
 	if (lhs.empty () && !rhs.empty ()) return false;
 	if (!lhs.empty () && rhs.empty ()) return false;
 	else return true;
+}
+
+bool reactionTemplate::handle_expression_1 (const Model* m)
+{
+	vector<constraintType>::iterator 
+		begin = listOfConstraints.begin ();
+
+	for (int i=0; i < listOfConstraints.size (); i++)
+	{
+		vector<string>& vars = listOfConstraints[i].first;
+		string formula = listOfConstraints[i].second;
+
+		string expression;
+		bool drop = false;	// drop this constraint
+		bool unknown = false;	//	variable unknown at present
+
+		//	find values of vars
+		for (int j=0; j < vars.size (); j++)
+		{
+			const string& varid = vars[j];
+
+			//	(1) search global parameters
+			const Parameter* para = m->getParameter (varid);		
+			if (para != NULL)
+			{
+				//	if not constant, we will drop this constraint and do the next
+				if (!para->getConstant ()) 
+				{
+					drop = true; 
+					break;
+				}
+				else 
+				{
+					ostringstream oss;
+					oss << varid 
+						<< "=" 
+						<< para->getValue () 
+						<< ",";
+					expression += oss.str ();
+					vars.erase (vars.begin () + j);
+					continue;
+				}
+			}
+
+			//	(2) search local parameters
+			para = getParameter (varid);
+			if (para != NULL)
+			{
+				ostringstream oss;
+				oss << varid << "=" << para->getValue () << ",";
+				expression += oss.str ();
+				vars.erase (vars.begin () + j);
+				continue;
+			}
+
+			//	not found, it may species/compartment/unknown
+			unknown = true;
+		}
+
+		if (drop) listOfConstraints.erase (begin + i);
+		else if (unknown) {conditions.push_back (expression);}
+		else
+		{
+			expression.substr (0, expression.size ()-1);
+			if (cacu_string_exp (expression.c_str (), formula.c_str ()) == 0) return false;
+			else listOfConstraints.erase (begin + i);
+		}
+	}
+
+	return true;
 }

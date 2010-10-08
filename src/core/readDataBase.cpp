@@ -832,24 +832,109 @@ void readDataBase::setFunction (
 	delete astMath;
 }
 
-void readDataBase::readReactionTemplate (
-		reactionTemplate* RT,
-		const string& doc,
-		const bool& direction
+/**
+ * only necessary examination will be executed
+ */
+void readDataBase::readReaction (
+		const string& doc,	//	reaction document file
+		const string& sid,	// 	species identifier
+		const string& type, //  reactant/modifier/product
+		reactionTemplate* tmpR
 		)
 {
-	cout << "\nreading reaction	...\n" << doc << endl;
-
 	string head ("/MoDeL/reaction");
 
-	if (doc.empty ())
-		throw StrCacuException (
-				"Reading Reaction...No ID Specified!"
-				);
+	if (doc.empty ()) throw StrCacuException (
+			"Reading Reaction...No ID Specified!"
+			);
 
 	vector<string> temp;
 
-	//	read attribute Id
+	/**
+	 * before everything, we first need to find
+	 * the species type of sid in the reaction if type is empty
+	 */
+	int speciesType = -1;	//0, 1, 2	
+
+	if (type == "reactant") speciesType = 0;
+	else if (type == "modifier") speciesType = 1;
+	else if (type == "product") speciesType = 2;
+	else
+	{
+		if (speciesType == -1)
+		{
+			//	read reactant species reference
+			string pathReactants = head + "/listOfReactants/reactant";
+			int numOfReactants = get_node_element_num (REACTION, &doc, &pathReactants);
+			for (int cnt =1; cnt <= numOfReactants; cnt++)
+			{
+				ostringstream oss;
+				oss << pathReactants << "[" << cnt << "]/speciesReference";
+				const string nodepath (oss.str ());
+				get_node_element (REACTION, &doc, &nodepath, temp); 
+				if (temp.empty ())
+				{
+					string errno = string (
+							"SPECIES: empty node speciesReference in "
+							) + doc + ".xml!";
+					throw StrCacuException (errno);
+				}
+				else if (temp[0] == sid) {speciesType = 0; break;}
+			}
+		}
+
+		if (speciesType == -1)
+		{
+			//	read modifier species reference
+			string pathModifiers = head + "/listOfModifiers/modifier";
+			int numOfModifiers = get_node_element_num (REACTION, &doc, &pathModifiers);
+			for (int cnt =1; cnt <= numOfModifiers; cnt++)
+			{
+				ostringstream oss;
+				oss << pathModifiers << "[" << cnt << "]/speciesReference";
+				const string nodepath (oss.str ());
+				get_node_element (REACTION, &doc, &nodepath, temp); 
+				if (temp.empty ())
+				{
+					string errno = string (
+							"SPECIES: empty node speciesReference in "
+							) + doc + ".xml!";
+					throw StrCacuException (errno);
+				}
+				else if (temp[0] == sid) {speciesType = 1; break;}
+			}
+		}
+
+		if (speciesType == -1)
+		{
+			//	read reactant species reference
+			string pathProducts = head + "/listOfProducts/product";
+			int numOfProducts = get_node_element_num (REACTION, &doc, &pathProducts);
+			for (int cnt =1; cnt <= numOfProducts; cnt++)
+			{
+				ostringstream oss;
+				oss << pathProducts << "[" << cnt << "]/speciesReference";
+				const string nodepath (oss.str ());
+				get_node_element (REACTION, &doc, &nodepath, temp); 
+				if (temp.empty ())
+				{
+					string errno = string (
+							"SPECIES: empty node speciesReference in "
+							) + doc + ".xml!";
+					throw StrCacuException (errno);
+				}
+				else if (temp[0] == sid) {speciesType = 2; break;}
+			}
+		}
+
+		if (speciesType == -1) throw StrCacuException (
+				"Wrong link from species to reaction!"
+				);
+	}
+
+	/**
+	 *	read attribute Id
+	 */
 	string id;
 	const string pathId = head + "/@id";
 	get_node_attr (REACTION, &doc, &pathId, temp);
@@ -862,43 +947,48 @@ void readDataBase::readReactionTemplate (
 	}
 	else id = temp[0];
 
-	if (id != doc)
-		throw StrCacuException (
-				"Reading Reaction...Inconsistent ID!"
-				);
+	if (id != doc) throw StrCacuException (
+			"Reading Reaction...Inconsistent ID!"
+			);
+	else tmpR->setId (id);
 
-	RT->setId (id);
-
-	//	read attribute name
+	/**
+	 *	read attribute name
+	 */
 	string name;
 	const string pathName = head + "/@name";
 	get_node_attr (REACTION, &doc, &pathName, temp);
 	if (!temp.empty ()) name = temp[0];
-	RT->setName (name);
+	tmpR->setName (name);
 
-	//	read attribute Reversible
+	/**
+	 * 	read attribute Reversible
+	 */
 	bool reversible;
 	const string pathRev = head + "/@reversible";
 	get_node_attr (REACTION, &doc, &pathRev, temp);
 	if (!temp.empty ()) reversible = (temp[0] == "true");
 	else reversible = true;
+	tmpR->setReversible (reversible);
 
-	if (!direction && !reversible) 
-		throw StrCacuException (
-				"Reactions shuold not be linked"
-				" to Products in Irreversible cases!"
-				);
-	RT->setReversible (reversible);
+	//	species type could not be "product" in an irreversible reaction
+	if (reversible == false && speciesType == 2) return;
 
-	//	read attribute fast
+	/**
+	 *	read attribute fast
+	 */
 	bool fast;
 	const string pathFast = head + "/@fast";
 	get_node_attr (REACTION, &doc, &pathFast, temp);
 	if (!temp.empty ()) fast = (temp[0] == "true");
 	else fast = false;
-	RT->setFast (fast);
+	tmpR->setFast (fast);
 
-	//readReactionCompartments
+	/**
+	 * read Block Compartments
+	 * *
+	 * validate: 
+	 */
 	const string pathComp = head + "/listOfCompartments/compartment";
 	int numOfComps = get_node_element_num (REACTION, &doc, &pathComp);
 
@@ -908,21 +998,29 @@ void readDataBase::readReactionTemplate (
 		string compartmentRef, currComp, parComp;
 		readCompartment (REACTION, doc, pathComp, cnt, compartmentRef, currComp, parComp);
 
+		if (currComp == "ROOT") throw StrCacuException (
+				"ROOT could not be regarded as child!"
+				);
+
 		if (__read_in_comps.count (currComp)) throw StrCacuException (
 				"REACTION: Different compartments should have different labels!"
 				);
 		else 
 		{
 			__read_in_comps.insert (currComp);
-			RT->addCompartment (compartmentRef, currComp, parComp);
+			tmpR->addCompartment (compartmentRef, currComp, parComp);
 		}
 	}
 
-	//readReactionSpecies
+	/**
+	 * readReactionSpecies
+	 */
+	bool direction = (speciesType != 2);
+	
 	//(1) read reactants
 	
 	string pathReactants = head;
-	if (direction)  pathReactants += "/listOfReactants/reactant";
+	if (direction) pathReactants += "/listOfReactants/reactant";
 	else pathReactants += "/listOfProducts/product";
 	int numOfReactants = get_node_element_num (
 			REACTION, &doc, &pathReactants
@@ -945,8 +1043,8 @@ void readDataBase::readReactionTemplate (
 		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
-		if (direction) RT->addReactant (s, compartmentLabel);
-		else RT->addProduct (s, compartmentLabel);
+		if (direction) tmpR->addReactant (s, compartmentLabel);
+		else tmpR->addProduct (s, compartmentLabel);
 	}
 
 	//(2) read products
@@ -973,8 +1071,8 @@ void readDataBase::readReactionTemplate (
 		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
-		if (direction) RT->addProduct (s, compartmentLabel);
-		else RT->addReactant (s, compartmentLabel);
+		if (direction) tmpR->addProduct (s, compartmentLabel);
+		else tmpR->addReactant (s, compartmentLabel);
 	}
 
 	//(3) read Modifier
@@ -998,27 +1096,43 @@ void readDataBase::readReactionTemplate (
 		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
 
-		RT->addModifier (s, compartmentLabel);
+		tmpR->addModifier (s, compartmentLabel);
+	}
+
+	/**
+	 * add prefix to products
+	 */
+	ostringstream oss;
+	string prefix = "__MoDeL_PRODUCT_CXX_";
+	for (int i=0; i < numOfProducts; i++) 
+	{
+		oss.str (""); oss << prefix << i << "::";
+		tmpR->addProductPrefix (oss.str ());
 	}
 
 	//read substituent transfer table
 	vector< pair<string,string> > source;
 	vector< pair<string,string> > destin;
 	const string pathTransfer = head + 
-		"/listOfSubstituentTransfers/substituentTransfer";
+		"/listOfSubstituentTransfers"
+		"/substituentTransfer";
 	int numOfTrans = get_node_element_num (REACTION, &doc, &pathTransfer);
 
 	for (int cnt= 1; cnt <= numOfTrans; cnt++)
 	{
 		pair<string,string> from, to;
 		readTransfer (REACTION, doc, pathTransfer, cnt, from, to);
-		RT->addSubstituentTransfer (from, to);
+		tmpR->addSubstituentTransfer (from, to);
 	}
 
-	//	read KineticLaw
+	/**
+	 *	read KineticLaw
+	 */
 	string pathKineticLaw;
-	if (direction) pathKineticLaw = head + "/kineticLaw/forwardKineticLaw";
-	else pathKineticLaw = head + "/kineticLaw/reverseKineticLaw";
+	if (direction) pathKineticLaw = 
+		head + "/kineticLaw/forwardKineticLaw";
+	else pathKineticLaw = 
+		head + "/kineticLaw/reverseKineticLaw";
 
 	//	read math
 	string math;
@@ -1033,7 +1147,7 @@ void readDataBase::readReactionTemplate (
 				"Reading Reaction...No Math Specified!"
 				);
 	}
-	else RT->setMath (math);
+	else tmpR->setMath (math);
 
 	//	read local parameters
 	const string pathLocalPara = 
@@ -1053,12 +1167,12 @@ void readDataBase::readReactionTemplate (
 
 		Parameter* para = new Parameter (2,4);
 		setParameter (para, id, name, value, units, constant);
-		RT->addParameter (para);
+		tmpR->addParameter (para);
 	}
 
 	//	read referenced parameters
-	const string pathExtRef = 
-		pathKineticLaw + "/listOfReferencedParameters/referencedParameter";
+	const string pathExtRef = pathKineticLaw + 
+		"/listOfReferencedParameters/referencedParameter";
 	const int numOfRefParas = get_node_element_num (
 			REACTION, &doc, &pathExtRef
 			);
@@ -1072,18 +1186,28 @@ void readDataBase::readReactionTemplate (
 				);
 
 		//	find species 
-		const MySpecies* s = RT->getSpecies (speciesLabel);
+		const MySpecies* s = tmpR->getSpecies (speciesLabel);
 		if (s == NULL)
-			throw StrCacuException (
-					string ("REACTION: No species existed with label ")
-					+ speciesLabel + "!"
-					);
+		{
+			string errno ("REACTION: species with label ");
+			errno += speciesLabel + " does not exist in"
+			   " reactant/modifier/product definition!";
+			throw StrCacuException (errno);
+		}
 		string compartmentLabel = s->getCompartment ();
 
 		string units, name;
 		double value;
 
 		const Part* p = s->getPart (partLabel);
+		if (p == NULL)
+		{
+			string errno ("REACTION: no part with label ");
+			errno += partLabel + 
+					" could be found in species " 
+					+ speciesLabel + "!"; 
+			throw StrCacuException (errno);
+		}
 		readConditionalParameter (
 				PART, p->getPartCtg (),
 				p->getPartRef (), parameterLabel,
@@ -1092,10 +1216,12 @@ void readDataBase::readReactionTemplate (
 
 		Parameter* para = new Parameter (2,4);
 		setParameter (para, id, name, value, units, true);
-		RT->addParameter (para);
+		tmpR->addParameter (para);
 	}
 	
-	//	read listOfConstraints
+	/**
+	 * read listOfConstraints
+	 */
 	const string pathConstraint = 
 		pathKineticLaw + "/listOfConstraints/constraint";
 	const int numOfConstraints = get_node_element_num (
@@ -1108,7 +1234,7 @@ void readDataBase::readReactionTemplate (
 		string formula;
 		readConstraint (REACTION, doc, pathConstraint,
 				i, variables, formula);
-		RT->addConstraint (variables, formula);
+		tmpR->addConstraint (variables, formula);
 	}
 
 	return;

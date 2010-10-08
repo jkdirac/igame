@@ -39,20 +39,21 @@ class readDataBase:
 		 * read cnModel of Species 
 		 */
 		void read_cnModel (
-				MySpecies* s,
-				const container_index& cind,
-				const string& doc,
-				const string& qp,
-				const bool& isTemplate
+				MySpecies*, 
+				const container_index&, 
+				const string&, 
+				const string&, 
+				const bool&
 				);
 
 		/**
 		 * read reaction template
 		 */
-		void readReactionTemplate (
-				reactionTemplate* RT,
-				const string& doc,
-				const bool& redir
+		void readReaction (
+				const string&,	//	reaction document file
+				const string&,	// 	species identifier
+				const string&, //  reactant/modifier/product
+				reactionTemplate*
 				);
 
 	protected:
