@@ -320,23 +320,29 @@ void MySBMLDocument::run (readDataBase& dbreader)
 void MySBMLDocument::handleReactionTemplate (
 		readDataBase& dbreader,
 		const string& doc,
-		const string& role,
+		const string& type, 
 		const string& dbref,
 		const int& index
 		)
 {
 	/**
+	 * =================================
 	 * create a reaction template object
+	 * =================================
 	 */
 	reactionTemplate* tmpR = new reactionTemplate;
-	dbreader.readReaction (doc, dbref, role, tmpR);
+	dbreader.readReaction (doc, dbref, type, tmpR);
 
 	/**
-	 * handle constraints partially
+	 * ===============================
+	 * HANDLE CONSTRAINTS OF PARAMTERS
+	 * ===============================
 	 */
-	bool val = tmpR->handle_expression_1 (getModel ());
-	if (!val) return;
-	
+	const ListOfParameters* listOfMyParameters 
+		= getModel ()->getListOfParameters ();
+	bool expr = tmpR->handle_constraints (listOfMyParameters);
+	if (!expr) {delete tmpR; return;}
+
 	/**
 	 * ================================================
 	 * find species and compartment configuration that
@@ -345,8 +351,13 @@ void MySBMLDocument::handleReactionTemplate (
 	 */
 
 	reactionArrayMatch result;
+
 	bool found = tmpR->findSpeciesMatch (
-			dbref, index, listOfMySpecies, listOfMyCompartments, result
+			dbref, 
+			index, 
+			listOfMySpecies, 
+			listOfMyCompartments, 
+			result
 			);
 
 	//----------------------------------

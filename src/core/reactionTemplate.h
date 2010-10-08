@@ -42,7 +42,7 @@ class reactionTemplate
 		string getMath () const;
 
 		string getCompartment (const string&) const;
-		const MySpecies* getSpecies (const string&_) const;
+		const MySpecies* getSpecies (const string&) const;
 		Parameter* getParameter (const string&);
 
 		void addParameter (Parameter*);
@@ -70,7 +70,7 @@ class reactionTemplate
 				vector<MySpecies*>&
 				);
 
-		bool handle_expression_1 (const Model* m);
+		bool handle_constraints (const ListOfParameters*);
 
 	private:
 
@@ -133,7 +133,6 @@ class reactionTemplate
 		//	constraints
 		//
 		vector<constraintType> listOfConstraints;
-		vector<string> conditions;
 };
 
 

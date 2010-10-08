@@ -561,6 +561,10 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
+			/**
+			 * COMPARTMENT CONSTRAINTS
+			 */
+			
 			//	find all possible compartment configuration
 			set<int> possible;
 
@@ -880,7 +884,9 @@ bool isSameType (const string& lhs, const string& rhs)
 	else return true;
 }
 
-bool reactionTemplate::handle_expression_1 (const Model* m)
+bool reactionTemplate::handle_constraints (
+		const ListOfParameters* globalpara
+		)
 {
 	vector<constraintType>::iterator 
 		begin = listOfConstraints.begin ();
@@ -890,60 +896,53 @@ bool reactionTemplate::handle_expression_1 (const Model* m)
 		vector<string>& vars = listOfConstraints[i].first;
 		string formula = listOfConstraints[i].second;
 
+		// temp vars	
 		string expression;
-		bool drop = false;	// drop this constraint
-		bool unknown = false;	//	variable unknown at present
+
+		//	drop this constraint if quantities are not constant
+		//	however, unrecognized vars would cause programme to terminate
+		bool drop = false;	
 
 		//	find values of vars
 		for (int j=0; j < vars.size (); j++)
 		{
 			const string& varid = vars[j];
-
-			//	(1) search global parameters
-			const Parameter* para = m->getParameter (varid);		
-			if (para != NULL)
+			
+			const Parameter* para1 = globalpara->get (varid);
+			if (para1 != NULL)
 			{
-				//	if not constant, we will drop this constraint and do the next
-				if (!para->getConstant ()) 
-				{
-					drop = true; 
-					break;
-				}
-				else 
+				if (para1->getConstant ())
 				{
 					ostringstream oss;
 					oss << varid 
 						<< "=" 
-						<< para->getValue () 
+						<< para1->getValue () 
 						<< ",";
 					expression += oss.str ();
-					vars.erase (vars.begin () + j);
 					continue;
 				}
+				else {drop = true; break;}
 			}
 
-			//	(2) search local parameters
-			para = getParameter (varid);
-			if (para != NULL)
+			const Parameter* para2 = getParameter (varid);
+			if (para2 != NULL)
 			{
 				ostringstream oss;
-				oss << varid << "=" << para->getValue () << ",";
+				oss << varid 
+					<< "=" 
+					<< para2->getValue () 
+					<< ",";
 				expression += oss.str ();
-				vars.erase (vars.begin () + j);
 				continue;
 			}
 
-			//	not found, it may species/compartment/unknown
-			unknown = true;
+			drop = true; break;
 		}
 
-		if (drop) listOfConstraints.erase (begin + i);
-		else if (unknown) {conditions.push_back (expression);}
-		else
+		if (!drop && !expression.empty ()) 
 		{
 			expression.substr (0, expression.size ()-1);
 			if (cacu_string_exp (expression.c_str (), formula.c_str ()) == 0) return false;
-			else listOfConstraints.erase (begin + i);
 		}
 	}
 
