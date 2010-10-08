@@ -85,4 +85,6 @@ typedef tvi permType;
 
 typedef pair<string,string> subsp;
 
+typedef pair<vector<string>, string> constraintType;
+
 #endif

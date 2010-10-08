@@ -561,6 +561,10 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
+			/**
+			 * COMPARTMENT CONSTRAINTS
+			 */
+			
 			//	find all possible compartment configuration
 			set<int> possible;
 
@@ -869,9 +873,78 @@ void reactionTemplate::createProductsFromTemplate (
 	}
 }
 
+void reactionTemplate::addProductPrefix (const string& prefix) {
+	for (int i=0; i<listOfMyProducts.size (); i++) listOfMyProducts[i]->addPrefix (prefix);
+}
+
 bool isSameType (const string& lhs, const string& rhs)
 {
 	if (lhs.empty () && !rhs.empty ()) return false;
 	if (!lhs.empty () && rhs.empty ()) return false;
 	else return true;
+}
+
+bool reactionTemplate::handle_constraints (
+		const ListOfParameters* globalpara
+		)
+{
+	vector<constraintType>::iterator 
+		begin = listOfConstraints.begin ();
+
+	for (int i=0; i < listOfConstraints.size (); i++)
+	{
+		vector<string>& vars = listOfConstraints[i].first;
+		string formula = listOfConstraints[i].second;
+
+		// temp vars	
+		string expression;
+
+		//	drop this constraint if quantities are not constant
+		//	however, unrecognized vars would cause programme to terminate
+		bool drop = false;	
+
+		//	find values of vars
+		for (int j=0; j < vars.size (); j++)
+		{
+			const string& varid = vars[j];
+			
+			const Parameter* para1 = globalpara->get (varid);
+			if (para1 != NULL)
+			{
+				if (para1->getConstant ())
+				{
+					ostringstream oss;
+					oss << varid 
+						<< "=" 
+						<< para1->getValue () 
+						<< ",";
+					expression += oss.str ();
+					continue;
+				}
+				else {drop = true; break;}
+			}
+
+			const Parameter* para2 = getParameter (varid);
+			if (para2 != NULL)
+			{
+				ostringstream oss;
+				oss << varid 
+					<< "=" 
+					<< para2->getValue () 
+					<< ",";
+				expression += oss.str ();
+				continue;
+			}
+
+			drop = true; break;
+		}
+
+		if (!drop && !expression.empty ()) 
+		{
+			expression.substr (0, expression.size ()-1);
+			if (cacu_string_exp (expression.c_str (), formula.c_str ()) == 0) return false;
+		}
+	}
+
+	return true;
 }
