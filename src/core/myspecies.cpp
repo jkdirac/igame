@@ -622,14 +622,13 @@ bool MySpecies::match (
 		vector<cMatchsType2>& trym
 		) const
 {
-	cout << "\nSPECIES: MATCHING 	......" << endl;
+	cout << "\n------------------------------------------------";
+	cout << "\n#############	   CHECK SPECIES MATCH		^_!";
+	cout << "\n------------------------------------------------\n"; 
 
-	//  template chain length
-	int numc_t = s->listOfChains.size ();
 
-	//  chain length to be matched
-	int numc_m = listOfChains.size ();
-
+	int numc_t = s->listOfChains.size (); //template chain length
+	int numc_m = listOfChains.size (); //length of this chain
 	if (numc_t < numc_m) return false;
 
 	//  temporary variables
@@ -651,7 +650,7 @@ bool MySpecies::match (
 		for (int j = 0; j < numc_m; j++)
 		{
 			cout << "\nchain number in current species"
-			     << "	--	..	--	" << j;
+			     << "	--	..	--	" << j << endl;
 
 			cMatchsType record2;
 			listOfChains[j]->match (c1, record2);
@@ -660,15 +659,17 @@ bool MySpecies::match (
 				record.push_back (make_pair(record2[k], j));
 		}
 
-		if (record.size () == 0) return false; 
+		if (record.size () == 0) 
+		{
+			cout << "\n^_^	FAIL!" << endl; 
+			return false; 
+		}
 		else
 		{
 			permuteAll *= record.size ();
 			records.push_back (record);		
 		}
 	}
-
-	cout << "\npermuteAll = " << permuteAll;
 
 	//
 	//	Permutation

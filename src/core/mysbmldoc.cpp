@@ -180,7 +180,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 1) break;
+		if (i == 4) break;
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
@@ -228,10 +228,12 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							t, speciesReference, partType
 							);
 
+					cout << "\n========================================================";
 					cout << "\nHandling Referenced Species	" 
 						 << t << "	...		DOC	:	" 
 						 << speciesReference << "	TYPE :	"
-						 << partType << endl;
+						 << partType;
+					cout << "\n========================================================\n";
 
 					//	if partType is not empty, it has to check
 					//	part type matching
@@ -374,10 +376,10 @@ void MySBMLDocument::handleReactionTemplate (
 			result
 			);
 
-	//----------------------------------
-	cout << "\n<--	Matching Result Size = " 
-		 << result.size () << endl;
-	//----------------------------------
+#ifndef NDEBUG
+	cout << "\n################		MATCHING...	 DONE	#################\n";
+	cout << "\n^_^	Combinations	=	" << result.size () << endl;
+#endif
 
 	/**
 	 * create reactions from each matching result
