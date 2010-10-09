@@ -294,9 +294,6 @@ bool reactionTemplate::findSpeciesMatch (
 					);
 			else conf.insert (make_pair (__comp_label, __comp_index));
 			divide /= options[j].size ();
-
-			cout << "\n__comp_label = " << __comp_label 
-				 << "; __comp_index = " << __comp_index << endl;
 		}
 
 		//	validate relations between compartments
@@ -514,23 +511,37 @@ bool reactionTemplate::findSpeciesMatch (
 	 * *************************************************
 	 */
 
+	cout << "\n!_!	TRY POSSIBLE COMBINATIONS	...	!_!\n";
+	cout << "\nReactants Candidates	=	" << possibleReactantMatch.size ();
+	cout << "\nModifiers Candidates	=	" << possibleModifierMatch.size ();
+
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
+			cout << "\ntrying	...	c(" << i << ", " << j << ")\n";
+
 			/**
 			 * COMPARTMENT CONSTRAINTS
 			 */
 
-			//	find all possible compartment configuration
 			set<int> possible;
+			for (int n1=0; n1< compConfig.size (); n1++) possible.insert (n1);
 
-			//	reactant constraints
-			if (listOfMyReactants.size () > 0)
+			/**
+			 * elements in possible will be removed if the compartment
+			 * configuration does not meet the requirements of reaction
+			 */
+
+			for (int n1 =0; n1 < compConfig.size (); n1++)
 			{
-				for (int n1 = 0; n1 < compConfig.size (); n1++)
+				//	reactant constraints
+				if (listOfMyReactants.size () > 0)
 				{
 					bool fail = false;
+
+					if (!possible.count (n1)) continue;
+
 					for (int n2=0; n2 < possibleReactantMatch[i].size (); n2++)
 					{
 						//	parameter about template spcies
@@ -551,19 +562,14 @@ bool reactionTemplate::findSpeciesMatch (
 
 						if (__compid_tm != __compid) {fail = true;break;}
 					}
-					if (!fail) possible.insert (n1);
+					if (fail) possible.erase (n1);
 				}
-				if (possible.empty ()) continue;
-			}
 
-			//	modifier constraints
-			if (listOfMyModifiers.size () > 0)
-			{
-				for (int n1 = 0; n1 < compConfig.size (); n1++)
+				if (listOfMyModifiers.size () > 0)
 				{
+					bool fail = false;
 					if (!possible.count (n1)) continue;
 
-					bool fail = false;
 					for (int n2=0; n2 < possibleModifierMatch[j].size (); n2++)
 					{
 						//	parameter about template spcies
@@ -589,19 +595,19 @@ bool reactionTemplate::findSpeciesMatch (
 					}
 					if (fail) possible.erase (n1);
 				}
-				if (possible.empty ()) continue;
 			}
+				
+			if (possible.empty ()) continue;
 
 			//	compartment-type species constraints
 			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
-				if (!possible.count (n1)) continue;
-
 				map<string, int> itself;
 
 				//	for reactants
 				if (listOfMyReactants.size () > 0)
 				{
+					if (!possible.count (n1)) continue;
 					for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
 					{
 						string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
@@ -620,6 +626,7 @@ bool reactionTemplate::findSpeciesMatch (
 				//	for modifiers
 				if (listOfMyModifiers.size () > 0)
 				{
+					if (!possible.count (n1)) continue;
 					for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
 					{
 						string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
@@ -658,6 +665,11 @@ bool reactionTemplate::findSpeciesMatch (
 					/**
 					 * it is important to check tmp
 					 */
+					
+					cout << "\n---------------------------------------------------\n";
+					cout << "^_!	ADD ONE MATCHING RESULTS:	" << result.size ()-1;
+					cout << "\n---------------------------------------------------\n";
+
 					cout << "\n^_^		REACTANTS	:	^_^\n";
 					if (listOfMyReactants.size () > 0)
 					{

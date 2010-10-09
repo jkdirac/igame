@@ -180,11 +180,11 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 5) break;
+		if (i == 1) break;
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n===========	SPECIES " << i << "		=============" << endl;
+		cout << "\n===========		SPECIES " << i << "		=============" << endl;
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -192,13 +192,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 
 		for (int j =0; j < s->getNumOfChains (); j++)
 		{
-			cout << "\n===========	Chain	  " << j << "		=============" << endl;
-
 			Chain* c = s->getChain (j);
 			for (int k=0; k < c->getNumOfParts (); k++)
 			{
 				Part* p = c->getPart (k);
-				cout << "\n===========	Part	  " << k << "	(" << p->getPartRef () << ")	============\n";
 
 				//	search transcription reactions
 				searchTranscriptionReactions (i, j, k, dbreader);
@@ -218,17 +215,23 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							PART, &doc_1, &speciesLinkPath
 							);
 
-				cout << "\nnumber of referenced species 	= 	" << numOfSpeciesLinks << endl;
+				cout << "\n------------------------------------------------------";
+				cout << "\nNumber of Referenced Species 	= 	" 
+					 << numOfSpeciesLinks << endl;
+				cout << "\n------------------------------------------------------\n";
 
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
-					cout << "\nHandling Referenced Species	" << t << "	..." << endl;
-
 					string speciesReference, partType;
 					dbreader.readSpeciesLink (
 							PART, p->getPartRef (),speciesLinkPath, 
 							t, speciesReference, partType
 							);
+
+					cout << "\nHandling Referenced Species	" 
+						 << t << "	...		DOC	:	" 
+						 << speciesReference << "	TYPE :	"
+						 << partType << endl;
 
 					//	if partType is not empty, it has to check
 					//	part type matching
@@ -253,10 +256,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							"/MoDeL/species", 
 							true
 							);
-					//                    cout << "\nspeciesReference = " <<
-					//                        speciesReference << endl;
 
-					cout << "\nSpecies Referred	...	" << endl;
 					sLink->Output ();
 
 					//
@@ -265,11 +265,9 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) 
 					{
-						cout << "\nDoes not MATCH! Continue to NEXT...";
+						cout << "\n^_^	Does not MATCH! Continue to NEXT...\n";
 						continue;
 					}
-					else cout << "\nMATCH! Continue..." << endl;
-
 
 					//
 					//  read reaction Links
@@ -286,8 +284,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							&reactionLinkPath
 							);
 
-					cout << "\n********		reactions related = " 
-						 << numOfReactionLinks << endl;
+					cout << "\n------------------------------------------------------";
+					cout << "\nNumber of Referenced Reactions 	= 	" 
+						<< numOfSpeciesLinks << endl;
+					cout << "\n------------------------------------------------------\n";
 
 					for (int r=1; r <= numOfReactionLinks; r++)
 					{
@@ -301,8 +301,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesRole
 								);
 
-						cout << "\n<--	Read Referenced Reactions	"
-							 << "---	...	---	DONE! " << endl;	
+						cout << "\nHandling Referenced Reaction	" 
+							<< t << "	...		DOC	:	" 
+							<< reactionReference << "	TYPE :	"
+							<< speciesRole << endl;
 
 						handleReactionTemplate (
 								dbreader, 
@@ -311,9 +313,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesReference,
 								i
 								);
-
-						cout << "\n<--  Handl Reaction Template	  "
-							 << "---	...	---	DONE! " << endl;
 					}
 				}
 			}
