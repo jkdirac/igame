@@ -800,8 +800,6 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 		}
 	}
 	
-	cout << "\nnumber of binding sites = " << bindsites.size () << endl;
-
 	//	trim condition 1
 	
 	/**

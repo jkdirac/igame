@@ -167,6 +167,10 @@ const MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s) const
 
 void MySBMLDocument::run (readDataBase& dbreader)
 {
+	
+	//	set start position of new generated species
+	startpos = listOfMySpecies.size ();
+
 	//
 	//  listOfMySpecies size may be updated while 
 	//  developing biological system network
@@ -176,6 +180,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
+		if (i == 5) break;
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
@@ -360,11 +365,8 @@ void MySBMLDocument::handleReactionTemplate (
 	 * matching patterns described in reaction template
 	 * ================================================
 	 */
-	cout << "\nTESTING PRODUCTS BEFORE MATCHING...\n";
-	tmpR->OutputProducts ();
 
 	reactionArrayMatch result;
-
 	bool found = tmpR->findSpeciesMatch (
 			dbref, 
 			index, 
@@ -372,9 +374,6 @@ void MySBMLDocument::handleReactionTemplate (
 			listOfMyCompartments, 
 			result
 			);
-
-	cout << "\nTESTING PRODUCTS AFTER MATCHING...\n";
-	tmpR->OutputProducts ();
 
 	//----------------------------------
 	cout << "\n<--	Matching Result Size = " 
@@ -516,6 +515,10 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
+					mrna->setHasOnlySubstanceUnits (false);
+					mrna->setConstant (false);
+					mrna->setCharge (0);
+					mrna->setBoundaryCondition (false);
 
 					assert (k+1 <= ci-1);
 					Chain* mrna_chain = mrna->createChain ();
@@ -629,6 +632,10 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
+					mrna->setHasOnlySubstanceUnits (false);
+					mrna->setConstant (false);
+					mrna->setCharge (0);
+					mrna->setBoundaryCondition (false);
 
 					Chain* mrna_chain = mrna->createChain ();
 					assert (k-1 >= ci+1);
@@ -775,6 +782,10 @@ void MySBMLDocument::searchTranslationReactions (
 						prot->setName ("prot");
 						prot->setCompartment (s->getCompartment ());
 						prot->setInitialAmount (0.0);
+						prot->setHasOnlySubstanceUnits (false);
+						prot->setConstant (false);
+						prot->setCharge (1);
+						prot->setBoundaryCondition (false);
 
 						Chain* prot_chain = prot->createChain ();
 						assert (k+1 <= ci);
@@ -839,19 +850,30 @@ void MySBMLDocument::write ()
 
 	Model* m = getModel ();
 
+#ifndef _CXX_DEBUG
+		cout << "\n================="
+		     << "  LIST OF SPECIES  "
+			 << "=================\n\n";
+#endif
+
 	for (int i=0; i < listOfMySpecies.size (); i++)
 	{
-		listOfMySpecies[i]->Output ();
+		MySpecies* myspe = listOfMySpecies[i];
+
+#ifndef _CXX_DEBUG
+		cout << "\n~~~~~~	SPECIES	" << i << "	~~~~~~" << endl;
+		myspe->Output ();
+#endif
+
+		if (i >= startpos)
+		{
+			myspe->setHasOnlySubstanceUnits (false);
+			myspe->setConstant (false);
+			myspe->setBoundaryCondition (false);
+			myspe->setCharge (0);
+		}
 
 		int operation = m->addSpecies (listOfMySpecies[i]);
-		if (operation == LIBSBML_LEVEL_MISMATCH)
-			throw StrCacuException (
-					"Add Species to Model: Level Mismatch!"
-					);
-		if (operation == LIBSBML_VERSION_MISMATCH)
-			throw StrCacuException (
-					"Add Species to Model: Version Mismatch!"
-					);
 		if (operation == LIBSBML_DUPLICATE_OBJECT_ID)
 			throw StrCacuException (
 					"Add Species to Model: Duplicate Object Id!"

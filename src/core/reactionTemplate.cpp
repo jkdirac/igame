@@ -236,6 +236,9 @@ bool reactionTemplate::findSpeciesMatch (
 		reactionArrayMatch& result	
 		) 
 {
+
+	cout << "\n^_^		FIND SPECIES MATCH		^_^\n";
+
 	/**
 	 * Generate a set of compartment configurations
 	 * *
@@ -343,173 +346,130 @@ bool reactionTemplate::findSpeciesMatch (
 			 << compConfig.size () << endl;
 	}
 
-	//
-	//  temporary variables
-	//
-	speciesArrayMatch* reactant_sam = 
-		new speciesArrayMatch [listOfMyReactants.size ()]; 
-	speciesArrayMatch* modifier_sam = 
-		new speciesArrayMatch [listOfMyModifiers.size ()]; 
-
-	//
-	//	find species matching for reactants 
-	//
-
-	int permAll1 = 1;	//	all permutations of reactants
-
 	/**
-	 *	map between species index and its matching details
+	 *	find species matching for reactants 
 	 */
 
-	bool fail1 = false; 
-	for (int i=0; i < listOfMyReactants.size (); i++)
+	int perm_reactants = 1;	//	all permutations of reactants
+	int perm_modifiers = 1;   //  all permutations of products
+	speciesArrayMatch* reactant_sam = NULL;
+    speciesArrayMatch* modifier_sam = NULL;
+
+	//	find reactants match
+	if (listOfMyReactants.size () > 0)
 	{
-		//
-		//	special handle for current species 
-		//
-		MySpecies* tmReactant = listOfMyReactants[i];
+		bool fail2match = false; 
+		reactant_sam = new speciesArrayMatch [listOfMyReactants.size ()]; 
 
-		if (tmReactant->getDB_ref () == dbref)
+		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
-			MySpecies* currSpe = listOfMySpecies[index];
-
-			cMatchsArray trym;
-
-			//	is two species both/both not of compartment-type 
-			bool same = isSameType (
-					currSpe->getCompTypeId (), tmReactant->getCompTypeId ()
-					);
-						
-			if (same && currSpe->match (tmReactant, trym))
+			MySpecies* tmReactant = listOfMyReactants[i];
+			if (tmReactant->getDB_ref () == dbref)
 			{
-				/**
-				 * pair relation between species index and its matching info.
-				 */
-				for (int k=0; k < trym.size (); k++)
-					reactant_sam[i].push_back (make_pair (index, trym[k]));
-			}
-			else 
-			{
-				fail1 = true;
-				break;
-			}
-		}
-		else
-		{
-			for (int j=0; j <= index; j++)
-			{
-				MySpecies* prevSpe = listOfMySpecies[j];
-
-				cMatchsArray trym;
-
-				//	is two species both/both not of compartment-type 
+				MySpecies* currSpe = listOfMySpecies[index];
 				bool same = isSameType (
-					prevSpe->getCompTypeId (), tmReactant->getCompTypeId ()
-					);
-
-				if (same && prevSpe->match (tmReactant, trym))
-				{
-					for (int k=0; k < trym.size (); k++)
-						reactant_sam[i].push_back (make_pair (j, trym[k]));
-				}
-			}
-			if (reactant_sam[i].empty ()) 
-			{
-				fail1 = true;
-				break;
-			}
-			else permAll1 *= reactant_sam[i].size ();
-		}
-	}
-
-	//	no reactant match
-	if (fail1) return false;
-	else cout << "\npermALL1 = " << permAll1 << endl;
-
-	
-	//
-	//	find species matching for modifiers
-	//
-	int permAll2 = 1;
-
-	bool fail2 = false; 
-	for (int i=0; i < listOfMyModifiers.size (); i++)
-	{
-		MySpecies* tmModifier = listOfMyModifiers[i];
-		
-//        cout << "\ngetDB_ref = " << tmModifier->getDB_ref () 
-//             << "  dbref =  "<< dbref << endl;
-
-		if (tmModifier->getDB_ref () == dbref)
-		{
-			MySpecies* currSpe = listOfMySpecies[index];
-
-			cMatchsArray trym;
-
-			//	is two species both/both not of compartment-type 
-			bool same = isSameType (
-					currSpe->getCompTypeId (), tmModifier->getCompTypeId ()
-					);
-			bool mok = currSpe->match (tmModifier, trym);
-
-			if (same && mok) 
-			{
-				for (int k=0; k < trym.size (); k++)
-				{
-					modifier_sam[i].push_back (make_pair (index, trym[k]));
-
-					//	test
-					cout << "\nTESTING OF SPECIES MATCH...	" << endl;
-					cout << "\nmodifier index = " << i 
-						 << " number of chains = " << 
-						 trym[k].size () << endl;
-				}
-			}
-			else 
-			{
-				fail2 = true;
-				break;
-			}
-		}
-		else
-		{
-			for (int j=0; j <= index; j++)
-			{
-				MySpecies* prevSpe = listOfMySpecies[j];
-
-				cMatchsArray trym;
-
-				//	is two species both/both not of compartment-type 
-				bool same = isSameType (
-						prevSpe->getCompTypeId (), tmModifier->getCompTypeId ()
+						currSpe->getCompTypeId (), 
+						tmReactant->getCompTypeId ()
 						);
 
-				if (same && prevSpe->match (tmModifier, trym))
+				cMatchsArray trym;
+				if (same && currSpe->match (tmReactant, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
-						modifier_sam[i].push_back (make_pair (j, trym[k]));
+						reactant_sam[i].push_back (make_pair (index, trym[k]));
+					perm_reactants *= reactant_sam[i].size ();
 				}
+				else {fail2match = true; break;}
 			}
-			if (modifier_sam[i].empty ()) 
+			else
 			{
-				fail2 = true;
-				break;
+				for (int j=0; j <= index; j++)
+				{
+					MySpecies* prevSpe = listOfMySpecies[j];
+					bool same = isSameType (
+							prevSpe->getCompTypeId (), 
+							tmReactant->getCompTypeId ()
+							);
+
+					cMatchsArray trym;
+					if (same && prevSpe->match (tmReactant, trym))
+					{
+						for (int k=0; k < trym.size (); k++)
+							reactant_sam[i].push_back (make_pair (j, trym[k]));
+					}
+				}
+
+				if (reactant_sam[i].empty ()) {fail2match = true; break;}
+				else perm_reactants *= reactant_sam[i].size ();
 			}
-			else permAll2 *= modifier_sam[i].size ();
 		}
+
+		//	no reactant match
+		if (fail2match) return false;
+		else cout << "\nNumber of Matchings of Reactant TEMPLATEs = " << perm_reactants << endl;
 	}
 
-	if (fail2) return false;
-	else cout << "\npermALL2 = " << permAll2 << endl;
+	//	find modifiers match
+	if (listOfMyModifiers.size () > 0)
+	{
+		bool fail2match = false; 
+		modifier_sam = new speciesArrayMatch [listOfMyModifiers.size ()]; 
+	
+		for (int i=0; i < listOfMyModifiers.size (); i++)
+		{
+			MySpecies* tmModifier = listOfMyModifiers[i];
+			if (tmModifier->getDB_ref () == dbref)
+			{
+				MySpecies* currSpe = listOfMySpecies[index];
+				bool same = isSameType (
+						currSpe->getCompTypeId (), 
+						tmModifier->getCompTypeId ()
+						);
 
-	//
-	//	permutation to find all possible combinations
-	//	reactant_sam and modifier_sam are both of type speciesArrayMatch*
-	//
+				cMatchsArray trym;
+				if (same && currSpe->match (tmModifier, trym)) 
+				{
+					for (int k=0; k < trym.size (); k++)
+						modifier_sam[i].push_back (make_pair (index, trym[k]));
+					perm_modifiers *= modifier_sam[i].size ();
+				}
+				else {fail2match = true; break;} 
+			}
+			else
+			{
+				for (int j=0; j <= index; j++)
+				{
+					MySpecies* prevSpe = listOfMySpecies[j];
+					bool same = isSameType (
+							prevSpe->getCompTypeId (), 
+							tmModifier->getCompTypeId ()
+							);
 
-	vector<speciesArrayMatch> possibleReactantMatch;
+					cMatchsArray trym;
+					if (same && prevSpe->match (tmModifier, trym))
+					{
+						for (int k=0; k < trym.size (); k++)
+							modifier_sam[i].push_back (make_pair (j, trym[k]));
+					}
+				}
 
-	for (int i =0; i < permAll1; i++)
+				if (modifier_sam[i].empty ()) {fail2match = true; break;}
+				else perm_modifiers *= modifier_sam[i].size ();
+			}
+		}
+
+		if (fail2match) return false;
+		else cout << "\nNumber of Matchings of Reactant TEMPLATEs = " << perm_modifiers << endl;
+	}
+
+	/**
+	 * permutation to find all possible combinations
+	 */
+
+	vector<speciesArrayMatch> possibleReactantMatch; 
+	vector<speciesArrayMatch> possibleModifierMatch;
+
+	for (int i =0; i < perm_reactants; i++)
 	{
 		speciesArrayMatch tryMS; 
 
@@ -523,11 +483,8 @@ bool reactionTemplate::findSpeciesMatch (
 
 		possibleReactantMatch.push_back (tryMS);
 	}
-	delete [] reactant_sam;
 
-	vector<speciesArrayMatch> possibleModifierMatch;
-
-	for (int i =0; i < permAll2; i++)
+	for (int i =0; i < perm_modifiers; i++)
 	{
 		speciesArrayMatch tryMS; 
 
@@ -536,20 +493,15 @@ bool reactionTemplate::findSpeciesMatch (
 		{
 			int indperm = divide % modifier_sam[j].size ();
 			tryMS.push_back (modifier_sam[j][indperm]);
-
-			cout << "\nmodifier index = " << j 
-				 << "	chain num  = " << 
-				 modifier_sam[j][indperm].second.size ()
-				 << " 	should be " << 
-				 listOfMyModifiers[j]->getNumOfChains ()
-				 << endl;
-
 			divide /= modifier_sam[j].size ();
 		}
 
 		possibleModifierMatch.push_back (tryMS);
 	}
-	delete [] modifier_sam;
+
+	//	free memory
+	if (reactant_sam != NULL) delete [] reactant_sam;
+	if (modifier_sam != NULL) delete [] modifier_sam;
 
 	/**
 	 * *************************************************
@@ -562,9 +514,6 @@ bool reactionTemplate::findSpeciesMatch (
 	 * *************************************************
 	 */
 
-//    cout << "\npossible reactants assembles = " << possibleReactantMatch.size ();
-//    cout << "\npossible modifiers assembles = " << possibleModifierMatch.size ();
-
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
@@ -572,76 +521,76 @@ bool reactionTemplate::findSpeciesMatch (
 			/**
 			 * COMPARTMENT CONSTRAINTS
 			 */
-			
+
 			//	find all possible compartment configuration
 			set<int> possible;
 
 			//	reactant constraints
-			assert (possibleReactantMatch[i].size () == listOfMyReactants.size ());
-			for (int n1 = 0; n1 < compConfig.size (); n1++)
+			if (listOfMyReactants.size () > 0)
 			{
-				bool fail = false;
-				for (int n2=0; n2 < possibleReactantMatch[i].size (); n2++)
+				for (int n1 = 0; n1 < compConfig.size (); n1++)
 				{
-					//	parameter about template spcies
-					string __compLabel_tm = listOfMyReactants[n2]->getCompartment ();
-					string __compid_tm;
-					if (compConfig[n1].count (__compLabel_tm))
+					bool fail = false;
+					for (int n2=0; n2 < possibleReactantMatch[i].size (); n2++)
 					{
-						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
-						__compid_tm = c->getId ();
+						//	parameter about template spcies
+						string __compLabel_tm = listOfMyReactants[n2]->getCompartment ();
+						string __compid_tm;
+						if (compConfig[n1].count (__compLabel_tm))
+						{
+							MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
+							__compid_tm = c->getId ();
+						}
+						else throw StrCacuException (
+								"No compartment read for species in reaction template!"
+								);
+
+						//	parameter about real species
+						int __species_index = possibleReactantMatch[i][n2].first;
+						string __compid = listOfMySpecies[__species_index]->getCompartment ();
+
+						if (__compid_tm != __compid) {fail = true;break;}
 					}
-					else throw StrCacuException (
-							"No compartment read for species in reaction template!"
-							);
-
-					//	parameter about real species
-					int __species_index = possibleReactantMatch[i][n2].first;
-					string __compid = listOfMySpecies[__species_index]->getCompartment ();
-
-					if (__compid_tm != __compid) {fail = true;break;}
+					if (!fail) possible.insert (n1);
 				}
-				if (!fail) possible.insert (n1);
+				if (possible.empty ()) continue;
 			}
-			if (possible.empty ()) continue;
-
-			cout << "\npossible_size after reactant constraints = " << possible.size();
 
 			//	modifier constraints
-			assert (possibleModifierMatch[j].size () == listOfMyModifiers.size ());
-			for (int n1 = 0; n1 < compConfig.size (); n1++)
+			if (listOfMyModifiers.size () > 0)
 			{
-				if (!possible.count (n1)) continue;
-
-				bool fail = false;
-				for (int n2=0; n2 < possibleModifierMatch[j].size (); n2++)
+				for (int n1 = 0; n1 < compConfig.size (); n1++)
 				{
-					//	parameter about template spcies
-					string __compLabel_tm = listOfMyModifiers[n2]->getCompartment ();
-					string __compid_tm;
+					if (!possible.count (n1)) continue;
 
-					//	LIAOCHEN MARK ... TAKE CARE!
-					assert (n1 < compConfig.size ());
-					if (compConfig[n1].count (__compLabel_tm))
+					bool fail = false;
+					for (int n2=0; n2 < possibleModifierMatch[j].size (); n2++)
 					{
-						MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
-						__compid_tm = c->getId ();
+						//	parameter about template spcies
+						string __compLabel_tm = listOfMyModifiers[n2]->getCompartment ();
+						string __compid_tm;
+
+						//	LIAOCHEN MARK ... TAKE CARE!
+						assert (n1 < compConfig.size ());
+						if (compConfig[n1].count (__compLabel_tm))
+						{
+							MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
+							__compid_tm = c->getId ();
+						}
+						else throw StrCacuException (
+								"No compartment read for species in reaction template!"
+								);
+
+						//	parameter about real species
+						int __species_index = possibleModifierMatch[j][n2].first;
+						string __compid = listOfMySpecies[__species_index]->getCompartment ();
+
+						if (__compid_tm != __compid) {fail = true;break;}
 					}
-					else throw StrCacuException (
-							"No compartment read for species in reaction template!"
-							);
-
-					//	parameter about real species
-					int __species_index = possibleModifierMatch[j][n2].first;
-					string __compid = listOfMySpecies[__species_index]->getCompartment ();
-
-					if (__compid_tm != __compid) {fail = true;break;}
+					if (fail) possible.erase (n1);
 				}
-				if (fail) possible.erase (n1);
+				if (possible.empty ()) continue;
 			}
-			if (possible.empty ()) continue;
-			
-			cout << "\npossible_size after modifier constraints = " << possible.size();
 
 			//	compartment-type species constraints
 			for (int n1=0; n1 < compConfig.size (); n1++)
@@ -651,38 +600,40 @@ bool reactionTemplate::findSpeciesMatch (
 				map<string, int> itself;
 
 				//	for reactants
-				for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
+				if (listOfMyReactants.size () > 0)
 				{
-					string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
-					if (!__species_itself.empty ())
+					for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
 					{
-						int __species_index = possibleReactantMatch[i][n2].first;
-						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __species_index;
-						else if (itself[__species_itself] != __species_index) {
-							possible.erase (n1); break;
+						string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
+						if (!__species_itself.empty ())
+						{
+							int __species_index = possibleReactantMatch[i][n2].first;
+							if (!itself.count (__species_itself)) 
+								itself[__species_itself] = __species_index;
+							else if (itself[__species_itself] != __species_index) {
+								possible.erase (n1); break;
+							}
 						}
 					}
 				}
-
-				cout << "\npossible1 = " << possible.size ();
 
 				//	for modifiers
-				for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
+				if (listOfMyModifiers.size () > 0)
 				{
-					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
-					if (!__species_itself.empty ())
+					for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
 					{
-						int __species_index = possibleModifierMatch[i][n2].first;
-						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __species_index;
-						else if (itself[__species_itself] != __species_index) {
-							possible.erase (n1); break;
+						string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
+						if (!__species_itself.empty ())
+						{
+							int __species_index = possibleModifierMatch[i][n2].first;
+							if (!itself.count (__species_itself)) 
+								itself[__species_itself] = __species_index;
+							else if (itself[__species_itself] != __species_index) {
+								possible.erase (n1); break;
+							}
 						}
 					}
 				}
-
-				cout << "\npossible2 = " << possible.size ();
 			}
 
 			if (possible.empty ()) continue;
@@ -693,78 +644,84 @@ bool reactionTemplate::findSpeciesMatch (
 			 * (2) associated product compartment attribution
 			 */
 
-			for (int i=0; i < compConfig.size (); i++)
+			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
-				if (possible.count (i))
+				if (possible.count (n1))
 				{
 					reactionMatch tmp = make_pair (
 							possibleReactantMatch[i], 
 							possibleModifierMatch[j]
 							);
-					map<string, int>& conf = compConfig[i];
+					map<string, int>& conf = compConfig[n1];
 					result.push_back (make_pair(tmp, conf));
 
 					/**
 					 * it is important to check tmp
 					 */
-					cout << "\n^^^^^^^^^^	REACTANTS	:	^^^^^^^^^^" << endl;
-					cout << "\nspeciesArrayMatch: reactant num = " 
-						 << possibleReactantMatch[i].size () << endl;
-					for (int cnt = 0; cnt < possibleReactantMatch[i].size (); cnt++)
+					cout << "\n^_^		REACTANTS	:	^_^\n";
+					if (listOfMyReactants.size () > 0)
 					{
-						cout << "\nreactant : " << cnt;
-						cout << "\nspecies matched in the system : " 
-							 << possibleReactantMatch[i][cnt].first;
-						cMatchsType2& details = possibleReactantMatch[i][cnt].second;
-						cout << "\nchains of reactant = " << details.size ();
-						for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
+						cout << "\nspeciesArrayMatch: reactant num = " 
+							<< possibleReactantMatch[i].size () << endl;
+						for (int cnt = 0; cnt < possibleReactantMatch[i].size (); cnt++)
 						{
-							cout << "\nmatched chain of species in reality: " << 
-								 details[cnt2].second;
-							cout << "\n<--	details	-->";
-							cMatchType& __match = details[cnt2].first;
-						    
-							cout << "\nnumber of parts to be matched:	" 
-								 << __match.size () << endl;
-							cMatchType::iterator first = __match.begin ();
-							for (; first != __match.end (); first++)
+							cout << "\nreactant : " << cnt;
+							cout << "\nspecies matched in the system : " 
+								<< possibleReactantMatch[i][cnt].first;
+							cMatchsType2& details = possibleReactantMatch[i][cnt].second;
+							cout << "\nchains of reactant = " << details.size ();
+							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
 							{
-								cout << "(" << first->first << ", " << first->second << ") " << endl; 
-							}	
-						}
-					}	
+								cout << "\nmatched chain of species in reality: " << 
+									details[cnt2].second;
+								cout << "\n<--	details	-->";
+								cMatchType& __match = details[cnt2].first;
 
-					cout << "\n^^^^^^^^^^^^^^^^^^^^^	MODIFIERS	:	^^^^^^^^^^^^^^^^^" << endl;
-					cout << "\nspeciesArrayMatch: modifier num = " 
-						 << possibleModifierMatch[j].size () << endl;
-					for (int cnt = 0; cnt < possibleModifierMatch[j].size (); cnt++)
+								cout << "\nnumber of parts to be matched:	" 
+									<< __match.size () << endl;
+								cMatchType::iterator first = __match.begin ();
+								for (; first != __match.end (); first++)
+								{
+									cout << "(" << first->first << ", " << first->second << ") " << endl; 
+								}	
+							}
+						}	
+					}
+
+					cout << "\n^_^		MODIFIERS	:	^_^\n";
+					if (listOfMyModifiers.size () > 0)
 					{
-						cout << "\nmodifier : " << cnt;
-						listOfMyModifiers[cnt]->Output ();
-
-						cout << "\nspecies matched in the system : " 
-							 << possibleModifierMatch[j][cnt].first;
-						listOfMySpecies[possibleModifierMatch[j][cnt].first]->Output ();
-
-						cMatchsType2& details = possibleModifierMatch[j][cnt].second;
-						cout << "\nchains of modifier = " << details.size () 
-							 << " should be : " << listOfMyModifiers[cnt]->getNumOfChains () << endl;
-						for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
+						cout << "\nspeciesArrayMatch: modifier num = " 
+							<< possibleModifierMatch[j].size () << endl;
+						for (int cnt = 0; cnt < possibleModifierMatch[j].size (); cnt++)
 						{
-							cout << "\nmatched chain of species in reality: " << 
-								 details[cnt2].second;
-							cout << "\n\n<-------			details			-------->";
-							cMatchType& __match = details[cnt2].first;
-						    
-							cout << "\nnumber of parts to be matched:	" 
-								 << __match.size () << endl;
-							cMatchType::iterator first = __match.begin ();
-							for (; first != __match.end (); first++)
+							cout << "\nmodifier : " << cnt;
+							listOfMyModifiers[cnt]->Output ();
+
+							cout << "\nspecies matched in the system : " 
+								<< possibleModifierMatch[j][cnt].first;
+							listOfMySpecies[possibleModifierMatch[j][cnt].first]->Output ();
+
+							cMatchsType2& details = possibleModifierMatch[j][cnt].second;
+							cout << "\nchains of modifier = " << details.size () 
+								<< " should be : " << listOfMyModifiers[cnt]->getNumOfChains () << endl;
+							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
 							{
-								cout << "(" << first->first << ", " << first->second << ") "; 
-							}	
-						}
-					}	
+								cout << "\nmatched chain of species in reality: " << 
+									details[cnt2].second;
+								cout << "\n\n<-------			details			-------->";
+								cMatchType& __match = details[cnt2].first;
+
+								cout << "\nnumber of parts to be matched:	" 
+									<< __match.size () << endl;
+								cMatchType::iterator first = __match.begin ();
+								for (; first != __match.end (); first++)
+								{
+									cout << "(" << first->first << ", " << first->second << ") "; 
+								}	
+							}
+						}	
+					}
 
 					//	check over
 				}
@@ -773,7 +730,7 @@ bool reactionTemplate::findSpeciesMatch (
 			//	go to next pair of reactants and modifiers
 		}
 	}
-	
+
 	return result.size () > 0;
 }
 

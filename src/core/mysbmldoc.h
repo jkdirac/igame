@@ -82,6 +82,7 @@ class MySBMLDocument:
 
 	private:
 		
+		int startpos;
 		void write ();
 
 	private:

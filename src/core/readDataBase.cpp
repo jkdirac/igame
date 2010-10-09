@@ -495,19 +495,13 @@ void readDataBase::setSpecies (
 {
 	int operation = LIBSBML_OPERATION_SUCCESS;
 
-	//
 	//  set database reference 
-	//
 	if (!db.empty ()) s->setDB_ref (db); 
 
-	//
 	//	set id of compartment-type species
-	//
 	if (!ccid.empty ()) s->setCompTypeId (ccid);
 
-	//
 	//  setId 
-	//
 	operation = s->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 	{
@@ -518,9 +512,7 @@ void readDataBase::setSpecies (
 				);
 	}
 
-	//
 	//  setName 
-	//
 	if (!name.empty ())
 	{
 		operation = s->setName (name);
@@ -531,9 +523,7 @@ void readDataBase::setSpecies (
 					);
 	}
 
-	//
 	//  setCompartment
-	//
 	operation = s->setCompartment (compartment);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
@@ -541,15 +531,11 @@ void readDataBase::setSpecies (
 				"Invalid Attribute Value: compartment!"
 				);
 
-	//
 	//  setInitialAmount
-	//
 	if (initialAmount >= 0.0) 
 		operation = s->setInitialAmount (initialAmount);
 
-	//
 	//  setInitialConcentration
-	//
 	if (initialConcentration >= 0.0) 
 	{
 		operation = s->setInitialConcentration (initialConcentration);
@@ -560,9 +546,7 @@ void readDataBase::setSpecies (
 					);
 	}
 
-	//
 	//  setSubstanceUnits
-	//
 	if (!substanceUnits.empty ())
 	{
 		operation = s->setSubstanceUnits (substanceUnits);
@@ -573,26 +557,18 @@ void readDataBase::setSpecies (
 					);
 	}
 
-	//
+
+	//	setConstant
+	if (constant == true) s->setConstant (true);
+
 	//  setHasOnlySubstanceUnits
-	//
-	operation = s->setHasOnlySubstanceUnits (hasOnlySubstanceUnits);
-	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-			throw StrCacuException (
-					"Reading Block Species..."
-					"Unexpected Attribute: hasOnlySubstanceUnits!"
-					);
+	if (hasOnlySubstanceUnits == true) s->setHasOnlySubstanceUnits (true);
 
-	//
-	//  setBoundaryCondition
-	//
-	s->setBoundaryCondition (boundaryCondition);
-
-	//
-	//  setCharge
-	//
-	if (charge != 0)
+	//	setBoundaryCondition
+	if (boundaryCondition == true) s->setBoundaryCondition (true);
+	
+	//	setCharge
+	if (charge != 0) 
 	{
 		operation = s->setCharge (charge);
 		if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
@@ -601,19 +577,6 @@ void readDataBase::setSpecies (
 					"Unexpected Attribute: charge!"
 					);
 	}
-
-	//
-	//  setConstant
-	//
-	operation = s->setConstant (constant);
-	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-		if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
-			throw StrCacuException (
-					"Reading Block Species..."
-					"Unexpected Attribute: constant!"
-					);
-
-	return;
 }
 
 void readDataBase::setUnit (
@@ -993,10 +956,6 @@ void readDataBase::readReaction (
 		else tmpR->addReactant (s, compartmentLabel);
 
 		prodIndex[speciesLabel] = cnt-1;
-
-		//	TEST
-		cout << "\nproducts read from database cnt = " << cnt << endl;
-		s->Output ();
 	}
 
 	//(3) read Modifier
@@ -1033,9 +992,6 @@ void readDataBase::readReaction (
 		oss.str (""); oss << prefix << i << "::";
         tmpR->addProductPrefix (oss.str ());
 	}
-
-	cout << "\n^^^^^^^^^^^^^^^	MENG  ^^^^^^^^^^^^^^^^\n";
-	tmpR->OutputProducts ();
 
 	//read substituent transfer table
 	vector< pair<string,string> > source;

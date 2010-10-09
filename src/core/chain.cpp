@@ -169,20 +169,22 @@ void Chain::__add_chain_prefix (
 
 void Chain::Output (ostream& os) const 
 {
-	os << "5' - ";
+	os << "\n5'	---- ";
 
 	int numP = listOfParts.size ();
 	for (int cnt =0; cnt < numP; cnt++)
 	{
 		Part* p = listOfParts[cnt];
-		os << p->getPartRef ();
+		os << "\n			" <<  p->getPartRef ();
+
 	    if (p->isBinded) os << "*";
+
 		os << "(" << p->getPartType () 
 		   << "," << p->getPartLabel () 
-		   << ") - " ;
+		   << ")  " ;
 	}
 
-	os << "3'";
+	os << "\n----	3'";
 }
 
 bool Chain::equal (const Chain* rhs) const
