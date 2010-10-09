@@ -54,6 +54,10 @@ void MySpecies::split (
 	//	first trim the species
 	trim (&dbreader);
 
+	cout << "\n!!!	--	--	--	--	!!!\n";
+	cout << "\nspecies after trim	=	 "  << endl;
+	Output ();
+
 	//	container to store chainnum of species
 	//	chainUsed[species][chainnum set]
 	vector< set<int> > chainUsed;
@@ -181,7 +185,7 @@ const Node* MySpecies::findBindedNode (
 	for (int i= 0; i<listOfTrees.size(); i++)
 	{
 		Node* n = listOfTrees[i]->getNode (label);
-		if (!n) return n;
+		if (n) return n;
 	}
 	return 0;
 }
@@ -193,7 +197,7 @@ Node* MySpecies::findBindedNode (
 	for (int i= 0; i<listOfTrees.size(); i++)
 	{
 		Node* n = listOfTrees[i]->getNode (label);
-		if (!n) return n;
+		if (n) return n;
 	}
 	return 0;
 }
@@ -354,7 +358,6 @@ void MySpecies::rearrange ()
 			{
 				string label = p->getPartLabel ();
 				Node* n = findBindedNode (label);
-				assert (!n);
 				if (n) n->setNodeWeight (i,j);
 			}
 		}
@@ -630,28 +633,39 @@ bool MySpecies::match (
 	if (numc_t < numc_m) return false;
 
 	//  temporary variables
-	vector<cMatchsType> records (numc_t);
-	vector<vi> chainNum (numc_t);
+	int permuteAll = 1;
+	cMatchsArray records;
 
 	//
 	// for each chain in template species, we find all matchings
 	// in this species, and records them
 	//
-	int permuteAll = 1;
 	for (int i =0; i < numc_t; i++)
 	{
-		Chain* c1 = s->listOfChains[i];
+		cout << "\n\ntry template pattern	"
+			 << "--	..	--	" << i << endl;
 
-		int found_all = 0;
+		cMatchsType2 record;
+
+		Chain* c1 = s->listOfChains[i];
 		for (int j = 0; j < numc_m; j++)
 		{
-			listOfChains[j]->match (c1, records[i]);
-			for (int k =0; k < records[i].size (); k++)
-				chainNum[i].push_back (j);
-			found_all += records[i].size ();
+			cout << "\nchain number in current species"
+			     << "	--	..	--	" << j;
+
+			cMatchsType record2;
+			listOfChains[j]->match (c1, record2);
+
+			for (int k =0; k < record2.size (); k++)
+				record.push_back (make_pair(record2[k], j));
 		}
-		if (found_all == 0) return false; 
-		else permuteAll *= found_all;
+
+		if (record.size () == 0) return false; 
+		else
+		{
+			permuteAll *= record.size ();
+			records.push_back (record);		
+		}
 	}
 
 	cout << "\npermuteAll = " << permuteAll;
@@ -666,33 +680,27 @@ bool MySpecies::match (
 
 		//	same chains in this species could not be allowed 
 		//            to match one chain in species s
-		set <int> chainUsed;
 
 		//	cMatchType2 only records details of one chain match
 		//	and vector<cMatchType2> have a complete set of chain match
-		cout << "\nnumc_t = " << numc_t << endl;
-		vector<cMatchType2> tryAssemble;
-		cout << "\ntryAssemble.size () = " << tryAssemble.size () << endl;
+		
+		set <int> chainUsed;
+		cMatchsType2 tryAssemble;
 
 		for (int j =0; j < numc_t; j++)
 		{
 			int indexperm = divide % records[j].size ();
-			int chainnum = chainNum[j][indexperm];	// num of chain of this species
+			int chainnum = records[j][indexperm].second;
 
 			if (chainUsed.count (chainnum)) {ok = false;break;}
 			else 
 			{
-				tryAssemble.push_back (
-						make_pair (records[j][indexperm],
-							chainNum[j][indexperm])
-						);
-
 				chainUsed.insert (chainnum); 
+				tryAssemble.push_back (records[j][indexperm]);
 			}
 			divide /= records[j].size ();
 		}
 
-		cout << "\ntryAssemble.size () = " << tryAssemble.size () << endl;
 		if (!ok) continue;
 
 		//
@@ -791,6 +799,8 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 			}
 		}
 	}
+	
+	cout << "\nnumber of binding sites = " << bindsites.size () << endl;
 
 	//	trim condition 1
 	
@@ -799,7 +809,7 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 	 * parts with isBinded attribute, then this tree will be removed
 	 */
 
-	for (int i=0; i <listOfTrees.size (); i++)
+	for (int i=0; i <listOfTrees.size ();)
 	{
 		//	find if there are leaf nodes that are not in bindsites set
 		//	if any, then remove this tree
@@ -829,9 +839,11 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 		{
 			set<string>::iterator iter = nodes.begin ();
 			while (iter != nodes.end ()) bindsites.erase (*iter++);
+			i++;
 		}
 		else
 		{
+//            cout << "\n<!!!	---	---	---	DELETE TREE	---	---	---\n";
 
 			//
 			//	delete tree
@@ -871,10 +883,11 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 					}
 				}
 			}
-		}
 
-		listOfTrees.erase (listOfTrees.begin ()+i);
-		delete t;
+			listOfTrees.erase (listOfTrees.begin ()+i);
+			delete t;
+
+		}
 	}	
 
 

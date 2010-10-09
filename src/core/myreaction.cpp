@@ -118,7 +118,7 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
-
+		
 		//	prefix to be added for part labels and node labels
 		ostringstream oss;
 		string prefix = "__MoDeL_REACTANT_CXX";
@@ -152,6 +152,11 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i < listOfMyProducts.size () ; i++)
 	{
 		MySpecies* s = listOfMyProducts[i];
+
+		//TEST
+		cout << "\nPRODUCT BODY: i = " << i;
+		s->Output ();
+
 		for (int j=0; j< s->getNumOfChains (); j++) 
 		{
 			Chain* c = mixture->createChain (s->getChain (j));
@@ -162,13 +167,18 @@ void MyReaction::createReactionsFromTemplate (
 			c->setLabel (oss.str ());
 			s->getChain (j)->setLabel (oss.str ());
 		}
+
 		for (int j=0; j< s->getNumOfTrees (); j++) 
+		{
+			cout << "\nj = " << j;
+			s->getTree (j)->Output (cout);
 			mixture->createTree (s->getTree (j));
+		}
 	}
 
 	//	mixed species
-//    cout << "\nMixture Before Splitting:" << endl;
-//    mixture->Output ();
+    cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
+    mixture->Output ();
 
 	/**
 	 * split mixed species and store results in splits
@@ -179,8 +189,14 @@ void MyReaction::createReactionsFromTemplate (
 	/**
 	 * check splits
 	 */
-//    cout << "\nChecking Species Spliting ...";
-//    for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+	cout << "\n**********************************\n";
+	cout << "\n**********************************\n\n";
+
+	cout << "\nChecking Species Spliting ...";
+	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+	
+	cout << "\n\n**********************************\n";
+	cout << "\n**********************************\n";
 
 	// 	splits are only partial copies of mixture 
 	delete mixture;
@@ -311,6 +327,12 @@ void MyReaction::createReactionsFromTemplate (
 
 			//  delete old species and replaced with new one
 			listOfMyProducts[degenerate[i][j]] = __product;
+
+			//	it is need to make it clear about chain labels
+			for (int k=0; k < __product->getNumOfChains (); k++)
+				__product->getChain (k)->setLabel ("");
+			
+
 			delete __product_tm;
 		}
 

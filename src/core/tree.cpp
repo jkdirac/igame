@@ -87,9 +87,12 @@ void Tree::__add_tree_prefix (const string& prefix)
 	{
 		Node* n = listOfNodes[i];
 
-		n->nodeLabel = prefix + n->nodeLabel;
-		if (n->parentNodeLabel != "ROOT")
-			n->parentNodeLabel = prefix + n->parentNodeLabel;
+		if (n->nodeLabel != "ROOT") 
+		{
+			n->nodeLabel = prefix + n->nodeLabel;
+			if (n->parentNodeLabel != "ROOT")
+				n->parentNodeLabel = prefix + n->parentNodeLabel;
+		}
 
 		mapNodes.insert (make_pair(n->nodeLabel, n));
 	}
@@ -251,7 +254,7 @@ void Tree::Output (ostream& os, const string& label) const
 	if (numCh == 0) return;
 	else
 	{
-		os << "\n" << std::setw (5) << label << " --> ";
+		os << "\n" << std::setw (3) << label << " --> ";
 		for (int cnt =0; cnt < numCh; cnt++)
 		{
 			Node* nn = n->children[cnt];

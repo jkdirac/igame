@@ -1,15 +1,6 @@
 #include "chain.h"
 
-Chain::Chain ()
-{
-	keywords["ANY"] = 0;
-	keywords["ANYUB"] = 1;
-	keywords["NZ"] = 2;
-	keywords["NZUB"] = 3;
-	keywords["ONE"] = 4;
-	keywords["ONEUB"] = 5;
-}
-
+Chain::Chain () {}
 Chain::Chain (const Chain* orig) 
 	:
 		unicode (orig->unicode),
@@ -184,9 +175,11 @@ void Chain::Output (ostream& os) const
 	for (int cnt =0; cnt < numP; cnt++)
 	{
 		Part* p = listOfParts[cnt];
-		os << p->getPartRef () << "(" 
-			<< p->getPartType () << ","  
-			<< p->getPartLabel () << ") - " ;
+		os << p->getPartRef ();
+	    if (p->isBinded) os << "*";
+		os << "(" << p->getPartType () 
+		   << "," << p->getPartLabel () 
+		   << ") - " ;
 	}
 
 	os << "3'";
@@ -234,9 +227,9 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 	}
 
 //        check block searching!
-    cout << "\n<!--		Non-Substituent Parts Block: 	-->" << endl;
-	for (int i=0; i < ns_t.size (); i++)
-		cout << "(" << ns_t[i].first << "," << ns_t[i].second << ") ";
+//    cout << "\n<!--		Non-Substituent Parts Block: 	-->" << endl;
+//    for (int i=0; i < ns_t.size (); i++)
+//        cout << "(" << ns_t[i].first << "," << ns_t[i].second << ") ";
 
 	if (ns_t.size () > 0)
 	{
@@ -279,7 +272,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			else permAll *= m_pos[cnt].size ();
 		}
 
-		cout << "\n<--	permAll for all non-substituent blocks	=	\n" << permAll << endl;
+//        cout << "\n<--	permAll for all non-substituent blocks	=	\n" << permAll << endl;
 
 		//
 		//	find possible matching combinations
@@ -318,6 +311,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 
 	//	check asmb
 		
+	/**
 	cout << "\n<--	all possible matchings for non-substituent blocks	-->\n";
 	for (int i=0; i < asmb.size (); i++)
 	{
@@ -333,6 +327,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			first ++;
 		}
 	}
+	*/
 
 	//
 	//	insert substituent pieces into asmb
@@ -381,9 +376,12 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 						);
 				
 				//	TEST
-				cout << "\nmok = " << boolalpha << mok 
-					 << "	tmp.size = " << tmp.size () << endl;
+//                cout << "\nl1 = " << 0 << " u1 = " << ns_t[0].first-1 <<
+//                    " l2 = " << 0 << " u2 = " << it->first-1 << endl;
+//                cout << "\nmok = " << boolalpha << mok 
+//                     << "	tmp.size = " << tmp.size () << endl;
 
+				/*
 				for (int i=0; i < tmp.size (); i++)
 				{
 					cout << "\ni = " << i << endl;
@@ -396,6 +394,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 					}
 
 				}
+				*/
 				//	END
 
 				if (mok && tmp.size () > 0)
@@ -442,12 +441,12 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 				if (j == ns_t.size ()-1) u2 = listOfParts.size ()-1;
 				else u2 = (++it)->first-1; //it add one object
 
+//                cout << "\nl1 = " << l1 << " u1 = " << u1 <<
+//                    " l2 = " << l2 << " u2 = " << u2 << endl;
+
 				//	no substituent-type parts
 				if (j == ns_t.size ()-1)
 					if (u1 < l1 && u2 < l2) continue;
-
-//                cout << "\nl1 = " << l1 << " u1 = " << u1 <<
-//                    " l2 = " << l2 << " u2 = " << u2 << endl;
 
 				bool mok = substituent_m (l1, u1, l2, u2, c, tmp);
 				
@@ -481,11 +480,24 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			else
 			{
 				for (int j=0; j < AssembleMatch.size (); j++)
+				{
 					res.push_back (AssembleMatch[j]);
+
+					//	TEST
+					cout << "\npattern match " << res.size ()-1 << "	--	";
+					cMatchType::iterator first = AssembleMatch[j].begin ();
+					while (first != AssembleMatch[j].end ())
+					{
+						cout << "(" << first->first << ", " << first->second << ") ";
+						first ++;
+					}
+
+				}
+
 			}
 		}
 
-		cout << "\nall possibilities found: " << res.size () << endl;
+		cout << "\n\nall possibilities found: " << res.size () << endl;
 
 		if (res.empty ()) return false;
 		return true;
@@ -526,12 +538,22 @@ bool Chain::substituent_m (
 			for (int i=l1; i <= u1; i++) 
 			{
 				string partRef = c->listOfParts[i]->getPartRef ();
-				int keyValue = keywords.find (partRef)->second;
-				switch (keyValue)
+				int keyValue = getKeywords (partRef);
+
+				if (keyValue != -1)
+				{	
+					switch (keyValue)
+					{
+						case 0: 
+						case 1: {res.push_back (make_pair(l2,u2));break;}
+						default: return false;
+					}
+				}
+				else 
 				{
-					case 0: 
-					case 1: {res.push_back (make_pair(l2,u2));break;}
-					default: return false;
+					string errno ("Invalid Substituent Type: ");
+				    errno += partRef + "!";
+					throw StrCacuException (errno);
 				}
 			}
 			result.push_back (res);
@@ -544,11 +566,13 @@ bool Chain::substituent_m (
 	//
 	int startpos, endpos;
 	assert (l1 < c->listOfParts.size ());
+	
 	string partRef = c->listOfParts[l1]->getPartRef ();
 	string partType = c->listOfParts[l1]->getPartType ();
-	if (keywords.count (partRef))
+	int keyValue = getKeywords (partRef);
+	
+	if (keyValue != -1)
 	{
-		int keyValue = keywords.find (partRef)->second;
 		switch (keyValue)
 		{
 			case 0: {
@@ -646,8 +670,14 @@ bool Chain::substituent_m (
 							endpos = l2;
 						break;
 					}
-			default: {startpos = l2; endpos = u2+1; break;}
+			default: break;
 		}
+	}
+	else 
+	{
+		string errno ("Invalid Substituent Type: ");
+		errno += partRef + "!";
+		throw StrCacuException (errno);
 	}
 
 	bool rVal = false;
@@ -691,4 +721,13 @@ bool Chain::substituent_m (
 	return rVal;
 }
 
-
+int Chain::getKeywords (const string& ref) const
+{
+	if (ref == "ANY") return 0;
+	if (ref == "ANYUB") return 1;
+	if (ref == "NZ") return 2;
+	if (ref == "NZUB") return 3;
+	if (ref == "ONE") return 4;
+	if (ref == "ONEUB") return 5;
+	return -1;
+}

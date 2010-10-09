@@ -790,19 +790,30 @@ void reactionTemplate::createProductsFromTemplate (
 		vector<MySpecies*>& products
 		)
 {
+	cout << "\n<--	create products from template	--	..	-->" << endl;
 
 	//	configure 
 	const map<string, int>& config = table.second;
 	const speciesArrayMatch& __cand_reactants =  table.first.first;
 	const speciesArrayMatch& __cand_modifiers =  table.first.second;
 
+	if (__cand_reactants.size () != listOfMyReactants.size ()) 
+		throw StrCacuException ("Empty reactant candidates to generate products!");
+
+	if (__cand_modifiers.size () != listOfMyModifiers.size ()) 
+		throw StrCacuException ("Empty modifier candidates to generate products!");
+
 	/**
 	 * core programme to generate products
 	 */
 	for (int i=0; i < listOfMyProducts.size (); i++)
 	{
+		cout << "\nproducts template i = " << i;
+
 		MySpecies* __orig_p = listOfMyProducts[i];	//	template product
 		MySpecies* __spe_new_p = new MySpecies;	//	product new body
+
+		__orig_p->Output ();
 		
 		//	set DB Label
 		string __label_p = __orig_p->getDB_Label ();
@@ -866,12 +877,24 @@ void reactionTemplate::createProductsFromTemplate (
 								);
 					}
 
-					cout << "\nj = " << j << "k = " << k << endl;
+//                    cout << "\nj = " << j << "k = " << k << endl;
 					subsp source = transferTable[destine];
+					
+
+					//	ATTENTION!
+					//
+					//	source.first --> speciesLabel of reactant/modifier
+					//	source.second --> corresponded partLabel in reactant/modifier
+					//	
+					//
+					//	we need to posit the chain number and part number 
+					//	of source.second in source.first
 
 					MySpecies* found = NULL;
 					bool isr = false;
-					int localindex = -1;
+
+					int index_s, index_c, index_p;
+					index_s = index_c = index_p = -1;
 
 					/**
 					 * find species with Label source.first
@@ -885,7 +908,17 @@ void reactionTemplate::createProductsFromTemplate (
 							int index = __cand_reactants[i].first;
 							found = listOfMySpecies[index];
 							isr = true;
-							localindex = i;
+
+							index_s = i;
+							for (int j=0; j < species->getNumOfChains (); j++)
+							{
+								Chain* c = species->getChain (j);
+								index_p = c->getPartIndex (source.second);
+								if (index_p >= 0) {index_c = j; break;}
+							}
+
+							assert (index_c >=0); assert (index_p >= 0);
+
 							break;
 						}
 					}
@@ -900,38 +933,54 @@ void reactionTemplate::createProductsFromTemplate (
 								int index = __cand_modifiers[i].first;
 								found = listOfMySpecies[index];
 								isr = false;
-								localindex = i;
+
+								index_s = i;
+								for (int j=0; j < species->getNumOfChains (); j++)
+								{
+									Chain* c = species->getChain (j);
+									index_p = c->getPartIndex (source.second);
+									if (index_p >= 0) {index_c = j; break;}
+								}
+
+								assert (index_c >=0); assert (index_p >= 0);
+
 								break;
 							}
 						}
 					}
 
-					if (found == NULL) throw StrCacuException (
-							"species Label NOT found!"
-							);
+					if (found == NULL) throw StrCacuException ("species Label NOT found!");
+
+					/*
+					cout << "\nsource.first = " << source.first
+					     << "  source.second = " << source.second 
+					     << "\nindex_s = " << index_s 
+						 << "  index_c = " << index_c
+						 << "  index_p = " << index_p << endl;
+					*/
 
 					/**
 					 * replace substituent-part 
 					 */
 					int chain_lst = -1;
-					if (isr) chain_lst = __cand_reactants[localindex].second[j].second;
-					else chain_lst = __cand_modifiers[localindex].second[j].second;
+//                    cout << "\ncand size = " << __cand_reactants.size () << endl;
+//                    if (isr) cout << "\nchain size = " << __cand_reactants[index_s].second.size ();
 
-					cout << "\nchain_lst = " << chain_lst << endl;
+					//	chain_lst is the matching of chain number of species found for chain j
+					if (isr) chain_lst = __cand_reactants[index_s].second[index_c].second;
+					else chain_lst = __cand_modifiers[index_s].second[index_c].second;
+
+//                    cout << "\nchain_lst = " << chain_lst << endl;
 
 					cMatchType cmt;
 					Chain* ck = found->getChain (chain_lst);
 					assert (ck != NULL);
 
-					cout << "\n__cand_modifiers[localindex].second.size = " 
-						 << __cand_modifiers[localindex].second.size ();
-
-					if (isr) cmt = __cand_reactants[localindex].second[j].first;
-					else cmt = __cand_modifiers[localindex].second[j].first;
+					if (isr) cmt = __cand_reactants[index_s].second[index_c].first;
+					else cmt = __cand_modifiers[index_s].second[index_c].first;
 
 					cMatchType::const_iterator cmtf = cmt.begin ();
-					cout << "\nk = " << k << " cmt.size = " << cmt.size () << endl;
-					for (int cnt =0; cnt != k; cnt++) {
+					for (int cnt =0; cnt != index_p; cnt++) {
 						cmtf ++; assert (cmtf != cmt.end ());
 					}
 
@@ -948,7 +997,7 @@ void reactionTemplate::createProductsFromTemplate (
 						else string prefix = "__MoDeL_MODIFIER_CXX";
 
 						ostringstream oss;
-						oss << prefix << localindex << "::" 
+						oss << prefix << index_s << "::" 
 							<< __new_p->getPartLabel ();
 						__new_p->setPartLabel (oss.str ());
 					}
@@ -956,6 +1005,10 @@ void reactionTemplate::createProductsFromTemplate (
 				else
 				{
 					__new_c->createPart (__orig_part);
+					cout << "\n__new_c->createPart = " 
+						 << __orig_part->getPartRef () << " "
+						 << __orig_part->getIsBinded ()
+						 << endl;
 				}
 			}
 		}
@@ -1041,4 +1094,11 @@ bool reactionTemplate::handle_constraints (
 	}
 
 	return true;
+}
+
+void reactionTemplate::OutputProducts ()
+{
+	cout << "\nTESTING...	...	..." << endl;
+	for (int i=0; i < listOfMyProducts.size (); i++)
+		listOfMyProducts[i]->Output ();
 }

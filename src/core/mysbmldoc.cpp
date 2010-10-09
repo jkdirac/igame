@@ -176,12 +176,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 2) break;
-
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n===========	SPECIES		" << i << "		=============" << endl;
+		cout << "\n===========	SPECIES " << i << "		=============" << endl;
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -196,7 +194,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 			{
 				Part* p = c->getPart (k);
 				cout << "\n===========	Part	  " << k << "	(" << p->getPartRef () << ")	============\n";
-				if (i == 1 && k == 1) goto DAODAO;
 
 				//	search transcription reactions
 				searchTranscriptionReactions (i, j, k, dbreader);
@@ -264,7 +261,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					if (!s->match (sLink, trym)) 
 					{
 						cout << "\nDoes not MATCH! Continue to NEXT...";
-						terminate ();
 						continue;
 					}
 					else cout << "\nMATCH! Continue..." << endl;
@@ -322,7 +318,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		cout << "\nnumOfSpecies = " << listOfMySpecies.size () << endl;
 	}
 
-DAODAO:
 	//	update
 	write ();
 }
@@ -365,6 +360,8 @@ void MySBMLDocument::handleReactionTemplate (
 	 * matching patterns described in reaction template
 	 * ================================================
 	 */
+	cout << "\nTESTING PRODUCTS BEFORE MATCHING...\n";
+	tmpR->OutputProducts ();
 
 	reactionArrayMatch result;
 
@@ -375,6 +372,9 @@ void MySBMLDocument::handleReactionTemplate (
 			listOfMyCompartments, 
 			result
 			);
+
+	cout << "\nTESTING PRODUCTS AFTER MATCHING...\n";
+	tmpR->OutputProducts ();
 
 	//----------------------------------
 	cout << "\n<--	Matching Result Size = " 

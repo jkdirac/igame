@@ -33,7 +33,7 @@
 		<listOfSubstituentTransfers>
 		</listOfSubstituentTransfers>
 		<kineticLaw>
-			<forwardKineticlaw>
+			<forwardKineticLaw>
 				<math>
 				  <apply>
 				    <times/>
@@ -55,7 +55,7 @@
 				</listOfReferencedParameters>
 				<listOfConstraints>
 				</listOfConstraints>
-			</forwardKineticlaw>
+			</forwardKineticLaw>
 			<reverseKineticLaw>
 			</reverseKineticLaw>
 		</kineticLaw>

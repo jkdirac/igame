@@ -72,6 +72,9 @@ class reactionTemplate
 
 		bool handle_constraints (const ListOfParameters*);
 
+
+		void OutputProducts ();
+
 	private:
 
 		//

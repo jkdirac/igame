@@ -51,6 +51,7 @@ class Chain
 
   private:
 
+	int getKeywords (const string&) const;
 	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; 
 
   private:
@@ -61,11 +62,6 @@ class Chain
 	string chainLabel;
 
 	vector<Part*> listOfParts;
-
-  private:
-
-	//	keywords for substituent type part
-	map<string, int> keywords;
 };
 
 #endif

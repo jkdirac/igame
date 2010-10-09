@@ -18,8 +18,8 @@
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
-							<partReference>placI185_v1</partReference>
-							<partLabel>placI_v1</partLabel>
+							<partReference>placI185_bs1</partReference>
+							<partLabel>placI185_bs1_0</partLabel>
 							<partType>ForwardDNA</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
@@ -36,7 +36,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X2</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -48,7 +47,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X3</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -58,7 +56,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X4</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -70,7 +67,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X5</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -80,7 +76,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X6</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -92,7 +87,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X7</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -102,7 +96,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X8</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -114,7 +107,6 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X9</partLabel>
-							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -152,8 +144,12 @@
 							<parentNodeLabel>placIlacI4</parentNodeLabel>
 						</node>
 						<node>
-							<currentNodeLabel>placI_v1</currentNodeLabel>
+							<currentNodeLabel>placI185_bs1_0</currentNodeLabel>
 							<parentNodeLabel>placIlacI4</parentNodeLabel>
+						</node>
+						<node>
+							<currentNodeLabel>placIlacI4</currentNodeLabel>
+							<parentNodeLabel>ROOT</parentNodeLabel>
 						</node>
 					</listOfNodes>
 				</tree>

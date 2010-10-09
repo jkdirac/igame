@@ -91,14 +91,6 @@ void readDataBase::read_cnModel (
 			readPart (cind, doc, pathPart, ipart, 
 					__ref, __label, __type, __ctg); 
 
-			//
-			//	TIPS:
-			//
-			//	1. if __label is empty, program will automatically 
-			//	generate one. 
-			//	2. __type is mandatory if it is not a substituent-type part
-			//
-
 			if (__label_set.count (__label))
 				throw StrCacuException (
 						"Species: partLabel should be unique within"
@@ -129,10 +121,6 @@ void readDataBase::read_cnModel (
 	string pathTree = nodepath + "/cnModel/listOfTrees/tree";
 	int numOfTrees = get_node_element_num (cind, &doc, &pathTree);
 
-	//	all parent nodes at least have two children
-	set<string> __leaf;
-	set<string> __all;	// "ROOT" node would not be added
-
 	for (int itree = 1; itree <= numOfTrees; itree++)
 	{
 		//	create an empty tree
@@ -144,106 +132,30 @@ void readDataBase::read_cnModel (
 		string pathNode (oss.str ());
 		int numOfNodes = get_node_element_num (cind, &doc, &pathNode);
 
-		//	Node labels of the tree should never be the same to nodes in
-		//	other trees
-		set<string> __prev (__all);
-		map<string, int> __parent;
-
 		for (int inode = 1; inode <= numOfNodes; inode++)
 		{
 			string child, parent;
 			readNode (cind, doc, pathNode, inode, child, parent);
-
-			//	ROOT could not be child
-			if (child == "ROOT") throw StrCacuException (
-					"\"ROOT\" could not be a child!"
-					);
-
-			if (!__label_set.count (child))
-			{
-				string errno ("No corresponded part found for Node: ");
-				errno += child + "with same Label!";
-				throw StrCacuException (errno);
-			}
-
-			if (__label_set.count (parent))
-			{
-				string errno ("Invalid Parent Node; ");
-				errno += parent + ", conflict with partLabel!";
-				throw StrCacuException (errno);
-			}
-
-			//create an empty node
-			if (__all.count (child))
-			{
-				string errno ("\nNode Label: ");
-				errno += child + " has been defined already!";
-				throw StrCacuException (errno);
-			}
-			else if (__prev.count (parent))
-			{
-				string errno ("\nNode Label: ");
-				errno += parent + " has been defined already!";
-				throw StrCacuException (errno);
-			}
-			else
-			{
-				//	insert child
-				__leaf.insert (child);
-				__all.insert (child);
-
-				//	insert parent (ROOT will not be added)
-				if (parent != "ROOT")
-				{
-					if (__parent.count (parent)) __parent[parent]++;
-					else {__parent[parent] = 1;	__all.insert (parent);}
-				}
-
-				//	create Node
-				t->createNode (child, parent);
-			}
-		}
-
-		//	check if all parents have more than one children (except "ROOT")
-		map<string, int>::iterator first= __parent.begin ();
-		while (first != __parent.end ())
-		{
-			if (first->second == 1) 
-			{
-				string errno ("Invalid Parent Node: ");
-				errno += first->first + ". At least 2 children are required!";
-				throw StrCacuException (errno);
-			}
-			first ++;
+			t->createNode (child, parent);
 		}
 
 		//add Children of each node
 		t->addNodeChildren ();	
-
-		//	check if the tree is itself as a whole 
-		t->checkIntegrated ();
 	}
 
 	//	find binded part
 	for (int ichain=0; ichain < s->getNumOfChains (); ichain++)
 	{
-		bool alone = false;
-
 		Chain* c = s->getChain (ichain);
 		for (int ipart = 0; ipart < c->getNumOfParts (); ipart++)
 		{
 			Part* p = c->getPart (ipart);
-			string __part_label = p->getPartLabel ();
-			if (__leaf.count (__part_label)) p->setIsBinded (true);
+			Node* n = s->findBindedNode (p->getPartLabel ());
+		    if (n != NULL) p->setIsBinded (true);
 			else p->setIsBinded (false);
 		}
-
-		//	any chain must be 
-		if (!alone && s->getNumOfChains () >1) 
-			throw StrCacuException ("Not a species ALONE!");
 	}
 
-	//	ok, fine strcuture
 	return;
 }
 
@@ -1081,6 +993,10 @@ void readDataBase::readReaction (
 		else tmpR->addReactant (s, compartmentLabel);
 
 		prodIndex[speciesLabel] = cnt-1;
+
+		//	TEST
+		cout << "\nproducts read from database cnt = " << cnt << endl;
+		s->Output ();
 	}
 
 	//(3) read Modifier
@@ -1115,8 +1031,11 @@ void readDataBase::readReaction (
 	for (int i=0; i < numOfProducts; i++) 
 	{
 		oss.str (""); oss << prefix << i << "::";
-		tmpR->addProductPrefix (oss.str ());
+        tmpR->addProductPrefix (oss.str ());
 	}
+
+	cout << "\n^^^^^^^^^^^^^^^	MENG  ^^^^^^^^^^^^^^^^\n";
+	tmpR->OutputProducts ();
 
 	//read substituent transfer table
 	vector< pair<string,string> > source;
@@ -1137,18 +1056,18 @@ void readDataBase::readReaction (
 		pair<string,string> from, to;
 		readTransfer (REACTION, doc, pathTransfer, cnt, from, to);
 
-		cout << "\nto.first = " <<to.first << "to.second = " << to.second << endl;
+//        cout << "\nto.first = " <<to.first << "to.second = " << to.second << endl;
 
 		//	reset partLabel of "to" element
 		oss.str (""); 
 		oss << prefix << prodIndex[to.first] << "::";
 		to.second = oss.str () + to.second;
-		cout << "\nto.second = " << to.second << endl;
+//        cout << "\nto.second = " << to.second << endl;
 
 		tmpR->addSubstituentTransfer (from, to);
 	}
 
-	cout << "\nbegin read kineticlaw " << endl;
+//    cout << "\nbegin read kineticlaw " << endl;
 
 	/**
 	 *	read KineticLaw
