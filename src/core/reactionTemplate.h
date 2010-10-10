@@ -43,7 +43,11 @@ class reactionTemplate
 
 		string getCompartment (const string&) const;
 		const MySpecies* getSpecies (const string&) const;
+		int getSpeciesIndex (const string&) const;
 		Parameter* getParameter (const string&);
+
+		MySpecies* getProduct (const int& n);
+		const MySpecies* getProduct (const int& n) const;
 
 		void addParameter (Parameter*);
 		void addReactant (MySpecies*, const string&);
@@ -53,7 +57,6 @@ class reactionTemplate
 		void addCompartment (const string&, const string&, const string&);
 		void addConstraint (const vector<string>&, const string&);
 		void addSubstituentTransfer (const subsp&, const subsp&);	//attention! it maps subsp to --> subsp from
-		void addProductPrefix (const string&);
 
 		bool findSpeciesMatch (
 				const string&, 
@@ -137,7 +140,6 @@ class reactionTemplate
 		//
 		vector<constraintType> listOfConstraints;
 };
-
 
 #endif
 

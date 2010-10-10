@@ -54,7 +54,7 @@
 				<to speciesLabel="lacI153_dimer">X2</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="lacI153_prot_1">X0</from>
+				<from speciesLabel="lacI153_prot_1">X1</from>
 				<to speciesLabel="lacI153_dimer">X3</to>
 			</substituentTransfer>
 		</listOfSubstituentTransfers>
@@ -92,7 +92,7 @@
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
-				<listOfLocalparameters>
+				<listOfLocalParameters>
 					<localParameter>
 						<id>koff</id>
 						<name>rate_of_unbinding</name>
@@ -100,7 +100,7 @@
 						<units>per_second</units>
 						<constant>true</constant>
 					</localParameter>
-				</listOfLocalparameters>
+				</listOfLocalParameters>
 				<listOfReferencedParameters>
 				</listOfReferencedParameters>
 				<listOfConstraints>

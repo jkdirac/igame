@@ -132,6 +132,31 @@ const MySpecies* reactionTemplate::getSpecies (
 	return NULL;
 }
 
+int reactionTemplate::getSpeciesIndex (
+		const string& speciesLabel
+		) const
+{
+	for (int i=0; i<listOfMyReactants.size (); i++)
+	{
+		MySpecies* s = listOfMyReactants[i];
+		if (s->getDB_Label () == speciesLabel) return i;
+	}
+
+	for (int i=0; i<listOfMyModifiers.size (); i++)
+	{
+		MySpecies* s = listOfMyModifiers[i];
+		if (s->getDB_Label () == speciesLabel) return i;
+	}
+
+	for (int i=0; i<listOfMyProducts.size (); i++)
+	{
+		MySpecies* s = listOfMyProducts[i];
+		if (s->getDB_Label () == speciesLabel) return i; 
+	}
+
+	return -1; 
+}
+
 void reactionTemplate::addCompartment (
 		const string& _compRef,
 		const string& _currComp,
@@ -989,15 +1014,18 @@ void reactionTemplate::createProductsFromTemplate (
 	}
 }
 
-void reactionTemplate::addProductPrefix (const string& prefix) {
-	for (int i=0; i<listOfMyProducts.size (); i++) listOfMyProducts[i]->addPrefix (prefix);
+MySpecies* reactionTemplate::getProduct (const int& n)
+{
+	if (n >=0 && n < listOfMyProducts.size ()) 
+		return listOfMyProducts[n];
+	else return NULL;
 }
 
-bool isSameType (const string& lhs, const string& rhs)
+const MySpecies* reactionTemplate::getProduct (const int& n) const
 {
-	if (lhs.empty () && !rhs.empty ()) return false;
-	if (!lhs.empty () && rhs.empty ()) return false;
-	else return true;
+	if (n >=0 && n < listOfMyProducts.size ()) 
+		return listOfMyProducts[n];
+	else return NULL;
 }
 
 bool reactionTemplate::handle_constraints (
@@ -1070,4 +1098,11 @@ void reactionTemplate::OutputProducts ()
 	cout << "\nTESTING...	...	..." << endl;
 	for (int i=0; i < listOfMyProducts.size (); i++)
 		listOfMyProducts[i]->Output ();
+}
+
+bool isSameType (const string& lhs, const string& rhs)
+{
+	if (lhs.empty () && !rhs.empty ()) return false;
+	if (!lhs.empty () && rhs.empty ()) return false;
+	else return true;
 }

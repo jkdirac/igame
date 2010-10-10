@@ -195,6 +195,8 @@ void MyReaction::createReactionsFromTemplate (
 	cout << "\nChecking Species Spliting ...";
 	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 	
+	cout << "\nChecking PRODUCTs ...";
+	for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
 	cout << "\n\n**********************************\n";
 	cout << "\n**********************************\n";
 
@@ -206,6 +208,8 @@ void MyReaction::createReactionsFromTemplate (
 
 	for (int i=0; i< splits.size (); i++)
 	{
+		cout << "\nsplits	i = " << i << endl;
+
 		MySpecies* split = splits[i];
 
 		//	gather chainLabels of split
@@ -215,7 +219,7 @@ void MyReaction::createReactionsFromTemplate (
 			Chain* c = split->getChain (j);
 			if (!c->getLabel ().empty ())
 			{
-//                cout << "\nc->getLabel = " << c->getLabel () << endl;
+				cout << "\nc->getLabel = " << c->getLabel () << endl;
 				__CU_splits.insert (c->getLabel ());
 			}
 		}
@@ -223,14 +227,12 @@ void MyReaction::createReactionsFromTemplate (
 		vector<int> __deg;
 		for (int j =0; j < listOfMyProducts.size (); j++)
 		{
-			MySpecies* __prod = listOfMyProducts[i];
-			__prod->Output ();
-			
+			MySpecies* __prod = listOfMyProducts[j];
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
 				if (__CU_splits.count (c->getLabel ())) {
-					__deg.push_back (j); break;
+					__deg.push_back (j); cout << "\n__deg = " << j << endl; break;
 				}
 			}
 		}
@@ -260,7 +262,7 @@ void MyReaction::createReactionsFromTemplate (
 	 * create products for each product template
 	 */
 
-//    cout << "\nsplits_size = " << splits.size ();
+	cout << "\nsplits_size = " << splits.size () << endl;
 	for (int i=0; i < splits.size (); i++)
 	{
 		MySpecies* splitted = splits[i];
@@ -332,7 +334,7 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k=0; k < __product->getNumOfChains (); k++)
 				__product->getChain (k)->setLabel ("");
 			
-
+			cout << "\ndelete!!!!	=	"<< degenerate[i][j] << endl;
 			delete __product_tm;
 		}
 

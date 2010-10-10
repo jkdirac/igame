@@ -116,7 +116,7 @@
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
-				<listOfLocalparameters>
+				<listOfLocalParameters>
 					<localParameter>
 						<id>koff</id>
 						<name>rate_of_unbinding</name>
@@ -124,7 +124,7 @@
 						<units>per_second</units>
 						<constant>true</constant>
 					</localParameter>
-				</listOfLocalparameters>
+				</listOfLocalParameters>
 				<listOfReferencedParameters>
 				</listOfReferencedParameters>
 				<listOfConstraints>

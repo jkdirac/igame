@@ -28,9 +28,10 @@
     <listOfSpecies>
       <species id="sPecIes0" compartment="Flask" initialConcentration="1e-20" substanceUnits="mole"/>
       <species id="sPecIes1" compartment="E_coli" initialAmount="1e-22" substanceUnits="mole"/>
-      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="131238016"/>
-      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0" charge="139419556"/>
+      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="161559004"/>
+      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0" charge="161559036"/>
       <species id="sPecIes4" compartment="E_coli" initialAmount="0"/>
+      <species id="sPecIes5" compartment="E_coli" initialAmount="0"/>
     </listOfSpecies>
     <listOfReactions>
       <reaction id="rEactIon0" name="amplification of Ecoli" reversible="false" fast="false">
@@ -147,6 +148,142 @@
           </math>
           <listOfParameters>
             <parameter id="kon" name="rate of binding" value="1000000000" units="litre_per_mole_per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon5" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kon </ci>
+              <ci> sPecIes4 </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kon" name="rate of binding" value="1000000000" units="litre_per_mole_per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon6" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kon </ci>
+              <ci> sPecIes4 </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kon" name="rate of binding" value="1000000000" units="litre_per_mole_per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon7" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kon </ci>
+              <ci> sPecIes4 </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kon" name="rate of binding" value="1000000000" units="litre_per_mole_per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon8" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kon </ci>
+              <ci> sPecIes4 </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kon" name="rate of binding" value="1000000000" units="litre_per_mole_per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon9" name="dimerization lacI" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes3"/>
+          <speciesReference species="sPecIes3"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon10" name="dimerization lacI" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes3"/>
+          <speciesReference species="sPecIes3"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
           </listOfParameters>
         </kineticLaw>
       </reaction>

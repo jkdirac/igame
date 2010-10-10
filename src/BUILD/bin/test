@@ -74,7 +74,9 @@ Number of Referenced Species 	= 	1
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	E_coli_cell	TYPE :	Compartment
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -284,11 +286,7 @@ TREEs (0):
 
 ------End (MySpeices)------
 
-
-**********************************
-
-**********************************
-
+Checking PRODUCTs ...
 ------Begin (MySpeices)------
 
 CHAINs (1):
@@ -302,6 +300,21 @@ TREEs (0):
 
 
 ------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
 
 numOfSpecies = 2
 
@@ -331,7 +344,9 @@ Number of Referenced Species 	= 	1
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	tm_pSB1A3	TYPE :	ForwardDNA
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -572,11 +587,7 @@ TREEs (0):
 
 ------End (MySpeices)------
 
-
-**********************************
-
-**********************************
-
+Checking PRODUCTs ...
 ------Begin (MySpeices)------
 
 CHAINs (1):
@@ -596,6 +607,21 @@ TREEs (0):
 
 ------End (MySpeices)------
 
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
 ------------------------------------------------------
 Number of Referenced Species 	= 	0
 
@@ -606,7 +632,9 @@ Number of Referenced Species 	= 	1
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	placI185_dna	TYPE :	ForwardDNA
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -692,13 +720,21 @@ Number of Referenced Species 	= 	4
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	lacI153_prot	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	2	...		DOC	:	lacI153_dimer	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	3	...		DOC	:	lacI153_tetramer	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	4	...		DOC	:	placI185lacI153_4	TYPE :	ForwardProtein
+========================================================
 
 ------------------------------------------------------
 Number of Referenced Species 	= 	0
@@ -734,13 +770,21 @@ Number of Referenced Species 	= 	4
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	lacI153_prot	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	2	...		DOC	:	lacI153_dimer	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	3	...		DOC	:	lacI153_tetramer	TYPE :	ForwardProtein
+========================================================
 
+========================================================
 Handling Referenced Species	4	...		DOC	:	placI185lacI153_4	TYPE :	ForwardProtein
+========================================================
 
 numOfSpecies = 4
 
@@ -765,7 +809,9 @@ Number of Referenced Species 	= 	4
 
 ------------------------------------------------------
 
+========================================================
 Handling Referenced Species	1	...		DOC	:	lacI153_prot	TYPE :	ForwardProtein
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -1047,11 +1093,7 @@ __MoDeL_PRODUCT_CXX_0::lacI2_0 	-->
 
 ------End (MySpeices)------
 
-
-**********************************
-
-**********************************
-
+Checking PRODUCTs ...
 ------Begin (MySpeices)------
 
 CHAINs (2):
@@ -1078,7 +1120,26 @@ __MoDeL_PRODUCT_CXX_0::lacI2_0 	-->
 
 ------End (MySpeices)------
 
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_1
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
+========================================================
 Handling Referenced Species	2	...		DOC	:	lacI153_dimer	TYPE :	ForwardProtein
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -1123,7 +1184,9 @@ chain number in current species	--	..	--	0
 
 ^_^	Does not MATCH! Continue to NEXT...
 
+========================================================
 Handling Referenced Species	3	...		DOC	:	lacI153_tetramer	TYPE :	ForwardProtein
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -1188,7 +1251,9 @@ chain number in current species	--	..	--	0
 
 ^_^	Does not MATCH! Continue to NEXT...
 
+========================================================
 Handling Referenced Species	4	...		DOC	:	placI185lacI153_4	TYPE :	ForwardProtein
+========================================================
 
 ------Begin (MySpeices)------
 
@@ -1264,6 +1329,2536 @@ chain number in current species	--	..	--	0
 ^_^	Does not MATCH! Continue to NEXT...
 
 numOfSpecies = 5
+
+===========		SPECIES 4		=============
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+
+------End (MySpeices)------
+
+------------------------------------------------------
+Number of Referenced Species 	= 	4
+
+------------------------------------------------------
+
+========================================================
+Handling Referenced Species	1	...		DOC	:	lacI153_prot	TYPE :	ForwardProtein
+========================================================
+
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,X0)  
+			lacI153(ForwardProtein,lacI153)  
+			ANY(ForwardProtein,X1)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+^_^	Does not MATCH! Continue to NEXT...
+
+========================================================
+Handling Referenced Species	2	...		DOC	:	lacI153_dimer	TYPE :	ForwardProtein
+========================================================
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,X0)  
+			lacI153*(ForwardProtein,lacI_0)  
+			ANY(ForwardProtein,X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,X2)  
+			lacI153*(ForwardProtein,lacI_1)  
+			ANY(ForwardProtein,X3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	lacI2_0 ( -1 -1 ,)	
+
+lacI2_0 	-->    
+	lacI_0 ( -1 -1 ,)	   
+	lacI_1 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	1
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+------------------------------------------------------
+Number of Referenced Reactions 	= 	4
+
+------------------------------------------------------
+
+Handling Referenced Reaction	2	...		DOC	:	dmr_lacI153_2	TYPE :	reactant
+
+##############	READING REACTION TEMPLATE:	dmr_lacI153_2	...
+
+<--  READ Reaction Template	  ---	...	---	DONE! 
+
+<--  Caculate Reaction Constraints ---	...	---	DONE! 
+
+^_^		FIND SPECIES MATCH		^_^
+
+Number of Compartment Configurations = 1
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	1
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	1
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+Number of Matchings of Reactant TEMPLATEs = 4
+
+!_!	TRY POSSIBLE COMBINATIONS	...	!_!
+
+Reactants Candidates	=	4
+Modifiers Candidates	=	1
+trying	...	c(0, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	0
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 2
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+reactant : 1
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+trying	...	c(1, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	1
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 2
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+reactant : 1
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+trying	...	c(2, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	2
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 2
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+reactant : 1
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+trying	...	c(3, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	3
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 2
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+reactant : 1
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+################		MATCHING...	 DONE	#################
+
+^_^	Combinations	=	4
+
+======	new reaction	i=	0	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X2)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X4)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X6)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X7)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+j = 0
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (3):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 1 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 2 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_1
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_2
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_3
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
+======	new reaction	i=	1	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X2)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X4)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X6)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X7)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+j = 0
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (3):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 1 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 2 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_1
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_2
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_3
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
+======	new reaction	i=	2	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X2)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X4)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X6)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X7)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+j = 0
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (3):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 1 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 2 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_1
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_2
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_3
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
+======	new reaction	i=	3	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X2)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X4)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X6)  
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X7)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+__new_c->createPart = lacI153 1
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+j = 0
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (3):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 1 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX1::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+tree 2 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_0_1) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, __MoDeL_CHAIN_CXX_0_2) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, __MoDeL_CHAIN_CXX_0_3) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( -1 -1 ,)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( -1 -1 ,)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_1
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_2
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_3
+
+__deg = 0
+
+splits_size = 1
+
+delete!!!!	=	0
+
+Handling Referenced Reaction	2	...		DOC	:	dmr_lacI153_prot	TYPE :	product
+
+##############	READING REACTION TEMPLATE:	dmr_lacI153_prot	...
+
+<--  READ Reaction Template	  ---	...	---	DONE! 
+
+<--  Caculate Reaction Constraints ---	...	---	DONE! 
+
+^_^		FIND SPECIES MATCH		^_^
+
+Number of Compartment Configurations = 1
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	1
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+Number of Matchings of Reactant TEMPLATEs = 2
+
+!_!	TRY POSSIBLE COMBINATIONS	...	!_!
+
+Reactants Candidates	=	2
+Modifiers Candidates	=	1
+trying	...	c(0, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	0
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 1
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+trying	...	c(1, 0)
+
+---------------------------------------------------
+^_!	ADD ONE MATCHING RESULTS:	1
+---------------------------------------------------
+
+^_^		REACTANTS	:	^_^
+
+speciesArrayMatch: reactant num = 1
+
+reactant : 0
+species matched in the system : 4
+chains of reactant = 2
+matched chain of species in reality: 0
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+matched chain of species in reality: 1
+<--	details	-->
+number of parts to be matched:	3
+(0, -1) 
+(0, 0) 
+(1, 0) 
+
+^_^		MODIFIERS	:	^_^
+
+################		MATCHING...	 DONE	#################
+
+^_^	Combinations	=	2
+
+======	new reaction	i=	0	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 0
+
+products template i = 1
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_1::X0)  
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_1::X1)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 0
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+PRODUCT BODY: i = 1
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+__deg = 0
+
+splits	i = 1
+
+c->getLabel = __MoDeL_CHAIN_CXX_1_0
+
+__deg = 1
+
+splits_size = 2
+
+delete!!!!	=	0
+
+delete!!!!	=	1
+
+======	new reaction	i=	1	=========
+
+<--	create products from template	--	..	-->
+
+products template i = 0
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X0)  
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_0::X1)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 0
+
+products template i = 1
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_1::X0)  
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+			ANY(ForwardProtein,__MoDeL_PRODUCT_CXX_1::X1)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+__new_c->createPart = lacI153 0
+
+<--	Create PRODUCTS	---	...	---	DONE!
+
+PRODUCT BODY: i = 0
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+PRODUCT BODY: i = 1
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, ) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+<--	Mixture Before Splitting:	--	..	--	-->
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 4 ) : 
+
+ROOT 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,0)	
+
+__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,00)	   
+	__MoDeL_REACTANT_CXX0::__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,01)	
+
+------End (MySpeices)------
+
+!!!	--	--	--	--	!!!
+
+species after trim	=	 
+
+------Begin (MySpeices)------
+
+CHAINs (2):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+chain (1, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+**********************************
+
+**********************************
+
+
+Checking Species Spliting ...
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+Checking PRODUCTs ...
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_0_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+------Begin (MySpeices)------
+
+CHAINs (1):
+
+chain (0, __MoDeL_CHAIN_CXX_1_0) :
+5'	---- 
+			lacI153(ForwardProtein,__MoDeL_PRODUCT_CXX_1::lacI153)  
+----	3'
+
+TREEs (0):
+
+
+------End (MySpeices)------
+
+
+**********************************
+
+**********************************
+
+splits	i = 0
+
+c->getLabel = __MoDeL_CHAIN_CXX_0_0
+
+__deg = 0
+
+splits	i = 1
+
+c->getLabel = __MoDeL_CHAIN_CXX_1_0
+
+__deg = 1
+
+splits_size = 2
+
+delete!!!!	=	0
+
+delete!!!!	=	1
+
+========================================================
+Handling Referenced Species	3	...		DOC	:	lacI153_tetramer	TYPE :	ForwardProtein
+========================================================
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardProtein,X0)  
+			lacI153*(ForwardProtein,lacI_0)  
+			ANY(ForwardProtein,X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(ForwardProtein,X2)  
+			lacI153*(ForwardProtein,lacI_1)  
+			ANY(ForwardProtein,X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(ForwardProtein,X4)  
+			lacI153*(ForwardProtein,lacI_2)  
+			ANY(ForwardProtein,X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(ForwardProtein,X6)  
+			lacI153*(ForwardProtein,lacI_3)  
+			ANY(ForwardProtein,X7)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	lacI4 ( -1 -1 ,)	
+
+lacI4 	-->    
+	lacI2_0 ( -1 -1 ,)	   
+	lacI2_1 ( -1 -1 ,)	
+
+lacI2_0 	-->    
+	lacI_0 ( -1 -1 ,)	   
+	lacI_1 ( -1 -1 ,)	
+
+lacI2_1 	-->    
+	lacI_2 ( -1 -1 ,)	   
+	lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	1
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	2
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+
+try template pattern	--	..	--	3
+
+chain number in current species	--	..	--	0
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+chain number in current species	--	..	--	1
+
+pattern match 0	--	(0, -1) (0, 0) (1, 0) 
+
+all possibilities found: 1
+
+^_^	Does not MATCH! Continue to NEXT...
+
+========================================================
+Handling Referenced Species	4	...		DOC	:	placI185lacI153_4	TYPE :	ForwardProtein
+========================================================
+
+------Begin (MySpeices)------
+
+CHAINs (5):
+
+chain (0, ) :
+5'	---- 
+			ANY(ForwardDNA,X0)  
+			placI185_bs1*(ForwardDNA,placI185_bs1_0)  
+			ANY(ForwardDNA,X1)  
+----	3'
+chain (1, ) :
+5'	---- 
+			ANY(,X2)  
+			lacI153*(ForwardProtein,lacI_0)  
+			ANY(,X3)  
+----	3'
+chain (2, ) :
+5'	---- 
+			ANY(,X4)  
+			lacI153*(ForwardProtein,lacI_1)  
+			ANY(,X5)  
+----	3'
+chain (3, ) :
+5'	---- 
+			ANY(,X6)  
+			lacI153*(ForwardProtein,lacI_2)  
+			ANY(,X7)  
+----	3'
+chain (4, ) :
+5'	---- 
+			ANY(,X8)  
+			lacI153*(ForwardProtein,lacI_3)  
+			ANY(,X9)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 10 ) : 
+
+ROOT 	-->    
+	placIlacI4 ( -1 -1 ,)	
+
+placIlacI4 	-->    
+	lacI4 ( -1 -1 ,)	   
+	placI185_bs1_0 ( -1 -1 ,)	
+
+lacI4 	-->    
+	lacI2_0 ( -1 -1 ,)	   
+	lacI2_1 ( -1 -1 ,)	
+
+lacI2_0 	-->    
+	lacI_0 ( -1 -1 ,)	   
+	lacI_1 ( -1 -1 ,)	
+
+lacI2_1 	-->    
+	lacI_2 ( -1 -1 ,)	   
+	lacI_3 ( -1 -1 ,)	
+
+------End (MySpeices)------
+
+------------------------------------------------
+#############	   CHECK SPECIES MATCH		^_!
+------------------------------------------------
+
+
+try template pattern	--	..	--	0
+
+chain number in current species	--	..	--	0
+
+chain number in current species	--	..	--	1
+
+^_^	FAIL!
+
+^_^	Does not MATCH! Continue to NEXT...
+
+------------------------------------------------------
+Number of Referenced Species 	= 	4
+
+------------------------------------------------------
+
+========================================================
+Handling Referenced Species	1	...		DOC	:	lacI153_prot	TYPE :	ForwardProtein
+========================================================
+
+========================================================
+Handling Referenced Species	2	...		DOC	:	lacI153_dimer	TYPE :	ForwardProtein
+========================================================
+
+========================================================
+Handling Referenced Species	3	...		DOC	:	lacI153_tetramer	TYPE :	ForwardProtein
+========================================================
+
+========================================================
+Handling Referenced Species	4	...		DOC	:	placI185lacI153_4	TYPE :	ForwardProtein
+========================================================
+
+numOfSpecies = 6
 
 =========================================================
 	 COPY MYOBJECTS TO SBML COMPONENTS... 		
@@ -1370,6 +3965,50 @@ __MoDeL_PRODUCT_CXX_0::lacI2_0 	-->
 
 ------End (MySpeices)------
 
+~~~~~~	SPECIES	5	~~~~~~
+
+------Begin (MySpeices)------
+
+CHAINs (4):
+
+chain (0, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_0)  
+----	3'
+chain (1, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_1)  
+----	3'
+chain (2, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_2)  
+----	3'
+chain (3, ) :
+5'	---- 
+			lacI153*(ForwardProtein,__MoDeL_PRODUCT_CXX_0::lacI_3)  
+----	3'
+
+TREEs (1):
+
+tree 0 ( NODES = 8 ) : 
+
+ROOT 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI4 ( 0 0 ,0)	
+
+__MoDeL_PRODUCT_CXX_0::lacI4 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI2_0 ( 0 0 ,00)	   
+	__MoDeL_PRODUCT_CXX_0::lacI2_1 ( 2 0 ,01)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_0 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_0 ( 0 0 ,000)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_1 ( 1 0 ,001)	
+
+__MoDeL_PRODUCT_CXX_0::lacI2_1 	-->    
+	__MoDeL_PRODUCT_CXX_0::lacI_2 ( 2 0 ,010)	   
+	__MoDeL_PRODUCT_CXX_0::lacI_3 ( 3 0 ,011)	
+
+------End (MySpeices)------
+
 REAL RULEs Number: 0
 
 REAL FUNCTIONDEFINITIONs Number: 0
@@ -1378,16 +4017,19 @@ REAL PARAMETERs Number: 0
 
 REAL UNITs Number: 3
 
-REAL SPECIES Number: 5
+REAL SPECIES Number: 6
 
 REAL COMPARTMENTs Number: 2
 
-REAL REACTIONs Number: 5
+REAL REACTIONs Number: 11
 
 DONE!...
 
-Notice: encountered 1 validation warning in model 'iGameModel'.
+ERROR: encountered 2 validation errors in model 'iGameModel'.
 
-line 1: (99505 [Warning]) In situations when a mathematical expression contains literal numbers or parameters whose units have not been declared, it is not possible to verify accurately the consistency of the units in the expression.  The units of the <kineticLaw> <math> expression 'kgrowth * (1 - sPecIes0 / maxc) * sPecIes0 * Flask' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate.
+line 1: (10215 [Error]) Outside of a <functionDefinition>, if a 'ci' element is not the first element within a MathML 'apply', then the 'ci''s value can only be chosen from the set of identifiers of <species>, <compartment>, <parameter> or <reaction> objects defined in the SBML model (In L2V1, the 'ci''s value can't be chosen from the identifiers of <reaction> objects). (References: L2V2 Section 3.5.4; L2V3 Section 3.4.3; L2V4 Section 3.4.3) 
+The formula 'koff' in the math element of the KineticLaw uses 'koff' that is not the id of a species/compartment/parameter/reaction.
 
-Wrote file "network.xml"
+line 1: (10215 [Error]) Outside of a <functionDefinition>, if a 'ci' element is not the first element within a MathML 'apply', then the 'ci''s value can only be chosen from the set of identifiers of <species>, <compartment>, <parameter> or <reaction> objects defined in the SBML model (In L2V1, the 'ci''s value can't be chosen from the identifiers of <reaction> objects). (References: L2V2 Section 3.5.4; L2V3 Section 3.4.3; L2V4 Section 3.4.3) 
+The formula 'koff' in the math element of the KineticLaw uses 'koff' that is not the id of a species/compartment/parameter/reaction.
+

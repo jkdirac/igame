@@ -810,6 +810,8 @@ void readDataBase::readReaction (
 				);
 	}
 
+//    cout << "\nspeciesType = " << speciesType << endl;
+
 	/**
 	 *	read attribute Id
 	 */
@@ -897,12 +899,8 @@ void readDataBase::readReaction (
 	
 	//(1) read reactants
 	
-	string pathReactants = head;
-	if (direction) pathReactants += "/listOfReactants/reactant";
-	else pathReactants += "/listOfProducts/product";
-	int numOfReactants = get_node_element_num (
-			REACTION, &doc, &pathReactants
-			);
+	string pathReactants = head + "/listOfReactants/reactant";
+	int numOfReactants = get_node_element_num (REACTION, &doc, &pathReactants);
 
 	for (int cnt =1; cnt <= numOfReactants; cnt++)
 	{
@@ -926,12 +924,7 @@ void readDataBase::readReaction (
 	}
 
 	//(2) read products
-	map <string, int> prodIndex;
-
-	//	begin
-	string pathProducts (head);
-	if (direction) pathProducts += "/listOfProducts/product";
-	else pathProducts += "/listOfReactants/reactant";
+	string pathProducts = head + "/listOfProducts/product";
 	int numOfProducts = get_node_element_num (REACTION, &doc, &pathProducts);
 
 	for (int cnt =1; cnt <= numOfProducts; cnt++)
@@ -951,11 +944,9 @@ void readDataBase::readReaction (
 		s->setCompartment (compartmentLabel);
 		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
-
+		
 		if (direction) tmpR->addProduct (s, compartmentLabel);
 		else tmpR->addReactant (s, compartmentLabel);
-
-		prodIndex[speciesLabel] = cnt-1;
 	}
 
 	//(3) read Modifier
@@ -987,10 +978,18 @@ void readDataBase::readReaction (
 	 */
 	ostringstream oss;
 	string prefix = "__MoDeL_PRODUCT_CXX_";
-	for (int i=0; i < numOfProducts; i++) 
+	
+	int __index = 0;
+	MySpecies* myproduct = tmpR->getProduct (__index);
+	while (myproduct != NULL)
 	{
-		oss.str (""); oss << prefix << i << "::";
-        tmpR->addProductPrefix (oss.str ());
+		oss.str (""); oss << prefix << __index << "::";
+        myproduct->addPrefix (oss.str ());
+
+//        cout << "\nprefix = " << prefix << endl;
+//        myproduct->Output ();
+
+		myproduct = tmpR->getProduct (++__index);
 	}
 
 	//read substituent transfer table
@@ -1009,16 +1008,29 @@ void readDataBase::readReaction (
 		//	for reverse reaction, roles of from/to will be exchanged
 		//	BIG PROBLEM!
 
-		pair<string,string> from, to;
+		subsp from, to, temp;
 		readTransfer (REACTION, doc, pathTransfer, cnt, from, to);
 
-//        cout << "\nto.first = " <<to.first << "to.second = " << to.second << endl;
+		//	exchange from and to for reverse reaction
+		if (!direction) {temp = from; from = to; to = temp;}
 
 		//	reset partLabel of "to" element
-		oss.str (""); 
-		oss << prefix << prodIndex[to.first] << "::";
-		to.second = oss.str () + to.second;
-//        cout << "\nto.second = " << to.second << endl;
+		int sind = tmpR->getSpeciesIndex (to.first);
+	    if (sind != -1)
+		{
+			oss.str (""); 
+			oss << prefix << sind << "::";
+			to.second = oss.str () + to.second;
+		}
+		else
+		{
+			string errno ("No species Label found in Products list: )");
+			errno += to.first + "!";
+			throw StrCacuException (errno);
+		}
+
+//        cout << "\nfrom = (" << from.first << ", " << from.second 
+//             << ")	to = (" << to.first << ", " << to.second << endl;
 
 		tmpR->addSubstituentTransfer (from, to);
 	}
@@ -1039,6 +1051,7 @@ void readDataBase::readReaction (
 
 	const string pathMath = pathKineticLaw + "/math";
 	get_node (REACTION, &doc, &pathMath, math); 
+//    cout << "\nmath	= "<< math;
 
 	if (math.empty ())
 	{

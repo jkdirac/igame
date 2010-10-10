@@ -180,7 +180,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-		if (i == 4) break;
+//        if (i == 5) break;
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 

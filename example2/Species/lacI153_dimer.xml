@@ -75,6 +75,7 @@
 		</cnModel>
 		<listOfReferencedReactions>
 			<referencedReaction speciesType="reactant">dmr_lacI153_2</referencedReaction>
+			<referencedReaction speciesType="product">dmr_lacI153_prot</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>
