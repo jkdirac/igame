@@ -134,8 +134,8 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="reactant">dmr_lacI153_2</referencedReaction>
-			<referencedReaction speciesType="product">bid_placI185_lacI153_4</referencedReaction>
+			<referencedReaction speciesType="product">dmr_lacI153_2</referencedReaction>
+			<referencedReaction speciesType="reactant">bid_placI185_lacI153_4</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

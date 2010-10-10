@@ -180,7 +180,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 	//  for each species in listOfMySpecies
 	for (int i= 0; i < numOfSpecies; i++)
 	{
-//        if (i == 5) break;
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
@@ -288,7 +287,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 
 					cout << "\n------------------------------------------------------";
 					cout << "\nNumber of Referenced Reactions 	= 	" 
-						<< numOfSpeciesLinks << endl;
+												<< numOfReactionLinks << endl;
 					cout << "\n------------------------------------------------------\n";
 
 					for (int r=1; r <= numOfReactionLinks; r++)
@@ -555,13 +554,17 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->rearrange ();
 
 					//	check existance of myspecies
-					if (getMySpecies (mrna) ==NULL) addMySpecies (mrna); 
+					MySpecies* found = getMySpecies (mrna);
+					if (found == NULL) {found = mrna; addMySpecies (mrna);} 
+					else delete mrna;
 
 					//	record a reaction
 					MyReaction* transcription = createMyReaction ();
 					transcription->setName ("transcription");
 					transcription->setReversible (false);
-					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
+					transcription->addSpecialReaction (
+							s, found, "k_tc", name, k_tc, units
+							);
 
 					if (!isvalidseq) break;
 					if (fabs (1-termeff) < TINY) break;
@@ -670,13 +673,15 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->rearrange ();
 
 					//	check existance of myspecies
-					if (getMySpecies (mrna) ==NULL) addMySpecies (mrna); 
+					MySpecies* found = getMySpecies (mrna);
+					if (found == NULL) {found = mrna; addMySpecies (mrna);} 
+					else delete mrna;
 
 					//	record a reaction
 					MyReaction* transcription = createMyReaction ();
 					transcription->setName ("transcription");
 					transcription->setReversible (false);
-					transcription->addSpecialReaction (s, mrna, "k_tc", name, k_tc, units);
+					transcription->addSpecialReaction (s, found, "k_tc", name, k_tc, units);
 
 					if (!isvalidseq) break;
 					if (fabs (1-termeff) < TINY) break;
@@ -821,13 +826,15 @@ void MySBMLDocument::searchTranslationReactions (
 						prot->rearrange ();
 
 						//	check existance of myspecies
-						if (getMySpecies (prot) ==NULL) addMySpecies (prot); 
+						MySpecies* found = getMySpecies (prot);
+						if (found == NULL) {found = prot; addMySpecies (prot);} 
+						else delete prot;
 
 						//	record a reaction
 						MyReaction* translation = createMyReaction ();
 						translation->setName ("translation");
 						translation->setReversible (false);
-						translation->addSpecialReaction (s, prot, "k_tl", name, value, units);
+						translation->addSpecialReaction (s, found, "k_tl", name, value, units);
 
 						break;
 					}

@@ -62,15 +62,15 @@
 				<to speciesLabel="lacI153_tetramer">X4</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="lacI153_dimer_1">X0</from>
+				<from speciesLabel="lacI153_dimer_1">X1</from>
 				<to speciesLabel="lacI153_tetramer">X5</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="lacI153_dimer_1">X0</from>
+				<from speciesLabel="lacI153_dimer_1">X2</from>
 				<to speciesLabel="lacI153_tetramer">X6</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="lacI153_dimer_1">X0</from>
+				<from speciesLabel="lacI153_dimer_1">X3</from>
 				<to speciesLabel="lacI153_tetramer">X7</to>
 			</substituentTransfer>
 		</listOfSubstituentTransfers>

@@ -27,9 +27,9 @@
     <listOfSpecies>
       <species id="sPecIes0" compartment="Flask" initialConcentration="1e-20" substanceUnits="mole"/>
       <species id="sPecIes1" compartment="E_coli" initialAmount="1e-22" substanceUnits="mole"/>
-      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="168130836"/>
-      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0" charge="168100372"/>
-      <species id="sPecIes4" compartment="E_coli" initialAmount="0" charge="168265248"/>
+      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="152143644"/>
+      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0"/>
+      <species id="sPecIes4" compartment="E_coli" initialAmount="0"/>
       <species id="sPecIes5" compartment="E_coli" initialAmount="0"/>
       <species id="sPecIes6" compartment="E_coli" initialAmount="0"/>
     </listOfSpecies>
@@ -287,7 +287,183 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon11" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon11" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon12" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon13" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon14" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon15" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon16" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon17" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon18" name="dimerization lacI2" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes4"/>
+          <speciesReference species="sPecIes4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="10" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon19" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -310,7 +486,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon12" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon20" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -333,7 +509,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon13" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon21" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -356,7 +532,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon14" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon22" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -379,7 +555,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon15" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon23" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -402,7 +578,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon16" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon24" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -425,7 +601,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon17" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon25" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -448,7 +624,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon18" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon26" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -471,9 +647,185 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon19" name="transcription" reversible="false">
+      <reaction id="rEactIon27" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
         <listOfProducts>
-          <speciesReference species="sPecIes7"/>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon28" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon29" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon30" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon31" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon32" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon33" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon34" name="binding placI:lacI4" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+          <speciesReference species="sPecIes5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> koff </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="koff" name="rate_of_unbinding" value="0.04" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon35" name="transcription" reversible="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes2"/>
         </listOfProducts>
         <listOfModifiers>
           <modifierSpeciesReference species="sPecIes6"/>
