@@ -10,6 +10,9 @@
 #include "integrate.h"
 #include "plotToolWidget.h"
 
+int max_step;
+int final_time;
+
 class MainWindow: public QMainWindow
 {
 public:
@@ -57,7 +60,7 @@ bool analys(char* fileName, intgrtOutData& ode_res)
 		if (fileName == NULL)
 				return false;
 	//获取结果
-	bool bRes = integrate(fileName, 500000, 5000, ode_res);
+	bool bRes = integrate(fileName, final_time, max_step, ode_res);
 
 	if (bRes == EXIT_FAILURE)
 	{
@@ -138,11 +141,20 @@ int main(int argc, char **argv)
 			return 0;
 	}
 
+	max_step = 1000;
+	final_time = 10000;
+
+	if (argc > 3)
+	{
+		final_time = atoi(argv[2]);
+		max_step = atoi(argv[3]);
+	}
+
 	intgrtOutData ode_res;
 
 	bool res = analys(argv[1], ode_res);
 	cout << "analys succ: " << res << endl;
-	printOdes_fromFile(argv[1]);
+//    printOdes_fromFile(argv[1]);
 
 	PlotInputData plotInputData(ode_res.test_y, ode_res.test_x, ode_res.get_labels());
 
