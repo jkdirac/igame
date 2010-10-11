@@ -29,9 +29,9 @@
       <species id="sPecIes1" compartment="E_coli" initialAmount="1e-22" substanceUnits="mole"/>
       <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0"/>
       <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0"/>
-      <species id="sPecIes4" compartment="E_coli" initialAmount="0" charge="147635848"/>
+      <species id="sPecIes4" compartment="E_coli" initialAmount="0" charge="142194960"/>
       <species id="sPecIes5" compartment="E_coli" initialAmount="0"/>
-      <species id="sPecIes6" compartment="E_coli" initialAmount="0"/>
+      <species id="sPecIes6" compartment="E_coli" initialAmount="0" charge="12383"/>
     </listOfSpecies>
     <listOfReactions>
       <reaction id="rEactIon0" name="amplification of Ecoli" reversible="false" fast="false">

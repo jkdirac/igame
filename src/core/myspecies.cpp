@@ -643,36 +643,41 @@ bool MySpecies::match (
 	// for each chain in template species, we find all matchings
 	// in this species, and records them
 	//
+	
+	//	for chains with same unicode, we only need to find
+	//	matchings for one of them
+	map<string, int> uniMap;
+
 	for (int i =0; i < numc_t; i++)
 	{
 		cout << "\n\ntry template pattern	"
 			 << "--	..	--	" << i << endl;
-
-		cMatchsType2 record;
-
+		
 		Chain* c1 = s->listOfChains[i];
-		for (int j = 0; j < numc_m; j++)
+		if (!uniMap.count (c1->unicode))
 		{
-			cout << "\nchain number in current species"
-			     << "	--	..	--	" << j << endl;
+			cMatchsType2 record;
+			for (int j = 0; j < numc_m; j++)
+			{
+				cout << "\nchain number in current species"
+					<< "	--	..	--	" << j << endl;
 
-			cMatchsType record2;
-			listOfChains[j]->match (c1, record2);
+				cMatchsType record2;
+				listOfChains[j]->match (c1, record2);
 
-			for (int k =0; k < record2.size (); k++)
-				record.push_back (make_pair(record2[k], j));
-		}
+				for (int k =0; k < record2.size (); k++)
+					record.push_back (make_pair(record2[k], j));
+			}
 
-		if (record.size () == 0) 
-		{
-			cout << "\n^_^	FAIL!" << endl; 
-			return false; 
+			if (record.size () == 0) return false; 
+			else 
+			{
+				records.push_back (record);		
+				uniMap.insert (make_pair(c1->unicode, i));
+			}
 		}
-		else
-		{
-			permuteAll *= record.size ();
-			records.push_back (record);		
-		}
+		else records.push_back (records[uniMap[c1->unicode]]);
+		permuteAll *= records.back ().size ();
 	}
 
 	//
