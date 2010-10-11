@@ -27,8 +27,8 @@
     <listOfSpecies>
       <species id="sPecIes0" compartment="Flask" initialConcentration="1e-20" substanceUnits="mole"/>
       <species id="sPecIes1" compartment="E_coli" initialAmount="1e-22" substanceUnits="mole"/>
-      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="158257972"/>
-      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0"/>
+      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="144112012"/>
+      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0" charge="144074028"/>
       <species id="sPecIes4" compartment="E_coli" initialAmount="0"/>
       <species id="sPecIes5" compartment="E_coli" initialAmount="0"/>
       <species id="sPecIes6" compartment="E_coli" initialAmount="0"/>
