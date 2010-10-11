@@ -57,26 +57,3 @@ bool Node::isLeaf () const
 {
 	return children.size () == 0;
 }
-
-bool Node::equal (
-		const Node* rhs
-		) const
-{
-	//compare current node
-	bool isequal = (weight == rhs->weight 
-			&& huffman == rhs->huffman);
-	if (!isequal) return false;
-
-	//compare children nodes
-	if (rhs->children.size () != children.size ()) return false;
-	else 
-	{
-		for (int i=0; i < children.size (); i++)
-		{
-			Node* n1 = children[i];
-			Node* n2 = rhs->children[i];
-			if (!n1->equal(n2)) return false;
-		}
-		return true;
-	}
-}

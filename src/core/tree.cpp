@@ -1,9 +1,8 @@
 #include "tree.h"
 
-Tree::Tree ()
-{}
+Tree::Tree () {}
 
-Tree::Tree (const Tree* orig)
+Tree::Tree (const Tree* orig) : unicode (orig->unicode)
 {
 	//copy listOfNodes and mapNodes
 	for (int i=0; i < orig->listOfNodes.size (); i++)
@@ -28,56 +27,12 @@ Tree::Tree (const Tree* orig)
 	}
 }
 
-Tree::~Tree ()
+Tree::~Tree () 
 {
-	//delete Node objects allocated in createNode
-	for (int i=0; i < listOfNodes.size (); i++)
-		delete listOfNodes[i];
+	for (int i=0; i < listOfNodes.size (); i++) delete listOfNodes[i];
 }
 
-int Tree::getNumOfNodes () const {
-	return listOfNodes.size ();
-}
-
-void Tree::checkIntegrated () const
-{
-	set<int> __index_root;
-
-	for (int i=0; i < listOfNodes.size (); i++)
-	{
-		Node* n = listOfNodes[i];
-		if (n->parentNodeLabel == "ROOT") __index_root.insert (i);
-	}
-
-	if (__index_root.size () == 0) throw StrCacuException (
-			"No tree ROOT is found!"
-			);
-	if (__index_root.size () > 1) throw StrCacuException (
-			"More than one tree ROOT is found!"
-			);
-
-	set<string> collection;
-	Node* n = listOfNodes[*__index_root.begin ()];
-	__label_collection (collection, n);
-
-	if (collection.size () < listOfNodes.size ())
-		throw StrCacuException (
-				"Incompleted Tree: unrelated nodes are found!"
-				);
-}
-
-Node* Tree::__label_collection (
-		set<string>& collection,
-		const Node* n
-		) const
-{
-	for (int i=0; i < n->children.size (); i++)
-	{
-		Node* __child = n->children[i];
-		collection.insert (__child->nodeLabel);
-		__label_collection (collection, n->children[i]); 
-	}
-}
+int Tree::getNumOfNodes () const {return listOfNodes.size ();}
 
 void Tree::__add_tree_prefix (const string& prefix)
 {
@@ -183,9 +138,7 @@ markType Tree::genWeight (const string& label)
 	// otherwise  
 	// assign minW with value of its first child
 	markType minW (0,0);
-	int numCh = n->children.size ();
-
-	for (int cnt =0; cnt < numCh; cnt++)
+	for (int cnt =0; cnt < n->children.size (); cnt++)
 	{
 		markType tempW (0,0);
 		string label = n->children[cnt]->nodeLabel;
@@ -194,7 +147,6 @@ markType Tree::genWeight (const string& label)
 		if (cnt == 0) minW = tempW;
 		else if (tempW < minW) minW = tempW;
 	}
-
 	n->weight = minW;
 
 	// sort children nodes by their weight
@@ -214,30 +166,21 @@ void Tree::genHuffman (const string& label)
 	Node* n = mapNodes[label];	  
 	if (n->children.empty ()) return;
 
-	// huffman code of children are generated only
-	// by adding 0 (firstchild) or 1 (ith time for i-1 child)
-	// to their parent one
-	Node* nn = 0;
-	string huff = n->huffman;
-	int numCh = n->children.size ();
-
-	// firstchild
-	string firstchild = huff + "0";
-	nn = n->children.at (0);
-	nn->huffman = firstchild;
-	genHuffman (nn->nodeLabel);
-
-	//nextsiblings
-	string nextsibling = huff;
-	for (int cnt =1; cnt < numCh; cnt++)
+	/**
+	 * huffman code of children are generated only
+	 * by adding 0 (left child) or 1 (right child) 
+	 * to their parent one
+	 * *
+	 * ROOT has empty huffman code
+	 */
+	
+	for (int i=0; i<n->children.size (); i++)
 	{
-		nextsibling += "1";
-		nn = n->children.at (cnt);
-		nn->huffman = nextsibling;
-		genHuffman (nn->nodeLabel);
+		Node* child = n->children[i];
+		if (i==0) child->huffman = n->huffman + "0";
+		else child->huffman = n->children[i-1]->huffman+"1";
+		genHuffman (child->nodeLabel);
 	}
-
-	//return
 }
 
 void Tree::Output (ostream& os) const {
@@ -273,12 +216,20 @@ void Tree::Output (ostream& os, const string& label) const
 	}
 }
 
-bool Tree::equal (
-		const Tree* rhs
-		) const 
+void Tree::genUnicode ()
 {
-	Node* rootLHS = mapNodes.find("ROOT")->second;
-	Node* rootRHS = rhs->mapNodes.find("ROOT")->second;
-	return rootLHS->equal (rootRHS);
+	if (!unicode.empty ()) unicode.clear ();
+	for (int i=0; i < listOfNodes.size (); i++)
+	{
+		Node* n = listOfNodes[i];
+		if (n->children.empty ())
+		{
+			//is Leaf
+			ostringstream oss;
+			oss << "[" << n->huffman << "("
+				<< n->weight.first << ","
+				<< n->weight.second << ")]";
+			unicode += oss.str ();
+		}
+	}		
 }
-

@@ -67,7 +67,6 @@ class MySpecies:
 		void rearrange ();
 		bool equal (const MySpecies*);
 		void split (bdbXMLInterface&, vector<MySpecies*>&);
-		void partialDup (const set<int>&, const set<string>&);
 		void addPrefix (const string&);
 
 		Chain* createChain ();
@@ -109,8 +108,8 @@ class MySpecies:
 		string comp_type_id; //non-empty if it is a compartment-type species 
 		string speciesLabel_db; //used in reaction templates
 
-		vector<markType> equiv; //record block of same chains
-		bool isRearranged; //if its structure has been rearranged
+		string minW;
+		vector< set<int> > equiv; // each set is an equivalent class
 
 		//	chain list and tree list
 		vector<Chain*> listOfChains;
@@ -118,8 +117,8 @@ class MySpecies:
 
 	private:
 
-		void findEquiv ();
-		void perm (const int&, const permType&);
+		void findEquiv (vector<markType>&) const;
 		void trim (bdbXMLInterface* dbreader = NULL);
+		void perm (const int&, const vector<markType>&, const permType&, vector<int>&);
 };
 #endif

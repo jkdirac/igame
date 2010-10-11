@@ -1,7 +1,7 @@
 #include "myspecies.h"
 
 MySpecies::MySpecies () :
-	Species (2,4), isRearranged (false)
+	Species (2,4)
 {}
 
 MySpecies::MySpecies (const int& speciesNum)
@@ -17,8 +17,7 @@ MySpecies::MySpecies (
 	reference_db (orig->reference_db),
 	comp_type_id (orig->comp_type_id),
 	speciesLabel_db (orig->speciesLabel_db),
-	equiv (orig->equiv),
-	isRearranged (orig->isRearranged)
+	equiv (orig->equiv)
 {
 	for (int i=0; i < orig->listOfChains.size (); i++)
 		createChain (orig->listOfChains[i]);
@@ -330,112 +329,149 @@ string MySpecies::getCompTypeId () const {
 
 void MySpecies::rearrange ()
 {
-	//sort chains
-	if (!isRearranged)
-	{
-		for (int i =0; i < listOfChains.size (); i++)
-			listOfChains[i]->genUnicode ();
+	//	sort chains
+	for (int i =0; i < listOfChains.size (); i++)
+		listOfChains[i]->genUnicode ();
 
-		stable_sort (
-				listOfChains.begin(), 
-				listOfChains.end (),
-				IsLess_c ()
-				);
-
-		//find equal chains
-		findEquiv ();
-		isRearranged = true;
-	}
-
-	//generate weight for leaf nodes
-	for (int i=0; i<listOfChains.size(); i++)
-	{
-		Chain* c = listOfChains[i];
-		for (int j=0; j<c->listOfParts.size (); j++)
-		{
-			Part* p = c->listOfParts[j];
-			if (p->getIsBinded ())
-			{
-				string label = p->getPartLabel ();
-				Node* n = findBindedNode (label);
-				if (n) n->setNodeWeight (i,j);
-			}
-		}
-	}
-
-	//generate weight for all nodes
-	//generate huffman code for all nodes
-	for (int i=0; i < listOfTrees.size (); i++)
-	{
-		Tree* t = listOfTrees[i];
-		t->genWeight ("ROOT");
-		t->genHuffman ("ROOT");
-
-		//sort listOfNodes
-		stable_sort (
-				t->listOfNodes.begin (), 
-				t->listOfNodes.end (),
-				IsLess_n ()
-				);
-	}
-
-	//sort trees
 	stable_sort (
-			listOfTrees.begin(), 
-			listOfTrees.end (),
-			IsLess_t ()
+			listOfChains.begin(), 
+			listOfChains.end (),
+			IsLess_c ()
 			);
 
-	//return
-}
+	//	find equal chains
+	vector<markType> psEquiv; 
+	findEquiv (psEquiv);
 
-void MySpecies::partialDup (
-		const set<int>& chainSaved,
-		const set<string>& nodeSaved
-		)
-{
-	//
-	//  copy Chain* saved in chainSaved
-	//
-	vector<Chain*> listOfChains_new;
-	listOfChains_new.reserve (chainSaved.size ());
-
-	set<int>::iterator iter_s = chainSaved.begin ();
-	for (int i=0; iter_s != chainSaved.end (); i++, iter_s++)
+	// (1) calculate and generate all permutations
+	// (important! initialize permAll)
+	int numPerm = 1;
+	permType permAll (psEquiv.size());
+	for (int i =0; i < psEquiv.size (); i++)
 	{
-		int cn = *iter_s;
-		listOfChains_new.push_back (listOfChains[cn]);
-		vector<Chain*>::iterator iter = listOfChains.begin () + cn;
-		listOfChains.erase (iter);
+		vector<int> perm;
+		const markType& eqv = psEquiv[i];
+		for (int j = eqv.first; j <= eqv.second; j++) perm.push_back (j);
+
+		//calculate full-array of numbers in perm
+		Math::ordered_FullArray (perm, permAll[i]);
+		numPerm *= (eqv.second-eqv.first+1);
 	}
 
-	for (int i =0; i <listOfChains.size (); i++) delete listOfChains[i];
-	listOfChains.clear ();
+	/**
+	 * iterate all permutations, and 
+	 * find those with minimum tree unicode
+	 */
 
-	listOfChains = listOfChains_new;
-
-	//
-	//  copy Tree* by nodeSaved
-	//
-	for (int i=0; i<listOfTrees.size(); i++)
+	vector< vector<int> > minWperm;
+	for (int i = 0; i < numPerm; i++)
 	{
-		Tree* t = listOfTrees[i];
-		for (int j=0; j< t->listOfNodes.size(); j++)
-		{
-			Node* n = t->getNode (j);
-			if (!nodeSaved.count (n->getNodeLabel ())) 
-			{
-				delete t;
-				vector<Tree*>::iterator iter = listOfTrees.begin () + i;
-				listOfTrees.erase (iter);
+		//	permute equivalent chains
+		vector<int> order;
+		perm (i, psEquiv, permAll, order);
 
-				break;
+		//	generate weight for leaf nodes
+		for (int i=0; i<listOfChains.size(); i++)
+		{
+			Chain* c = listOfChains[i];
+			for (int j=0; j<c->listOfParts.size (); j++)
+			{
+				Part* p = c->listOfParts[j];
+				if (p->getIsBinded ())
+				{
+					string label = p->getPartLabel ();
+					Node* n = findBindedNode (label);
+					if (n) n->setNodeWeight (i,j);
+				}
 			}
+		}
+
+		//	generate weight for all nodes
+		for (int i=0; i<listOfTrees.size (); i++) 
+		{
+			Tree* t = listOfTrees[i];
+			t->genWeight ("ROOT");
+			stable_sort (
+					t->listOfNodes.begin (), 
+					t->listOfNodes.end (),
+					IsLess_n ()
+					);
+		}
+
+		//	sort trees
+		stable_sort (
+				listOfTrees.begin(), 
+				listOfTrees.end (), 
+				IsLess_t ()
+				);
+
+		//	generate huffman code for all nodes
+		//	create a unique tree code 
+		
+		string tryuni;
+		for (int i=0; i < listOfTrees.size (); i++)
+		{
+			Tree* t = listOfTrees[i];
+			t->genHuffman ("ROOT");
+			t->genUnicode ();
+			tryuni += t->unicode;
+		}
+
+		if (minW.empty ()) 
+		{
+			minW = tryuni;
+			minWperm.push_back (order);
+		}
+		else if (minW > tryuni)
+		{
+			minW = tryuni;
+			minWperm.clear ();
+			minWperm.push_back (order);
+		}
+		else if (minW == tryuni)
+		{
+			minWperm.push_back (order);
 		}
 	}
 
-	isRearranged = false;
-	rearrange ();
+	//	find equivalent chains
+	for (int i=0; i < minWperm.size (); i++)
+	{
+		const vector<int>& elem_i = minWperm[i]; 
+		for (int j=i+1; j < minWperm.size (); j++)
+		{
+			const vector<int>& elem_j = minWperm[j];
+			
+			//	for each (i,j) pair, find equivalent chains
+			int found_i = -1;
+			int found_j = -1;
+			for (int k=0; k < equiv.size (); k++)
+			{
+				if (equiv[k].count (i)) {found_i = k;}
+				if (equiv[k].count (j)) {found_i = j;}
+				if (found_i != -1 && found_j != -1) break;
+			}
+
+			if (found_i == -1 && found_j == -1)
+			{
+				set<int> newequiv;
+				newequiv.insert (i);
+				newequiv.insert (j);
+				equiv.push_back (newequiv);
+			}
+			
+			if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
+			if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
+
+			if (found_i != -1 && found_j != -1)
+			{
+				//	merge set found_i and found_j
+				set<int>::iterator iterf = equiv[found_j].begin ();
+				while (iterf != equiv[found_j].end ()) equiv[found_i].insert (*iterf++);
+				equiv.erase (equiv.begin () + found_j);
+			}
+		}
+	}
 }
 
 void MySpecies::Output () const
@@ -476,7 +512,7 @@ bool MySpecies::equal (
 {
 	MySpecies* lhs = this;
 
-	//compare chains
+	//	compare chains
 	if (lhs->listOfChains.size () != rhs->listOfChains.size ()) return false;
 	else
 	{
@@ -490,52 +526,12 @@ bool MySpecies::equal (
 		}
 	}
 
-	//campare trees
-	if (lhs->listOfTrees.size () != rhs->listOfTrees.size ()) return false;
-	else
-	{
-		if (lhs->listOfTrees.size () == 0) return true;
-		else
-		{
-			// (1) calculate and generate all permutations
-			// (important! initialize permAll)
-			int numPerm = 1;
-			permType permAll (lhs->equiv.size());
-			for (int i =0; i < lhs->equiv.size (); i++)
-			{
-				vector<int> perm;
-				const pair <int, int>& eqv = lhs->equiv[i];
-				for (int j = eqv.first; j <= eqv.second; j++) perm.push_back (j);
-
-				//calculate full-array of numbers in perm
-				Math::ordered_FullArray (perm, permAll[i]);
-				numPerm *= (eqv.second-eqv.first+1);
-			}
-
-			for (int i = 0; i < numPerm; i++)
-			{
-				//permute equivalent chains to get a new chain order
-				lhs->perm (i, permAll);
-
-				//compare tree structure
-				for (int j =0; j < lhs->listOfTrees.size (); j++)
-				{
-					Tree* left = lhs->listOfTrees[j];
-					Tree* right = rhs->listOfTrees[j];
-					if (left->equal (right)) return true;
-				}
-			}
-
-			return false;
-		}
-	}
+	//	compare minimum forest weight 
+	return minW == rhs->minW;
 }
 
-void MySpecies::findEquiv () 
+void MySpecies::findEquiv (vector<markType>& psEquiv) const 
 {
-	//clear if there are element left
-	if (!equiv.empty ()) equiv.clear ();
-
 	int i =0;
 	while (i < listOfChains.size ()-1)
 	{
@@ -552,17 +548,15 @@ void MySpecies::findEquiv ()
 				offset++;
 				if (curp+1 == listOfChains.size ()) //last element
 				{
-					equiv.push_back (
-							make_pair(i, listOfChains.size ()-1)
-							);
 					i = listOfChains.size ();
+					psEquiv.push_back (make_pair(i, listOfChains.size ()-1));
 					break;
 				}
 			}
 			else
 			{
 				if (offset > 1)
-					equiv.push_back (make_pair(i, curp-1));
+					psEquiv.push_back (make_pair(i, curp-1));
 				i += offset;
 				break;
 			}
@@ -572,41 +566,40 @@ void MySpecies::findEquiv ()
 
 void MySpecies::perm (
 		const int& i, 
-		const permType& permAll
+		const vector<markType>& psEquiv,
+		const permType& permAll,
+		vector<int>& order
 		) 
 {
-	// ith permutation
-	// swap chains and modify chain node/weight relation
+	//	ith permutation
+	// 	swap chains and modify chain node/weight relation
 	int divide = i;
-	for (int j = 0; j < equiv.size (); j++)
+	for (int j = 0; j < psEquiv.size (); j++)
 	{
-		const markType& eqv = equiv[j];
-
+		const markType& eqv = psEquiv[j];
 		const vector<int>& permutedArray = 
 			permAll[j][divide % permAll[j].size ()];
 
-		//start permutation
-		//elements in [first, last] have been copied into vector splice
+		//	start permutation
+		//	elements in [first, last] have been copied into vector splice
 		vector<Chain*>::iterator 
 			first = listOfChains.begin () + eqv.first, 
 				  last = listOfChains.begin () + eqv.second + 1;
 		vector<Chain*> splice (first, last);
 
-		//permute
+		//	permute
 		for (int perm = eqv.first; perm <= eqv.second; perm++) 
 		{
 			int pos = permutedArray[perm-eqv.first] - eqv.first;
 			listOfChains[perm] = splice.at (pos);
 		}
 
+		//	record the order
+		for (int k=0; k < permutedArray.size (); k++)
+			order.push_back (permutedArray[k]);
+
 		divide /= permAll[j].size ();
 	}
-
-	//    based on  chain node/weight relation, 
-	//    modify order of tree nodes
-	rearrange ();
-
-	//return
 }
 
 void MySpecies::addPrefix (const string& prefix)
@@ -918,7 +911,6 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 		p->setIsBinded (false);
 	}
 
-	//	rearrange
-	isRearranged = false; rearrange ();
+	rearrange ();
 }
 

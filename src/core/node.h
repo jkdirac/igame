@@ -25,13 +25,10 @@ class Node
 	Node (const Node*);
 	~Node ();
 
-	bool equal (const Node*) const;
-
-	void setNodeLabel (const string&);
-
 	string getNodeLabel () const;
 	string getParentNodeLabel () const;
 
+	void setNodeLabel (const string&);
 	void setNodeWeight (const int&, const int&);
 	markType getNodeWeight () const;
 	
