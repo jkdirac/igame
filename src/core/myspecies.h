@@ -33,6 +33,21 @@ class IsLess_c
 		}
 };
 
+class IsLess_no
+{
+	public:
+
+		IsLess_no () {}
+
+		inline bool operator () (
+				const Chain* x,
+				const Chain* y
+				) const
+		{
+			return x->chainNum < y->chainNum;
+		}
+};
+
 class IsLess_t
 {
 	public:

@@ -339,6 +339,10 @@ void MySpecies::rearrange ()
 			IsLess_c ()
 			);
 
+	for (int i=0; i < listOfChains.size (); i++)
+		listOfChains[i]->chainNum = i;
+
+
 	//	find equal chains
 	vector<markType> psEquiv; 
 	findEquiv (psEquiv);
@@ -432,6 +436,13 @@ void MySpecies::rearrange ()
 		{
 			minWperm.push_back (order);
 		}
+
+		//	recover to orginal order
+		stable_sort (
+				listOfChains.begin(), 
+				listOfChains.end (),
+				IsLess_no ()
+				);
 	}
 
 	//	find equivalent chains
@@ -463,7 +474,7 @@ void MySpecies::rearrange ()
 			if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
 			if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
 
-			if (found_i != -1 && found_j != -1)
+			if (found_i != -1 && found_j != -1 && found_i != found_j)
 			{
 				//	merge set found_i and found_j
 				set<int>::iterator iterf = equiv[found_j].begin ();
@@ -667,6 +678,7 @@ bool MySpecies::match (
 	//
 	//	Permutation
 	//
+	set< vector< set<int> > > repeatRemove;
 	for (int i = 0; i < permuteAll; i++)
 	{
 		int divide = i;
@@ -694,8 +706,25 @@ bool MySpecies::match (
 			}
 			divide /= records[j].size ();
 		}
-
 		if (!ok) continue;
+
+		vector< set<int> > equivck;
+		for (int j=0; j < s->equiv.size (); j++)
+		{
+			const set<int>& equivset = equiv[j];
+
+			set<int> tmp;
+			set<int>::const_iterator iter = equivset.begin ();
+			while (iter != equivset.end ())
+				tmp.insert (tryAssemble[*iter++].second);
+			equivck.push_back (tmp);
+		}
+
+		/**
+		 * check if this permutation has been added
+		 */
+		if (repeatRemove.count (equivck)) continue;
+		else repeatRemove.insert (equivck);
 
 		//
 		//	if no trees, a successful match has been found

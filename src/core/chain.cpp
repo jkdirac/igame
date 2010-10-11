@@ -4,7 +4,8 @@ Chain::Chain () {}
 Chain::Chain (const Chain* orig) 
 	:
 		unicode (orig->unicode),
-		chainLabel (orig->chainLabel)
+		chainLabel (orig->chainLabel),
+		chainNum (orig->chainNum)
 {
 	for (int i =0; i < orig->listOfParts.size (); i++)
 		this->createPart (orig->listOfParts[i]);
