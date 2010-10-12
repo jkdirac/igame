@@ -77,6 +77,27 @@ SBML_ODESOLVER_API int IntegratorInstance_cvodeOneStep(integratorInstance_t *eng
     cvodeSettings_t *opt = engine->opt;
     cvodeResults_t *results = engine->results;
     odeModel_t *om = engine->om;
+
+	/*add by jkdirac*/
+	/*The default integration tolerances is not right for all value conditions
+	 * the assignment of accurate value should take consideration of y value*/
+	realtype min_tol; 
+	for (i = 0; i < NV_LENGTH_S(solver->y); i++)
+	{
+		min_tol = NV_Ith_S(solver->abstol, i);
+
+		if ((NV_Ith_S(solver->y, i) > 0)
+				&& (min_tol > NV_Ith_S(solver->y, i)*1e-10))
+		{
+			min_tol = NV_Ith_S(solver->y, i)/1e10;
+		}
+
+		printf("jkdirac %dth min_tol %lg y %lg\n", i, min_tol, NV_Ith_S(solver->y, i));
+		NV_Ith_S(solver->abstol, i) = min_tol;
+	}
+	CVodeSetTolerances(solver->cvode_mem, CV_SV, solver->reltol, solver->abstol);
+/*    CVodeSStolerances(solver->cvode_mem, 1e-4, min_y/10);*/
+/*    printf ("jkdirac: %f\n", min_y);*/
     
     /* !!!! calling CVODE !!!! */
     flag = CVode(solver->cvode_mem, solver->tout,

@@ -10,6 +10,9 @@
 #include "integrate.h"
 #include "plotToolWidget.h"
 
+int max_step;
+int final_time;
+
 class MainWindow: public QMainWindow
 {
 public:
@@ -57,7 +60,7 @@ bool analys(char* fileName, intgrtOutData& ode_res)
 		if (fileName == NULL)
 				return false;
 	//获取结果
-	bool bRes = integrate(fileName, 500000, 5000, ode_res);
+	bool bRes = integrate(fileName, final_time, max_step, ode_res);
 
 	if (bRes == EXIT_FAILURE)
 	{
@@ -108,14 +111,14 @@ void printOdes_fromFile(char* filename)
       free(formula);
       VariableIndex_free(vi);
     }
-    printf("Assigned Variables:\n");
-    for ( i=0; i<ODEModel_getNumAssignments(model); i++ ){
-      vi = ODEModel_getAssignedVariableIndex(model, i);
-      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
-      printf("%s = %s \n", ODEModel_getVariableName(model, vi), formula);
-      free(formula);
-      VariableIndex_free(vi);
-    }
+//    printf("Assigned Variables:\n");
+//    for ( i=0; i<ODEModel_getNumAssignments(model); i++ ){
+//      vi = ODEModel_getAssignedVariableIndex(model, i);
+//      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
+//      printf("%s = %s \n", ODEModel_getVariableName(model, vi), formula);
+//      free(formula);
+//      VariableIndex_free(vi);
+//    }
     printf("Constants:\n");
     for ( i=0; i<ODEModel_getNumConstants(model); i++ ){
       vi = ODEModel_getConstantIndex(model, i);
@@ -136,6 +139,15 @@ int main(int argc, char **argv)
 	{
 			fprintf(stderr, "please input src file\n");
 			return 0;
+	}
+
+	max_step = 1000;
+	final_time = 10000;
+
+	if (argc > 3)
+	{
+		final_time = atoi(argv[2]);
+		max_step = atoi(argv[3]);
 	}
 
 	intgrtOutData ode_res;
