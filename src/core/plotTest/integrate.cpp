@@ -178,7 +178,7 @@ int integrate(char *model, double time, double printstep, intgrtOutData &res)
   /* Setting SBML ODE Solver integration parameters  */
   set = CvodeSettings_create();
   CvodeSettings_setTime(set, time, printstep);
-  CvodeSettings_setErrors(set, 1e-9, 1e-4, 1000);
+  CvodeSettings_setErrors(set, 1e-9, 1e-10, 1000);
 
   /* calling the SBML ODE Solver which returns SBMLResults */  
   results = SBML_odeSolver(d, set);
@@ -197,7 +197,7 @@ int integrate(char *model, double time, double printstep, intgrtOutData &res)
   SBMLDocument_free(d);
 
   /* print results */
-  printf("### RESULTS \n");  
+//  printf("### RESULTS \n");  
 //  SBMLResults_dump(results);
 
   //get time points

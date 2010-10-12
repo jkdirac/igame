@@ -111,14 +111,14 @@ void printOdes_fromFile(char* filename)
       free(formula);
       VariableIndex_free(vi);
     }
-    printf("Assigned Variables:\n");
-    for ( i=0; i<ODEModel_getNumAssignments(model); i++ ){
-      vi = ODEModel_getAssignedVariableIndex(model, i);
-      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
-      printf("%s = %s \n", ODEModel_getVariableName(model, vi), formula);
-      free(formula);
-      VariableIndex_free(vi);
-    }
+//    printf("Assigned Variables:\n");
+//    for ( i=0; i<ODEModel_getNumAssignments(model); i++ ){
+//      vi = ODEModel_getAssignedVariableIndex(model, i);
+//      formula = SBML_formulaToString(ODEModel_getOde(model, vi));
+//      printf("%s = %s \n", ODEModel_getVariableName(model, vi), formula);
+//      free(formula);
+//      VariableIndex_free(vi);
+//    }
     printf("Constants:\n");
     for ( i=0; i<ODEModel_getNumConstants(model); i++ ){
       vi = ODEModel_getConstantIndex(model, i);
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 
 	bool res = analys(argv[1], ode_res);
 	cout << "analys succ: " << res << endl;
-//    printOdes_fromFile(argv[1]);
+	printOdes_fromFile(argv[1]);
 
 	PlotInputData plotInputData(ode_res.test_y, ode_res.test_x, ode_res.get_labels());
 

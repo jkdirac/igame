@@ -87,11 +87,12 @@ SBML_ODESOLVER_API int IntegratorInstance_cvodeOneStep(integratorInstance_t *eng
 		min_tol = NV_Ith_S(solver->abstol, i);
 
 		if ((NV_Ith_S(solver->y, i) > 0)
-				&& (min_tol > NV_Ith_S(solver->y, i)))
+				&& (min_tol > NV_Ith_S(solver->y, i)*1e-10))
 		{
-			min_tol = NV_Ith_S(solver->y, i)/10;
+			min_tol = NV_Ith_S(solver->y, i)/1e10;
 		}
 
+		printf("jkdirac %dth min_tol %lg y %lg\n", i, min_tol, NV_Ith_S(solver->y, i));
 		NV_Ith_S(solver->abstol, i) = min_tol;
 	}
 	CVodeSetTolerances(solver->cvode_mem, CV_SV, solver->reltol, solver->abstol);

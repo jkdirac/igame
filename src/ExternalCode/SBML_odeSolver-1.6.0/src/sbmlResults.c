@@ -470,8 +470,8 @@ SBML_ODESOLVER_API void SBMLResults_dump(SBMLResults_t *results)
   printf("### Printing All Results \n");
   SBMLResults_dumpCompartments(results);
   SBMLResults_dumpSpecies(results);
-  SBMLResults_dumpParameters(results);
-  SBMLResults_dumpFluxes(results);
+/*  SBMLResults_dumpParameters(results);*/
+/*  SBMLResults_dumpFluxes(results);*/
 }
 
 
