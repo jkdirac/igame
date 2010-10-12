@@ -571,6 +571,7 @@ void readDataBase::setSpecies (
 	if (boundaryCondition == true) s->setBoundaryCondition (true);
 	
 	//	setCharge
+	/**
 	if (charge != 0) 
 	{
 		operation = s->setCharge (charge);
@@ -580,6 +581,7 @@ void readDataBase::setSpecies (
 					"Unexpected Attribute: charge!"
 					);
 	}
+	*/
 }
 
 void readDataBase::setUnit (

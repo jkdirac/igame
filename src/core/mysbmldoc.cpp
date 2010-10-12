@@ -258,6 +258,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							true
 							);
 
+					cout << "\nSpecies Referenced 	...	";
 					sLink->Output ();
 
 					//
@@ -517,7 +518,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
 					mrna->setConstant (false);
-					mrna->setCharge (0);
+//                    mrna->setCharge (0);
 					mrna->setBoundaryCondition (false);
 
 					assert (k+1 <= ci-1);
@@ -638,7 +639,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
 					mrna->setConstant (false);
-					mrna->setCharge (0);
+//                    mrna->setCharge (0);
 					mrna->setBoundaryCondition (false);
 
 					Chain* mrna_chain = mrna->createChain ();
@@ -790,7 +791,7 @@ void MySBMLDocument::searchTranslationReactions (
 						prot->setInitialAmount (0.0);
 						prot->setHasOnlySubstanceUnits (false);
 						prot->setConstant (false);
-						prot->setCharge (1);
+//                        prot->setCharge (0);
 						prot->setBoundaryCondition (false);
 
 						Chain* prot_chain = prot->createChain ();

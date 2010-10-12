@@ -15,6 +15,7 @@
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
 				<referencedSpecies partType="ForwardDNA">tm_pSB1A3</referencedSpecies>
+				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
 	</part>

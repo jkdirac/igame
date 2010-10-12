@@ -340,14 +340,16 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 	if (ns_t.size () == 0)
 	{
 		int l1 = 0;
-		int u1 = c->listOfParts.size ()-1;
-
-		assert (u1 >= l1);
+		int u1 = static_cast<int> (c->listOfParts.size ())-1;
 
 		int l2 = 0; 
 		int u2 = listOfParts.size ()-1;
 
+		assert (u1 >= l1);
 		assert (u2 >= l2);
+
+//        cout << "\nNS_T = 0" << endl;
+//        cout << "\nl1 = " << l1 << " u1 = " << u1 << " l2 = "<< l2 << " u2 = " << u2 << endl;
 
 		bool mok = substituent_m (l1, u1, l2, u2, c, res);
 		if (mok && res.size() > 0) return true;
@@ -587,7 +589,7 @@ bool Chain::substituent_m (
 							{
 								string partType__ = 
 									listOfParts[i]->partType;
-							    if (partType__ != partType) {
+						    if (partType__ != partType) {
 									endpos = i; break;
 								}
 							}

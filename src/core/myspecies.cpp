@@ -544,9 +544,8 @@ bool MySpecies::equal (
 void MySpecies::findEquiv (vector<markType>& psEquiv) const 
 {
 	int i =0;
-	while (i < listOfChains.size ()-1)
+	while (i+1 < listOfChains.size ())
 	{
-		cout << "\nint i = " << i << " size = " << listOfChains.size () << endl;
 		Chain* c1 = listOfChains[i];
 
 		int offset = 1;
@@ -634,7 +633,7 @@ bool MySpecies::match (
 
 	int numc_t = s->listOfChains.size (); //template chain length
 	int numc_m = listOfChains.size (); //length of this chain
-	if (numc_t < numc_m) return false;
+	if (numc_m < numc_t) return false;
 
 	//  temporary variables
 	int permuteAll = 1;

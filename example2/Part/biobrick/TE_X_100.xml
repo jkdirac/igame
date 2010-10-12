@@ -11,6 +11,9 @@
 			  <conditionalParameter id="forwardTerminatorEfficiency" commonValue="1.0" units="dimensionless"/>
 			  <conditionalParameter id="reverseTerminatorEfficiency" commonValue="1.0" units="dimensionless"/>
 			</listOfConditionalParameters>
+			<listOfReferencedSpecies>
+				<referencedSpecies>any_species</referencedSpecies>
+			</listOfReferencedSpecies>
 		</biobrick>
 	</part>
 </MoDeL>

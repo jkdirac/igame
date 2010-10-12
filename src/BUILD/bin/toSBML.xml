@@ -19,6 +19,12 @@
           <unit kind="second" exponent="-1"/>
         </listOfUnits>
       </unitDefinition>
+      <unitDefinition id="item_per_mole">
+        <listOfUnits>
+          <unit kind="item"/>
+          <unit kind="mole" exponent="-1"/>
+        </listOfUnits>
+      </unitDefinition>
     </listOfUnitDefinitions>
     <listOfCompartments>
       <compartment id="Flask" size="0.4"/>
@@ -27,12 +33,15 @@
     <listOfSpecies>
       <species id="sPecIes0" compartment="Flask" initialConcentration="1e-20" substanceUnits="mole"/>
       <species id="sPecIes1" compartment="E_coli" initialAmount="1e-22" substanceUnits="mole"/>
-      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0"/>
-      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0"/>
-      <species id="sPecIes4" compartment="E_coli" initialAmount="0" charge="142194960"/>
-      <species id="sPecIes5" compartment="E_coli" initialAmount="0"/>
-      <species id="sPecIes6" compartment="E_coli" initialAmount="0" charge="12383"/>
+      <species id="sPecIes2" name="mrna" compartment="E_coli" initialAmount="0" charge="167022324"/>
+      <species id="sPecIes3" name="prot" compartment="E_coli" initialAmount="0" charge="167018568"/>
+      <species id="sPecIes4" compartment="E_coli" initialAmount="0" charge="167035856"/>
+      <species id="sPecIes5" compartment="E_coli" initialAmount="0" charge="167168008"/>
+      <species id="sPecIes6" compartment="E_coli" initialAmount="0" charge="166979720"/>
     </listOfSpecies>
+    <listOfParameters>
+      <parameter id="Avogadro" value="6.022e+23" units="item_per_mole"/>
+    </listOfParameters>
     <listOfReactions>
       <reaction id="rEactIon0" name="amplification of Ecoli" reversible="false" fast="false">
         <listOfProducts>
@@ -86,7 +95,69 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon2" name="transcription" reversible="false">
+      <reaction id="rEactIon2" name="suppression of tm_pSB1A3" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes1"/>
+          <modifierSpeciesReference species="sPecIes1"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <cn> -1 </cn>
+              <ci> ksup </ci>
+              <apply>
+                <divide/>
+                <ci> sPecIes1 </ci>
+                <ci> copynum </ci>
+              </apply>
+              <ci> sPecIes1 </ci>
+              <ci> E_coli </ci>
+              <ci> E_coli </ci>
+              <ci> Avogadro </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="ksup" name="rate of suppression" value="0.1" units="per_second"/>
+            <parameter id="copynum" name="copy number" value="200" units="item"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon3" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes1"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes1 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon4" name="transcription" reversible="false">
         <listOfProducts>
           <speciesReference species="sPecIes2"/>
         </listOfProducts>
@@ -107,7 +178,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon3" name="translation" reversible="false">
+      <reaction id="rEactIon5" name="translation" reversible="false">
         <listOfProducts>
           <speciesReference species="sPecIes3"/>
         </listOfProducts>
@@ -128,7 +199,56 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon4" name="dimerization lacI" fast="false">
+      <reaction id="rEactIon6" name="template rna degradation in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes2"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdeg </ci>
+              <ci> sPecIes2 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kdeg" name="rate of degradation" value="0.001" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon7" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes2"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes2 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon8" name="dimerization lacI" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes3"/>
           <speciesReference species="sPecIes3"/>
@@ -151,7 +271,56 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon5" name="dimerization lacI2" fast="false">
+      <reaction id="rEactIon9" name="template protein degradation in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes3"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdeg </ci>
+              <ci> sPecIes3 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kdeg" name="rate of degradation" value="0.001" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon10" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes3"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes3 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon11" name="dimerization lacI2" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes4"/>
           <speciesReference species="sPecIes4"/>
@@ -174,7 +343,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon6" name="dimerization lacI" fast="false">
+      <reaction id="rEactIon12" name="dimerization lacI" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes4"/>
         </listOfReactants>
@@ -196,7 +365,38 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon7" name="dimerization lacI2" fast="false">
+      <reaction id="rEactIon13" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes4"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes4 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon14" name="dimerization lacI2" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes5"/>
         </listOfReactants>
@@ -218,7 +418,7 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon8" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon15" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes1"/>
           <speciesReference species="sPecIes5"/>
@@ -241,7 +441,38 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon9" name="binding placI:lacI4" fast="false">
+      <reaction id="rEactIon16" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes5"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes5 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon17" name="binding placI:lacI4" fast="false">
         <listOfReactants>
           <speciesReference species="sPecIes6"/>
         </listOfReactants>
@@ -263,7 +494,152 @@
           </listOfParameters>
         </kineticLaw>
       </reaction>
-      <reaction id="rEactIon10" name="transcription" reversible="false">
+      <reaction id="rEactIon18" name="template dilution in E_coli" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="sPecIes6"/>
+        </listOfReactants>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> sPecIes0 </ci>
+                  <ci> maxc </ci>
+                </apply>
+              </apply>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="growth rate of cell" value="0.0005766" units="per_second"/>
+            <parameter id="maxc" name="max concentration of cell" value="1.66e-12" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon19" name="amplification of tm_pSB1A3" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes6"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kgrowth </ci>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="kgrowth" name="rate of growth" value="1" units="per_second"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon20" name="suppression of tm_pSB1A3" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes6"/>
+          <modifierSpeciesReference species="sPecIes1"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <cn> -1 </cn>
+              <ci> ksup </ci>
+              <apply>
+                <divide/>
+                <ci> sPecIes6 </ci>
+                <ci> copynum </ci>
+              </apply>
+              <ci> sPecIes1 </ci>
+              <ci> E_coli </ci>
+              <ci> E_coli </ci>
+              <ci> Avogadro </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="ksup" name="rate of suppression" value="0.1" units="per_second"/>
+            <parameter id="copynum" name="copy number" value="200" units="item"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon21" name="suppression of tm_pSB1A3" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes1"/>
+          <modifierSpeciesReference species="sPecIes6"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <cn> -1 </cn>
+              <ci> ksup </ci>
+              <apply>
+                <divide/>
+                <ci> sPecIes1 </ci>
+                <ci> copynum </ci>
+              </apply>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+              <ci> E_coli </ci>
+              <ci> Avogadro </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="ksup" name="rate of suppression" value="0.1" units="per_second"/>
+            <parameter id="copynum" name="copy number" value="200" units="item"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon22" name="suppression of tm_pSB1A3" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="sPecIes1"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="sPecIes6"/>
+          <modifierSpeciesReference species="sPecIes6"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <cn> -1 </cn>
+              <ci> ksup </ci>
+              <apply>
+                <divide/>
+                <ci> sPecIes6 </ci>
+                <ci> copynum </ci>
+              </apply>
+              <ci> sPecIes6 </ci>
+              <ci> E_coli </ci>
+              <ci> E_coli </ci>
+              <ci> Avogadro </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="ksup" name="rate of suppression" value="0.1" units="per_second"/>
+            <parameter id="copynum" name="copy number" value="200" units="item"/>
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rEactIon23" name="transcription" reversible="false">
         <listOfProducts>
           <speciesReference species="sPecIes2"/>
         </listOfProducts>

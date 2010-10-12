@@ -16,6 +16,7 @@
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
 				<referencedSpecies partType="Compartment">E_coli_cell</referencedSpecies>
+				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</compartment>
 	</part>
