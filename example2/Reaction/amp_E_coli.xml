@@ -22,18 +22,18 @@
 		<listOfReactants>
 		</listOfReactants>
 		<listOfModifiers>
-			<modifier>
-				<speciesReference>E_coli_cell</speciesReference>
-				<speciesLabel>E_coli_cell_0</speciesLabel>
-				<compartmentLabel itself="E_coli">Flask</compartmentLabel>
-			</modifier>
+				<modifier>
+					<speciesReference>E_coli_cell</speciesReference>
+					<speciesLabel>E_coli_cell_0</speciesLabel>
+					<compartmentLabel itself="E_coli">Flask</compartmentLabel>
+				</modifier>
 		</listOfModifiers>
 		<listOfProducts>
-			<product>
-				<speciesReference>E_coli_cell</speciesReference>
-				<speciesLabel>E_coli_cell_1</speciesLabel>
-				<compartmentLabel itself="E_coli">Flask</compartmentLabel>
-			</product>
+				<product>
+					<speciesReference>E_coli_cell</speciesReference>
+					<speciesLabel>E_coli_cell_1</speciesLabel>
+					<compartmentLabel itself="E_coli">Flask</compartmentLabel>
+				</product>
 		</listOfProducts>
 		<listOfSubstituentTransfers>
 		</listOfSubstituentTransfers>

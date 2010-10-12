@@ -4,6 +4,9 @@
 <MoDeL>
 	<system>
 		<listOfGlobalParameters>
+			<id>Avogadro</id>
+			<value>6.022E23</value>
+			<units>item_per_mole</units>
 		</listOfGlobalParameters>
 	</system>
 </MoDeL>

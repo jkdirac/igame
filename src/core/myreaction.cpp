@@ -195,8 +195,8 @@ void MyReaction::createReactionsFromTemplate (
 	cout << "\nChecking Species Spliting ...";
 	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 	
-	cout << "\nChecking PRODUCTs ...";
-	for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
+//    cout << "\nChecking PRODUCTs ...";
+//    for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
 	cout << "\n\n**********************************\n";
 	cout << "\n**********************************\n";
 

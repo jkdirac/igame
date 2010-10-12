@@ -45,11 +45,13 @@
 				    <ci> ksup </ci>
 				    <apply>
 				      <divide/>
-				      <ci> tm_pSB1A3_0 </ci>
+				      <ci> tm_pSB1A3_1 </ci>
 				      <ci> copynum </ci>
 				    </apply>
-				    <ci> tm_pSB1A3_1 </ci>
-				    <ci> E_coli </ci>
+				    <ci> tm_pSB1A3_0 </ci>
+					<ci> E_coli </ci>
+					<ci> E_coli </ci>
+					<ci> Avogadro </ci>
 				  </apply>
 				</math>
 				<listOfLocalParameters>

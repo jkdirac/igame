@@ -17,6 +17,7 @@
 class Chain
 {
   friend class IsLess_c;
+  friend class IsLess_no;
   friend class MySpecies;
 
   public:
@@ -60,6 +61,9 @@ class Chain
 
 	//	only used when generating products by splitting the spcies mixure
 	string chainLabel;
+
+	//	chain number will be used to recover original order after perm
+	int chainNum;
 
 	vector<Part*> listOfParts;
 };

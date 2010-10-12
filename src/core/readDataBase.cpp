@@ -156,7 +156,10 @@ void readDataBase::read_cnModel (
 		}
 	}
 
-	return;
+	/**
+	 * ATTENTION: even a template need to rearrange its structure
+	 */
+	s->rearrange ();
 }
 
 void readDataBase::setParameter (

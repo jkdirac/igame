@@ -14,6 +14,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
+							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -25,6 +26,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
+							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -35,6 +37,7 @@
 		</cnModel>
 		<listOfReferencedReactions>
 			<referencedReaction speciesType="modifier">amp_tm_pSB1A3</referencedReaction>
+			<referencedReaction speciesType="reactant">sup_tm_pSB1A3</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

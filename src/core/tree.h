@@ -40,8 +40,8 @@ class Tree
 	Tree (const Tree*);
 	~Tree ();
 
-	bool equal (const Tree*) const;
-	void checkIntegrated () const;
+//    bool equal (const Tree*) const;
+//    void checkIntegrated () const;
 
 	Node* createNode ();
 	Node* createNode (const Node*);
@@ -55,21 +55,23 @@ class Tree
 	const Node* getNode (const int&) const;
 	int getNumOfNodes () const;
 
-	markType genWeight (const string&);
-	void genHuffman (const string&);
-
 	void __add_tree_prefix (const string&);
 	void Output (ostream&) const;
 
 	private:
 
 	void Output (ostream&, const string&) const; 
-	Node* __label_collection (set<string>&, const Node*) const;
+
+	markType genWeight (const string&);
+	void genHuffman (const string&);
+	void genUnicode ();
 
 	private:
 
 	vector<Node*> listOfNodes;
 	map<string, Node*> mapNodes;
+
+	string unicode;
 };
 
 #endif
