@@ -703,8 +703,12 @@ bool reactionTemplate::findSpeciesMatch (
 						for (int cnt = 0; cnt < possibleReactantMatch[i].size (); cnt++)
 						{
 							cout << "\nreactant : " << cnt;
+							listOfMyReactants[cnt]->Output ();
+
 							cout << "\nspecies matched in the system : " 
 								<< possibleReactantMatch[i][cnt].first;
+							listOfMySpecies[possibleReactantMatch[j][cnt].first]->Output ();
+
 							cMatchsType2& details = possibleReactantMatch[i][cnt].second;
 							cout << "\nchains of reactant = " << details.size ();
 							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
@@ -740,13 +744,12 @@ bool reactionTemplate::findSpeciesMatch (
 							listOfMySpecies[possibleModifierMatch[j][cnt].first]->Output ();
 
 							cMatchsType2& details = possibleModifierMatch[j][cnt].second;
-							cout << "\nchains of modifier = " << details.size () 
-								<< " should be : " << listOfMyModifiers[cnt]->getNumOfChains () << endl;
+							cout << "\nchains of modifier = " << details.size ();
 							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
 							{
 								cout << "\nmatched chain of species in reality: " << 
 									details[cnt2].second;
-								cout << "\n\n<-------			details			-------->";
+								cout << "\n<--	details	-->";
 								cMatchType& __match = details[cnt2].first;
 
 								cout << "\nnumber of parts to be matched:	" 

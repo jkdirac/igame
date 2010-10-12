@@ -546,6 +546,7 @@ void MySpecies::findEquiv (vector<markType>& psEquiv) const
 	int i =0;
 	while (i < listOfChains.size ()-1)
 	{
+		cout << "\nint i = " << i << " size = " << listOfChains.size () << endl;
 		Chain* c1 = listOfChains[i];
 
 		int offset = 1;
