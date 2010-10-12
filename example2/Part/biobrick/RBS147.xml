@@ -13,6 +13,10 @@
 					<parameterValue compartment="E_coli">6.93</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
+			<listOfReferencedSpecies>
+				<referencedSpecies partType="ForwardProtein">anyub_forwardprotein</referencedSpecies>
+				<referencedSpecies partType="ForwardRNA">anyub_forwardrna</referencedSpecies>
+			</listOfReferencedSpecies>
 		</biobrick>
 	</part>
 </MoDeL>

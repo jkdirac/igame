@@ -36,6 +36,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X2</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -47,6 +48,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X3</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -56,6 +58,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X4</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -67,6 +70,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X5</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -76,6 +80,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X6</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -87,6 +92,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X7</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -96,6 +102,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X8</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -107,6 +114,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X9</partLabel>
+							<partType>ForwardProtein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>

@@ -14,6 +14,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
+							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -25,6 +26,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
+							<partType>ForwardDNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>

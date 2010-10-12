@@ -14,6 +14,8 @@
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
 				<referencedSpecies partType="ForwardDNA">placI185lacI153_4</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">anyub_forwardprotein</referencedSpecies>
+				<referencedSpecies partType="ForwardRNA">anyub_forwardrna</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
 	</part>

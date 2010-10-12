@@ -21,8 +21,8 @@
 		</listOfCompartments>
 		<listOfReactants>
 			<reactant>
-				<speciesReference>anyub_forward_protein</speciesReference>
-				<speciesLabel>anyub_forward_protein</speciesLabel>
+				<speciesReference>anyub_forwardprotein</speciesReference>
+				<speciesLabel>anyub_forwardprotein</speciesLabel>
 				<compartmentLabel>E_coli</compartmentLabel>
 			</reactant>
 		</listOfReactants>
@@ -38,7 +38,7 @@
 				  <apply>
 				    <times/>
 				    <ci> kdeg </ci>
-				    <ci> anyub_forward_protein </ci>
+				    <ci> anyub_forwardprotein </ci>
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
