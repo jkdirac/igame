@@ -508,13 +508,9 @@ bool reactionTemplate::findSpeciesMatch (
 			for (int k=0; k < listOfMyReactants.size (); k++)
 				match_index.insert (possibleReactantMatch[i][k].first);
 			for (int k=0; k < listOfMyModifiers.size (); k++)
-			{
-				cout << "\nmodeindex = " << possibleModifierMatch[j][k].first;
 				match_index.insert (possibleModifierMatch[j][k].first);
-			}
 
 			cout << "\nindex = " << index << endl;
-			cout << "\nmodifier index = " << endl;
 			set<int>::iterator iter = match_index.begin ();
 			while (iter != match_index.end ()) cout << "\nit = " << *iter++;
 
@@ -610,10 +606,12 @@ bool reactionTemplate::findSpeciesMatch (
 				if (!possible.count (n1)) continue;
 				for (int n2 =0; n2 < listOfMyReactants.size (); n2++)
 				{
-					string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
-					if (!__species_itself.empty ())
+					MySpecies* tmr = listOfMyReactants[n2];
+//                    cout << "\nempty = " << boolalpha << __species_itself.empty() << endl;
+//                    cout << "\n__species_itself = " << __species_itself << endl;
+					if (tmr->isCompartment ())
 					{
-						cout << "\ni = " << i << " n2 = " << n2 << " reactant size = " << listOfMyReactants.size () << endl;
+						string __species_itself = tmr->getCompTypeId ();
 						int __species_index = possibleReactantMatch[i][n2].first;
 						if (!itself.count (__species_itself)) 
 							itself[__species_itself] = __species_index;

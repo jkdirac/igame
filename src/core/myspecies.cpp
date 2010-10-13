@@ -35,6 +35,11 @@ MySpecies::~MySpecies ()
 		delete listOfTrees[i];
 }
 
+bool MySpecies::isCompartment () const
+{
+	return !comp_type_id.empty ();
+}
+
 int MySpecies::getNumOfChains () const
 {
 	return listOfChains.size ();
@@ -651,7 +656,7 @@ bool MySpecies::match (
 	for (int i =0; i < numc_t; i++)
 	{
 		cout << "\n\ntry template pattern	"
-			 << "--	..	--	" << i << endl;
+			 << "--	..	--	" << i;
 		
 		Chain* c1 = s->listOfChains[i];
 		if (!uniMap.count (c1->unicode))
@@ -659,8 +664,8 @@ bool MySpecies::match (
 			cMatchsType2 record;
 			for (int j = 0; j < numc_m; j++)
 			{
-				cout << "\nchain number in current species"
-					<< "	--	..	--	" << j << endl;
+//                cout << "\nchain number in current species"
+//                    << "	--	..	--	" << j << endl;
 
 				cMatchsType record2;
 				listOfChains[j]->match (c1, record2);
@@ -668,6 +673,9 @@ bool MySpecies::match (
 				for (int k =0; k < record2.size (); k++)
 					record.push_back (make_pair(record2[k], j));
 			}
+
+			cout << "		found =  " << record.size ();
+
 
 			if (record.size () == 0) return false; 
 			else 

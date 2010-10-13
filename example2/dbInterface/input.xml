@@ -4,6 +4,26 @@
 <MoDeL>
 	<dbInterface>
 		<input>
+			<listOfParameters>
+				<parameter>
+					<id> amount </id>
+					<value> 1 </value>
+					<units> mole </units>
+					<constant> true </constant>
+				</parameter>
+				<parameter>
+					<id> t0 </id>
+					<value> 1 </value>
+					<units> second </units>
+					<constant> true </constant>
+				</parameter>
+			</listOfParameters>
+			<listOfRules>
+				<rateRule>
+					<variable>sPecIes1</variable>
+					<math>gaussian(amount, t, t0, sigma)</math>
+				</rateRule>
+			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">
 					<id>Flask</id>
@@ -19,31 +39,21 @@
 				</compartment>
 			</listOfCompartments>
 			<listOfSpecies>
-				<species>
+				<species db="E_coli_cell">
 					<id>sPecIes0</id>
 					<compartment itself="E_coli">Flask</compartment>
 					<initialConcentration>1E-20</initialConcentration>
-					<substanceUnits>mole</substanceUnits>
-					<cnModel>
-						<listOfChains>
-							<chain>
-								<listOfParts>
-									<part>
-										<partReference>E_coli</partReference>
-										<partLabel>E_coli_0</partLabel>
-										<partType>Compartment</partType>
-										<partCategory>compartment</partCategory>
-									</part>
-								</listOfParts>
-							</chain>
-						</listOfChains>
-					</cnModel>
+				</species>
+				<species db="IPTG_compound">
+					<id>sPecIes1</id>
+					<compartment> Flask </compartment>
+					<initialConcentration> 0 </initialConcentration>
+					<boundaryCondition>true</boundaryCondition>
 				</species>
 				<species>
-					<id>sPecIes1</id>
+					<id>sPecIes2</id>
 					<compartment>E_coli</compartment>
 					<initialAmount>1E-22</initialAmount>
-					<substanceUnits>mole</substanceUnits>
 					<cnModel>
 						<listOfChains>
 							<chain>

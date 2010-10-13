@@ -113,6 +113,7 @@ class MySpecies:
 		Node* findBindedNode (const string&);
 		const Node* findBindedNode (const string&) const;
 
+		bool isCompartment () const;
 		bool match (const MySpecies*, cMatchsArray& res) const;
 
 		void Output () const;
