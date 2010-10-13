@@ -1,0 +1,1599 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AR	strcacu/Makefile	/^AR = ar$/;"	m
+BEGIN	strcacu/caculex.c	125;"	d	file:
+CC	strcacu/Makefile	/^CC = gcc$/;"	m
+CCFLAGS	strcacu/Makefile	/^CCFLAGS = -g$/;"	m
+CHAIN_H	chain.h	13;"	d
+CPULSPLUS	strcacu/Makefile	/^CPULSPLUS = g++$/;"	m
+Chain	chain.cpp	/^Chain::Chain ()$/;"	f	class:Chain	signature:()
+Chain	chain.cpp	/^Chain::Chain (const Chain* orig) $/;"	f	class:Chain	signature:(const Chain* orig)
+Chain	chain.h	/^	Chain ();$/;"	p	class:Chain	access:public	signature:()
+Chain	chain.h	/^	Chain (const Chain*);$/;"	p	class:Chain	access:public	signature:(const Chain*)
+Chain	chain.h	/^class Chain$/;"	c
+Chain::Chain	chain.cpp	/^Chain::Chain ()$/;"	f	class:Chain	signature:()
+Chain::Chain	chain.cpp	/^Chain::Chain (const Chain* orig) $/;"	f	class:Chain	signature:(const Chain* orig)
+Chain::Chain	chain.h	/^	Chain ();$/;"	p	class:Chain	access:public	signature:()
+Chain::Chain	chain.h	/^	Chain (const Chain*);$/;"	p	class:Chain	access:public	signature:(const Chain*)
+Chain::Output	chain.cpp	/^void Chain::Output (ostream& os) const $/;"	f	class:Chain	signature:(ostream& os) const
+Chain::Output	chain.h	/^	void Output (ostream&) const; $/;"	p	class:Chain	access:public	signature:(ostream&) const
+Chain::__add_chain_prefix	chain.cpp	/^void Chain::__add_chain_prefix ($/;"	f	class:Chain	signature:( const string& prefix )
+Chain::__add_chain_prefix	chain.h	/^	void __add_chain_prefix (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+Chain::chainLabel	chain.h	/^	string chainLabel;$/;"	m	class:Chain	access:private
+Chain::createPart	chain.cpp	/^Part* Chain::createPart ($/;"	f	class:Chain	signature:( const string& __ref, const string& __label, const string& __type, const string& __ctg, const bool& __isb )
+Chain::createPart	chain.cpp	/^Part* Chain::createPart ()$/;"	f	class:Chain	signature:()
+Chain::createPart	chain.cpp	/^Part* Chain::createPart (const Part* p)$/;"	f	class:Chain	signature:(const Part* p)
+Chain::createPart	chain.h	/^	Part* createPart ();$/;"	p	class:Chain	access:public	signature:()
+Chain::createPart	chain.h	/^	Part* createPart (const Part*);$/;"	p	class:Chain	access:public	signature:(const Part*)
+Chain::createPart	chain.h	/^	Part* createPart (const string&, const string&, const string&, const string&, const bool& =false);$/;"	p	class:Chain	access:public	signature:(const string&, const string&, const string&, const string&, const bool& =false)
+Chain::equal	chain.cpp	/^bool Chain::equal (const Chain* rhs) const$/;"	f	class:Chain	signature:(const Chain* rhs) const
+Chain::equal	chain.h	/^	bool equal (const Chain*) const;$/;"	p	class:Chain	access:public	signature:(const Chain*) const
+Chain::genUnicode	chain.cpp	/^string Chain::genUnicode ($/;"	f	class:Chain	signature:( const int& start, const int& end ) const
+Chain::genUnicode	chain.cpp	/^void Chain::genUnicode ()$/;"	f	class:Chain	signature:()
+Chain::genUnicode	chain.h	/^	string genUnicode (const int&, const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&, const int&) const
+Chain::genUnicode	chain.h	/^	void genUnicode ();$/;"	p	class:Chain	access:public	signature:()
+Chain::getLabel	chain.cpp	/^string Chain::getLabel () const {$/;"	f	class:Chain	signature:() const
+Chain::getLabel	chain.h	/^	string getLabel () const;$/;"	p	class:Chain	access:public	signature:() const
+Chain::getNumOfParts	chain.cpp	/^int Chain::getNumOfParts () const$/;"	f	class:Chain	signature:() const
+Chain::getNumOfParts	chain.h	/^	int getNumOfParts () const;$/;"	p	class:Chain	access:public	signature:() const
+Chain::getPart	chain.cpp	/^Part* Chain::getPart (const int& n) {$/;"	f	class:Chain	signature:(const int& n)
+Chain::getPart	chain.cpp	/^Part* Chain::getPart (const string& label)$/;"	f	class:Chain	signature:(const string& label)
+Chain::getPart	chain.cpp	/^const Part* Chain::getPart (const int& n) const {$/;"	f	class:Chain	signature:(const int& n) const
+Chain::getPart	chain.cpp	/^const Part* Chain::getPart (const string& label) const$/;"	f	class:Chain	signature:(const string& label) const
+Chain::getPart	chain.h	/^	Part* getPart (const int&);$/;"	p	class:Chain	access:public	signature:(const int&)
+Chain::getPart	chain.h	/^	Part* getPart (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+Chain::getPart	chain.h	/^	const Part* getPart (const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&) const
+Chain::getPart	chain.h	/^	const Part* getPart (const string&) const;$/;"	p	class:Chain	access:public	signature:(const string&) const
+Chain::getPartIndex	chain.cpp	/^int Chain::getPartIndex ($/;"	f	class:Chain	signature:( const string& label ) const
+Chain::getPartIndex	chain.h	/^	int getPartIndex (const string&) const;$/;"	p	class:Chain	access:public	signature:(const string&) const
+Chain::getUnicode	chain.cpp	/^string Chain::getUnicode () const$/;"	f	class:Chain	signature:() const
+Chain::getUnicode	chain.h	/^	string getUnicode () const;$/;"	p	class:Chain	access:public	signature:() const
+Chain::keywords	chain.h	/^	map<string, int> keywords;$/;"	m	class:Chain	access:private
+Chain::listOfParts	chain.h	/^	vector<Part*> listOfParts;$/;"	m	class:Chain	access:private
+Chain::match	chain.cpp	/^bool Chain::match (const Chain* c, cMatchsType& res	) const $/;"	f	class:Chain	signature:(const Chain* c, cMatchsType& res ) const
+Chain::match	chain.h	/^	bool match (const Chain*, cMatchsType&) const; $/;"	p	class:Chain	access:public	signature:(const Chain*, cMatchsType&) const
+Chain::setLabel	chain.cpp	/^void Chain::setLabel (const string& label) {$/;"	f	class:Chain	signature:(const string& label)
+Chain::setLabel	chain.h	/^	void setLabel (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+Chain::substituent_m	chain.cpp	/^bool Chain::substituent_m ($/;"	f	class:Chain	signature:( const int& l1, const int& u1, const int& l2, const int& u2, const Chain* c, vector<cMatchType>& result ) const
+Chain::substituent_m	chain.h	/^	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; $/;"	p	class:Chain	access:private	signature:(const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const
+Chain::unicode	chain.h	/^	string unicode;$/;"	m	class:Chain	access:private
+Chain::~Chain	chain.cpp	/^Chain::~Chain ()$/;"	f	class:Chain	signature:()
+Chain::~Chain	chain.h	/^	~Chain ();$/;"	p	class:Chain	access:public	signature:()
+DRIVER_H	driver.h	13;"	d
+Driver	driver.cpp	/^Driver::Driver ()$/;"	f	class:Driver	signature:()
+Driver	driver.h	/^	Driver ();$/;"	p	class:Driver	access:public	signature:()
+Driver	driver.h	/^class Driver$/;"	c
+Driver::Driver	driver.cpp	/^Driver::Driver ()$/;"	f	class:Driver	signature:()
+Driver::Driver	driver.h	/^	Driver ();$/;"	p	class:Driver	access:public	signature:()
+Driver::beginSimulation	driver.cpp	/^bool Driver::beginSimulation ()$/;"	f	class:Driver	signature:()
+Driver::beginSimulation	driver.h	/^	bool beginSimulation ();$/;"	p	class:Driver	access:public	signature:()
+Driver::validateExampleSBML	driver.cpp	/^bool Driver::validateExampleSBML ($/;"	f	class:Driver	signature:( SBMLDocument* sbmlDoc ) const
+Driver::validateExampleSBML	driver.h	/^	bool validateExampleSBML ($/;"	p	class:Driver	access:private	signature:( SBMLDocument* sbmlDoc ) const
+Driver::writeExampleSBML	driver.cpp	/^bool Driver::writeExampleSBML($/;"	f	class:Driver	signature:( const SBMLDocument* sbmlDoc, const string& filename ) const
+Driver::writeExampleSBML	driver.h	/^	bool writeExampleSBML($/;"	p	class:Driver	access:private	signature:( const SBMLDocument* sbmlDoc, const string& filename ) const
+Driver::~Driver	driver.cpp	/^Driver::~Driver ()$/;"	f	class:Driver	signature:()
+Driver::~Driver	driver.h	/^	~Driver ();$/;"	p	class:Driver	access:public	signature:()
+ECHO	strcacu/caculex.c	588;"	d	file:
+EOB_ACT_CONTINUE_SCAN	strcacu/caculex.c	168;"	d	file:
+EOB_ACT_END_OF_FILE	strcacu/caculex.c	169;"	d	file:
+EOB_ACT_LAST_MATCH	strcacu/caculex.c	170;"	d	file:
+FLEXINT_H	strcacu/caculex.c	29;"	d	file:
+FLEX_BETA	strcacu/caculex.c	13;"	d	file:
+FLEX_SCANNER	strcacu/caculex.c	8;"	d	file:
+Factorial	imath.cpp	/^int Math::Factorial ($/;"	f	class:Math	signature:( const int& n )
+Factorial	imath.h	/^	static int Factorial ($/;"	p	class:Math	access:private	signature:( const int& n )
+GLOBAL_INCLUDES_H	g_i.h	13;"	d
+INITIAL	strcacu/caculex.c	496;"	d	file:
+INT16_MAX	strcacu/caculex.c	71;"	d	file:
+INT16_MIN	strcacu/caculex.c	62;"	d	file:
+INT32_MAX	strcacu/caculex.c	74;"	d	file:
+INT32_MIN	strcacu/caculex.c	65;"	d	file:
+INT8_MAX	strcacu/caculex.c	68;"	d	file:
+INT8_MIN	strcacu/caculex.c	59;"	d	file:
+IsLess_c	myspecies.h	/^		IsLess_c () {}$/;"	f	class:IsLess_c	access:public	signature:()
+IsLess_c	myspecies.h	/^class IsLess_c$/;"	c
+IsLess_c::IsLess_c	myspecies.h	/^		IsLess_c () {}$/;"	f	class:IsLess_c	access:public	signature:()
+IsLess_c::operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_c	access:public	signature:( const Chain* x, const Chain* y ) const
+IsLess_n	tree.h	/^		IsLess_n () {}$/;"	f	class:IsLess_n	access:public	signature:()
+IsLess_n	tree.h	/^class IsLess_n$/;"	c
+IsLess_n::IsLess_n	tree.h	/^		IsLess_n () {}$/;"	f	class:IsLess_n	access:public	signature:()
+IsLess_n::operator ()	tree.h	/^		inline bool operator () ($/;"	f	class:IsLess_n	access:public	signature:( const Node* x, const Node* y ) const
+IsLess_t	myspecies.h	/^		IsLess_t () {}$/;"	f	class:IsLess_t	access:public	signature:()
+IsLess_t	myspecies.h	/^class IsLess_t$/;"	c
+IsLess_t::IsLess_t	myspecies.h	/^		IsLess_t () {}$/;"	f	class:IsLess_t	access:public	signature:()
+IsLess_t::operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_t	access:public	signature:( const Tree* x, const Tree* y ) const
+LEX	strcacu/Makefile	/^LEX = flex$/;"	m
+LIBS	strcacu/Makefile	/^LIBS = $/;"	m
+MATH_H	imath.h	13;"	d
+MSG_BUFF	strcacu/cacu_main.h	10;"	d
+MSG_BUFF	strcacu/str_cacu.h	10;"	d
+MYSBML_DOCUMENT_H	mysbmldoc.h	13;"	d
+MY_COMPARTMENT_H	mycompartment.h	13;"	d
+MY_REACTION_H	myreaction.h	13;"	d
+MY_SPECIES_H	myspecies.h	13;"	d
+MainWindow	plotTest/plot_main.cpp	/^    MainWindow()$/;"	f	class:MainWindow	access:public	signature:()
+MainWindow	plotTest/plot_main.cpp	/^class MainWindow: public QMainWindow$/;"	c	file:	inherits:QMainWindow
+MainWindow::MainWindow	plotTest/plot_main.cpp	/^    MainWindow()$/;"	f	class:MainWindow	access:public	signature:()
+Math	imath.h	/^class Math$/;"	c
+Math::Factorial	imath.cpp	/^int Math::Factorial ($/;"	f	class:Math	signature:( const int& n )
+Math::Factorial	imath.h	/^	static int Factorial ($/;"	p	class:Math	access:private	signature:( const int& n )
+Math::ordered_FullArray	imath.cpp	/^void Math::ordered_FullArray ($/;"	f	class:Math	signature:( const vector<int>& orig, vector< vector<int> >& fullarray )
+Math::ordered_FullArray	imath.h	/^	static void ordered_FullArray ($/;"	p	class:Math	access:public	signature:( const vector<int>& orig, vector< vector<int> >& fullarray )
+MyCompartment	mycompartment.cpp	/^MyCompartment::MyCompartment ():$/;"	f	class:MyCompartment	signature:()
+MyCompartment	mycompartment.h	/^	MyCompartment ();$/;"	p	class:MyCompartment	access:public	signature:()
+MyCompartment	mycompartment.h	/^class MyCompartment:$/;"	c	inherits:Compartment
+MyCompartment::MyCompartment	mycompartment.cpp	/^MyCompartment::MyCompartment ():$/;"	f	class:MyCompartment	signature:()
+MyCompartment::MyCompartment	mycompartment.h	/^	MyCompartment ();$/;"	p	class:MyCompartment	access:public	signature:()
+MyCompartment::addMyCompartmentIn	mycompartment.cpp	/^void MyCompartment::addMyCompartmentIn (MyCompartment* comp) {$/;"	f	class:MyCompartment	signature:(MyCompartment* comp)
+MyCompartment::addMyCompartmentIn	mycompartment.h	/^	void addMyCompartmentIn (MyCompartment*);$/;"	p	class:MyCompartment	access:public	signature:(MyCompartment*)
+MyCompartment::addMySpeciesIn	mycompartment.cpp	/^void MyCompartment::addMySpeciesIn (MySpecies* s) {$/;"	f	class:MyCompartment	signature:(MySpecies* s)
+MyCompartment::addMySpeciesIn	mycompartment.h	/^	void addMySpeciesIn (MySpecies*);$/;"	p	class:MyCompartment	access:public	signature:(MySpecies*)
+MyCompartment::getDB_ref	mycompartment.cpp	/^string MyCompartment::getDB_ref () const {$/;"	f	class:MyCompartment	signature:() const
+MyCompartment::getDB_ref	mycompartment.h	/^	string getDB_ref () const;$/;"	p	class:MyCompartment	access:public	signature:() const
+MyCompartment::isMyCompartmentIn	mycompartment.cpp	/^MyCompartment* MyCompartment::isMyCompartmentIn ($/;"	f	class:MyCompartment	signature:( const string& ref )
+MyCompartment::isMyCompartmentIn	mycompartment.cpp	/^const MyCompartment* MyCompartment::isMyCompartmentIn ($/;"	f	class:MyCompartment	signature:( const string& ref ) const
+MyCompartment::isMyCompartmentIn	mycompartment.h	/^	MyCompartment* isMyCompartmentIn (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+MyCompartment::isMyCompartmentIn	mycompartment.h	/^	const MyCompartment* isMyCompartmentIn (const string&) const;$/;"	p	class:MyCompartment	access:public	signature:(const string&) const
+MyCompartment::isMySpeciesIn	mycompartment.cpp	/^MySpecies* MyCompartment::isMySpeciesIn ($/;"	f	class:MyCompartment	signature:( const MySpecies* rhs )
+MyCompartment::isMySpeciesIn	mycompartment.cpp	/^MySpecies* MyCompartment::isMySpeciesIn (const string& ref) $/;"	f	class:MyCompartment	signature:(const string& ref)
+MyCompartment::isMySpeciesIn	mycompartment.cpp	/^const MySpecies* MyCompartment::isMySpeciesIn ($/;"	f	class:MyCompartment	signature:( const MySpecies* rhs ) const
+MyCompartment::isMySpeciesIn	mycompartment.cpp	/^const MySpecies* MyCompartment::isMySpeciesIn (const string& ref) const $/;"	f	class:MyCompartment	signature:(const string& ref) const
+MyCompartment::isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const MySpecies*);$/;"	p	class:MyCompartment	access:public	signature:(const MySpecies*)
+MyCompartment::isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+MyCompartment::isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const MySpecies*) const;$/;"	p	class:MyCompartment	access:public	signature:(const MySpecies*) const
+MyCompartment::isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const string&) const;$/;"	p	class:MyCompartment	access:public	signature:(const string&) const
+MyCompartment::listOfMyCompartmentsIn	mycompartment.h	/^	vector<MyCompartment*> listOfMyCompartmentsIn;$/;"	m	class:MyCompartment	access:private
+MyCompartment::listOfMySpeciesIn	mycompartment.h	/^	vector<MySpecies*> listOfMySpeciesIn;$/;"	m	class:MyCompartment	access:private
+MyCompartment::reference_db	mycompartment.h	/^	string reference_db;$/;"	m	class:MyCompartment	access:private
+MyCompartment::setDB_ref	mycompartment.cpp	/^void MyCompartment::setDB_ref (const string& ref) {$/;"	f	class:MyCompartment	signature:(const string& ref)
+MyCompartment::setDB_ref	mycompartment.h	/^	void setDB_ref (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+MyCompartment::~MyCompartment	mycompartment.cpp	/^MyCompartment::~MyCompartment ()$/;"	f	class:MyCompartment	signature:()
+MyCompartment::~MyCompartment	mycompartment.h	/^	~MyCompartment ();$/;"	p	class:MyCompartment	access:public	signature:()
+MyReaction	myreaction.cpp	/^MyReaction::MyReaction ():$/;"	f	class:MyReaction	signature:()
+MyReaction	myreaction.h	/^		MyReaction ();$/;"	p	class:MyReaction	access:public	signature:()
+MyReaction	myreaction.h	/^class MyReaction:$/;"	c	inherits:Reaction
+MyReaction::MyReaction	myreaction.cpp	/^MyReaction::MyReaction ():$/;"	f	class:MyReaction	signature:()
+MyReaction::MyReaction	myreaction.h	/^		MyReaction ();$/;"	p	class:MyReaction	access:public	signature:()
+MyReaction::addSpecialReaction	myreaction.cpp	/^void MyReaction::addSpecialReaction ($/;"	f	class:MyReaction	signature:( MySpecies* modifier, MySpecies* product, const string& paraId, const string& paraName, const double& paraValue, const string& paraUnits )
+MyReaction::addSpecialReaction	myreaction.h	/^		void addSpecialReaction ($/;"	p	class:MyReaction	access:public	signature:( MySpecies*, MySpecies*, const string&, const string&, const double&, const string& )
+MyReaction::createReactionsFromTemplate	myreaction.cpp	/^void MyReaction::createReactionsFromTemplate ($/;"	f	class:MyReaction	signature:( bdbXMLInterface& dbreader, vector<MySpecies*>& listOfMySpecies, vector<MyCompartment*>& listOfMyCompartments, const speciesArrayMatch& __reactants_m, const reactionTemplate* tmpR )
+MyReaction::createReactionsFromTemplate	myreaction.h	/^		void createReactionsFromTemplate ($/;"	p	class:MyReaction	access:public	signature:( bdbXMLInterface&, vector<MySpecies*>&, vector<MyCompartment*>&, const speciesArrayMatch&, const reactionTemplate* )
+MyReaction::init	myreaction.cpp	/^void MyReaction::init ($/;"	f	class:MyReaction	signature:( vector<MySpecies*>& products, const vector<MySpecies*>& listOfMySpecies, const reactionMatch& __reaction_match, const reactionTemplate* tmpR )
+MyReaction::init	myreaction.h	/^		void init ($/;"	p	class:MyReaction	access:public	signature:( vector<MySpecies*>&, const vector<MySpecies*>&, const reactionMatch&, const reactionTemplate* )
+MyReaction::listOfMyModifiers	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+MyReaction::listOfMyProducts	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+MyReaction::listOfMyReactants	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+MyReaction::~MyReaction	myreaction.cpp	/^MyReaction::~MyReaction () $/;"	f	class:MyReaction	signature:()
+MyReaction::~MyReaction	myreaction.h	/^		~MyReaction ();$/;"	p	class:MyReaction	access:public	signature:()
+MySBMLDocument	mysbmldoc.cpp	/^MySBMLDocument::MySBMLDocument ():$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument	mysbmldoc.h	/^		MySBMLDocument ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument	mysbmldoc.h	/^class MySBMLDocument:$/;"	c	inherits:SBMLDocument
+MySBMLDocument::MySBMLDocument	mysbmldoc.cpp	/^MySBMLDocument::MySBMLDocument ():$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::MySBMLDocument	mysbmldoc.h	/^		MySBMLDocument ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument::addMyCompartment	mysbmldoc.cpp	/^void MySBMLDocument::addMyCompartment (MyCompartment* c) $/;"	f	class:MySBMLDocument	signature:(MyCompartment* c)
+MySBMLDocument::addMyCompartment	mysbmldoc.h	/^		void addMyCompartment (MyCompartment*);$/;"	p	class:MySBMLDocument	access:public	signature:(MyCompartment*)
+MySBMLDocument::addMyCompartmentChildren	mysbmldoc.cpp	/^void MySBMLDocument::addMyCompartmentChildren ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::addMyCompartmentChildren	mysbmldoc.h	/^		void addMyCompartmentChildren ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument::addMyReaction	mysbmldoc.cpp	/^void MySBMLDocument::addMyReaction (MyReaction* r) {$/;"	f	class:MySBMLDocument	signature:(MyReaction* r)
+MySBMLDocument::addMyReaction	mysbmldoc.h	/^		void addMyReaction (MyReaction*);$/;"	p	class:MySBMLDocument	access:public	signature:(MyReaction*)
+MySBMLDocument::addMySpecies	mysbmldoc.cpp	/^void MySBMLDocument::addMySpecies (MySpecies* s) $/;"	f	class:MySBMLDocument	signature:(MySpecies* s)
+MySBMLDocument::addMySpecies	mysbmldoc.h	/^		void addMySpecies (MySpecies*);$/;"	p	class:MySBMLDocument	access:public	signature:(MySpecies*)
+MySBMLDocument::createMyCompartment	mysbmldoc.cpp	/^MyCompartment* MySBMLDocument::createMyCompartment ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::createMyCompartment	mysbmldoc.h	/^		MyCompartment* createMyCompartment ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument::createMyReaction	mysbmldoc.cpp	/^MyReaction* MySBMLDocument::createMyReaction ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::createMyReaction	mysbmldoc.h	/^		MyReaction* createMyReaction ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument::createMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::createMySpecies ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::createMySpecies	mysbmldoc.h	/^		MySpecies* createMySpecies ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySBMLDocument::getMyCompartment	mysbmldoc.cpp	/^MyCompartment* MySBMLDocument::getMyCompartment (const string& ref)$/;"	f	class:MySBMLDocument	signature:(const string& ref)
+MySBMLDocument::getMyCompartment	mysbmldoc.cpp	/^const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const$/;"	f	class:MySBMLDocument	signature:(const string& ref) const
+MySBMLDocument::getMyCompartment	mysbmldoc.h	/^		MyCompartment* getMyCompartment (const string&);$/;"	p	class:MySBMLDocument	access:public	signature:(const string&)
+MySBMLDocument::getMyCompartment	mysbmldoc.h	/^		const MyCompartment* getMyCompartment (const string&) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const string&) const
+MySBMLDocument::getMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s)$/;"	f	class:MySBMLDocument	signature:(const MySpecies* s)
+MySBMLDocument::getMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::getMySpecies (const string& ref) $/;"	f	class:MySBMLDocument	signature:(const string& ref)
+MySBMLDocument::getMySpecies	mysbmldoc.cpp	/^const MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s) const$/;"	f	class:MySBMLDocument	signature:(const MySpecies* s) const
+MySBMLDocument::getMySpecies	mysbmldoc.cpp	/^const MySpecies* MySBMLDocument::getMySpecies (const string& ref) const$/;"	f	class:MySBMLDocument	signature:(const string& ref) const
+MySBMLDocument::getMySpecies	mysbmldoc.h	/^		MySpecies* getMySpecies (const MySpecies*);$/;"	p	class:MySBMLDocument	access:public	signature:(const MySpecies*)
+MySBMLDocument::getMySpecies	mysbmldoc.h	/^		MySpecies* getMySpecies (const string&);$/;"	p	class:MySBMLDocument	access:public	signature:(const string&)
+MySBMLDocument::getMySpecies	mysbmldoc.h	/^		const MySpecies* getMySpecies (const MySpecies*) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const MySpecies*) const
+MySBMLDocument::getMySpecies	mysbmldoc.h	/^		const MySpecies* getMySpecies (const string&) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const string&) const
+MySBMLDocument::getNumOfMyCompartments	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMyCompartments () const$/;"	f	class:MySBMLDocument	signature:() const
+MySBMLDocument::getNumOfMyCompartments	mysbmldoc.h	/^		int getNumOfMyCompartments () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
+MySBMLDocument::getNumOfMySpecies	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMySpecies () const$/;"	f	class:MySBMLDocument	signature:() const
+MySBMLDocument::getNumOfMySpecies	mysbmldoc.h	/^		int getNumOfMySpecies () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
+MySBMLDocument::handleReactionTemplate	mysbmldoc.cpp	/^void MySBMLDocument::handleReactionTemplate ($/;"	f	class:MySBMLDocument	signature:( readDataBase& dbreader, const string& doc, const string& type, const string& dbref, const int& index )
+MySBMLDocument::handleReactionTemplate	mysbmldoc.h	/^		void handleReactionTemplate ($/;"	p	class:MySBMLDocument	access:private	signature:( readDataBase&, const string&, const string&, const string&, const int& )
+MySBMLDocument::listOfMyCompartments	mysbmldoc.h	/^		vector<MyCompartment*> listOfMyCompartments;$/;"	m	class:MySBMLDocument	access:private
+MySBMLDocument::listOfMyReactions	mysbmldoc.h	/^		vector<MyReaction*> listOfMyReactions;$/;"	m	class:MySBMLDocument	access:private
+MySBMLDocument::listOfMySpecies	mysbmldoc.h	/^		vector<MySpecies*> listOfMySpecies;$/;"	m	class:MySBMLDocument	access:private
+MySBMLDocument::run	mysbmldoc.cpp	/^void MySBMLDocument::run (readDataBase& dbreader)$/;"	f	class:MySBMLDocument	signature:(readDataBase& dbreader)
+MySBMLDocument::run	mysbmldoc.h	/^		void run (readDataBase&);$/;"	p	class:MySBMLDocument	access:public	signature:(readDataBase&)
+MySBMLDocument::searchTranscriptionReactions	mysbmldoc.cpp	/^void MySBMLDocument::searchTranscriptionReactions ($/;"	f	class:MySBMLDocument	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+MySBMLDocument::searchTranscriptionReactions	mysbmldoc.h	/^		void searchTranscriptionReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+MySBMLDocument::searchTranslationReactions	mysbmldoc.cpp	/^void MySBMLDocument::searchTranslationReactions ($/;"	f	class:MySBMLDocument	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+MySBMLDocument::searchTranslationReactions	mysbmldoc.h	/^		void searchTranslationReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+MySBMLDocument::write	mysbmldoc.cpp	/^void MySBMLDocument::write ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::write	mysbmldoc.h	/^		void write ();$/;"	p	class:MySBMLDocument	access:private	signature:()
+MySBMLDocument::~MySBMLDocument	mysbmldoc.cpp	/^MySBMLDocument::~MySBMLDocument ()$/;"	f	class:MySBMLDocument	signature:()
+MySBMLDocument::~MySBMLDocument	mysbmldoc.h	/^		~MySBMLDocument ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+MySpecies	myspecies.cpp	/^MySpecies::MySpecies ($/;"	f	class:MySpecies	signature:( const MySpecies* orig )
+MySpecies	myspecies.cpp	/^MySpecies::MySpecies () :$/;"	f	class:MySpecies	signature:()
+MySpecies	myspecies.cpp	/^MySpecies::MySpecies (const int& speciesNum)$/;"	f	class:MySpecies	signature:(const int& speciesNum)
+MySpecies	myspecies.h	/^		MySpecies ();$/;"	p	class:MySpecies	access:public	signature:()
+MySpecies	myspecies.h	/^		MySpecies (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
+MySpecies	myspecies.h	/^		MySpecies (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+MySpecies	myspecies.h	/^class MySpecies:$/;"	c	inherits:Species
+MySpecies::MySpecies	myspecies.cpp	/^MySpecies::MySpecies ($/;"	f	class:MySpecies	signature:( const MySpecies* orig )
+MySpecies::MySpecies	myspecies.cpp	/^MySpecies::MySpecies () :$/;"	f	class:MySpecies	signature:()
+MySpecies::MySpecies	myspecies.cpp	/^MySpecies::MySpecies (const int& speciesNum)$/;"	f	class:MySpecies	signature:(const int& speciesNum)
+MySpecies::MySpecies	myspecies.h	/^		MySpecies ();$/;"	p	class:MySpecies	access:public	signature:()
+MySpecies::MySpecies	myspecies.h	/^		MySpecies (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
+MySpecies::MySpecies	myspecies.h	/^		MySpecies (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+MySpecies::Output	myspecies.cpp	/^void MySpecies::Output () const$/;"	f	class:MySpecies	signature:() const
+MySpecies::Output	myspecies.h	/^		void Output () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::addPrefix	myspecies.cpp	/^void MySpecies::addPrefix (const string& prefix)$/;"	f	class:MySpecies	signature:(const string& prefix)
+MySpecies::addPrefix	myspecies.h	/^		void addPrefix (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::comp_type_id	myspecies.h	/^		string comp_type_id; \/\/non-empty if it is a compartment-type species $/;"	m	class:MySpecies	access:private
+MySpecies::createChain	myspecies.cpp	/^Chain* MySpecies::createChain ($/;"	f	class:MySpecies	signature:( const Chain* orig )
+MySpecies::createChain	myspecies.cpp	/^Chain* MySpecies::createChain ()$/;"	f	class:MySpecies	signature:()
+MySpecies::createChain	myspecies.h	/^		Chain* createChain ();$/;"	p	class:MySpecies	access:public	signature:()
+MySpecies::createChain	myspecies.h	/^		Chain* createChain (const Chain* c); $/;"	p	class:MySpecies	access:public	signature:(const Chain* c)
+MySpecies::createTree	myspecies.cpp	/^Tree* MySpecies::createTree ($/;"	f	class:MySpecies	signature:( const Tree* t )
+MySpecies::createTree	myspecies.cpp	/^Tree* MySpecies::createTree ()$/;"	f	class:MySpecies	signature:()
+MySpecies::createTree	myspecies.h	/^		Tree* createTree ();$/;"	p	class:MySpecies	access:public	signature:()
+MySpecies::createTree	myspecies.h	/^		Tree* createTree (const Tree* t);$/;"	p	class:MySpecies	access:public	signature:(const Tree* t)
+MySpecies::equal	myspecies.cpp	/^bool MySpecies::equal ($/;"	f	class:MySpecies	signature:( const MySpecies* rhs )
+MySpecies::equal	myspecies.h	/^		bool equal (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
+MySpecies::equiv	myspecies.h	/^		vector<markType> equiv; \/\/record block of same chains$/;"	m	class:MySpecies	access:private
+MySpecies::findBindedNode	myspecies.cpp	/^Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label )
+MySpecies::findBindedNode	myspecies.cpp	/^const Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label ) const
+MySpecies::findBindedNode	myspecies.h	/^		Node* findBindedNode (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::findBindedNode	myspecies.h	/^		const Node* findBindedNode (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
+MySpecies::findEquiv	myspecies.cpp	/^void MySpecies::findEquiv () $/;"	f	class:MySpecies	signature:()
+MySpecies::findEquiv	myspecies.h	/^		void findEquiv ();$/;"	p	class:MySpecies	access:private	signature:()
+MySpecies::getChain	myspecies.cpp	/^Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n )
+MySpecies::getChain	myspecies.cpp	/^const Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n ) const
+MySpecies::getChain	myspecies.h	/^		Chain* getChain (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+MySpecies::getChain	myspecies.h	/^		const Chain* getChain (const int&) const;$/;"	p	class:MySpecies	access:public	signature:(const int&) const
+MySpecies::getCompTypeId	myspecies.cpp	/^string MySpecies::getCompTypeId () const {$/;"	f	class:MySpecies	signature:() const
+MySpecies::getCompTypeId	myspecies.h	/^		string getCompTypeId () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::getDB_Label	myspecies.cpp	/^string MySpecies::getDB_Label () const {$/;"	f	class:MySpecies	signature:() const
+MySpecies::getDB_Label	myspecies.h	/^		string getDB_Label () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::getDB_ref	myspecies.cpp	/^string MySpecies::getDB_ref () const {$/;"	f	class:MySpecies	signature:() const
+MySpecies::getDB_ref	myspecies.h	/^		string getDB_ref () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::getNumOfChains	myspecies.cpp	/^int MySpecies::getNumOfChains () const$/;"	f	class:MySpecies	signature:() const
+MySpecies::getNumOfChains	myspecies.h	/^		int getNumOfChains () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::getNumOfTrees	myspecies.cpp	/^int MySpecies::getNumOfTrees () const$/;"	f	class:MySpecies	signature:() const
+MySpecies::getNumOfTrees	myspecies.h	/^		int getNumOfTrees () const;$/;"	p	class:MySpecies	access:public	signature:() const
+MySpecies::getPart	myspecies.cpp	/^Part* MySpecies::getPart ($/;"	f	class:MySpecies	signature:( const string& partLabel )
+MySpecies::getPart	myspecies.cpp	/^const Part* MySpecies::getPart ($/;"	f	class:MySpecies	signature:( const string& partLabel ) const
+MySpecies::getPart	myspecies.h	/^		Part* getPart (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::getPart	myspecies.h	/^		const Part* getPart (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
+MySpecies::getTree	myspecies.cpp	/^Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n )
+MySpecies::getTree	myspecies.cpp	/^const Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n ) const
+MySpecies::getTree	myspecies.h	/^		Tree* getTree (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+MySpecies::getTree	myspecies.h	/^		const Tree* getTree (const int&) const;$/;"	p	class:MySpecies	access:public	signature:(const int&) const
+MySpecies::isRearranged	myspecies.h	/^		bool isRearranged; \/\/if its structure has been rearranged$/;"	m	class:MySpecies	access:private
+MySpecies::listOfChains	myspecies.h	/^		vector<Chain*> listOfChains;$/;"	m	class:MySpecies	access:private
+MySpecies::listOfTrees	myspecies.h	/^		vector<Tree*> listOfTrees;$/;"	m	class:MySpecies	access:private
+MySpecies::match	myspecies.cpp	/^bool MySpecies::match ($/;"	f	class:MySpecies	signature:( const MySpecies* s, vector<cMatchsType2>& trym ) const
+MySpecies::match	myspecies.h	/^		bool match (const MySpecies*, cMatchsArray& res) const;$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*, cMatchsArray& res) const
+MySpecies::partialDup	myspecies.cpp	/^void MySpecies::partialDup ($/;"	f	class:MySpecies	signature:( const set<int>& chainSaved, const set<string>& nodeSaved )
+MySpecies::partialDup	myspecies.h	/^		void partialDup (const set<int>&, const set<string>&);$/;"	p	class:MySpecies	access:public	signature:(const set<int>&, const set<string>&)
+MySpecies::perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const permType& permAll )
+MySpecies::perm	myspecies.h	/^		void perm (const int&, const permType&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const permType&)
+MySpecies::rearrange	myspecies.cpp	/^void MySpecies::rearrange ()$/;"	f	class:MySpecies	signature:()
+MySpecies::rearrange	myspecies.h	/^		void rearrange ();$/;"	p	class:MySpecies	access:public	signature:()
+MySpecies::reference_db	myspecies.h	/^		string reference_db; \/\/id in database for template species $/;"	m	class:MySpecies	access:private
+MySpecies::setCompTypeId	myspecies.cpp	/^void MySpecies::setCompTypeId (const string& sid) {$/;"	f	class:MySpecies	signature:(const string& sid)
+MySpecies::setCompTypeId	myspecies.h	/^		void setCompTypeId (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::setDB_Label	myspecies.cpp	/^void MySpecies::setDB_Label (const string& label) {$/;"	f	class:MySpecies	signature:(const string& label)
+MySpecies::setDB_Label	myspecies.h	/^		void setDB_Label (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::setDB_ref	myspecies.cpp	/^void MySpecies::setDB_ref (const string& ref) {$/;"	f	class:MySpecies	signature:(const string& ref)
+MySpecies::setDB_ref	myspecies.h	/^		void setDB_ref (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+MySpecies::speciesLabel_db	myspecies.h	/^		string speciesLabel_db; \/\/used in reaction templates$/;"	m	class:MySpecies	access:private
+MySpecies::split	myspecies.cpp	/^void MySpecies::split ($/;"	f	class:MySpecies	signature:( bdbXMLInterface& dbreader, vector<MySpecies*>& pieces )
+MySpecies::split	myspecies.h	/^		void split (bdbXMLInterface&, vector<MySpecies*>&);$/;"	p	class:MySpecies	access:public	signature:(bdbXMLInterface&, vector<MySpecies*>&)
+MySpecies::trim	myspecies.cpp	/^void MySpecies::trim (bdbXMLInterface* dbreader)$/;"	f	class:MySpecies	signature:(bdbXMLInterface* dbreader)
+MySpecies::trim	myspecies.h	/^		void trim (bdbXMLInterface* dbreader = NULL);$/;"	p	class:MySpecies	access:private	signature:(bdbXMLInterface* dbreader = NULL)
+MySpecies::~MySpecies	myspecies.cpp	/^MySpecies::~MySpecies ()$/;"	f	class:MySpecies	signature:()
+MySpecies::~MySpecies	myspecies.h	/^		~MySpecies ();$/;"	p	class:MySpecies	access:public	signature:()
+NODE_H	node.h	13;"	d
+Node	node.cpp	/^Node::Node ()$/;"	f	class:Node	signature:()
+Node	node.cpp	/^Node::Node (const Node* orig)$/;"	f	class:Node	signature:(const Node* orig)
+Node	node.h	/^	Node ();$/;"	p	class:Node	access:public	signature:()
+Node	node.h	/^	Node (const Node*);$/;"	p	class:Node	access:public	signature:(const Node*)
+Node	node.h	/^class Node$/;"	c
+Node::Node	node.cpp	/^Node::Node ()$/;"	f	class:Node	signature:()
+Node::Node	node.cpp	/^Node::Node (const Node* orig)$/;"	f	class:Node	signature:(const Node* orig)
+Node::Node	node.h	/^	Node ();$/;"	p	class:Node	access:public	signature:()
+Node::Node	node.h	/^	Node (const Node*);$/;"	p	class:Node	access:public	signature:(const Node*)
+Node::addChild	node.cpp	/^void Node::addChild ($/;"	f	class:Node	signature:( Node* childNodePtr )
+Node::addChild	node.h	/^	void addChild (Node*);$/;"	p	class:Node	access:public	signature:(Node*)
+Node::children	node.h	/^	vector<Node*> children;$/;"	m	class:Node	access:private
+Node::equal	node.cpp	/^bool Node::equal ($/;"	f	class:Node	signature:( const Node* rhs ) const
+Node::equal	node.h	/^	bool equal (const Node*) const;$/;"	p	class:Node	access:public	signature:(const Node*) const
+Node::getNodeLabel	node.cpp	/^string Node::getNodeLabel () const$/;"	f	class:Node	signature:() const
+Node::getNodeLabel	node.h	/^	string getNodeLabel () const;$/;"	p	class:Node	access:public	signature:() const
+Node::getNodeWeight	node.cpp	/^markType Node::getNodeWeight () const$/;"	f	class:Node	signature:() const
+Node::getNodeWeight	node.h	/^	markType getNodeWeight () const;$/;"	p	class:Node	access:public	signature:() const
+Node::getParentNodeLabel	node.cpp	/^string Node::getParentNodeLabel () const$/;"	f	class:Node	signature:() const
+Node::getParentNodeLabel	node.h	/^	string getParentNodeLabel () const;$/;"	p	class:Node	access:public	signature:() const
+Node::huffman	node.h	/^	string huffman;$/;"	m	class:Node	access:private
+Node::isLeaf	node.cpp	/^bool Node::isLeaf () const$/;"	f	class:Node	signature:() const
+Node::isLeaf	node.h	/^	bool isLeaf () const;$/;"	p	class:Node	access:public	signature:() const
+Node::nodeLabel	node.h	/^	string nodeLabel;$/;"	m	class:Node	access:private
+Node::parentNodeLabel	node.h	/^	string parentNodeLabel;$/;"	m	class:Node	access:private
+Node::setNodeLabel	node.cpp	/^void Node::setNodeLabel (const string& label) {$/;"	f	class:Node	signature:(const string& label)
+Node::setNodeLabel	node.h	/^	void setNodeLabel (const string&);$/;"	p	class:Node	access:public	signature:(const string&)
+Node::setNodeWeight	node.cpp	/^void Node::setNodeWeight ($/;"	f	class:Node	signature:( const int& cn, const int& pn )
+Node::setNodeWeight	node.h	/^	void setNodeWeight (const int&, const int&);$/;"	p	class:Node	access:public	signature:(const int&, const int&)
+Node::weight	node.h	/^	markType weight;$/;"	m	class:Node	access:private
+Node::~Node	node.cpp	/^Node::~Node ()$/;"	f	class:Node	signature:()
+Node::~Node	node.h	/^	~Node ();$/;"	p	class:Node	access:public	signature:()
+Output	chain.cpp	/^void Chain::Output (ostream& os) const $/;"	f	class:Chain	signature:(ostream& os) const
+Output	chain.h	/^	void Output (ostream&) const; $/;"	p	class:Chain	access:public	signature:(ostream&) const
+Output	myspecies.cpp	/^void MySpecies::Output () const$/;"	f	class:MySpecies	signature:() const
+Output	myspecies.h	/^		void Output () const;$/;"	p	class:MySpecies	access:public	signature:() const
+Output	tree.cpp	/^void Tree::Output (ostream& os) const {$/;"	f	class:Tree	signature:(ostream& os) const
+Output	tree.cpp	/^void Tree::Output (ostream& os, const string& label) const$/;"	f	class:Tree	signature:(ostream& os, const string& label) const
+Output	tree.h	/^	void Output (ostream&) const;$/;"	p	class:Tree	access:public	signature:(ostream&) const
+Output	tree.h	/^	void Output (ostream&, const string&) const; $/;"	p	class:Tree	access:private	signature:(ostream&, const string&) const
+PART_H	part.h	13;"	d
+Part	part.cpp	/^Part::Part () :isBinded (false) {}$/;"	f	class:Part	signature:()
+Part	part.cpp	/^Part::Part (const Part* orig) : $/;"	f	class:Part	signature:(const Part* orig)
+Part	part.h	/^	Part ();$/;"	p	class:Part	access:public	signature:()
+Part	part.h	/^	Part (const Part* orig);$/;"	p	class:Part	access:public	signature:(const Part* orig)
+Part	part.h	/^class Part$/;"	c
+Part::Part	part.cpp	/^Part::Part () :isBinded (false) {}$/;"	f	class:Part	signature:()
+Part::Part	part.cpp	/^Part::Part (const Part* orig) : $/;"	f	class:Part	signature:(const Part* orig)
+Part::Part	part.h	/^	Part ();$/;"	p	class:Part	access:public	signature:()
+Part::Part	part.h	/^	Part (const Part* orig);$/;"	p	class:Part	access:public	signature:(const Part* orig)
+Part::getIsBinded	part.cpp	/^bool Part::getIsBinded () const {return isBinded;}$/;"	f	class:Part	signature:() const
+Part::getIsBinded	part.h	/^	bool getIsBinded () const;$/;"	p	class:Part	access:public	signature:() const
+Part::getPartCtg	part.cpp	/^string Part::getPartCtg () const {return partCtg;}$/;"	f	class:Part	signature:() const
+Part::getPartCtg	part.h	/^	string getPartCtg () const;$/;"	p	class:Part	access:public	signature:() const
+Part::getPartLabel	part.cpp	/^string Part::getPartLabel () const {return partLabel;}$/;"	f	class:Part	signature:() const
+Part::getPartLabel	part.h	/^	string getPartLabel () const;$/;"	p	class:Part	access:public	signature:() const
+Part::getPartRef	part.cpp	/^string Part::getPartRef () const {return partRef;}$/;"	f	class:Part	signature:() const
+Part::getPartRef	part.h	/^	string getPartRef () const;$/;"	p	class:Part	access:public	signature:() const
+Part::getPartType	part.cpp	/^string Part::getPartType () const {return partType;}$/;"	f	class:Part	signature:() const
+Part::getPartType	part.h	/^	string getPartType () const;$/;"	p	class:Part	access:public	signature:() const
+Part::isBinded	part.h	/^	bool isBinded;$/;"	m	class:Part	access:private
+Part::partCtg	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+Part::partLabel	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+Part::partRef	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+Part::partType	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+Part::setIsBinded	part.cpp	/^void Part::setIsBinded (const bool& isb) {$/;"	f	class:Part	signature:(const bool& isb)
+Part::setIsBinded	part.h	/^	void setIsBinded (const bool& );$/;"	p	class:Part	access:public	signature:(const bool& )
+Part::setPart	part.cpp	/^void Part::setPart ($/;"	f	class:Part	signature:( const string& __ref, const string& __label, const string& __type, const string& __ctg, const bool& __isb )
+Part::setPart	part.h	/^	void setPart ($/;"	p	class:Part	access:public	signature:( const string&, const string&, const string&, const string&, const bool& = false )
+Part::setPartCtg	part.cpp	/^void Part::setPartCtg (const string& __ctg) {$/;"	f	class:Part	signature:(const string& __ctg)
+Part::setPartCtg	part.h	/^	void setPartCtg (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+Part::setPartLabel	part.cpp	/^void Part::setPartLabel (const string& __label) {$/;"	f	class:Part	signature:(const string& __label)
+Part::setPartLabel	part.h	/^	void setPartLabel (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+Part::setPartRef	part.cpp	/^void Part::setPartRef (const string& __ref) {$/;"	f	class:Part	signature:(const string& __ref)
+Part::setPartRef	part.h	/^	void setPartRef (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+Part::setPartType	part.cpp	/^void Part::setPartType (const string& __type) {$/;"	f	class:Part	signature:(const string& __type)
+Part::setPartType	part.h	/^	void setPartType (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+Part::~Part	part.cpp	/^Part::~Part (){}$/;"	f	class:Part	signature:()
+Part::~Part	part.h	/^	~Part ();$/;"	p	class:Part	access:public	signature:()
+REACTION_TEMPLATE_H	reactionTemplate.h	13;"	d
+READ_DB_H	readDataBase.h	14;"	d
+READ_INPUT_H	readInput.h	13;"	d
+READ_XML_COMPONENT_H	readXMLComponent.h	13;"	d
+REJECT	strcacu/caculex.c	471;"	d	file:
+STRCACU_NULL_POINTER	strcacu/cacu_main.h	25;"	d
+STRCACU_NULL_POINTER	strcacu/str_cacu.h	25;"	d
+STRCACU_SUCCESS	strcacu/cacu_main.h	23;"	d
+STRCACU_SUCCESS	strcacu/str_cacu.h	23;"	d
+STRCACU_SYMBOL_NOT_FOUND	strcacu/cacu_main.h	24;"	d
+STRCACU_SYMBOL_NOT_FOUND	strcacu/str_cacu.h	24;"	d
+STRCACU_SYNTAX_ERROR	strcacu/cacu_main.h	26;"	d
+STRCACU_SYNTAX_ERROR	strcacu/str_cacu.h	26;"	d
+StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::StrCacuException(const StrCacuException& other) throw()$/;"	f	class:StrCacuException	signature:(const StrCacuException& other)
+StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::StrCacuException(const string &msg) throw()$/;"	f	class:StrCacuException	signature:(const string &msg)
+StrCacuException	strcacu/StrCacuException.h	/^		StrCacuException(const StrCacuException&) throw();$/;"	p	class:StrCacuException	access:public	signature:(const StrCacuException&)
+StrCacuException	strcacu/StrCacuException.h	/^		StrCacuException(const string &msg) throw();$/;"	p	class:StrCacuException	access:public	signature:(const string &msg)
+StrCacuException	strcacu/StrCacuException.h	/^class StrCacuException : public exception$/;"	c	inherits:exception
+StrCacuException::StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::StrCacuException(const StrCacuException& other) throw()$/;"	f	class:StrCacuException	signature:(const StrCacuException& other)
+StrCacuException::StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::StrCacuException(const string &msg) throw()$/;"	f	class:StrCacuException	signature:(const string &msg)
+StrCacuException::StrCacuException	strcacu/StrCacuException.h	/^		StrCacuException(const StrCacuException&) throw();$/;"	p	class:StrCacuException	access:public	signature:(const StrCacuException&)
+StrCacuException::StrCacuException	strcacu/StrCacuException.h	/^		StrCacuException(const string &msg) throw();$/;"	p	class:StrCacuException	access:public	signature:(const string &msg)
+StrCacuException::get_msg	strcacu/StrCacuException.cpp	/^const string& StrCacuException::get_msg() const throw()$/;"	f	class:StrCacuException	signature:() const
+StrCacuException::get_msg	strcacu/StrCacuException.h	/^		const string& get_msg() const throw();$/;"	p	class:StrCacuException	access:private	signature:() const
+StrCacuException::n_msg	strcacu/StrCacuException.h	/^		string n_msg;$/;"	m	class:StrCacuException	access:private
+StrCacuException::operator =	strcacu/StrCacuException.cpp	/^StrCacuException& StrCacuException::operator = (const StrCacuException& other) throw()$/;"	f	class:StrCacuException	signature:(const StrCacuException& other)
+StrCacuException::operator =	strcacu/StrCacuException.h	/^		StrCacuException& operator= (const StrCacuException& other) throw();$/;"	p	class:StrCacuException	access:public	signature:(const StrCacuException& other)
+StrCacuException::what	strcacu/StrCacuException.cpp	/^const char* StrCacuException::what() const throw()$/;"	f	class:StrCacuException	signature:() const
+StrCacuException::what	strcacu/StrCacuException.h	/^		const char* what() const throw();$/;"	p	class:StrCacuException	access:public	signature:() const
+StrCacuException::~StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::~StrCacuException() throw()$/;"	f	class:StrCacuException	signature:()
+StrCacuException::~StrCacuException	strcacu/StrCacuException.h	/^		~StrCacuException() throw();$/;"	p	class:StrCacuException	access:public	signature:()
+TARGETLIB	strcacu/Makefile	/^TARGETLIB = libstr_cacu.a$/;"	m
+TEST_OUTPUT	strcacu/cacu_main.h	14;"	d
+TEST_OUTPUT	strcacu/str_cacu.h	14;"	d
+TINY	mysbmldoc.h	21;"	d
+TOKEN_AND	strcacu/cacuyac.c	/^     TOKEN_AND = 262,$/;"	e	enum:yytokentype	file:
+TOKEN_AND	strcacu/cacuyac.c	136;"	d	file:
+TOKEN_AND	strcacu/cacuyac.h	/^     TOKEN_AND = 262,$/;"	e	enum:yytokentype
+TOKEN_AND	strcacu/cacuyac.h	64;"	d
+TOKEN_DIVIDE	strcacu/cacuyac.c	/^     TOKEN_DIVIDE = 267,$/;"	e	enum:yytokentype	file:
+TOKEN_DIVIDE	strcacu/cacuyac.c	141;"	d	file:
+TOKEN_DIVIDE	strcacu/cacuyac.h	/^     TOKEN_DIVIDE = 267,$/;"	e	enum:yytokentype
+TOKEN_DIVIDE	strcacu/cacuyac.h	69;"	d
+TOKEN_EQU	strcacu/cacuyac.c	/^     TOKEN_EQU = 258,$/;"	e	enum:yytokentype	file:
+TOKEN_EQU	strcacu/cacuyac.c	132;"	d	file:
+TOKEN_EQU	strcacu/cacuyac.h	/^     TOKEN_EQU = 258,$/;"	e	enum:yytokentype
+TOKEN_EQU	strcacu/cacuyac.h	60;"	d
+TOKEN_IDENTIFIER	strcacu/cacuyac.c	/^     TOKEN_IDENTIFIER = 268,$/;"	e	enum:yytokentype	file:
+TOKEN_IDENTIFIER	strcacu/cacuyac.c	142;"	d	file:
+TOKEN_IDENTIFIER	strcacu/cacuyac.h	/^     TOKEN_IDENTIFIER = 268,$/;"	e	enum:yytokentype
+TOKEN_IDENTIFIER	strcacu/cacuyac.h	70;"	d
+TOKEN_LEFT_BRACKET	strcacu/cacuyac.c	/^     TOKEN_LEFT_BRACKET = 271,$/;"	e	enum:yytokentype	file:
+TOKEN_LEFT_BRACKET	strcacu/cacuyac.c	145;"	d	file:
+TOKEN_LEFT_BRACKET	strcacu/cacuyac.h	/^     TOKEN_LEFT_BRACKET = 271,$/;"	e	enum:yytokentype
+TOKEN_LEFT_BRACKET	strcacu/cacuyac.h	73;"	d
+TOKEN_LESS_EQ	strcacu/cacuyac.c	/^     TOKEN_LESS_EQ = 260,$/;"	e	enum:yytokentype	file:
+TOKEN_LESS_EQ	strcacu/cacuyac.c	134;"	d	file:
+TOKEN_LESS_EQ	strcacu/cacuyac.h	/^     TOKEN_LESS_EQ = 260,$/;"	e	enum:yytokentype
+TOKEN_LESS_EQ	strcacu/cacuyac.h	62;"	d
+TOKEN_MINUS	strcacu/cacuyac.c	/^     TOKEN_MINUS = 265,$/;"	e	enum:yytokentype	file:
+TOKEN_MINUS	strcacu/cacuyac.c	139;"	d	file:
+TOKEN_MINUS	strcacu/cacuyac.h	/^     TOKEN_MINUS = 265,$/;"	e	enum:yytokentype
+TOKEN_MINUS	strcacu/cacuyac.h	67;"	d
+TOKEN_MORE_EQ	strcacu/cacuyac.c	/^     TOKEN_MORE_EQ = 261,$/;"	e	enum:yytokentype	file:
+TOKEN_MORE_EQ	strcacu/cacuyac.c	135;"	d	file:
+TOKEN_MORE_EQ	strcacu/cacuyac.h	/^     TOKEN_MORE_EQ = 261,$/;"	e	enum:yytokentype
+TOKEN_MORE_EQ	strcacu/cacuyac.h	63;"	d
+TOKEN_NEQU	strcacu/cacuyac.c	/^     TOKEN_NEQU = 259,$/;"	e	enum:yytokentype	file:
+TOKEN_NEQU	strcacu/cacuyac.c	133;"	d	file:
+TOKEN_NEQU	strcacu/cacuyac.h	/^     TOKEN_NEQU = 259,$/;"	e	enum:yytokentype
+TOKEN_NEQU	strcacu/cacuyac.h	61;"	d
+TOKEN_NUM	strcacu/cacuyac.c	/^     TOKEN_NUM = 269,$/;"	e	enum:yytokentype	file:
+TOKEN_NUM	strcacu/cacuyac.c	143;"	d	file:
+TOKEN_NUM	strcacu/cacuyac.h	/^     TOKEN_NUM = 269,$/;"	e	enum:yytokentype
+TOKEN_NUM	strcacu/cacuyac.h	71;"	d
+TOKEN_OR	strcacu/cacuyac.c	/^     TOKEN_OR = 263,$/;"	e	enum:yytokentype	file:
+TOKEN_OR	strcacu/cacuyac.c	137;"	d	file:
+TOKEN_OR	strcacu/cacuyac.h	/^     TOKEN_OR = 263,$/;"	e	enum:yytokentype
+TOKEN_OR	strcacu/cacuyac.h	65;"	d
+TOKEN_PLUS	strcacu/cacuyac.c	/^     TOKEN_PLUS = 264,$/;"	e	enum:yytokentype	file:
+TOKEN_PLUS	strcacu/cacuyac.c	138;"	d	file:
+TOKEN_PLUS	strcacu/cacuyac.h	/^     TOKEN_PLUS = 264,$/;"	e	enum:yytokentype
+TOKEN_PLUS	strcacu/cacuyac.h	66;"	d
+TOKEN_REAL	strcacu/cacuyac.c	/^     TOKEN_REAL = 270,$/;"	e	enum:yytokentype	file:
+TOKEN_REAL	strcacu/cacuyac.c	144;"	d	file:
+TOKEN_REAL	strcacu/cacuyac.h	/^     TOKEN_REAL = 270,$/;"	e	enum:yytokentype
+TOKEN_REAL	strcacu/cacuyac.h	72;"	d
+TOKEN_RIGHT_BRACKET	strcacu/cacuyac.c	/^     TOKEN_RIGHT_BRACKET = 272$/;"	e	enum:yytokentype	file:
+TOKEN_RIGHT_BRACKET	strcacu/cacuyac.c	146;"	d	file:
+TOKEN_RIGHT_BRACKET	strcacu/cacuyac.h	/^     TOKEN_RIGHT_BRACKET = 272$/;"	e	enum:yytokentype
+TOKEN_RIGHT_BRACKET	strcacu/cacuyac.h	74;"	d
+TOKEN_TIMES	strcacu/cacuyac.c	/^     TOKEN_TIMES = 266,$/;"	e	enum:yytokentype	file:
+TOKEN_TIMES	strcacu/cacuyac.c	140;"	d	file:
+TOKEN_TIMES	strcacu/cacuyac.h	/^     TOKEN_TIMES = 266,$/;"	e	enum:yytokentype
+TOKEN_TIMES	strcacu/cacuyac.h	68;"	d
+TREE_H	tree.h	13;"	d
+Tree	tree.cpp	/^Tree::Tree ()$/;"	f	class:Tree	signature:()
+Tree	tree.cpp	/^Tree::Tree (const Tree* orig)$/;"	f	class:Tree	signature:(const Tree* orig)
+Tree	tree.h	/^	Tree ();$/;"	p	class:Tree	access:public	signature:()
+Tree	tree.h	/^	Tree (const Tree*);$/;"	p	class:Tree	access:public	signature:(const Tree*)
+Tree	tree.h	/^class Tree$/;"	c
+Tree::Output	tree.cpp	/^void Tree::Output (ostream& os) const {$/;"	f	class:Tree	signature:(ostream& os) const
+Tree::Output	tree.cpp	/^void Tree::Output (ostream& os, const string& label) const$/;"	f	class:Tree	signature:(ostream& os, const string& label) const
+Tree::Output	tree.h	/^	void Output (ostream&) const;$/;"	p	class:Tree	access:public	signature:(ostream&) const
+Tree::Output	tree.h	/^	void Output (ostream&, const string&) const; $/;"	p	class:Tree	access:private	signature:(ostream&, const string&) const
+Tree::Tree	tree.cpp	/^Tree::Tree ()$/;"	f	class:Tree	signature:()
+Tree::Tree	tree.cpp	/^Tree::Tree (const Tree* orig)$/;"	f	class:Tree	signature:(const Tree* orig)
+Tree::Tree	tree.h	/^	Tree ();$/;"	p	class:Tree	access:public	signature:()
+Tree::Tree	tree.h	/^	Tree (const Tree*);$/;"	p	class:Tree	access:public	signature:(const Tree*)
+Tree::__add_tree_prefix	tree.cpp	/^void Tree::__add_tree_prefix (const string& prefix)$/;"	f	class:Tree	signature:(const string& prefix)
+Tree::__add_tree_prefix	tree.h	/^	void __add_tree_prefix (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::__label_collection	tree.cpp	/^Node* Tree::__label_collection ($/;"	f	class:Tree	signature:( set<string>& collection, const Node* n ) const
+Tree::__label_collection	tree.h	/^	Node* __label_collection (set<string>&, const Node*) const;$/;"	p	class:Tree	access:private	signature:(set<string>&, const Node*) const
+Tree::addNodeChildren	tree.cpp	/^void Tree::addNodeChildren ()$/;"	f	class:Tree	signature:()
+Tree::addNodeChildren	tree.h	/^	void addNodeChildren ();$/;"	p	class:Tree	access:public	signature:()
+Tree::checkIntegrated	tree.cpp	/^void Tree::checkIntegrated () const$/;"	f	class:Tree	signature:() const
+Tree::checkIntegrated	tree.h	/^	void checkIntegrated () const;$/;"	p	class:Tree	access:public	signature:() const
+Tree::createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const Node* n )
+Tree::createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const string& child, const string& parent )
+Tree::createNode	tree.cpp	/^Node* Tree::createNode ()$/;"	f	class:Tree	signature:()
+Tree::createNode	tree.h	/^	Node* createNode ();$/;"	p	class:Tree	access:public	signature:()
+Tree::createNode	tree.h	/^	Node* createNode (const Node*);$/;"	p	class:Tree	access:public	signature:(const Node*)
+Tree::createNode	tree.h	/^	Node* createNode (const string&, const string&);$/;"	p	class:Tree	access:public	signature:(const string&, const string&)
+Tree::equal	tree.cpp	/^bool Tree::equal ($/;"	f	class:Tree	signature:( const Tree* rhs ) const
+Tree::equal	tree.h	/^	bool equal (const Tree*) const;$/;"	p	class:Tree	access:public	signature:(const Tree*) const
+Tree::genHuffman	tree.cpp	/^void Tree::genHuffman (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+Tree::genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::genWeight	tree.cpp	/^markType Tree::genWeight (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+Tree::genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::getNode	tree.cpp	/^Node* Tree::getNode (const int& n) {$/;"	f	class:Tree	signature:(const int& n)
+Tree::getNode	tree.cpp	/^Node* Tree::getNode (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+Tree::getNode	tree.cpp	/^const Node* Tree::getNode (const int& n) const {$/;"	f	class:Tree	signature:(const int& n) const
+Tree::getNode	tree.cpp	/^const Node* Tree::getNode (const string& label) const$/;"	f	class:Tree	signature:(const string& label) const
+Tree::getNode	tree.h	/^	Node* getNode (const int&);$/;"	p	class:Tree	access:public	signature:(const int&)
+Tree::getNode	tree.h	/^	Node* getNode (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::getNode	tree.h	/^	const Node* getNode (const int&) const;$/;"	p	class:Tree	access:public	signature:(const int&) const
+Tree::getNode	tree.h	/^	const Node* getNode (const string&) const;$/;"	p	class:Tree	access:public	signature:(const string&) const
+Tree::getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {$/;"	f	class:Tree	signature:() const
+Tree::getNumOfNodes	tree.h	/^	int getNumOfNodes () const;$/;"	p	class:Tree	access:public	signature:() const
+Tree::listOfNodes	tree.h	/^	vector<Node*> listOfNodes;$/;"	m	class:Tree	access:private
+Tree::mapNodes	tree.h	/^	map<string, Node*> mapNodes;$/;"	m	class:Tree	access:private
+Tree::~Tree	tree.cpp	/^Tree::~Tree ()$/;"	f	class:Tree	signature:()
+Tree::~Tree	tree.h	/^	~Tree ();$/;"	p	class:Tree	access:public	signature:()
+UINT16_MAX	strcacu/caculex.c	80;"	d	file:
+UINT32_MAX	strcacu/caculex.c	83;"	d	file:
+UINT8_MAX	strcacu/caculex.c	77;"	d	file:
+YACC	strcacu/Makefile	/^YACC = yacc$/;"	m
+YYABORT	strcacu/cacuyac.c	598;"	d	file:
+YYACCEPT	strcacu/cacuyac.c	597;"	d	file:
+YYBACKUP	strcacu/cacuyac.c	610;"	d	file:
+YYBISON	strcacu/cacuyac.c	46;"	d	file:
+YYBISON_VERSION	strcacu/cacuyac.c	49;"	d	file:
+YYCOPY	strcacu/cacuyac.c	357;"	d	file:
+YYCOPY	strcacu/cacuyac.c	360;"	d	file:
+YYDEBUG	strcacu/cacuyac.c	91;"	d	file:
+YYDPRINTF	strcacu/cacuyac.c	690;"	d	file:
+YYDPRINTF	strcacu/cacuyac.c	839;"	d	file:
+YYEMPTY	strcacu/cacuyac.c	594;"	d	file:
+YYEOF	strcacu/cacuyac.c	595;"	d	file:
+YYERRCODE	strcacu/cacuyac.c	629;"	d	file:
+YYERROR	strcacu/cacuyac.c	599;"	d	file:
+YYERROR_VERBOSE	strcacu/cacuyac.c	96;"	d	file:
+YYERROR_VERBOSE	strcacu/cacuyac.c	97;"	d	file:
+YYERROR_VERBOSE	strcacu/cacuyac.c	99;"	d	file:
+YYFAIL	strcacu/cacuyac.c	606;"	d	file:
+YYFINAL	strcacu/cacuyac.c	390;"	d	file:
+YYFPRINTF	strcacu/cacuyac.c	687;"	d	file:
+YYFREE	strcacu/cacuyac.c	323;"	d	file:
+YYID	strcacu/cacuyac.c	/^YYID (int yyi)$/;"	f	file:	signature:(int yyi)
+YYID	strcacu/cacuyac.c	247;"	d	file:
+YYINITDEPTH	strcacu/cacuyac.c	848;"	d	file:
+YYLAST	strcacu/cacuyac.c	392;"	d	file:
+YYLEX	strcacu/cacuyac.c	677;"	d	file:
+YYLEX	strcacu/cacuyac.c	679;"	d	file:
+YYLLOC_DEFAULT	strcacu/cacuyac.c	638;"	d	file:
+YYLSP_NEEDED	strcacu/cacuyac.c	64;"	d	file:
+YYMALLOC	strcacu/cacuyac.c	316;"	d	file:
+YYMAXDEPTH	strcacu/cacuyac.c	859;"	d	file:
+YYMAXUTOK	strcacu/cacuyac.c	405;"	d	file:
+YYNNTS	strcacu/cacuyac.c	397;"	d	file:
+YYNRULES	strcacu/cacuyac.c	399;"	d	file:
+YYNSTATES	strcacu/cacuyac.c	401;"	d	file:
+YYNTOKENS	strcacu/cacuyac.c	395;"	d	file:
+YYPACT_NINF	strcacu/cacuyac.c	536;"	d	file:
+YYPOPSTACK	strcacu/cacuyac.c	1199;"	d	file:
+YYPULL	strcacu/cacuyac.c	61;"	d	file:
+YYPURE	strcacu/cacuyac.c	55;"	d	file:
+YYPUSH	strcacu/cacuyac.c	58;"	d	file:
+YYRECOVERING	strcacu/cacuyac.c	608;"	d	file:
+YYRHSLOC	strcacu/cacuyac.c	636;"	d	file:
+YYSIZE_MAXIMUM	strcacu/cacuyac.c	224;"	d	file:
+YYSIZE_T	strcacu/cacuyac.c	212;"	d	file:
+YYSIZE_T	strcacu/cacuyac.c	214;"	d	file:
+YYSIZE_T	strcacu/cacuyac.c	218;"	d	file:
+YYSIZE_T	strcacu/cacuyac.c	220;"	d	file:
+YYSKELETON_NAME	strcacu/cacuyac.c	52;"	d	file:
+YYSTACK_ALLOC	strcacu/cacuyac.c	270;"	d	file:
+YYSTACK_ALLOC	strcacu/cacuyac.c	274;"	d	file:
+YYSTACK_ALLOC	strcacu/cacuyac.c	279;"	d	file:
+YYSTACK_ALLOC	strcacu/cacuyac.c	302;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	strcacu/cacuyac.c	299;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	strcacu/cacuyac.c	305;"	d	file:
+YYSTACK_BYTES	strcacu/cacuyac.c	349;"	d	file:
+YYSTACK_FREE	strcacu/cacuyac.c	293;"	d	file:
+YYSTACK_FREE	strcacu/cacuyac.c	303;"	d	file:
+YYSTACK_GAP_MAXIMUM	strcacu/cacuyac.c	345;"	d	file:
+YYSTACK_RELOCATE	strcacu/cacuyac.c	376;"	d	file:
+YYSTATE	strcacu/caculex.c	132;"	d	file:
+YYSTYPE	strcacu/cacuyac.c	/^typedef union YYSTYPE$/;"	u	file:
+YYSTYPE	strcacu/cacuyac.c	/^} YYSTYPE;$/;"	t	typeref:union:YYSTYPE	file:
+YYSTYPE	strcacu/cacuyac.h	/^typedef union YYSTYPE$/;"	u
+YYSTYPE	strcacu/cacuyac.h	/^} YYSTYPE;$/;"	t	typeref:union:YYSTYPE
+YYSTYPE::integer	strcacu/cacuyac.c	/^    int    integer;          \/* int value *\/$/;"	m	union:YYSTYPE	file:	access:public
+YYSTYPE::integer	strcacu/cacuyac.h	/^    int    integer;          \/* int value *\/$/;"	m	union:YYSTYPE	access:public
+YYSTYPE::real	strcacu/cacuyac.c	/^    double real;$/;"	m	union:YYSTYPE	file:	access:public
+YYSTYPE::real	strcacu/cacuyac.h	/^    double real;$/;"	m	union:YYSTYPE	access:public
+YYSTYPE::string	strcacu/cacuyac.c	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	file:	access:public
+YYSTYPE::string	strcacu/cacuyac.h	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	access:public
+YYSTYPE_IS_DECLARED	strcacu/cacuyac.c	169;"	d	file:
+YYSTYPE_IS_DECLARED	strcacu/cacuyac.h	97;"	d
+YYSTYPE_IS_TRIVIAL	strcacu/cacuyac.c	167;"	d	file:
+YYSTYPE_IS_TRIVIAL	strcacu/cacuyac.h	95;"	d
+YYTABLES_NAME	strcacu/caculex.c	1875;"	d	file:
+YYTABLE_NINF	strcacu/cacuyac.c	556;"	d	file:
+YYTERROR	strcacu/cacuyac.c	628;"	d	file:
+YYTOKENTYPE	strcacu/cacuyac.c	110;"	d	file:
+YYTOKENTYPE	strcacu/cacuyac.h	38;"	d
+YYTOKEN_TABLE	strcacu/cacuyac.c	104;"	d	file:
+YYTRANSLATE	strcacu/cacuyac.c	407;"	d	file:
+YYUNDEFTOK	strcacu/cacuyac.c	404;"	d	file:
+YYUSE	strcacu/cacuyac.c	240;"	d	file:
+YYUSE	strcacu/cacuyac.c	242;"	d	file:
+YY_	strcacu/cacuyac.c	230;"	d	file:
+YY_	strcacu/cacuyac.c	234;"	d	file:
+YY_AT_BOL	strcacu/caculex.c	339;"	d	file:
+YY_BREAK	strcacu/caculex.c	667;"	d	file:
+YY_BUFFER_EOF_PENDING	strcacu/caculex.c	255;"	d	file:
+YY_BUFFER_NEW	strcacu/caculex.c	243;"	d	file:
+YY_BUFFER_NORMAL	strcacu/caculex.c	244;"	d	file:
+YY_BUFFER_STATE	strcacu/caculex.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	typeref:struct:yy_buffer_state	file:
+YY_BUF_SIZE	strcacu/caculex.c	149;"	d	file:
+YY_BUF_SIZE	strcacu/caculex.c	151;"	d	file:
+YY_CHAR	strcacu/caculex.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
+YY_CURRENT_BUFFER	strcacu/caculex.c	271;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	strcacu/caculex.c	278;"	d	file:
+YY_DECL	strcacu/caculex.c	655;"	d	file:
+YY_DECL_IS_OURS	strcacu/caculex.c	651;"	d	file:
+YY_DO_BEFORE_ACTION	strcacu/caculex.c	364;"	d	file:
+YY_END_OF_BUFFER	strcacu/caculex.c	372;"	d	file:
+YY_END_OF_BUFFER_CHAR	strcacu/caculex.c	140;"	d	file:
+YY_EXIT_FAILURE	strcacu/caculex.c	1673;"	d	file:
+YY_EXTRA_TYPE	strcacu/caculex.c	507;"	d	file:
+YY_FATAL_ERROR	strcacu/caculex.c	642;"	d	file:
+YY_FLEX_MAJOR_VERSION	strcacu/caculex.c	9;"	d	file:
+YY_FLEX_MINOR_VERSION	strcacu/caculex.c	10;"	d	file:
+YY_FLEX_SUBMINOR_VERSION	strcacu/caculex.c	11;"	d	file:
+YY_FLUSH_BUFFER	strcacu/caculex.c	307;"	d	file:
+YY_INPUT	strcacu/caculex.c	595;"	d	file:
+YY_INT_ALIGNED	strcacu/caculex.c	4;"	d	file:
+YY_LESS_LINENO	strcacu/caculex.c	172;"	d	file:
+YY_LOCATION_PRINT	strcacu/cacuyac.c	664;"	d	file:
+YY_LOCATION_PRINT	strcacu/cacuyac.c	669;"	d	file:
+YY_MORE_ADJ	strcacu/caculex.c	473;"	d	file:
+YY_NEW_FILE	strcacu/caculex.c	138;"	d	file:
+YY_NULL	strcacu/caculex.c	112;"	d	file:
+YY_NUM_RULES	strcacu/caculex.c	371;"	d	file:
+YY_READ_BUF_SIZE	strcacu/caculex.c	577;"	d	file:
+YY_READ_BUF_SIZE	strcacu/caculex.c	579;"	d	file:
+YY_REDUCE_PRINT	strcacu/cacuyac.c	829;"	d	file:
+YY_REDUCE_PRINT	strcacu/cacuyac.c	842;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	strcacu/caculex.c	474;"	d	file:
+YY_RULE_SETUP	strcacu/caculex.c	670;"	d	file:
+YY_SC_TO_UI	strcacu/caculex.c	119;"	d	file:
+YY_STACK_PRINT	strcacu/cacuyac.c	791;"	d	file:
+YY_STACK_PRINT	strcacu/cacuyac.c	841;"	d	file:
+YY_START	strcacu/caculex.c	131;"	d	file:
+YY_START_STACK_INCR	strcacu/caculex.c	637;"	d	file:
+YY_STATE_BUF_SIZE	strcacu/caculex.c	157;"	d	file:
+YY_STATE_EOF	strcacu/caculex.c	135;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	strcacu/caculex.c	196;"	d	file:
+YY_SYMBOL_PRINT	strcacu/cacuyac.c	696;"	d	file:
+YY_SYMBOL_PRINT	strcacu/cacuyac.c	840;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	strcacu/caculex.c	160;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	strcacu/caculex.c	191;"	d	file:
+YY_USER_ACTION	strcacu/caculex.c	662;"	d	file:
+YY_USE_CONST	strcacu/caculex.c	100;"	d	file:
+YY_USE_CONST	strcacu/caculex.c	93;"	d	file:
+_CACU_MAIN_H_	strcacu/cacu_main.h	2;"	d
+_INTEGRATE_H_	plotTest/integrate.h	2;"	d
+_STDLIB_H	strcacu/cacuyac.c	284;"	d	file:
+_STDLIB_H	strcacu/cacuyac.c	312;"	d	file:
+_STR_CACU_H_	strcacu/str_cacu.h	2;"	d
+_TRCACU_EXCEPTION_H_	strcacu/StrCacuException.h	2;"	d
+__STDC_LIMIT_MACROS	strcacu/caculex.c	39;"	d	file:
+__add_chain_prefix	chain.cpp	/^void Chain::__add_chain_prefix ($/;"	f	class:Chain	signature:( const string& prefix )
+__add_chain_prefix	chain.h	/^	void __add_chain_prefix (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+__add_tree_prefix	tree.cpp	/^void Tree::__add_tree_prefix (const string& prefix)$/;"	f	class:Tree	signature:(const string& prefix)
+__add_tree_prefix	tree.h	/^	void __add_tree_prefix (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+__label_collection	tree.cpp	/^Node* Tree::__label_collection ($/;"	f	class:Tree	signature:( set<string>& collection, const Node* n ) const
+__label_collection	tree.h	/^	Node* __label_collection (set<string>&, const Node*) const;$/;"	p	class:Tree	access:private	signature:(set<string>&, const Node*) const
+addChild	node.cpp	/^void Node::addChild ($/;"	f	class:Node	signature:( Node* childNodePtr )
+addChild	node.h	/^	void addChild (Node*);$/;"	p	class:Node	access:public	signature:(Node*)
+addCompartment	reactionTemplate.cpp	/^void reactionTemplate::addCompartment ($/;"	f	class:reactionTemplate	signature:( const string& _compRef, const string& _currComp, const string& _parComp )
+addCompartment	reactionTemplate.h	/^		void addCompartment (const string&, const string&, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&, const string&, const string&)
+addConstraint	reactionTemplate.cpp	/^void reactionTemplate::addConstraint ($/;"	f	class:reactionTemplate	signature:( const vector<string>& vars, const string& formula )
+addConstraint	reactionTemplate.h	/^		void addConstraint (const vector<string>&, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const vector<string>&, const string&)
+addModifier	reactionTemplate.cpp	/^void reactionTemplate::addModifier ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+addModifier	reactionTemplate.h	/^		void addModifier (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+addMyCompartment	mysbmldoc.cpp	/^void MySBMLDocument::addMyCompartment (MyCompartment* c) $/;"	f	class:MySBMLDocument	signature:(MyCompartment* c)
+addMyCompartment	mysbmldoc.h	/^		void addMyCompartment (MyCompartment*);$/;"	p	class:MySBMLDocument	access:public	signature:(MyCompartment*)
+addMyCompartmentChildren	mysbmldoc.cpp	/^void MySBMLDocument::addMyCompartmentChildren ()$/;"	f	class:MySBMLDocument	signature:()
+addMyCompartmentChildren	mysbmldoc.h	/^		void addMyCompartmentChildren ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+addMyCompartmentIn	mycompartment.cpp	/^void MyCompartment::addMyCompartmentIn (MyCompartment* comp) {$/;"	f	class:MyCompartment	signature:(MyCompartment* comp)
+addMyCompartmentIn	mycompartment.h	/^	void addMyCompartmentIn (MyCompartment*);$/;"	p	class:MyCompartment	access:public	signature:(MyCompartment*)
+addMyReaction	mysbmldoc.cpp	/^void MySBMLDocument::addMyReaction (MyReaction* r) {$/;"	f	class:MySBMLDocument	signature:(MyReaction* r)
+addMyReaction	mysbmldoc.h	/^		void addMyReaction (MyReaction*);$/;"	p	class:MySBMLDocument	access:public	signature:(MyReaction*)
+addMySpecies	mysbmldoc.cpp	/^void MySBMLDocument::addMySpecies (MySpecies* s) $/;"	f	class:MySBMLDocument	signature:(MySpecies* s)
+addMySpecies	mysbmldoc.h	/^		void addMySpecies (MySpecies*);$/;"	p	class:MySBMLDocument	access:public	signature:(MySpecies*)
+addMySpeciesIn	mycompartment.cpp	/^void MyCompartment::addMySpeciesIn (MySpecies* s) {$/;"	f	class:MyCompartment	signature:(MySpecies* s)
+addMySpeciesIn	mycompartment.h	/^	void addMySpeciesIn (MySpecies*);$/;"	p	class:MyCompartment	access:public	signature:(MySpecies*)
+addNodeChildren	tree.cpp	/^void Tree::addNodeChildren ()$/;"	f	class:Tree	signature:()
+addNodeChildren	tree.h	/^	void addNodeChildren ();$/;"	p	class:Tree	access:public	signature:()
+addParameter	reactionTemplate.cpp	/^void reactionTemplate::addParameter ($/;"	f	class:reactionTemplate	signature:( Parameter* para )
+addParameter	reactionTemplate.h	/^		void addParameter (Parameter*);$/;"	p	class:reactionTemplate	access:public	signature:(Parameter*)
+addPrefix	myspecies.cpp	/^void MySpecies::addPrefix (const string& prefix)$/;"	f	class:MySpecies	signature:(const string& prefix)
+addPrefix	myspecies.h	/^		void addPrefix (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+addProduct	reactionTemplate.cpp	/^void reactionTemplate::addProduct ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+addProduct	reactionTemplate.h	/^		void addProduct (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+addProductPrefix	reactionTemplate.cpp	/^void reactionTemplate::addProductPrefix (const string& prefix) {$/;"	f	class:reactionTemplate	signature:(const string& prefix)
+addProductPrefix	reactionTemplate.h	/^		void addProductPrefix (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+addReactant	reactionTemplate.cpp	/^void reactionTemplate::addReactant ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+addReactant	reactionTemplate.h	/^		void addReactant (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+addSpecialReaction	myreaction.cpp	/^void MyReaction::addSpecialReaction ($/;"	f	class:MyReaction	signature:( MySpecies* modifier, MySpecies* product, const string& paraId, const string& paraName, const double& paraValue, const string& paraUnits )
+addSpecialReaction	myreaction.h	/^		void addSpecialReaction ($/;"	p	class:MyReaction	access:public	signature:( MySpecies*, MySpecies*, const string&, const string&, const double&, const string& )
+addSubstituentTransfer	reactionTemplate.cpp	/^void reactionTemplate::addSubstituentTransfer ($/;"	f	class:reactionTemplate	signature:( const pair<string,string>& from, const pair<string,string>& to )
+addSubstituentTransfer	reactionTemplate.h	/^		void addSubstituentTransfer (const subsp&, const subsp&);	\/\/attention! it maps subsp to --> subsp from$/;"	p	class:reactionTemplate	access:public	signature:(const subsp&, const subsp&)
+add_symbol	strcacu/cacu_main.h	/^void add_symbol(char *name, double value);$/;"	p	signature:(char *name, double value)
+add_symbol	strcacu/str_cacu.cpp	/^void add_symbol(char *name, double value)$/;"	f	signature:(char *name, double value)
+add_symbol	strcacu/str_cacu.h	/^void add_symbol(char *name, double value);$/;"	p	signature:(char *name, double value)
+alloca	strcacu/cacuyac.c	277;"	d	file:
+analys	plotTest/plot_main.cpp	/^bool analys(char* fileName, intgrtOutData& ode_res)$/;"	f	signature:(char* fileName, intgrtOutData& ode_res)
+assignexp	strcacu/cacu.y	/^assignexp : \/**\/$/;"	l
+beginSimulation	driver.cpp	/^bool Driver::beginSimulation ()$/;"	f	class:Driver	signature:()
+beginSimulation	driver.h	/^	bool beginSimulation ();$/;"	p	class:Driver	access:public	signature:()
+cMatchType	g_i.h	/^typedef list<markType> cMatchType;$/;"	t
+cMatchType2	g_i.h	/^typedef pair<cMatchType, int> cMatchType2;$/;"	t
+cMatchsArray	g_i.h	/^typedef vector<cMatchsType2> cMatchsArray;$/;"	t
+cMatchsType	g_i.h	/^typedef vector<cMatchType> cMatchsType;$/;"	t
+cMatchsType2	g_i.h	/^typedef vector<cMatchType2> cMatchsType2;$/;"	t
+cacu_str_exp	strcacu/str_cacu.cpp	/^int cacu_str_exp(const char *par, const char *expr)$/;"	f	signature:(const char *par, const char *expr)
+cacu_str_exp	strcacu/str_cacu.h	/^int cacu_str_exp(char const*par, char const*expr);$/;"	p	signature:(char const*par, char const*expr)
+cacu_string_exp	strcacu/cacuyac.c	/^int cacu_string_exp(char *par, char *expr)$/;"	f	signature:(char *par, char *expr)
+cacu_string_exp	strcacu/str_cacu.h	/^extern int cacu_string_exp(const char *par, const char *expr);$/;"	p	signature:(const char *par, const char *expr)
+cacuexpr	strcacu/cacu.y	/^cacuexpr :TOKEN_LEFT_BRACKET cacuexpr TOKEN_RIGHT_BRACKET$/;"	l
+chainLabel	chain.h	/^	string chainLabel;$/;"	m	class:Chain	access:private
+checkIntegrated	tree.cpp	/^void Tree::checkIntegrated () const$/;"	f	class:Tree	signature:() const
+checkIntegrated	tree.h	/^	void checkIntegrated () const;$/;"	p	class:Tree	access:public	signature:() const
+children	node.h	/^	vector<Node*> children;$/;"	m	class:Node	access:private
+comp_type_id	myspecies.h	/^		string comp_type_id; \/\/non-empty if it is a compartment-type species $/;"	m	class:MySpecies	access:private
+config	readInput.cpp	/^void readInput::config ($/;"	f	class:readInput	signature:( MySBMLDocument* mysbmldoc )
+config	readInput.h	/^	void config ($/;"	p	class:readInput	access:public	signature:( MySBMLDocument* mysbmldoc )
+constraintType	g_i.h	/^typedef pair<vector<string>, string> constraintType;$/;"	t
+createChain	myspecies.cpp	/^Chain* MySpecies::createChain ($/;"	f	class:MySpecies	signature:( const Chain* orig )
+createChain	myspecies.cpp	/^Chain* MySpecies::createChain ()$/;"	f	class:MySpecies	signature:()
+createChain	myspecies.h	/^		Chain* createChain ();$/;"	p	class:MySpecies	access:public	signature:()
+createChain	myspecies.h	/^		Chain* createChain (const Chain* c); $/;"	p	class:MySpecies	access:public	signature:(const Chain* c)
+createMyCompartment	mysbmldoc.cpp	/^MyCompartment* MySBMLDocument::createMyCompartment ()$/;"	f	class:MySBMLDocument	signature:()
+createMyCompartment	mysbmldoc.h	/^		MyCompartment* createMyCompartment ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+createMyReaction	mysbmldoc.cpp	/^MyReaction* MySBMLDocument::createMyReaction ()$/;"	f	class:MySBMLDocument	signature:()
+createMyReaction	mysbmldoc.h	/^		MyReaction* createMyReaction ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+createMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::createMySpecies ()$/;"	f	class:MySBMLDocument	signature:()
+createMySpecies	mysbmldoc.h	/^		MySpecies* createMySpecies ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const Node* n )
+createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const string& child, const string& parent )
+createNode	tree.cpp	/^Node* Tree::createNode ()$/;"	f	class:Tree	signature:()
+createNode	tree.h	/^	Node* createNode ();$/;"	p	class:Tree	access:public	signature:()
+createNode	tree.h	/^	Node* createNode (const Node*);$/;"	p	class:Tree	access:public	signature:(const Node*)
+createNode	tree.h	/^	Node* createNode (const string&, const string&);$/;"	p	class:Tree	access:public	signature:(const string&, const string&)
+createPart	chain.cpp	/^Part* Chain::createPart ($/;"	f	class:Chain	signature:( const string& __ref, const string& __label, const string& __type, const string& __ctg, const bool& __isb )
+createPart	chain.cpp	/^Part* Chain::createPart ()$/;"	f	class:Chain	signature:()
+createPart	chain.cpp	/^Part* Chain::createPart (const Part* p)$/;"	f	class:Chain	signature:(const Part* p)
+createPart	chain.h	/^	Part* createPart ();$/;"	p	class:Chain	access:public	signature:()
+createPart	chain.h	/^	Part* createPart (const Part*);$/;"	p	class:Chain	access:public	signature:(const Part*)
+createPart	chain.h	/^	Part* createPart (const string&, const string&, const string&, const string&, const bool& =false);$/;"	p	class:Chain	access:public	signature:(const string&, const string&, const string&, const string&, const bool& =false)
+createProductsFromTemplate	reactionTemplate.cpp	/^void reactionTemplate::createProductsFromTemplate ($/;"	f	class:reactionTemplate	signature:( const vector<MySpecies*>& listOfMySpecies, const vector<MyCompartment*>& listOfMyCompartments, const reactionPairMatch& table, vector<MySpecies*>& products )
+createProductsFromTemplate	reactionTemplate.h	/^		void createProductsFromTemplate ($/;"	p	class:reactionTemplate	access:public	signature:( const vector<MySpecies*>&, const vector<MyCompartment*>&, const reactionPairMatch&, vector<MySpecies*>& )
+createReactionsFromTemplate	myreaction.cpp	/^void MyReaction::createReactionsFromTemplate ($/;"	f	class:MyReaction	signature:( bdbXMLInterface& dbreader, vector<MySpecies*>& listOfMySpecies, vector<MyCompartment*>& listOfMyCompartments, const speciesArrayMatch& __reactants_m, const reactionTemplate* tmpR )
+createReactionsFromTemplate	myreaction.h	/^		void createReactionsFromTemplate ($/;"	p	class:MyReaction	access:public	signature:( bdbXMLInterface&, vector<MySpecies*>&, vector<MyCompartment*>&, const speciesArrayMatch&, const reactionTemplate* )
+createTree	myspecies.cpp	/^Tree* MySpecies::createTree ($/;"	f	class:MySpecies	signature:( const Tree* t )
+createTree	myspecies.cpp	/^Tree* MySpecies::createTree ()$/;"	f	class:MySpecies	signature:()
+createTree	myspecies.h	/^		Tree* createTree ();$/;"	p	class:MySpecies	access:public	signature:()
+createTree	myspecies.h	/^		Tree* createTree (const Tree* t);$/;"	p	class:MySpecies	access:public	signature:(const Tree* t)
+dbgToken	strcacu/caculex.c	/^int dbgToken(int tok, char *s)$/;"	f	signature:(int tok, char *s)
+dump	plotTest/integrate.cpp	/^void intgrtOutData::dump()$/;"	f	class:intgrtOutData	signature:()
+dump	plotTest/integrate.h	/^		void dump();$/;"	p	class:intgrtOutData	access:public	signature:()
+dvi	g_i.h	/^typedef vector<vi> dvi;$/;"	t
+equal	chain.cpp	/^bool Chain::equal (const Chain* rhs) const$/;"	f	class:Chain	signature:(const Chain* rhs) const
+equal	chain.h	/^	bool equal (const Chain*) const;$/;"	p	class:Chain	access:public	signature:(const Chain*) const
+equal	myspecies.cpp	/^bool MySpecies::equal ($/;"	f	class:MySpecies	signature:( const MySpecies* rhs )
+equal	myspecies.h	/^		bool equal (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
+equal	node.cpp	/^bool Node::equal ($/;"	f	class:Node	signature:( const Node* rhs ) const
+equal	node.h	/^	bool equal (const Node*) const;$/;"	p	class:Node	access:public	signature:(const Node*) const
+equal	tree.cpp	/^bool Tree::equal ($/;"	f	class:Tree	signature:( const Tree* rhs ) const
+equal	tree.h	/^	bool equal (const Tree*) const;$/;"	p	class:Tree	access:public	signature:(const Tree*) const
+equiv	myspecies.h	/^		vector<markType> equiv; \/\/record block of same chains$/;"	m	class:MySpecies	access:private
+err_msg	strcacu/str_cacu.cpp	/^char err_msg[MSG_BUFF];$/;"	v
+err_no	strcacu/str_cacu.cpp	/^int err_no;$/;"	v
+expression	strcacu/cacu.y	/^expression: assignexp ';' cacuexpr ';'$/;"	l
+fast	reactionTemplate.h	/^		bool fast;$/;"	m	class:reactionTemplate	access:private
+findBindedNode	myspecies.cpp	/^Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label )
+findBindedNode	myspecies.cpp	/^const Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label ) const
+findBindedNode	myspecies.h	/^		Node* findBindedNode (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+findBindedNode	myspecies.h	/^		const Node* findBindedNode (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
+findEquiv	myspecies.cpp	/^void MySpecies::findEquiv () $/;"	f	class:MySpecies	signature:()
+findEquiv	myspecies.h	/^		void findEquiv ();$/;"	p	class:MySpecies	access:private	signature:()
+findSpeciesMatch	reactionTemplate.cpp	/^bool reactionTemplate::findSpeciesMatch ($/;"	f	class:reactionTemplate	signature:( const string& dbref, const int& index, const vector<MySpecies*>& listOfMySpecies, const vector<MyCompartment*>& listOfMyCompartments, reactionArrayMatch& result )
+findSpeciesMatch	reactionTemplate.h	/^		bool findSpeciesMatch ($/;"	p	class:reactionTemplate	access:public	signature:( const string&, const int&, const vector<MySpecies*>&, const vector<MyCompartment*>&, reactionArrayMatch& )
+flex_int16_t	strcacu/caculex.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
+flex_int16_t	strcacu/caculex.c	/^typedef short int flex_int16_t;$/;"	t	file:
+flex_int32_t	strcacu/caculex.c	/^typedef int flex_int32_t;$/;"	t	file:
+flex_int32_t	strcacu/caculex.c	/^typedef int32_t flex_int32_t;$/;"	t	file:
+flex_int8_t	strcacu/caculex.c	/^typedef int8_t flex_int8_t;$/;"	t	file:
+flex_int8_t	strcacu/caculex.c	/^typedef signed char flex_int8_t;$/;"	t	file:
+flex_uint16_t	strcacu/caculex.c	/^typedef uint16_t flex_uint16_t;$/;"	t	file:
+flex_uint16_t	strcacu/caculex.c	/^typedef unsigned short int flex_uint16_t;$/;"	t	file:
+flex_uint32_t	strcacu/caculex.c	/^typedef uint32_t flex_uint32_t;$/;"	t	file:
+flex_uint32_t	strcacu/caculex.c	/^typedef unsigned int flex_uint32_t;$/;"	t	file:
+flex_uint8_t	strcacu/caculex.c	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
+flex_uint8_t	strcacu/caculex.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
+free	strcacu/cacuyac.c	/^void free (void *); \/* INFRINGES ON USER NAME SPACE *\/$/;"	p	file:	signature:(void *)
+function_tests	strcacu/cacu_main.cpp	/^void function_tests()$/;"	f	signature:()
+genHuffman	tree.cpp	/^void Tree::genHuffman (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+genUnicode	chain.cpp	/^string Chain::genUnicode ($/;"	f	class:Chain	signature:( const int& start, const int& end ) const
+genUnicode	chain.cpp	/^void Chain::genUnicode ()$/;"	f	class:Chain	signature:()
+genUnicode	chain.h	/^	string genUnicode (const int&, const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&, const int&) const
+genUnicode	chain.h	/^	void genUnicode ();$/;"	p	class:Chain	access:public	signature:()
+genWeight	tree.cpp	/^markType Tree::genWeight (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+getChain	myspecies.cpp	/^Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n )
+getChain	myspecies.cpp	/^const Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n ) const
+getChain	myspecies.h	/^		Chain* getChain (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+getChain	myspecies.h	/^		const Chain* getChain (const int&) const;$/;"	p	class:MySpecies	access:public	signature:(const int&) const
+getCompTypeId	myspecies.cpp	/^string MySpecies::getCompTypeId () const {$/;"	f	class:MySpecies	signature:() const
+getCompTypeId	myspecies.h	/^		string getCompTypeId () const;$/;"	p	class:MySpecies	access:public	signature:() const
+getCompartment	reactionTemplate.cpp	/^string reactionTemplate::getCompartment ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+getCompartment	reactionTemplate.h	/^		string getCompartment (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+getDB_Label	myspecies.cpp	/^string MySpecies::getDB_Label () const {$/;"	f	class:MySpecies	signature:() const
+getDB_Label	myspecies.h	/^		string getDB_Label () const;$/;"	p	class:MySpecies	access:public	signature:() const
+getDB_ref	mycompartment.cpp	/^string MyCompartment::getDB_ref () const {$/;"	f	class:MyCompartment	signature:() const
+getDB_ref	mycompartment.h	/^	string getDB_ref () const;$/;"	p	class:MyCompartment	access:public	signature:() const
+getDB_ref	myspecies.cpp	/^string MySpecies::getDB_ref () const {$/;"	f	class:MySpecies	signature:() const
+getDB_ref	myspecies.h	/^		string getDB_ref () const;$/;"	p	class:MySpecies	access:public	signature:() const
+getDataBounds	plotTest/integrate.cpp	/^QRectF& intgrtOutData::getDataBounds()$/;"	f	class:intgrtOutData	signature:()
+getDataBounds	plotTest/integrate.h	/^		QRectF& getDataBounds();$/;"	p	class:intgrtOutData	access:public	signature:()
+getFast	reactionTemplate.cpp	/^bool reactionTemplate::getFast () const$/;"	f	class:reactionTemplate	signature:() const
+getFast	reactionTemplate.h	/^		bool getFast () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+getId	reactionTemplate.cpp	/^string reactionTemplate::getId () const$/;"	f	class:reactionTemplate	signature:() const
+getId	reactionTemplate.h	/^		string getId () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+getIsBinded	part.cpp	/^bool Part::getIsBinded () const {return isBinded;}$/;"	f	class:Part	signature:() const
+getIsBinded	part.h	/^	bool getIsBinded () const;$/;"	p	class:Part	access:public	signature:() const
+getLabel	chain.cpp	/^string Chain::getLabel () const {$/;"	f	class:Chain	signature:() const
+getLabel	chain.h	/^	string getLabel () const;$/;"	p	class:Chain	access:public	signature:() const
+getMath	reactionTemplate.cpp	/^string reactionTemplate::getMath () const$/;"	f	class:reactionTemplate	signature:() const
+getMath	reactionTemplate.h	/^		string getMath () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+getMyCompartment	mysbmldoc.cpp	/^MyCompartment* MySBMLDocument::getMyCompartment (const string& ref)$/;"	f	class:MySBMLDocument	signature:(const string& ref)
+getMyCompartment	mysbmldoc.cpp	/^const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const$/;"	f	class:MySBMLDocument	signature:(const string& ref) const
+getMyCompartment	mysbmldoc.h	/^		MyCompartment* getMyCompartment (const string&);$/;"	p	class:MySBMLDocument	access:public	signature:(const string&)
+getMyCompartment	mysbmldoc.h	/^		const MyCompartment* getMyCompartment (const string&) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const string&) const
+getMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s)$/;"	f	class:MySBMLDocument	signature:(const MySpecies* s)
+getMySpecies	mysbmldoc.cpp	/^MySpecies* MySBMLDocument::getMySpecies (const string& ref) $/;"	f	class:MySBMLDocument	signature:(const string& ref)
+getMySpecies	mysbmldoc.cpp	/^const MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s) const$/;"	f	class:MySBMLDocument	signature:(const MySpecies* s) const
+getMySpecies	mysbmldoc.cpp	/^const MySpecies* MySBMLDocument::getMySpecies (const string& ref) const$/;"	f	class:MySBMLDocument	signature:(const string& ref) const
+getMySpecies	mysbmldoc.h	/^		MySpecies* getMySpecies (const MySpecies*);$/;"	p	class:MySBMLDocument	access:public	signature:(const MySpecies*)
+getMySpecies	mysbmldoc.h	/^		MySpecies* getMySpecies (const string&);$/;"	p	class:MySBMLDocument	access:public	signature:(const string&)
+getMySpecies	mysbmldoc.h	/^		const MySpecies* getMySpecies (const MySpecies*) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const MySpecies*) const
+getMySpecies	mysbmldoc.h	/^		const MySpecies* getMySpecies (const string&) const;$/;"	p	class:MySBMLDocument	access:public	signature:(const string&) const
+getName	reactionTemplate.cpp	/^string reactionTemplate::getName () const$/;"	f	class:reactionTemplate	signature:() const
+getName	reactionTemplate.h	/^		string getName () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+getNode	tree.cpp	/^Node* Tree::getNode (const int& n) {$/;"	f	class:Tree	signature:(const int& n)
+getNode	tree.cpp	/^Node* Tree::getNode (const string& label)$/;"	f	class:Tree	signature:(const string& label)
+getNode	tree.cpp	/^const Node* Tree::getNode (const int& n) const {$/;"	f	class:Tree	signature:(const int& n) const
+getNode	tree.cpp	/^const Node* Tree::getNode (const string& label) const$/;"	f	class:Tree	signature:(const string& label) const
+getNode	tree.h	/^	Node* getNode (const int&);$/;"	p	class:Tree	access:public	signature:(const int&)
+getNode	tree.h	/^	Node* getNode (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+getNode	tree.h	/^	const Node* getNode (const int&) const;$/;"	p	class:Tree	access:public	signature:(const int&) const
+getNode	tree.h	/^	const Node* getNode (const string&) const;$/;"	p	class:Tree	access:public	signature:(const string&) const
+getNodeLabel	node.cpp	/^string Node::getNodeLabel () const$/;"	f	class:Node	signature:() const
+getNodeLabel	node.h	/^	string getNodeLabel () const;$/;"	p	class:Node	access:public	signature:() const
+getNodeWeight	node.cpp	/^markType Node::getNodeWeight () const$/;"	f	class:Node	signature:() const
+getNodeWeight	node.h	/^	markType getNodeWeight () const;$/;"	p	class:Node	access:public	signature:() const
+getNumOfChains	myspecies.cpp	/^int MySpecies::getNumOfChains () const$/;"	f	class:MySpecies	signature:() const
+getNumOfChains	myspecies.h	/^		int getNumOfChains () const;$/;"	p	class:MySpecies	access:public	signature:() const
+getNumOfMyCompartments	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMyCompartments () const$/;"	f	class:MySBMLDocument	signature:() const
+getNumOfMyCompartments	mysbmldoc.h	/^		int getNumOfMyCompartments () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
+getNumOfMySpecies	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMySpecies () const$/;"	f	class:MySBMLDocument	signature:() const
+getNumOfMySpecies	mysbmldoc.h	/^		int getNumOfMySpecies () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
+getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {$/;"	f	class:Tree	signature:() const
+getNumOfNodes	tree.h	/^	int getNumOfNodes () const;$/;"	p	class:Tree	access:public	signature:() const
+getNumOfParts	chain.cpp	/^int Chain::getNumOfParts () const$/;"	f	class:Chain	signature:() const
+getNumOfParts	chain.h	/^	int getNumOfParts () const;$/;"	p	class:Chain	access:public	signature:() const
+getNumOfTrees	myspecies.cpp	/^int MySpecies::getNumOfTrees () const$/;"	f	class:MySpecies	signature:() const
+getNumOfTrees	myspecies.h	/^		int getNumOfTrees () const;$/;"	p	class:MySpecies	access:public	signature:() const
+getParameter	reactionTemplate.cpp	/^Parameter* reactionTemplate::getParameter ($/;"	f	class:reactionTemplate	signature:( const string& sid )
+getParameter	reactionTemplate.h	/^		Parameter* getParameter (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+getParentNodeLabel	node.cpp	/^string Node::getParentNodeLabel () const$/;"	f	class:Node	signature:() const
+getParentNodeLabel	node.h	/^	string getParentNodeLabel () const;$/;"	p	class:Node	access:public	signature:() const
+getPart	chain.cpp	/^Part* Chain::getPart (const int& n) {$/;"	f	class:Chain	signature:(const int& n)
+getPart	chain.cpp	/^Part* Chain::getPart (const string& label)$/;"	f	class:Chain	signature:(const string& label)
+getPart	chain.cpp	/^const Part* Chain::getPart (const int& n) const {$/;"	f	class:Chain	signature:(const int& n) const
+getPart	chain.cpp	/^const Part* Chain::getPart (const string& label) const$/;"	f	class:Chain	signature:(const string& label) const
+getPart	chain.h	/^	Part* getPart (const int&);$/;"	p	class:Chain	access:public	signature:(const int&)
+getPart	chain.h	/^	Part* getPart (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+getPart	chain.h	/^	const Part* getPart (const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&) const
+getPart	chain.h	/^	const Part* getPart (const string&) const;$/;"	p	class:Chain	access:public	signature:(const string&) const
+getPart	myspecies.cpp	/^Part* MySpecies::getPart ($/;"	f	class:MySpecies	signature:( const string& partLabel )
+getPart	myspecies.cpp	/^const Part* MySpecies::getPart ($/;"	f	class:MySpecies	signature:( const string& partLabel ) const
+getPart	myspecies.h	/^		Part* getPart (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+getPart	myspecies.h	/^		const Part* getPart (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
+getPartCtg	part.cpp	/^string Part::getPartCtg () const {return partCtg;}$/;"	f	class:Part	signature:() const
+getPartCtg	part.h	/^	string getPartCtg () const;$/;"	p	class:Part	access:public	signature:() const
+getPartIndex	chain.cpp	/^int Chain::getPartIndex ($/;"	f	class:Chain	signature:( const string& label ) const
+getPartIndex	chain.h	/^	int getPartIndex (const string&) const;$/;"	p	class:Chain	access:public	signature:(const string&) const
+getPartLabel	part.cpp	/^string Part::getPartLabel () const {return partLabel;}$/;"	f	class:Part	signature:() const
+getPartLabel	part.h	/^	string getPartLabel () const;$/;"	p	class:Part	access:public	signature:() const
+getPartRef	part.cpp	/^string Part::getPartRef () const {return partRef;}$/;"	f	class:Part	signature:() const
+getPartRef	part.h	/^	string getPartRef () const;$/;"	p	class:Part	access:public	signature:() const
+getPartType	part.cpp	/^string Part::getPartType () const {return partType;}$/;"	f	class:Part	signature:() const
+getPartType	part.h	/^	string getPartType () const;$/;"	p	class:Part	access:public	signature:() const
+getReversible	reactionTemplate.cpp	/^bool reactionTemplate::getReversible () const$/;"	f	class:reactionTemplate	signature:() const
+getReversible	reactionTemplate.h	/^		bool getReversible () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+getSpecies	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getSpecies ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+getSpecies	reactionTemplate.h	/^		const MySpecies* getSpecies (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+getTree	myspecies.cpp	/^Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n )
+getTree	myspecies.cpp	/^const Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n ) const
+getTree	myspecies.h	/^		Tree* getTree (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
+getTree	myspecies.h	/^		const Tree* getTree (const int&) const;$/;"	p	class:MySpecies	access:public	signature:(const int&) const
+getUnicode	chain.cpp	/^string Chain::getUnicode () const$/;"	f	class:Chain	signature:() const
+getUnicode	chain.h	/^	string getUnicode () const;$/;"	p	class:Chain	access:public	signature:() const
+getUnitKind_t	readDataBase.cpp	/^UnitKind_t readDataBase::getUnitKind_t ($/;"	f	class:readDataBase	signature:( const string& unit ) const
+getUnitKind_t	readDataBase.h	/^		UnitKind_t getUnitKind_t (const string&) const;$/;"	p	class:readDataBase	access:protected	signature:(const string&) const
+get_data_point	plotTest/integrate.cpp	/^const QVector < QVector<double> >& intgrtOutData::get_data_point() const$/;"	f	class:intgrtOutData	signature:() const
+get_data_point	plotTest/integrate.h	/^		const QVector < QVector<double> >& get_data_point() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+get_err_msg	strcacu/cacu_main.h	/^const char* get_err_msg();$/;"	p	signature:()
+get_err_msg	strcacu/str_cacu.cpp	/^const char *get_err_msg()$/;"	f	signature:()
+get_err_msg	strcacu/str_cacu.h	/^const char* get_err_msg();$/;"	p	signature:()
+get_labels	plotTest/integrate.cpp	/^const QVector <QString>& intgrtOutData::get_labels() const$/;"	f	class:intgrtOutData	signature:() const
+get_labels	plotTest/integrate.h	/^		const QVector <QString>& get_labels() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+get_msg	strcacu/StrCacuException.cpp	/^const string& StrCacuException::get_msg() const throw()$/;"	f	class:StrCacuException	signature:() const
+get_msg	strcacu/StrCacuException.h	/^		const string& get_msg() const throw();$/;"	p	class:StrCacuException	access:private	signature:() const
+get_symbol_value	strcacu/cacu_main.h	/^double get_symbol_value(char *name);$/;"	p	signature:(char *name)
+get_symbol_value	strcacu/str_cacu.cpp	/^double get_symbol_value(char *name)$/;"	f	signature:(char *name)
+get_symbol_value	strcacu/str_cacu.h	/^double get_symbol_value(char *name);$/;"	p	signature:(char *name)
+get_time_point	plotTest/integrate.cpp	/^const QVector < double > & intgrtOutData::get_time_point() const$/;"	f	class:intgrtOutData	signature:() const
+get_time_point	plotTest/integrate.h	/^		const QVector < double > & get_time_point() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+handleReactionTemplate	mysbmldoc.cpp	/^void MySBMLDocument::handleReactionTemplate ($/;"	f	class:MySBMLDocument	signature:( readDataBase& dbreader, const string& doc, const string& type, const string& dbref, const int& index )
+handleReactionTemplate	mysbmldoc.h	/^		void handleReactionTemplate ($/;"	p	class:MySBMLDocument	access:private	signature:( readDataBase&, const string&, const string&, const string&, const int& )
+handle_constraints	reactionTemplate.cpp	/^bool reactionTemplate::handle_constraints ($/;"	f	class:reactionTemplate	signature:( const ListOfParameters* globalpara )
+handle_constraints	reactionTemplate.h	/^		bool handle_constraints (const ListOfParameters*);$/;"	p	class:reactionTemplate	access:public	signature:(const ListOfParameters*)
+huffman	node.h	/^	string huffman;$/;"	m	class:Node	access:private
+id	reactionTemplate.h	/^		string id;$/;"	m	class:reactionTemplate	access:private
+init	myreaction.cpp	/^void MyReaction::init ($/;"	f	class:MyReaction	signature:( vector<MySpecies*>& products, const vector<MySpecies*>& listOfMySpecies, const reactionMatch& __reaction_match, const reactionTemplate* tmpR )
+init	myreaction.h	/^		void init ($/;"	p	class:MyReaction	access:public	signature:( vector<MySpecies*>&, const vector<MySpecies*>&, const reactionMatch&, const reactionTemplate* )
+init_symbol_table	strcacu/str_cacu.cpp	/^void init_symbol_table()$/;"	f	signature:()
+init_symbol_table	strcacu/str_cacu.h	/^void init_symbol_table();$/;"	p	signature:()
+input	strcacu/caculex.c	/^static int input (void );$/;"	p	file:	signature:(void )
+integer	strcacu/cacuyac.c	/^    int    integer;          \/* int value *\/$/;"	m	union:YYSTYPE	file:	access:public
+integer	strcacu/cacuyac.h	/^    int    integer;          \/* int value *\/$/;"	m	union:YYSTYPE	access:public
+integrate	plotTest/integrate.cpp	/^int integrate(char *model, double time, double printstep, intgrtOutData &res)$/;"	f	signature:(char *model, double time, double printstep, intgrtOutData &res)
+integrate	plotTest/integrate.h	/^int integrate(char *model, double time, $/;"	p	signature:(char *model, double time, double printstep, intgrtOutData &res)
+intgrtOutData	plotTest/integrate.cpp	/^intgrtOutData::intgrtOutData()$/;"	f	class:intgrtOutData	signature:()
+intgrtOutData	plotTest/integrate.h	/^		intgrtOutData();$/;"	p	class:intgrtOutData	access:public	signature:()
+intgrtOutData	plotTest/integrate.h	/^class intgrtOutData$/;"	c
+intgrtOutData::dump	plotTest/integrate.cpp	/^void intgrtOutData::dump()$/;"	f	class:intgrtOutData	signature:()
+intgrtOutData::dump	plotTest/integrate.h	/^		void dump();$/;"	p	class:intgrtOutData	access:public	signature:()
+intgrtOutData::getDataBounds	plotTest/integrate.cpp	/^QRectF& intgrtOutData::getDataBounds()$/;"	f	class:intgrtOutData	signature:()
+intgrtOutData::getDataBounds	plotTest/integrate.h	/^		QRectF& getDataBounds();$/;"	p	class:intgrtOutData	access:public	signature:()
+intgrtOutData::get_data_point	plotTest/integrate.cpp	/^const QVector < QVector<double> >& intgrtOutData::get_data_point() const$/;"	f	class:intgrtOutData	signature:() const
+intgrtOutData::get_data_point	plotTest/integrate.h	/^		const QVector < QVector<double> >& get_data_point() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+intgrtOutData::get_labels	plotTest/integrate.cpp	/^const QVector <QString>& intgrtOutData::get_labels() const$/;"	f	class:intgrtOutData	signature:() const
+intgrtOutData::get_labels	plotTest/integrate.h	/^		const QVector <QString>& get_labels() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+intgrtOutData::get_time_point	plotTest/integrate.cpp	/^const QVector < double > & intgrtOutData::get_time_point() const$/;"	f	class:intgrtOutData	signature:() const
+intgrtOutData::get_time_point	plotTest/integrate.h	/^		const QVector < double > & get_time_point() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
+intgrtOutData::intgrtOutData	plotTest/integrate.cpp	/^intgrtOutData::intgrtOutData()$/;"	f	class:intgrtOutData	signature:()
+intgrtOutData::intgrtOutData	plotTest/integrate.h	/^		intgrtOutData();$/;"	p	class:intgrtOutData	access:public	signature:()
+intgrtOutData::labels	plotTest/integrate.h	/^		QVector <QString> labels;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::mMaxDataX	plotTest/integrate.h	/^		double mMaxDataX;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::mMaxDataY	plotTest/integrate.h	/^	double mMaxDataY;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::mMinDataX	plotTest/integrate.h	/^		double mMinDataX;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::mMinDataY	plotTest/integrate.h	/^		double mMinDataY;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::mPlotRegion	plotTest/integrate.h	/^		QRectF mPlotRegion;$/;"	m	class:intgrtOutData	access:private
+intgrtOutData::push_data_point	plotTest/integrate.cpp	/^void intgrtOutData::push_data_point(int n, double y)$/;"	f	class:intgrtOutData	signature:(int n, double y)
+intgrtOutData::push_data_point	plotTest/integrate.h	/^		void push_data_point(int n, double x);$/;"	p	class:intgrtOutData	access:public	signature:(int n, double x)
+intgrtOutData::push_label	plotTest/integrate.cpp	/^void intgrtOutData::push_label(QString &str)$/;"	f	class:intgrtOutData	signature:(QString &str)
+intgrtOutData::push_label	plotTest/integrate.h	/^		void push_label(QString &str);$/;"	p	class:intgrtOutData	access:public	signature:(QString &str)
+intgrtOutData::push_time_point	plotTest/integrate.cpp	/^void intgrtOutData::push_time_point(double x)$/;"	f	class:intgrtOutData	signature:(double x)
+intgrtOutData::push_time_point	plotTest/integrate.h	/^		void push_time_point(double x);$/;"	p	class:intgrtOutData	access:public	signature:(double x)
+intgrtOutData::test_x	plotTest/integrate.h	/^		QVector < double > test_x;$/;"	m	class:intgrtOutData	access:public
+intgrtOutData::test_y	plotTest/integrate.h	/^		QVector < QVector<double> > test_y;$/;"	m	class:intgrtOutData	access:public
+isBinded	part.h	/^	bool isBinded;$/;"	m	class:Part	access:private
+isLeaf	node.cpp	/^bool Node::isLeaf () const$/;"	f	class:Node	signature:() const
+isLeaf	node.h	/^	bool isLeaf () const;$/;"	p	class:Node	access:public	signature:() const
+isMyCompartmentIn	mycompartment.cpp	/^MyCompartment* MyCompartment::isMyCompartmentIn ($/;"	f	class:MyCompartment	signature:( const string& ref )
+isMyCompartmentIn	mycompartment.cpp	/^const MyCompartment* MyCompartment::isMyCompartmentIn ($/;"	f	class:MyCompartment	signature:( const string& ref ) const
+isMyCompartmentIn	mycompartment.h	/^	MyCompartment* isMyCompartmentIn (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+isMyCompartmentIn	mycompartment.h	/^	const MyCompartment* isMyCompartmentIn (const string&) const;$/;"	p	class:MyCompartment	access:public	signature:(const string&) const
+isMySpeciesIn	mycompartment.cpp	/^MySpecies* MyCompartment::isMySpeciesIn ($/;"	f	class:MyCompartment	signature:( const MySpecies* rhs )
+isMySpeciesIn	mycompartment.cpp	/^MySpecies* MyCompartment::isMySpeciesIn (const string& ref) $/;"	f	class:MyCompartment	signature:(const string& ref)
+isMySpeciesIn	mycompartment.cpp	/^const MySpecies* MyCompartment::isMySpeciesIn ($/;"	f	class:MyCompartment	signature:( const MySpecies* rhs ) const
+isMySpeciesIn	mycompartment.cpp	/^const MySpecies* MyCompartment::isMySpeciesIn (const string& ref) const $/;"	f	class:MyCompartment	signature:(const string& ref) const
+isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const MySpecies*);$/;"	p	class:MyCompartment	access:public	signature:(const MySpecies*)
+isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const MySpecies*) const;$/;"	p	class:MyCompartment	access:public	signature:(const MySpecies*) const
+isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const string&) const;$/;"	p	class:MyCompartment	access:public	signature:(const string&) const
+isRearranged	myspecies.h	/^		bool isRearranged; \/\/if its structure has been rearranged$/;"	m	class:MySpecies	access:private
+isSameType	reactionTemplate.cpp	/^bool isSameType (const string& lhs, const string& rhs)$/;"	f	signature:(const string& lhs, const string& rhs)
+isSameType	reactionTemplate.h	/^bool isSameType (const string&, const string&);$/;"	p	signature:(const string&, const string&)
+isatty	strcacu/caculex.c	/^extern int isatty (int );$/;"	p	file:	signature:(int )
+keywords	chain.h	/^	map<string, int> keywords;$/;"	m	class:Chain	access:private
+labels	plotTest/integrate.h	/^		QVector <QString> labels;$/;"	m	class:intgrtOutData	access:private
+lineno	strcacu/cacuyac.c	/^int lineno = 0;$/;"	v
+listOfChains	myspecies.h	/^		vector<Chain*> listOfChains;$/;"	m	class:MySpecies	access:private
+listOfConstraints	reactionTemplate.h	/^		vector<constraintType> listOfConstraints;$/;"	m	class:reactionTemplate	access:private
+listOfMyCompartments	mysbmldoc.h	/^		vector<MyCompartment*> listOfMyCompartments;$/;"	m	class:MySBMLDocument	access:private
+listOfMyCompartmentsIn	mycompartment.h	/^	vector<MyCompartment*> listOfMyCompartmentsIn;$/;"	m	class:MyCompartment	access:private
+listOfMyModifiers	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+listOfMyModifiers	reactionTemplate.h	/^		vector<MySpecies*> listOfMyModifiers;$/;"	m	class:reactionTemplate	access:private
+listOfMyProducts	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+listOfMyProducts	reactionTemplate.h	/^		vector<MySpecies*> listOfMyProducts;$/;"	m	class:reactionTemplate	access:private
+listOfMyReactants	myreaction.h	/^		vector<MySpecies*> listOfMyReactants, listOfMyModifiers, listOfMyProducts;$/;"	m	class:MyReaction	access:private
+listOfMyReactants	reactionTemplate.h	/^		vector<MySpecies*> listOfMyReactants;$/;"	m	class:reactionTemplate	access:private
+listOfMyReactions	mysbmldoc.h	/^		vector<MyReaction*> listOfMyReactions;$/;"	m	class:MySBMLDocument	access:private
+listOfMySpecies	mysbmldoc.h	/^		vector<MySpecies*> listOfMySpecies;$/;"	m	class:MySBMLDocument	access:private
+listOfMySpeciesIn	mycompartment.h	/^	vector<MySpecies*> listOfMySpeciesIn;$/;"	m	class:MyCompartment	access:private
+listOfNodes	tree.h	/^	vector<Node*> listOfNodes;$/;"	m	class:Tree	access:private
+listOfParameters	reactionTemplate.h	/^		vector<Parameter*> listOfParameters;$/;"	m	class:reactionTemplate	access:private
+listOfParts	chain.h	/^	vector<Part*> listOfParts;$/;"	m	class:Chain	access:private
+listOfTrees	myspecies.h	/^		vector<Tree*> listOfTrees;$/;"	m	class:MySpecies	access:private
+mMaxDataX	plotTest/integrate.h	/^		double mMaxDataX;$/;"	m	class:intgrtOutData	access:private
+mMaxDataY	plotTest/integrate.h	/^	double mMaxDataY;$/;"	m	class:intgrtOutData	access:private
+mMinDataX	plotTest/integrate.h	/^		double mMinDataX;$/;"	m	class:intgrtOutData	access:private
+mMinDataY	plotTest/integrate.h	/^		double mMinDataY;$/;"	m	class:intgrtOutData	access:private
+mPlotRegion	plotTest/integrate.h	/^		QRectF mPlotRegion;$/;"	m	class:intgrtOutData	access:private
+main	main.cpp	/^int main ()$/;"	f	signature:()
+main	plotTest/plot_main.cpp	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	strcacu/cacu_main.cpp	/^int main (int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+malloc	strcacu/cacuyac.c	/^void *malloc (YYSIZE_T); \/* INFRINGES ON USER NAME SPACE *\/$/;"	p	file:
+mapComps	reactionTemplate.h	/^		map <string, string> mapComps;$/;"	m	class:reactionTemplate	access:private
+mapNodes	tree.h	/^	map<string, Node*> mapNodes;$/;"	m	class:Tree	access:private
+markType	g_i.h	/^typedef pair<int,int> markType;$/;"	t
+match	chain.cpp	/^bool Chain::match (const Chain* c, cMatchsType& res	) const $/;"	f	class:Chain	signature:(const Chain* c, cMatchsType& res ) const
+match	chain.h	/^	bool match (const Chain*, cMatchsType&) const; $/;"	p	class:Chain	access:public	signature:(const Chain*, cMatchsType&) const
+match	myspecies.cpp	/^bool MySpecies::match ($/;"	f	class:MySpecies	signature:( const MySpecies* s, vector<cMatchsType2>& trym ) const
+match	myspecies.h	/^		bool match (const MySpecies*, cMatchsArray& res) const;$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*, cMatchsArray& res) const
+math	reactionTemplate.h	/^		string math;$/;"	m	class:reactionTemplate	access:private
+mmapComps	reactionTemplate.h	/^		multimap <string,string> mmapComps;$/;"	m	class:reactionTemplate	access:private
+mmapIndexModifiers	reactionTemplate.h	/^		multimap <string, int> mmapIndexModifiers;$/;"	m	class:reactionTemplate	access:private
+mmapIndexProducts	reactionTemplate.h	/^		multimap <string, int> mmapIndexProducts;$/;"	m	class:reactionTemplate	access:private
+mmapIndexReactants	reactionTemplate.h	/^		multimap <string, int> mmapIndexReactants;$/;"	m	class:reactionTemplate	access:private
+my_printf	strcacu/cacu_main.h	17;"	d
+my_printf	strcacu/cacu_main.h	19;"	d
+my_printf	strcacu/str_cacu.h	17;"	d
+my_printf	strcacu/str_cacu.h	19;"	d
+my_return	strcacu/caculex.c	493;"	d	file:
+n_msg	strcacu/StrCacuException.h	/^		string n_msg;$/;"	m	class:StrCacuException	access:private
+name	reactionTemplate.h	/^		string name;$/;"	m	class:reactionTemplate	access:private
+nodeLabel	node.h	/^	string nodeLabel;$/;"	m	class:Node	access:private
+operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_c	access:public	signature:( const Chain* x, const Chain* y ) const
+operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_t	access:public	signature:( const Tree* x, const Tree* y ) const
+operator ()	tree.h	/^		inline bool operator () ($/;"	f	class:IsLess_n	access:public	signature:( const Node* x, const Node* y ) const
+operator =	strcacu/StrCacuException.cpp	/^StrCacuException& StrCacuException::operator = (const StrCacuException& other) throw()$/;"	f	class:StrCacuException	signature:(const StrCacuException& other)
+operator =	strcacu/StrCacuException.h	/^		StrCacuException& operator= (const StrCacuException& other) throw();$/;"	p	class:StrCacuException	access:public	signature:(const StrCacuException& other)
+ordered_FullArray	imath.cpp	/^void Math::ordered_FullArray ($/;"	f	class:Math	signature:( const vector<int>& orig, vector< vector<int> >& fullarray )
+ordered_FullArray	imath.h	/^	static void ordered_FullArray ($/;"	p	class:Math	access:public	signature:( const vector<int>& orig, vector< vector<int> >& fullarray )
+parentNodeLabel	node.h	/^	string parentNodeLabel;$/;"	m	class:Node	access:private
+partCtg	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+partCtg_set	readXMLComponent.h	/^		set<string> partCtg_set;$/;"	m	class:readXMLComponent	access:protected
+partLabel	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+partRef	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+partType	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
+partType_set	readXMLComponent.h	/^		set<string> partType_set;$/;"	m	class:readXMLComponent	access:protected
+partialDup	myspecies.cpp	/^void MySpecies::partialDup ($/;"	f	class:MySpecies	signature:( const set<int>& chainSaved, const set<string>& nodeSaved )
+partialDup	myspecies.h	/^		void partialDup (const set<int>&, const set<string>&);$/;"	p	class:MySpecies	access:public	signature:(const set<int>&, const set<string>&)
+perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const permType& permAll )
+perm	myspecies.h	/^		void perm (const int&, const permType&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const permType&)
+permType	g_i.h	/^typedef tvi permType;$/;"	t
+printOdes_fromFile	plotTest/plot_main.cpp	/^void printOdes_fromFile(char* filename)$/;"	f	signature:(char* filename)
+push_data_point	plotTest/integrate.cpp	/^void intgrtOutData::push_data_point(int n, double y)$/;"	f	class:intgrtOutData	signature:(int n, double y)
+push_data_point	plotTest/integrate.h	/^		void push_data_point(int n, double x);$/;"	p	class:intgrtOutData	access:public	signature:(int n, double x)
+push_label	plotTest/integrate.cpp	/^void intgrtOutData::push_label(QString &str)$/;"	f	class:intgrtOutData	signature:(QString &str)
+push_label	plotTest/integrate.h	/^		void push_label(QString &str);$/;"	p	class:intgrtOutData	access:public	signature:(QString &str)
+push_time_point	plotTest/integrate.cpp	/^void intgrtOutData::push_time_point(double x)$/;"	f	class:intgrtOutData	signature:(double x)
+push_time_point	plotTest/integrate.h	/^		void push_time_point(double x);$/;"	p	class:intgrtOutData	access:public	signature:(double x)
+reactionArrayMatch	g_i.h	/^typedef vector<reactionPairMatch> reactionArrayMatch;$/;"	t
+reactionMatch	g_i.h	/^typedef pair<speciesArrayMatch, speciesArrayMatch> reactionMatch;$/;"	t
+reactionPairMatch	g_i.h	/^typedef pair<reactionMatch, map<string, int> > reactionPairMatch;$/;"	t
+reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
+reactionTemplate	reactionTemplate.h	/^		reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()
+reactionTemplate	reactionTemplate.h	/^class reactionTemplate$/;"	c
+reactionTemplate::addCompartment	reactionTemplate.cpp	/^void reactionTemplate::addCompartment ($/;"	f	class:reactionTemplate	signature:( const string& _compRef, const string& _currComp, const string& _parComp )
+reactionTemplate::addCompartment	reactionTemplate.h	/^		void addCompartment (const string&, const string&, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&, const string&, const string&)
+reactionTemplate::addConstraint	reactionTemplate.cpp	/^void reactionTemplate::addConstraint ($/;"	f	class:reactionTemplate	signature:( const vector<string>& vars, const string& formula )
+reactionTemplate::addConstraint	reactionTemplate.h	/^		void addConstraint (const vector<string>&, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const vector<string>&, const string&)
+reactionTemplate::addModifier	reactionTemplate.cpp	/^void reactionTemplate::addModifier ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+reactionTemplate::addModifier	reactionTemplate.h	/^		void addModifier (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+reactionTemplate::addParameter	reactionTemplate.cpp	/^void reactionTemplate::addParameter ($/;"	f	class:reactionTemplate	signature:( Parameter* para )
+reactionTemplate::addParameter	reactionTemplate.h	/^		void addParameter (Parameter*);$/;"	p	class:reactionTemplate	access:public	signature:(Parameter*)
+reactionTemplate::addProduct	reactionTemplate.cpp	/^void reactionTemplate::addProduct ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+reactionTemplate::addProduct	reactionTemplate.h	/^		void addProduct (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+reactionTemplate::addProductPrefix	reactionTemplate.cpp	/^void reactionTemplate::addProductPrefix (const string& prefix) {$/;"	f	class:reactionTemplate	signature:(const string& prefix)
+reactionTemplate::addProductPrefix	reactionTemplate.h	/^		void addProductPrefix (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::addReactant	reactionTemplate.cpp	/^void reactionTemplate::addReactant ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
+reactionTemplate::addReactant	reactionTemplate.h	/^		void addReactant (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
+reactionTemplate::addSubstituentTransfer	reactionTemplate.cpp	/^void reactionTemplate::addSubstituentTransfer ($/;"	f	class:reactionTemplate	signature:( const pair<string,string>& from, const pair<string,string>& to )
+reactionTemplate::addSubstituentTransfer	reactionTemplate.h	/^		void addSubstituentTransfer (const subsp&, const subsp&);	\/\/attention! it maps subsp to --> subsp from$/;"	p	class:reactionTemplate	access:public	signature:(const subsp&, const subsp&)
+reactionTemplate::createProductsFromTemplate	reactionTemplate.cpp	/^void reactionTemplate::createProductsFromTemplate ($/;"	f	class:reactionTemplate	signature:( const vector<MySpecies*>& listOfMySpecies, const vector<MyCompartment*>& listOfMyCompartments, const reactionPairMatch& table, vector<MySpecies*>& products )
+reactionTemplate::createProductsFromTemplate	reactionTemplate.h	/^		void createProductsFromTemplate ($/;"	p	class:reactionTemplate	access:public	signature:( const vector<MySpecies*>&, const vector<MyCompartment*>&, const reactionPairMatch&, vector<MySpecies*>& )
+reactionTemplate::fast	reactionTemplate.h	/^		bool fast;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::findSpeciesMatch	reactionTemplate.cpp	/^bool reactionTemplate::findSpeciesMatch ($/;"	f	class:reactionTemplate	signature:( const string& dbref, const int& index, const vector<MySpecies*>& listOfMySpecies, const vector<MyCompartment*>& listOfMyCompartments, reactionArrayMatch& result )
+reactionTemplate::findSpeciesMatch	reactionTemplate.h	/^		bool findSpeciesMatch ($/;"	p	class:reactionTemplate	access:public	signature:( const string&, const int&, const vector<MySpecies*>&, const vector<MyCompartment*>&, reactionArrayMatch& )
+reactionTemplate::getCompartment	reactionTemplate.cpp	/^string reactionTemplate::getCompartment ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+reactionTemplate::getCompartment	reactionTemplate.h	/^		string getCompartment (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+reactionTemplate::getFast	reactionTemplate.cpp	/^bool reactionTemplate::getFast () const$/;"	f	class:reactionTemplate	signature:() const
+reactionTemplate::getFast	reactionTemplate.h	/^		bool getFast () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+reactionTemplate::getId	reactionTemplate.cpp	/^string reactionTemplate::getId () const$/;"	f	class:reactionTemplate	signature:() const
+reactionTemplate::getId	reactionTemplate.h	/^		string getId () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+reactionTemplate::getMath	reactionTemplate.cpp	/^string reactionTemplate::getMath () const$/;"	f	class:reactionTemplate	signature:() const
+reactionTemplate::getMath	reactionTemplate.h	/^		string getMath () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+reactionTemplate::getName	reactionTemplate.cpp	/^string reactionTemplate::getName () const$/;"	f	class:reactionTemplate	signature:() const
+reactionTemplate::getName	reactionTemplate.h	/^		string getName () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+reactionTemplate::getParameter	reactionTemplate.cpp	/^Parameter* reactionTemplate::getParameter ($/;"	f	class:reactionTemplate	signature:( const string& sid )
+reactionTemplate::getParameter	reactionTemplate.h	/^		Parameter* getParameter (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::getReversible	reactionTemplate.cpp	/^bool reactionTemplate::getReversible () const$/;"	f	class:reactionTemplate	signature:() const
+reactionTemplate::getReversible	reactionTemplate.h	/^		bool getReversible () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
+reactionTemplate::getSpecies	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getSpecies ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+reactionTemplate::getSpecies	reactionTemplate.h	/^		const MySpecies* getSpecies (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+reactionTemplate::handle_constraints	reactionTemplate.cpp	/^bool reactionTemplate::handle_constraints ($/;"	f	class:reactionTemplate	signature:( const ListOfParameters* globalpara )
+reactionTemplate::handle_constraints	reactionTemplate.h	/^		bool handle_constraints (const ListOfParameters*);$/;"	p	class:reactionTemplate	access:public	signature:(const ListOfParameters*)
+reactionTemplate::id	reactionTemplate.h	/^		string id;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::listOfConstraints	reactionTemplate.h	/^		vector<constraintType> listOfConstraints;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::listOfMyModifiers	reactionTemplate.h	/^		vector<MySpecies*> listOfMyModifiers;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::listOfMyProducts	reactionTemplate.h	/^		vector<MySpecies*> listOfMyProducts;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::listOfMyReactants	reactionTemplate.h	/^		vector<MySpecies*> listOfMyReactants;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::listOfParameters	reactionTemplate.h	/^		vector<Parameter*> listOfParameters;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::mapComps	reactionTemplate.h	/^		map <string, string> mapComps;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::math	reactionTemplate.h	/^		string math;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::mmapComps	reactionTemplate.h	/^		multimap <string,string> mmapComps;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::mmapIndexModifiers	reactionTemplate.h	/^		multimap <string, int> mmapIndexModifiers;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::mmapIndexProducts	reactionTemplate.h	/^		multimap <string, int> mmapIndexProducts;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::mmapIndexReactants	reactionTemplate.h	/^		multimap <string, int> mmapIndexReactants;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::name	reactionTemplate.h	/^		string name;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
+reactionTemplate::reactionTemplate	reactionTemplate.h	/^		reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()
+reactionTemplate::reversible	reactionTemplate.h	/^		bool reversible;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::setFast	reactionTemplate.cpp	/^void reactionTemplate::setFast ($/;"	f	class:reactionTemplate	signature:( const bool& _fast )
+reactionTemplate::setFast	reactionTemplate.h	/^		void setFast (const bool&);$/;"	p	class:reactionTemplate	access:public	signature:(const bool&)
+reactionTemplate::setId	reactionTemplate.cpp	/^void reactionTemplate::setId ($/;"	f	class:reactionTemplate	signature:( const string& _id )
+reactionTemplate::setId	reactionTemplate.h	/^		void setId (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::setMath	reactionTemplate.cpp	/^void reactionTemplate::setMath ($/;"	f	class:reactionTemplate	signature:( const string& __math )
+reactionTemplate::setMath	reactionTemplate.h	/^		void setMath (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::setName	reactionTemplate.cpp	/^void reactionTemplate::setName ($/;"	f	class:reactionTemplate	signature:( const string& _name )
+reactionTemplate::setName	reactionTemplate.h	/^		void setName (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::setReversible	reactionTemplate.cpp	/^void reactionTemplate::setReversible ($/;"	f	class:reactionTemplate	signature:( const bool& _rev )
+reactionTemplate::setReversible	reactionTemplate.h	/^		void setReversible (const bool&);$/;"	p	class:reactionTemplate	access:public	signature:(const bool&)
+reactionTemplate::transferTable	reactionTemplate.h	/^		map<subsp, subsp> transferTable;$/;"	m	class:reactionTemplate	access:private
+reactionTemplate::~reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::~reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
+reactionTemplate::~reactionTemplate	reactionTemplate.h	/^		~reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()
+readCompartment	readXMLComponent.cpp	/^void readXMLComponent::readCompartment ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& compartmentReference, string& currentCompartmentLabel, string& parentCompartmentLabel )
+readCompartment	readXMLComponent.cpp	/^void readXMLComponent::readCompartment ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, int& spatialDimensions, double& size, string& units, string& outside, bool& constant )
+readCompartment	readXMLComponent.h	/^		void readCompartment ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& compartmentReference, string& currentCompartmentLabel, string& parentCompartmentLabel )
+readCompartment	readXMLComponent.h	/^		void readCompartment ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, int& spatialDimensions, double& size, string& units, string& outside, bool& constant )
+readConditionalParameter	readXMLComponent.cpp	/^void readXMLComponent::readConditionalParameter ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& dir, const string& doc, const string& para, const string& comp, double& value, string& units, string& name )
+readConditionalParameter	readXMLComponent.h	/^		void readConditionalParameter ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& dir, const string& doc, const string& para, const string& comp, double& value, string& units, string& name )
+readConstraint	readXMLComponent.cpp	/^void readXMLComponent::readConstraint ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, vector<string>& vars, string& formula )
+readConstraint	readXMLComponent.h	/^		void readConstraint ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, vector<string>& vars, string& formula )
+readDataBase	readDataBase.cpp	/^readDataBase::readDataBase ()$/;"	f	class:readDataBase	signature:()
+readDataBase	readDataBase.h	/^		readDataBase ();$/;"	p	class:readDataBase	access:public	signature:()
+readDataBase	readDataBase.h	/^class readDataBase:$/;"	c	inherits:readXMLComponent
+readDataBase::getUnitKind_t	readDataBase.cpp	/^UnitKind_t readDataBase::getUnitKind_t ($/;"	f	class:readDataBase	signature:( const string& unit ) const
+readDataBase::getUnitKind_t	readDataBase.h	/^		UnitKind_t getUnitKind_t (const string&) const;$/;"	p	class:readDataBase	access:protected	signature:(const string&) const
+readDataBase::readDataBase	readDataBase.cpp	/^readDataBase::readDataBase ()$/;"	f	class:readDataBase	signature:()
+readDataBase::readDataBase	readDataBase.h	/^		readDataBase ();$/;"	p	class:readDataBase	access:public	signature:()
+readDataBase::readReaction	readDataBase.cpp	/^void readDataBase::readReaction ($/;"	f	class:readDataBase	signature:( const string& doc, const string& sid, const string& type, reactionTemplate* tmpR )
+readDataBase::readReaction	readDataBase.h	/^		void readReaction ($/;"	p	class:readDataBase	access:public	signature:( const string&, const string&, const string&, reactionTemplate* )
+readDataBase::read_cnModel	readDataBase.cpp	/^void readDataBase::read_cnModel ($/;"	f	class:readDataBase	signature:( MySpecies* s, const container_index& cind, const string& doc, const string& nodepath, const bool& isTemplate )
+readDataBase::read_cnModel	readDataBase.h	/^		void read_cnModel ($/;"	p	class:readDataBase	access:public	signature:( MySpecies*, const container_index&, const string&, const string&, const bool& )
+readDataBase::setAlgebraicRule	readDataBase.cpp	/^void readDataBase::setAlgebraicRule ($/;"	f	class:readDataBase	signature:( AlgebraicRule* alger, const string& variable, const string& math, const bool& text ) const
+readDataBase::setAlgebraicRule	readDataBase.h	/^		void setAlgebraicRule ($/;"	p	class:readDataBase	access:protected	signature:( AlgebraicRule* alger, const string& variable, const string& math, const bool& text ) const
+readDataBase::setAssignmentRule	readDataBase.cpp	/^void readDataBase::setAssignmentRule ($/;"	f	class:readDataBase	signature:( AssignmentRule* assr, const string& variable, const string& math, const bool& text ) const
+readDataBase::setAssignmentRule	readDataBase.h	/^		void setAssignmentRule ($/;"	p	class:readDataBase	access:protected	signature:( AssignmentRule* assr, const string& variable, const string& math, const bool& text ) const
+readDataBase::setCompartment	readDataBase.cpp	/^void readDataBase::setCompartment ($/;"	f	class:readDataBase	signature:( MyCompartment* comp, const string& db, const string& id, const string& name, const int& spatialDimensions, const double& size, const string& units, const string& outside, const bool& constant ) const
+readDataBase::setCompartment	readDataBase.h	/^		void setCompartment ($/;"	p	class:readDataBase	access:protected	signature:( MyCompartment* comp, const string& db, const string& id, const string& name, const int& spatialDimensions, const double& size, const string& units, const string& outside, const bool& constant ) const
+readDataBase::setFunction	readDataBase.cpp	/^void readDataBase::setFunction ($/;"	f	class:readDataBase	signature:( FunctionDefinition* fdef, const string& id, const string& name, const string& math ) const
+readDataBase::setFunction	readDataBase.h	/^		void setFunction ($/;"	p	class:readDataBase	access:protected	signature:( FunctionDefinition* fdef, const string& id, const string& name, const string& math ) const
+readDataBase::setParameter	readDataBase.cpp	/^void readDataBase::setParameter ($/;"	f	class:readDataBase	signature:( Parameter* para, const string& id, const string& name, const double& value, const string& units, const bool& constant ) const
+readDataBase::setParameter	readDataBase.h	/^		void setParameter ($/;"	p	class:readDataBase	access:protected	signature:( Parameter* para, const string& id, const string& name, const double& value, const string& units, const bool& constant ) const
+readDataBase::setRateRule	readDataBase.cpp	/^void readDataBase::setRateRule ($/;"	f	class:readDataBase	signature:( RateRule* rater, const string& variable, const string& math, const bool& text ) const
+readDataBase::setRateRule	readDataBase.h	/^		void setRateRule ($/;"	p	class:readDataBase	access:protected	signature:( RateRule* rater, const string& variable, const string& math, const bool& text ) const
+readDataBase::setSpecies	readDataBase.cpp	/^void readDataBase::setSpecies ($/;"	f	class:readDataBase	signature:( MySpecies* s, const string& db, const string& ccid, const string& id, const string& name, const string& compartment, const double& initialAmount, const double& initialConcentration, const string& substanceUnits, const bool& hasOnlySubstanceUnits, const bool& boundaryCondition, const int& charge, const bool& constant ) const
+readDataBase::setSpecies	readDataBase.h	/^		void setSpecies ($/;"	p	class:readDataBase	access:protected	signature:( MySpecies* s, const string& db, const string& ccid, const string& id, const string& name, const string& compartment, const double& initialAmount, const double& initialConcentration, const string& substanceUnits, const bool& hasOnlySubstanceUnits, const bool& boundaryCondition, const int& charge, const bool& constant ) const
+readDataBase::setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase	signature:( Unit* unit, const UnitKind_t& kind, const double& exponent, const int& scale, const double& multiplier ) const
+readDataBase::setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
+readDataBase::setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( Unit* unit, const UnitKind_t& kind, const double& exponent, const int& scale, const double& multiplier ) const
+readDataBase::setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
+readDataBase::unitMap	readDataBase.h	/^		map <string, UnitKind_t> unitMap;$/;"	m	class:readDataBase	access:private
+readDataBase::~readDataBase	readDataBase.cpp	/^readDataBase::~readDataBase () {}$/;"	f	class:readDataBase	signature:()
+readDataBase::~readDataBase	readDataBase.h	/^		~readDataBase (); $/;"	p	class:readDataBase	access:public	signature:()
+readExternalRef	readXMLComponent.cpp	/^void readXMLComponent::readExternalRef ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& speciesLabel, string& partLabel, string& parameterLabel )
+readExternalRef	readXMLComponent.h	/^		void readExternalRef ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& speciesLabel, string& partLabel, string& parameterLabel )
+readFunctionDef	readXMLComponent.cpp	/^void readXMLComponent::readFunctionDef ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& name, string& math )
+readFunctionDef	readXMLComponent.h	/^		void readFunctionDef ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& name, string& math )
+readInput	readInput.cpp	/^readInput::readInput ()$/;"	f	class:readInput	signature:()
+readInput	readInput.h	/^	readInput ();$/;"	p	class:readInput	access:public	signature:()
+readInput	readInput.h	/^class readInput:$/;"	c	inherits:readDataBase
+readInput::config	readInput.cpp	/^void readInput::config ($/;"	f	class:readInput	signature:( MySBMLDocument* mysbmldoc )
+readInput::config	readInput.h	/^	void config ($/;"	p	class:readInput	access:public	signature:( MySBMLDocument* mysbmldoc )
+readInput::readInput	readInput.cpp	/^readInput::readInput ()$/;"	f	class:readInput	signature:()
+readInput::readInput	readInput.h	/^	readInput ();$/;"	p	class:readInput	access:public	signature:()
+readInput::~readInput	readInput.cpp	/^readInput::~readInput ()$/;"	f	class:readInput	signature:()
+readInput::~readInput	readInput.h	/^	~readInput ();$/;"	p	class:readInput	access:public	signature:()
+readNode	readXMLComponent.cpp	/^void readXMLComponent::readNode ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& nCL, string& nPL )
+readNode	readXMLComponent.h	/^		void readNode ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& nCL, string& nPL )
+readParameter	readXMLComponent.cpp	/^void readXMLComponent::readParameter ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, double& value, string& units, bool& constant )
+readParameter	readXMLComponent.h	/^		void readParameter ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, double& value, string& units, bool& constant )
+readPart	readXMLComponent.cpp	/^void readXMLComponent::readPart ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& __ref, string& __label, string& __type, string& __ctg )
+readPart	readXMLComponent.h	/^		void readPart ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& __ref, string& __label, string& __type, string& __ctg )
+readReaction	readDataBase.cpp	/^void readDataBase::readReaction ($/;"	f	class:readDataBase	signature:( const string& doc, const string& sid, const string& type, reactionTemplate* tmpR )
+readReaction	readDataBase.h	/^		void readReaction ($/;"	p	class:readDataBase	access:public	signature:( const string&, const string&, const string&, reactionTemplate* )
+readReactionLink	readXMLComponent.cpp	/^void readXMLComponent::readReactionLink ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& reactionReference, string& speciesType )
+readReactionLink	readXMLComponent.h	/^		void readReactionLink ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& reactionReference, string& speciesRole )
+readRule	readXMLComponent.cpp	/^void readXMLComponent::readRule ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& variable, string& math, const bool& text )
+readRule	readXMLComponent.h	/^		void readRule ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& variable, string& math, const bool& text )
+readSpecies	readXMLComponent.cpp	/^void readXMLComponent::readSpecies ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& ccid, string& id, string& name, string& compartment, double& initialAmount, double& initialConcentration, string& substanceUnits, bool& hasOnlySubstanceUnits, bool& boundaryCondition, int& charge, bool& constant )
+readSpecies	readXMLComponent.cpp	/^void readXMLComponent::readSpecies ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& speciesLabel, string& compartmentLabel, string& ccid )
+readSpecies	readXMLComponent.h	/^		void readSpecies ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& ccid, string& id, string& name, string& compartment, double& initialAmount, double& initialConcentration, string& substanceUnits, bool& hasOnlySubstanceUnits, bool& boundaryCondition, int& charge, bool& constant )
+readSpecies	readXMLComponent.h	/^		void readSpecies ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& speciesLabel, string& compartmentLabel, string& ccid )
+readSpeciesLink	readXMLComponent.cpp	/^void readXMLComponent::readSpeciesLink ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& partType )
+readSpeciesLink	readXMLComponent.h	/^		void readSpeciesLink ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& partType )
+readTransfer	readXMLComponent.cpp	/^void readXMLComponent::readTransfer ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, pair<string,string>& from, pair<string,string>& to )
+readTransfer	readXMLComponent.h	/^		void readTransfer ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, pair<string,string>& from, pair<string,string>& to )
+readUnit	readXMLComponent.cpp	/^void readXMLComponent::readUnit ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& kind, double& exponent, int& scale, double& multiplier )
+readUnit	readXMLComponent.h	/^		void readUnit ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& kind, double& exponent, int& scale, double& multiplier )
+readXMLComponent	readXMLComponent.cpp	/^readXMLComponent::readXMLComponent ()$/;"	f	class:readXMLComponent	signature:()
+readXMLComponent	readXMLComponent.h	/^		readXMLComponent ();$/;"	p	class:readXMLComponent	access:public	signature:()
+readXMLComponent	readXMLComponent.h	/^class readXMLComponent :$/;"	c	inherits:bdbXMLInterface
+readXMLComponent::partCtg_set	readXMLComponent.h	/^		set<string> partCtg_set;$/;"	m	class:readXMLComponent	access:protected
+readXMLComponent::partType_set	readXMLComponent.h	/^		set<string> partType_set;$/;"	m	class:readXMLComponent	access:protected
+readXMLComponent::readCompartment	readXMLComponent.cpp	/^void readXMLComponent::readCompartment ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& compartmentReference, string& currentCompartmentLabel, string& parentCompartmentLabel )
+readXMLComponent::readCompartment	readXMLComponent.cpp	/^void readXMLComponent::readCompartment ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, int& spatialDimensions, double& size, string& units, string& outside, bool& constant )
+readXMLComponent::readCompartment	readXMLComponent.h	/^		void readCompartment ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& compartmentReference, string& currentCompartmentLabel, string& parentCompartmentLabel )
+readXMLComponent::readCompartment	readXMLComponent.h	/^		void readCompartment ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, int& spatialDimensions, double& size, string& units, string& outside, bool& constant )
+readXMLComponent::readConditionalParameter	readXMLComponent.cpp	/^void readXMLComponent::readConditionalParameter ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& dir, const string& doc, const string& para, const string& comp, double& value, string& units, string& name )
+readXMLComponent::readConditionalParameter	readXMLComponent.h	/^		void readConditionalParameter ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& dir, const string& doc, const string& para, const string& comp, double& value, string& units, string& name )
+readXMLComponent::readConstraint	readXMLComponent.cpp	/^void readXMLComponent::readConstraint ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, vector<string>& vars, string& formula )
+readXMLComponent::readConstraint	readXMLComponent.h	/^		void readConstraint ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, vector<string>& vars, string& formula )
+readXMLComponent::readExternalRef	readXMLComponent.cpp	/^void readXMLComponent::readExternalRef ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& speciesLabel, string& partLabel, string& parameterLabel )
+readXMLComponent::readExternalRef	readXMLComponent.h	/^		void readExternalRef ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& speciesLabel, string& partLabel, string& parameterLabel )
+readXMLComponent::readFunctionDef	readXMLComponent.cpp	/^void readXMLComponent::readFunctionDef ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& name, string& math )
+readXMLComponent::readFunctionDef	readXMLComponent.h	/^		void readFunctionDef ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& id, string& name, string& math )
+readXMLComponent::readNode	readXMLComponent.cpp	/^void readXMLComponent::readNode ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& nCL, string& nPL )
+readXMLComponent::readNode	readXMLComponent.h	/^		void readNode ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& nCL, string& nPL )
+readXMLComponent::readParameter	readXMLComponent.cpp	/^void readXMLComponent::readParameter ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, double& value, string& units, bool& constant )
+readXMLComponent::readParameter	readXMLComponent.h	/^		void readParameter ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& id, string& name, double& value, string& units, bool& constant )
+readXMLComponent::readPart	readXMLComponent.cpp	/^void readXMLComponent::readPart ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& __ref, string& __label, string& __type, string& __ctg )
+readXMLComponent::readPart	readXMLComponent.h	/^		void readPart ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& __ref, string& __label, string& __type, string& __ctg )
+readXMLComponent::readReactionLink	readXMLComponent.cpp	/^void readXMLComponent::readReactionLink ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& reactionReference, string& speciesType )
+readXMLComponent::readReactionLink	readXMLComponent.h	/^		void readReactionLink ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& reactionReference, string& speciesRole )
+readXMLComponent::readRule	readXMLComponent.cpp	/^void readXMLComponent::readRule ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& variable, string& math, const bool& text )
+readXMLComponent::readRule	readXMLComponent.h	/^		void readRule ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& variable, string& math, const bool& text )
+readXMLComponent::readSpecies	readXMLComponent.cpp	/^void readXMLComponent::readSpecies ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& ccid, string& id, string& name, string& compartment, double& initialAmount, double& initialConcentration, string& substanceUnits, bool& hasOnlySubstanceUnits, bool& boundaryCondition, int& charge, bool& constant )
+readXMLComponent::readSpecies	readXMLComponent.cpp	/^void readXMLComponent::readSpecies ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& speciesLabel, string& compartmentLabel, string& ccid )
+readXMLComponent::readSpecies	readXMLComponent.h	/^		void readSpecies ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& db, string& ccid, string& id, string& name, string& compartment, double& initialAmount, double& initialConcentration, string& substanceUnits, bool& hasOnlySubstanceUnits, bool& boundaryCondition, int& charge, bool& constant )
+readXMLComponent::readSpecies	readXMLComponent.h	/^		void readSpecies ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& speciesLabel, string& compartmentLabel, string& ccid )
+readXMLComponent::readSpeciesLink	readXMLComponent.cpp	/^void readXMLComponent::readSpeciesLink ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& partType )
+readXMLComponent::readSpeciesLink	readXMLComponent.h	/^		void readSpeciesLink ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& speciesReference, string& partType )
+readXMLComponent::readTransfer	readXMLComponent.cpp	/^void readXMLComponent::readTransfer ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, pair<string,string>& from, pair<string,string>& to )
+readXMLComponent::readTransfer	readXMLComponent.h	/^		void readTransfer ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, pair<string,string>& from, pair<string,string>& to )
+readXMLComponent::readUnit	readXMLComponent.cpp	/^void readXMLComponent::readUnit ($/;"	f	class:readXMLComponent	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& kind, double& exponent, int& scale, double& multiplier )
+readXMLComponent::readUnit	readXMLComponent.h	/^		void readUnit ($/;"	p	class:readXMLComponent	access:public	signature:( const container_index& cind, const string& doc, const string& qpath, const int& i, string& kind, double& exponent, int& scale, double& multiplier )
+readXMLComponent::readXMLComponent	readXMLComponent.cpp	/^readXMLComponent::readXMLComponent ()$/;"	f	class:readXMLComponent	signature:()
+readXMLComponent::readXMLComponent	readXMLComponent.h	/^		readXMLComponent ();$/;"	p	class:readXMLComponent	access:public	signature:()
+readXMLComponent::speciesType_set	readXMLComponent.h	/^		set<string> speciesType_set;$/;"	m	class:readXMLComponent	access:protected
+readXMLComponent::substituentType_set	readXMLComponent.h	/^		set<string> substituentType_set;$/;"	m	class:readXMLComponent	access:protected
+readXMLComponent::~readXMLComponent	readXMLComponent.cpp	/^readXMLComponent::~readXMLComponent ()$/;"	f	class:readXMLComponent	signature:()
+readXMLComponent::~readXMLComponent	readXMLComponent.h	/^		~readXMLComponent ();$/;"	p	class:readXMLComponent	access:public	signature:()
+read_cnModel	readDataBase.cpp	/^void readDataBase::read_cnModel ($/;"	f	class:readDataBase	signature:( MySpecies* s, const container_index& cind, const string& doc, const string& nodepath, const bool& isTemplate )
+read_cnModel	readDataBase.h	/^		void read_cnModel ($/;"	p	class:readDataBase	access:public	signature:( MySpecies*, const container_index&, const string&, const string&, const bool& )
+real	strcacu/cacuyac.c	/^    double real;$/;"	m	union:YYSTYPE	file:	access:public
+real	strcacu/cacuyac.h	/^    double real;$/;"	m	union:YYSTYPE	access:public
+rearrange	myspecies.cpp	/^void MySpecies::rearrange ()$/;"	f	class:MySpecies	signature:()
+rearrange	myspecies.h	/^		void rearrange ();$/;"	p	class:MySpecies	access:public	signature:()
+reference_db	mycompartment.h	/^	string reference_db;$/;"	m	class:MyCompartment	access:private
+reference_db	myspecies.h	/^		string reference_db; \/\/id in database for template species $/;"	m	class:MySpecies	access:private
+result	strcacu/cacuyac.c	/^double result;$/;"	v
+reversible	reactionTemplate.h	/^		bool reversible;$/;"	m	class:reactionTemplate	access:private
+run	mysbmldoc.cpp	/^void MySBMLDocument::run (readDataBase& dbreader)$/;"	f	class:MySBMLDocument	signature:(readDataBase& dbreader)
+run	mysbmldoc.h	/^		void run (readDataBase&);$/;"	p	class:MySBMLDocument	access:public	signature:(readDataBase&)
+searchTranscriptionReactions	mysbmldoc.cpp	/^void MySBMLDocument::searchTranscriptionReactions ($/;"	f	class:MySBMLDocument	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+searchTranscriptionReactions	mysbmldoc.h	/^		void searchTranscriptionReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+searchTranslationReactions	mysbmldoc.cpp	/^void MySBMLDocument::searchTranslationReactions ($/;"	f	class:MySBMLDocument	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+searchTranslationReactions	mysbmldoc.h	/^		void searchTranslationReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+setAlgebraicRule	readDataBase.cpp	/^void readDataBase::setAlgebraicRule ($/;"	f	class:readDataBase	signature:( AlgebraicRule* alger, const string& variable, const string& math, const bool& text ) const
+setAlgebraicRule	readDataBase.h	/^		void setAlgebraicRule ($/;"	p	class:readDataBase	access:protected	signature:( AlgebraicRule* alger, const string& variable, const string& math, const bool& text ) const
+setAssignmentRule	readDataBase.cpp	/^void readDataBase::setAssignmentRule ($/;"	f	class:readDataBase	signature:( AssignmentRule* assr, const string& variable, const string& math, const bool& text ) const
+setAssignmentRule	readDataBase.h	/^		void setAssignmentRule ($/;"	p	class:readDataBase	access:protected	signature:( AssignmentRule* assr, const string& variable, const string& math, const bool& text ) const
+setCompTypeId	myspecies.cpp	/^void MySpecies::setCompTypeId (const string& sid) {$/;"	f	class:MySpecies	signature:(const string& sid)
+setCompTypeId	myspecies.h	/^		void setCompTypeId (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+setCompartment	readDataBase.cpp	/^void readDataBase::setCompartment ($/;"	f	class:readDataBase	signature:( MyCompartment* comp, const string& db, const string& id, const string& name, const int& spatialDimensions, const double& size, const string& units, const string& outside, const bool& constant ) const
+setCompartment	readDataBase.h	/^		void setCompartment ($/;"	p	class:readDataBase	access:protected	signature:( MyCompartment* comp, const string& db, const string& id, const string& name, const int& spatialDimensions, const double& size, const string& units, const string& outside, const bool& constant ) const
+setDB_Label	myspecies.cpp	/^void MySpecies::setDB_Label (const string& label) {$/;"	f	class:MySpecies	signature:(const string& label)
+setDB_Label	myspecies.h	/^		void setDB_Label (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+setDB_ref	mycompartment.cpp	/^void MyCompartment::setDB_ref (const string& ref) {$/;"	f	class:MyCompartment	signature:(const string& ref)
+setDB_ref	mycompartment.h	/^	void setDB_ref (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
+setDB_ref	myspecies.cpp	/^void MySpecies::setDB_ref (const string& ref) {$/;"	f	class:MySpecies	signature:(const string& ref)
+setDB_ref	myspecies.h	/^		void setDB_ref (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
+setFast	reactionTemplate.cpp	/^void reactionTemplate::setFast ($/;"	f	class:reactionTemplate	signature:( const bool& _fast )
+setFast	reactionTemplate.h	/^		void setFast (const bool&);$/;"	p	class:reactionTemplate	access:public	signature:(const bool&)
+setFunction	readDataBase.cpp	/^void readDataBase::setFunction ($/;"	f	class:readDataBase	signature:( FunctionDefinition* fdef, const string& id, const string& name, const string& math ) const
+setFunction	readDataBase.h	/^		void setFunction ($/;"	p	class:readDataBase	access:protected	signature:( FunctionDefinition* fdef, const string& id, const string& name, const string& math ) const
+setId	reactionTemplate.cpp	/^void reactionTemplate::setId ($/;"	f	class:reactionTemplate	signature:( const string& _id )
+setId	reactionTemplate.h	/^		void setId (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+setIsBinded	part.cpp	/^void Part::setIsBinded (const bool& isb) {$/;"	f	class:Part	signature:(const bool& isb)
+setIsBinded	part.h	/^	void setIsBinded (const bool& );$/;"	p	class:Part	access:public	signature:(const bool& )
+setLabel	chain.cpp	/^void Chain::setLabel (const string& label) {$/;"	f	class:Chain	signature:(const string& label)
+setLabel	chain.h	/^	void setLabel (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
+setMath	reactionTemplate.cpp	/^void reactionTemplate::setMath ($/;"	f	class:reactionTemplate	signature:( const string& __math )
+setMath	reactionTemplate.h	/^		void setMath (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+setName	reactionTemplate.cpp	/^void reactionTemplate::setName ($/;"	f	class:reactionTemplate	signature:( const string& _name )
+setName	reactionTemplate.h	/^		void setName (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+setNodeLabel	node.cpp	/^void Node::setNodeLabel (const string& label) {$/;"	f	class:Node	signature:(const string& label)
+setNodeLabel	node.h	/^	void setNodeLabel (const string&);$/;"	p	class:Node	access:public	signature:(const string&)
+setNodeWeight	node.cpp	/^void Node::setNodeWeight ($/;"	f	class:Node	signature:( const int& cn, const int& pn )
+setNodeWeight	node.h	/^	void setNodeWeight (const int&, const int&);$/;"	p	class:Node	access:public	signature:(const int&, const int&)
+setParameter	readDataBase.cpp	/^void readDataBase::setParameter ($/;"	f	class:readDataBase	signature:( Parameter* para, const string& id, const string& name, const double& value, const string& units, const bool& constant ) const
+setParameter	readDataBase.h	/^		void setParameter ($/;"	p	class:readDataBase	access:protected	signature:( Parameter* para, const string& id, const string& name, const double& value, const string& units, const bool& constant ) const
+setPart	part.cpp	/^void Part::setPart ($/;"	f	class:Part	signature:( const string& __ref, const string& __label, const string& __type, const string& __ctg, const bool& __isb )
+setPart	part.h	/^	void setPart ($/;"	p	class:Part	access:public	signature:( const string&, const string&, const string&, const string&, const bool& = false )
+setPartCtg	part.cpp	/^void Part::setPartCtg (const string& __ctg) {$/;"	f	class:Part	signature:(const string& __ctg)
+setPartCtg	part.h	/^	void setPartCtg (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+setPartLabel	part.cpp	/^void Part::setPartLabel (const string& __label) {$/;"	f	class:Part	signature:(const string& __label)
+setPartLabel	part.h	/^	void setPartLabel (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+setPartRef	part.cpp	/^void Part::setPartRef (const string& __ref) {$/;"	f	class:Part	signature:(const string& __ref)
+setPartRef	part.h	/^	void setPartRef (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+setPartType	part.cpp	/^void Part::setPartType (const string& __type) {$/;"	f	class:Part	signature:(const string& __type)
+setPartType	part.h	/^	void setPartType (const string& );$/;"	p	class:Part	access:public	signature:(const string& )
+setRateRule	readDataBase.cpp	/^void readDataBase::setRateRule ($/;"	f	class:readDataBase	signature:( RateRule* rater, const string& variable, const string& math, const bool& text ) const
+setRateRule	readDataBase.h	/^		void setRateRule ($/;"	p	class:readDataBase	access:protected	signature:( RateRule* rater, const string& variable, const string& math, const bool& text ) const
+setReversible	reactionTemplate.cpp	/^void reactionTemplate::setReversible ($/;"	f	class:reactionTemplate	signature:( const bool& _rev )
+setReversible	reactionTemplate.h	/^		void setReversible (const bool&);$/;"	p	class:reactionTemplate	access:public	signature:(const bool&)
+setSpecies	readDataBase.cpp	/^void readDataBase::setSpecies ($/;"	f	class:readDataBase	signature:( MySpecies* s, const string& db, const string& ccid, const string& id, const string& name, const string& compartment, const double& initialAmount, const double& initialConcentration, const string& substanceUnits, const bool& hasOnlySubstanceUnits, const bool& boundaryCondition, const int& charge, const bool& constant ) const
+setSpecies	readDataBase.h	/^		void setSpecies ($/;"	p	class:readDataBase	access:protected	signature:( MySpecies* s, const string& db, const string& ccid, const string& id, const string& name, const string& compartment, const double& initialAmount, const double& initialConcentration, const string& substanceUnits, const bool& hasOnlySubstanceUnits, const bool& boundaryCondition, const int& charge, const bool& constant ) const
+setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase	signature:( Unit* unit, const UnitKind_t& kind, const double& exponent, const int& scale, const double& multiplier ) const
+setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
+setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( Unit* unit, const UnitKind_t& kind, const double& exponent, const int& scale, const double& multiplier ) const
+setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
+short	strcacu/cacuyac.c	180;"	d	file:
+speciesArrayMatch	g_i.h	/^typedef vector<speciesMatch> speciesArrayMatch;$/;"	t
+speciesLabel_db	myspecies.h	/^		string speciesLabel_db; \/\/used in reaction templates$/;"	m	class:MySpecies	access:private
+speciesMatch	g_i.h	/^typedef pair<int, cMatchsType2> speciesMatch;$/;"	t
+speciesType_set	readXMLComponent.h	/^		set<string> speciesType_set;$/;"	m	class:readXMLComponent	access:protected
+split	myspecies.cpp	/^void MySpecies::split ($/;"	f	class:MySpecies	signature:( bdbXMLInterface& dbreader, vector<MySpecies*>& pieces )
+split	myspecies.h	/^		void split (bdbXMLInterface&, vector<MySpecies*>&);$/;"	p	class:MySpecies	access:public	signature:(bdbXMLInterface&, vector<MySpecies*>&)
+string	strcacu/cacuyac.c	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	file:	access:public
+string	strcacu/cacuyac.h	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	access:public
+subsp	g_i.h	/^typedef pair<string,string> subsp;$/;"	t
+substituentType_set	readXMLComponent.h	/^		set<string> substituentType_set;$/;"	m	class:readXMLComponent	access:protected
+substituent_m	chain.cpp	/^bool Chain::substituent_m ($/;"	f	class:Chain	signature:( const int& l1, const int& u1, const int& l2, const int& u2, const Chain* c, vector<cMatchType>& result ) const
+substituent_m	chain.h	/^	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; $/;"	p	class:Chain	access:private	signature:(const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const
+symbo_table	strcacu/str_cacu.cpp	/^map<string, double> symbo_table;$/;"	v
+test_x	plotTest/integrate.h	/^		QVector < double > test_x;$/;"	m	class:intgrtOutData	access:public
+test_y	plotTest/integrate.h	/^		QVector < QVector<double> > test_y;$/;"	m	class:intgrtOutData	access:public
+transferTable	reactionTemplate.h	/^		map<subsp, subsp> transferTable;$/;"	m	class:reactionTemplate	access:private
+trim	myspecies.cpp	/^void MySpecies::trim (bdbXMLInterface* dbreader)$/;"	f	class:MySpecies	signature:(bdbXMLInterface* dbreader)
+trim	myspecies.h	/^		void trim (bdbXMLInterface* dbreader = NULL);$/;"	p	class:MySpecies	access:private	signature:(bdbXMLInterface* dbreader = NULL)
+tvi	g_i.h	/^typedef vector<dvi> tvi;$/;"	t
+unicode	chain.h	/^	string unicode;$/;"	m	class:Chain	access:private
+unitMap	readDataBase.h	/^		map <string, UnitKind_t> unitMap;$/;"	m	class:readDataBase	access:private
+unput	strcacu/caculex.c	188;"	d	file:
+validateExampleSBML	driver.cpp	/^bool Driver::validateExampleSBML ($/;"	f	class:Driver	signature:( SBMLDocument* sbmlDoc ) const
+validateExampleSBML	driver.h	/^	bool validateExampleSBML ($/;"	p	class:Driver	access:private	signature:( SBMLDocument* sbmlDoc ) const
+vi	g_i.h	/^typedef vector<int> vi;$/;"	t
+weight	node.h	/^	markType weight;$/;"	m	class:Node	access:private
+what	strcacu/StrCacuException.cpp	/^const char* StrCacuException::what() const throw()$/;"	f	class:StrCacuException	signature:() const
+what	strcacu/StrCacuException.h	/^		const char* what() const throw();$/;"	p	class:StrCacuException	access:public	signature:() const
+write	mysbmldoc.cpp	/^void MySBMLDocument::write ()$/;"	f	class:MySBMLDocument	signature:()
+write	mysbmldoc.h	/^		void write ();$/;"	p	class:MySBMLDocument	access:private	signature:()
+writeExampleSBML	driver.cpp	/^bool Driver::writeExampleSBML($/;"	f	class:Driver	signature:( const SBMLDocument* sbmlDoc, const string& filename ) const
+writeExampleSBML	driver.h	/^	bool writeExampleSBML($/;"	p	class:Driver	access:private	signature:( const SBMLDocument* sbmlDoc, const string& filename ) const
+yy_accept	strcacu/caculex.c	/^static yyconst flex_int16_t yy_accept[35] =$/;"	v	file:
+yy_at_bol	strcacu/caculex.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_base	strcacu/caculex.c	/^static yyconst flex_int16_t yy_base[36] =$/;"	v	file:
+yy_bs_column	strcacu/caculex.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_bs_lineno	strcacu/caculex.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buf_pos	strcacu/caculex.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buf_size	strcacu/caculex.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_stack	strcacu/caculex.c	/^static YY_BUFFER_STATE * yy_buffer_stack = 0; \/**< Stack as an array. *\/$/;"	v	file:
+yy_buffer_stack_max	strcacu/caculex.c	/^static size_t yy_buffer_stack_max = 0; \/**< capacity of stack. *\/$/;"	v	file:
+yy_buffer_stack_top	strcacu/caculex.c	/^static size_t yy_buffer_stack_top = 0; \/**< index of top of stack. *\/$/;"	v	file:
+yy_buffer_state	strcacu/caculex.c	/^struct yy_buffer_state$/;"	s	file:
+yy_buffer_state::yy_at_bol	strcacu/caculex.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_bs_column	strcacu/caculex.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_bs_lineno	strcacu/caculex.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_buf_pos	strcacu/caculex.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_buf_size	strcacu/caculex.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_buffer_status	strcacu/caculex.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_ch_buf	strcacu/caculex.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_fill_buffer	strcacu/caculex.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_input_file	strcacu/caculex.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_is_interactive	strcacu/caculex.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_is_our_buffer	strcacu/caculex.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_state::yy_n_chars	strcacu/caculex.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_buffer_status	strcacu/caculex.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_c_buf_p	strcacu/caculex.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
+yy_ch_buf	strcacu/caculex.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_chk	strcacu/caculex.c	/^static yyconst flex_int16_t yy_chk[61] =$/;"	v	file:
+yy_create_buffer	strcacu/caculex.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f	signature:(FILE * file, int size )
+yy_create_buffer	strcacu/caculex.c	/^YY_BUFFER_STATE yy_create_buffer (FILE *file,int size  );$/;"	p	file:	signature:(FILE *file,int size )
+yy_def	strcacu/caculex.c	/^static yyconst flex_int16_t yy_def[36] =$/;"	v	file:
+yy_delete_buffer	strcacu/caculex.c	/^    void yy_delete_buffer (YY_BUFFER_STATE  b )$/;"	f	signature:(YY_BUFFER_STATE b )
+yy_delete_buffer	strcacu/caculex.c	/^void yy_delete_buffer (YY_BUFFER_STATE b  );$/;"	p	file:	signature:(YY_BUFFER_STATE b )
+yy_did_buffer_switch_on_eof	strcacu/caculex.c	/^static int yy_did_buffer_switch_on_eof;$/;"	v	file:
+yy_ec	strcacu/caculex.c	/^static yyconst flex_int32_t yy_ec[256] =$/;"	v	file:
+yy_fatal_error	strcacu/caculex.c	/^static void yy_fatal_error (yyconst char msg[]  );$/;"	p	file:	signature:(yyconst char msg[] )
+yy_fatal_error	strcacu/caculex.c	/^static void yy_fatal_error (yyconst char* msg )$/;"	f	file:	signature:(yyconst char* msg )
+yy_fill_buffer	strcacu/caculex.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_flex_debug	strcacu/caculex.c	/^int yy_flex_debug = 0;$/;"	v
+yy_flex_strlen	strcacu/caculex.c	/^static int yy_flex_strlen (yyconst char * );$/;"	p	file:	signature:(yyconst char * )
+yy_flex_strlen	strcacu/caculex.c	/^static int yy_flex_strlen (yyconst char * s )$/;"	f	file:	signature:(yyconst char * s )
+yy_flex_strncpy	strcacu/caculex.c	/^static void yy_flex_strncpy (char *,yyconst char *,int );$/;"	p	file:	signature:(char *,yyconst char *,int )
+yy_flex_strncpy	strcacu/caculex.c	/^static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )$/;"	f	file:	signature:(char* s1, yyconst char * s2, int n )
+yy_flush_buffer	strcacu/caculex.c	/^    void yy_flush_buffer (YY_BUFFER_STATE  b )$/;"	f	signature:(YY_BUFFER_STATE b )
+yy_flush_buffer	strcacu/caculex.c	/^void yy_flush_buffer (YY_BUFFER_STATE b  );$/;"	p	file:	signature:(YY_BUFFER_STATE b )
+yy_get_next_buffer	strcacu/caculex.c	/^static int yy_get_next_buffer (void );$/;"	p	file:	signature:(void )
+yy_get_next_buffer	strcacu/caculex.c	/^static int yy_get_next_buffer (void)$/;"	f	file:	signature:(void)
+yy_get_previous_state	strcacu/caculex.c	/^    static yy_state_type yy_get_previous_state (void)$/;"	f	file:	signature:(void)
+yy_get_previous_state	strcacu/caculex.c	/^static yy_state_type yy_get_previous_state (void );$/;"	p	file:	signature:(void )
+yy_hold_char	strcacu/caculex.c	/^static char yy_hold_char;$/;"	v	file:
+yy_init	strcacu/caculex.c	/^static int yy_init = 0;		\/* whether we need to initialize *\/$/;"	v	file:
+yy_init_buffer	strcacu/caculex.c	/^    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )$/;"	f	file:	signature:(YY_BUFFER_STATE b, FILE * file )
+yy_init_buffer	strcacu/caculex.c	/^static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file  );$/;"	p	file:	signature:(YY_BUFFER_STATE b,FILE *file )
+yy_init_globals	strcacu/caculex.c	/^static int yy_init_globals (void );$/;"	p	file:	signature:(void )
+yy_init_globals	strcacu/caculex.c	/^static int yy_init_globals (void)$/;"	f	file:	signature:(void)
+yy_input_file	strcacu/caculex.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_is_interactive	strcacu/caculex.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_is_our_buffer	strcacu/caculex.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_last_accepting_cpos	strcacu/caculex.c	/^static char *yy_last_accepting_cpos;$/;"	v	file:
+yy_last_accepting_state	strcacu/caculex.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
+yy_load_buffer_state	strcacu/caculex.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:	signature:(void)
+yy_load_buffer_state	strcacu/caculex.c	/^static void yy_load_buffer_state (void );$/;"	p	file:	signature:(void )
+yy_meta	strcacu/caculex.c	/^static yyconst flex_int32_t yy_meta[21] =$/;"	v	file:
+yy_n_chars	strcacu/caculex.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:	access:public
+yy_n_chars	strcacu/caculex.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	strcacu/caculex.c	317;"	d	file:
+yy_nxt	strcacu/caculex.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:	access:public
+yy_nxt	strcacu/caculex.c	/^static yyconst flex_int16_t yy_nxt[61] =$/;"	v	file:
+yy_reduce_print	strcacu/cacuyac.c	/^yy_reduce_print (YYSTYPE *yyvsp, int yyrule)$/;"	f	file:	signature:(YYSTYPE *yyvsp, int yyrule)
+yy_scan_buffer	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f	signature:(char * base, yy_size_t size )
+yy_scan_buffer	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size  );$/;"	p	file:	signature:(char *base,yy_size_t size )
+yy_scan_bytes	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )$/;"	f	signature:(yyconst char * yybytes, int _yybytes_len )
+yy_scan_bytes	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,int len  );$/;"	p	file:	signature:(yyconst char *bytes,int len )
+yy_scan_string	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f	signature:(yyconst char * yystr )
+yy_scan_string	strcacu/caculex.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str  );$/;"	p	file:	signature:(yyconst char *yy_str )
+yy_set_bol	strcacu/caculex.c	329;"	d	file:
+yy_set_interactive	strcacu/caculex.c	319;"	d	file:
+yy_size_t	strcacu/caculex.c	/^typedef size_t yy_size_t;$/;"	t	file:
+yy_stack_print	strcacu/cacuyac.c	/^yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)$/;"	f	file:	signature:(yytype_int16 *yybottom, yytype_int16 *yytop)
+yy_start	strcacu/caculex.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
+yy_state_type	strcacu/caculex.c	/^typedef int yy_state_type;$/;"	t	file:
+yy_switch_to_buffer	strcacu/caculex.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f	signature:(YY_BUFFER_STATE new_buffer )
+yy_switch_to_buffer	strcacu/caculex.c	/^void yy_switch_to_buffer (YY_BUFFER_STATE new_buffer  );$/;"	p	file:	signature:(YY_BUFFER_STATE new_buffer )
+yy_symbol_print	strcacu/cacuyac.c	/^yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:	signature:(FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_value_print	strcacu/cacuyac.c	/^yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:	signature:(FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_trans_info	strcacu/caculex.c	/^struct yy_trans_info$/;"	s	file:
+yy_trans_info::yy_nxt	strcacu/caculex.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:	access:public
+yy_trans_info::yy_verify	strcacu/caculex.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:	access:public
+yy_try_NUL_trans	strcacu/caculex.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	file:	signature:(yy_state_type yy_current_state )
+yy_try_NUL_trans	strcacu/caculex.c	/^static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );$/;"	p	file:	signature:(yy_state_type current_state )
+yy_verify	strcacu/caculex.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:	access:public
+yyalloc	strcacu/caculex.c	/^void *yyalloc (yy_size_t  );$/;"	p	file:
+yyalloc	strcacu/caculex.c	/^void *yyalloc (yy_size_t  size )$/;"	f	signature:(yy_size_t size )
+yyalloc	strcacu/cacuyac.c	/^union yyalloc$/;"	u	file:
+yyalloc::yyss_alloc	strcacu/cacuyac.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:	access:public
+yyalloc::yyvs_alloc	strcacu/cacuyac.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:	access:public
+yychar	strcacu/cacuyac.c	/^int yychar;$/;"	v
+yycheck	strcacu/cacuyac.c	/^static const yytype_int8 yycheck[] =$/;"	v	file:
+yyclearin	strcacu/cacuyac.c	593;"	d	file:
+yyconst	strcacu/caculex.c	106;"	d	file:
+yyconst	strcacu/caculex.c	108;"	d	file:
+yydebug	strcacu/cacuyac.c	/^int yydebug;$/;"	v
+yydefact	strcacu/cacuyac.c	/^static const yytype_uint8 yydefact[] =$/;"	v	file:
+yydefgoto	strcacu/cacuyac.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	file:
+yydestruct	strcacu/cacuyac.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	file:	signature:(const char *yymsg, int yytype, YYSTYPE *yyvaluep)
+yyensure_buffer_stack	strcacu/caculex.c	/^static void yyensure_buffer_stack (void );$/;"	p	file:	signature:(void )
+yyensure_buffer_stack	strcacu/caculex.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:	signature:(void)
+yyerrok	strcacu/cacuyac.c	592;"	d	file:
+yyerror	strcacu/cacuyac.c	/^int yyerror (char *err) {$/;"	f	signature:(char *err)
+yyfree	strcacu/caculex.c	/^void yyfree (void *  );$/;"	p	file:	signature:(void * )
+yyfree	strcacu/caculex.c	/^void yyfree (void * ptr )$/;"	f	signature:(void * ptr )
+yyget_debug	strcacu/caculex.c	/^int yyget_debug  (void)$/;"	f	signature:(void)
+yyget_debug	strcacu/caculex.c	/^int yyget_debug (void );$/;"	p	file:	signature:(void )
+yyget_extra	strcacu/caculex.c	/^YY_EXTRA_TYPE yyget_extra (void );$/;"	p	file:	signature:(void )
+yyget_in	strcacu/caculex.c	/^FILE *yyget_in  (void)$/;"	f	signature:(void)
+yyget_in	strcacu/caculex.c	/^FILE *yyget_in (void );$/;"	p	file:	signature:(void )
+yyget_leng	strcacu/caculex.c	/^int yyget_leng  (void)$/;"	f	signature:(void)
+yyget_leng	strcacu/caculex.c	/^int yyget_leng (void );$/;"	p	file:	signature:(void )
+yyget_lineno	strcacu/caculex.c	/^int yyget_lineno  (void)$/;"	f	signature:(void)
+yyget_lineno	strcacu/caculex.c	/^int yyget_lineno (void );$/;"	p	file:	signature:(void )
+yyget_out	strcacu/caculex.c	/^FILE *yyget_out  (void)$/;"	f	signature:(void)
+yyget_out	strcacu/caculex.c	/^FILE *yyget_out (void );$/;"	p	file:	signature:(void )
+yyget_text	strcacu/caculex.c	/^char *yyget_text  (void)$/;"	f	signature:(void)
+yyget_text	strcacu/caculex.c	/^char *yyget_text (void );$/;"	p	file:	signature:(void )
+yyin	strcacu/caculex.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yyinput	strcacu/caculex.c	/^    static int yyinput (void)$/;"	f	file:	signature:(void)
+yyinput	strcacu/caculex.c	/^static int yyinput (void );$/;"	p	file:	signature:(void )
+yyleng	strcacu/caculex.c	/^int yyleng;$/;"	v
+yyless	strcacu/caculex.c	1684;"	d	file:
+yyless	strcacu/caculex.c	1685;"	d	file:
+yyless	strcacu/caculex.c	175;"	d	file:
+yylex	strcacu/caculex.c	/^extern int yylex (void);$/;"	p	file:	signature:(void)
+yylex_destroy	strcacu/caculex.c	/^int yylex_destroy  (void)$/;"	f	signature:(void)
+yylex_destroy	strcacu/caculex.c	/^int yylex_destroy (void );$/;"	p	file:	signature:(void )
+yylineno	strcacu/caculex.c	/^int yylineno = 1;$/;"	v
+yylval	strcacu/cacuyac.c	/^YYSTYPE yylval;$/;"	v
+yymore	strcacu/caculex.c	472;"	d	file:
+yynerrs	strcacu/cacuyac.c	/^int yynerrs;$/;"	v
+yyout	strcacu/caculex.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yypact	strcacu/cacuyac.c	/^static const yytype_int8 yypact[] =$/;"	v	file:
+yyparse	strcacu/cacuyac.c	/^int yyparse ();$/;"	p	file:
+yyparse	strcacu/cacuyac.c	/^int yyparse (void *YYPARSE_PARAM);$/;"	p	file:	signature:(void *YYPARSE_PARAM)
+yyparse	strcacu/cacuyac.c	/^int yyparse (void);$/;"	p	file:	signature:(void)
+yyparse	strcacu/cacuyac.c	/^yyparse (void *YYPARSE_PARAM)$/;"	f	signature:(void *YYPARSE_PARAM)
+yypgoto	strcacu/cacuyac.c	/^static const yytype_int8 yypgoto[] =$/;"	v	file:
+yypop_buffer_state	strcacu/caculex.c	/^void yypop_buffer_state (void );$/;"	p	file:	signature:(void )
+yypop_buffer_state	strcacu/caculex.c	/^void yypop_buffer_state (void)$/;"	f	signature:(void)
+yyprhs	strcacu/cacuyac.c	/^static const yytype_uint8 yyprhs[] =$/;"	v	file:
+yypush_buffer_state	strcacu/caculex.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer  );$/;"	p	file:	signature:(YY_BUFFER_STATE new_buffer )
+yypush_buffer_state	strcacu/caculex.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f	signature:(YY_BUFFER_STATE new_buffer )
+yyr1	strcacu/cacuyac.c	/^static const yytype_uint8 yyr1[] =$/;"	v	file:
+yyr2	strcacu/cacuyac.c	/^static const yytype_uint8 yyr2[] =$/;"	v	file:
+yyrealloc	strcacu/caculex.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f	signature:(void * ptr, yy_size_t size )
+yyrealloc	strcacu/caculex.c	/^void *yyrealloc (void *,yy_size_t  );$/;"	p	file:	signature:(void *,yy_size_t )
+yyrestart	strcacu/caculex.c	/^    void yyrestart  (FILE * input_file )$/;"	f	signature:(FILE * input_file )
+yyrestart	strcacu/caculex.c	/^void yyrestart (FILE *input_file  );$/;"	p	file:	signature:(FILE *input_file )
+yyrhs	strcacu/cacuyac.c	/^static const yytype_int8 yyrhs[] =$/;"	v	file:
+yyrline	strcacu/cacuyac.c	/^static const yytype_uint8 yyrline[] =$/;"	v	file:
+yyset_debug	strcacu/caculex.c	/^void yyset_debug (int  bdebug )$/;"	f	signature:(int bdebug )
+yyset_debug	strcacu/caculex.c	/^void yyset_debug (int debug_flag  );$/;"	p	file:	signature:(int debug_flag )
+yyset_extra	strcacu/caculex.c	/^void yyset_extra (YY_EXTRA_TYPE user_defined  );$/;"	p	file:	signature:(YY_EXTRA_TYPE user_defined )
+yyset_in	strcacu/caculex.c	/^void yyset_in  (FILE * in_str  );$/;"	p	file:	signature:(FILE * in_str )
+yyset_in	strcacu/caculex.c	/^void yyset_in (FILE *  in_str )$/;"	f	signature:(FILE * in_str )
+yyset_lineno	strcacu/caculex.c	/^void yyset_lineno (int  line_number )$/;"	f	signature:(int line_number )
+yyset_lineno	strcacu/caculex.c	/^void yyset_lineno (int line_number  );$/;"	p	file:	signature:(int line_number )
+yyset_out	strcacu/caculex.c	/^void yyset_out  (FILE * out_str  );$/;"	p	file:	signature:(FILE * out_str )
+yyset_out	strcacu/caculex.c	/^void yyset_out (FILE *  out_str )$/;"	f	signature:(FILE * out_str )
+yyss_alloc	strcacu/cacuyac.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:	access:public
+yystos	strcacu/cacuyac.c	/^static const yytype_uint8 yystos[] =$/;"	v	file:
+yystpcpy	strcacu/cacuyac.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:	signature:(char *yydest, const char *yysrc)
+yystpcpy	strcacu/cacuyac.c	891;"	d	file:
+yystrlen	strcacu/cacuyac.c	/^yystrlen (const char *yystr)$/;"	f	file:	signature:(const char *yystr)
+yystrlen	strcacu/cacuyac.c	868;"	d	file:
+yystype	strcacu/cacuyac.c	168;"	d	file:
+yystype	strcacu/cacuyac.h	96;"	d
+yysyntax_error	strcacu/cacuyac.c	/^yysyntax_error (char *yyresult, int yystate, int yychar)$/;"	f	file:	signature:(char *yyresult, int yystate, int yychar)
+yytable	strcacu/cacuyac.c	/^static const yytype_uint8 yytable[] =$/;"	v	file:
+yyterminate	strcacu/caculex.c	632;"	d	file:
+yytext	strcacu/caculex.c	/^char *yytext;$/;"	v
+yytext_ptr	strcacu/caculex.c	354;"	d	file:
+yytname	strcacu/cacuyac.c	/^static const char *const yytname[] =$/;"	v	file:
+yytnamerr	strcacu/cacuyac.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:	signature:(char *yyres, const char *yystr)
+yytokentype	strcacu/cacuyac.c	/^   enum yytokentype {$/;"	g	file:
+yytokentype	strcacu/cacuyac.h	/^   enum yytokentype {$/;"	g
+yytoknum	strcacu/cacuyac.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	file:
+yytranslate	strcacu/cacuyac.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	file:
+yytype_int16	strcacu/cacuyac.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	file:
+yytype_int16	strcacu/cacuyac.c	/^typedef short int yytype_int16;$/;"	t	file:
+yytype_int8	strcacu/cacuyac.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	file:
+yytype_int8	strcacu/cacuyac.c	/^typedef short int yytype_int8;$/;"	t	file:
+yytype_int8	strcacu/cacuyac.c	/^typedef signed char yytype_int8;$/;"	t	file:
+yytype_uint16	strcacu/cacuyac.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	file:
+yytype_uint16	strcacu/cacuyac.c	/^typedef unsigned short int yytype_uint16;$/;"	t	file:
+yytype_uint8	strcacu/cacuyac.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	file:
+yytype_uint8	strcacu/cacuyac.c	/^typedef unsigned char yytype_uint8;$/;"	t	file:
+yyunput	strcacu/caculex.c	/^    static void yyunput (int c, register char * yy_bp )$/;"	f	file:	signature:(int c, register char * yy_bp )
+yyunput	strcacu/caculex.c	/^    static void yyunput (int c,char *buf_ptr  );$/;"	p	file:	signature:(int c,char *buf_ptr )
+yyvs_alloc	strcacu/cacuyac.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:	access:public
+yywrap	strcacu/caculex.c	/^extern "C" int yywrap (void );$/;"	p	file:	signature:(void )
+yywrap	strcacu/caculex.c	/^extern int yywrap (void );$/;"	p	file:	signature:(void )
+yywrap	strcacu/cacuyac.c	/^int yywrap () {$/;"	f
+~Chain	chain.cpp	/^Chain::~Chain ()$/;"	f	class:Chain	signature:()
+~Chain	chain.h	/^	~Chain ();$/;"	p	class:Chain	access:public	signature:()
+~Driver	driver.cpp	/^Driver::~Driver ()$/;"	f	class:Driver	signature:()
+~Driver	driver.h	/^	~Driver ();$/;"	p	class:Driver	access:public	signature:()
+~MyCompartment	mycompartment.cpp	/^MyCompartment::~MyCompartment ()$/;"	f	class:MyCompartment	signature:()
+~MyCompartment	mycompartment.h	/^	~MyCompartment ();$/;"	p	class:MyCompartment	access:public	signature:()
+~MyReaction	myreaction.cpp	/^MyReaction::~MyReaction () $/;"	f	class:MyReaction	signature:()
+~MyReaction	myreaction.h	/^		~MyReaction ();$/;"	p	class:MyReaction	access:public	signature:()
+~MySBMLDocument	mysbmldoc.cpp	/^MySBMLDocument::~MySBMLDocument ()$/;"	f	class:MySBMLDocument	signature:()
+~MySBMLDocument	mysbmldoc.h	/^		~MySBMLDocument ();$/;"	p	class:MySBMLDocument	access:public	signature:()
+~MySpecies	myspecies.cpp	/^MySpecies::~MySpecies ()$/;"	f	class:MySpecies	signature:()
+~MySpecies	myspecies.h	/^		~MySpecies ();$/;"	p	class:MySpecies	access:public	signature:()
+~Node	node.cpp	/^Node::~Node ()$/;"	f	class:Node	signature:()
+~Node	node.h	/^	~Node ();$/;"	p	class:Node	access:public	signature:()
+~Part	part.cpp	/^Part::~Part (){}$/;"	f	class:Part	signature:()
+~Part	part.h	/^	~Part ();$/;"	p	class:Part	access:public	signature:()
+~StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::~StrCacuException() throw()$/;"	f	class:StrCacuException	signature:()
+~StrCacuException	strcacu/StrCacuException.h	/^		~StrCacuException() throw();$/;"	p	class:StrCacuException	access:public	signature:()
+~Tree	tree.cpp	/^Tree::~Tree ()$/;"	f	class:Tree	signature:()
+~Tree	tree.h	/^	~Tree ();$/;"	p	class:Tree	access:public	signature:()
+~reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::~reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
+~reactionTemplate	reactionTemplate.h	/^		~reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()
+~readDataBase	readDataBase.cpp	/^readDataBase::~readDataBase () {}$/;"	f	class:readDataBase	signature:()
+~readDataBase	readDataBase.h	/^		~readDataBase (); $/;"	p	class:readDataBase	access:public	signature:()
+~readInput	readInput.cpp	/^readInput::~readInput ()$/;"	f	class:readInput	signature:()
+~readInput	readInput.h	/^	~readInput ();$/;"	p	class:readInput	access:public	signature:()
+~readXMLComponent	readXMLComponent.cpp	/^readXMLComponent::~readXMLComponent ()$/;"	f	class:readXMLComponent	signature:()
+~readXMLComponent	readXMLComponent.h	/^		~readXMLComponent ();$/;"	p	class:readXMLComponent	access:public	signature:()

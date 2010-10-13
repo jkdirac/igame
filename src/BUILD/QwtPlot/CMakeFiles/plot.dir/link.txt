@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../bin/libplot.a  CMakeFiles/plot.dir/moc_plotInputData.cxx.o CMakeFiles/plot.dir/moc_plotToolWidget.cxx.o CMakeFiles/plot.dir/moc_data_plot.cxx.o CMakeFiles/plot.dir/plotInputData.cpp.o CMakeFiles/plot.dir/data_plot.cpp.o CMakeFiles/plot.dir/plotToolWidget.cpp.o
+/usr/bin/ranlib ../bin/libplot.a

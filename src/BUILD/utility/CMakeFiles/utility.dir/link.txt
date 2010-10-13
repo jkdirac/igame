@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../bin/libutility.a  CMakeFiles/utility.dir/libsbml-401-wrapper.cpp.o
+/usr/bin/ranlib ../bin/libutility.a
