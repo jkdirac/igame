@@ -162,6 +162,78 @@ void readDataBase::read_cnModel (
 	s->rearrange ();
 }
 
+typedef enum
+{
+    LIBSBML_OPERATION_SUCCESS       = 0
+    /*!< The operation was successful. */
+
+  , LIBSBML_INDEX_EXCEEDS_SIZE      = -1
+    /*!< An index parameter exceeded the bounds of a data array or other
+     * collection used in the operation.  This return value is typically
+     * returned by methods that take index numbers to refer to lists
+     * of objects, when the caller has provided an index that exceeds
+     * the bounds of the list.  LibSBML provides methods for checking the
+     * size of list/sequence/collection structures, and callers should
+     * verify the sizes before calling methods that take index numbers. */
+
+  , LIBSBML_UNEXPECTED_ATTRIBUTE    = -2
+    /*!< The attribute that is the subject of this operation is not valid
+     * for the combination of SBML Level and Version for the underlying
+     * object.  This can happen because libSBML strives to offer a uniform
+     * API for all SBML Levels and Versions, but some object attributes and
+     * elements are not defined for all SBML Levels and Versions.  Calling
+     * programs are expected to be aware of which object structures they
+     * are working with, but when errors of this kind occur, they are
+     * reported using this return value. */
+
+  , LIBSBML_OPERATION_FAILED        = -3
+    /*!< The requested action could not be performed.  This can occur in
+     * a variety of contexts, such as passing a null object as a parameter
+     * in a situation where it does not make sense to permit a null object.
+     */
+
+  , LIBSBML_INVALID_ATTRIBUTE_VALUE = -4
+    /*!< A value passed as an argument to the method is not of a type that
+     * is valid for the operation or kind of object involved.  For example,
+     * this return code is used when a calling program attempts to set an
+     * SBML object identifier to a string whose syntax does not conform to
+     * the SBML identifier syntax. */
+
+  , LIBSBML_INVALID_OBJECT          = -5
+    /*!< The object passed as an argument to the method is not of a type
+     * that is valid for the operation or kind of object involved.  For
+     * example, handing an invalidly-constructed ASTNode to a method
+     * expecting an ASTNode will result in this error. */
+
+  , LIBSBML_DUPLICATE_OBJECT_ID     = -6
+    /*!< There already exists an object with this identifier in the
+     * context where this operation is being attempted.  This error is
+     * typically returned in situations where SBML object identifiers must be
+     * unique, such as attempting to add two species with the same identifier
+     * to a model. */
+
+  , LIBSBML_LEVEL_MISMATCH          = -7
+    /*!< The SBML Level associated with the object does not match the Level
+     * of the parent object.  This error can happen when an SBML component
+     * such as a species or compartment object is created outside of a model
+     * and a calling program then attempts to add the object to a model that
+     * has a different SBML Level defined. */
+
+  , LIBSBML_VERSION_MISMATCH        = -8
+    /*!< The SBML Version within the SBML Level associated with the object
+     * does not match the Version of the parent object.  This error can
+     * happen when an SBML component such as a species or compartment object
+     * is created outside of a model and a calling program then attempts to
+     * add the object to a model that has a different SBML Level+Version
+     * combination. */
+
+  , LIBSBML_INVALID_XML_OPERATION   = -9
+    /*!< The XML operation attempted is not valid for the object or context
+     * involved.  This error is typically returned by the XML interface layer
+     * of libSBML, when a calling program attempts to construct or manipulate
+     * XML in an invalid way.  */
+
+} OperationReturnValues_t;
 void readDataBase::setParameter (
 		Parameter* para,
 		const string& id,
@@ -176,7 +248,7 @@ void readDataBase::setParameter (
 	//
 	//  setId
 	//
-	operation = para->setId (id); 
+	 para->setId (id); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Parameter..."
@@ -188,7 +260,7 @@ void readDataBase::setParameter (
 	//
 	if (!name.empty ())
 	{
-		operation = para->setName (name);
+		para->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Parameter..."
@@ -199,14 +271,14 @@ void readDataBase::setParameter (
 	//
 	//  setValue
 	//
-	operation = para->setValue (value);
+	para->setValue (value);
 
 	//
 	//  setUnits
 	//  
 	if (!units.empty ())
 	{
-		operation = para->setUnits (units);
+		 para->setUnits (units);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Parameter..."
@@ -217,7 +289,7 @@ void readDataBase::setParameter (
 	//
 	//  setConstant
 	//
-	operation = para->setConstant (constant);
+	 para->setConstant (constant);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
 		throw StrCacuException (
 				"Reading Block Parameter..."
@@ -239,7 +311,7 @@ void readDataBase::setAlgebraicRule (
 	//
 	//  setVariable
 	//
-	operation = alger->setVariable (variable); 
+	 alger->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block AlgebraicRule..."
@@ -256,7 +328,7 @@ void readDataBase::setAlgebraicRule (
 	//
 	if (text)
 	{
-		operation = alger->setFormula (math);
+		alger->setFormula (math);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Reading Block AlgebraicRule..."
@@ -268,7 +340,7 @@ void readDataBase::setAlgebraicRule (
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
 			throw StrCacuException ("Invalid MathML string converted!");
-		operation = alger->setMath (astMath);
+		 alger->setMath (astMath);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Writing Block Reaction...Invalid object: astMath!"
@@ -290,7 +362,7 @@ void readDataBase::setAssignmentRule (
 	//
 	//  setVariable
 	//
-	operation = assr->setVariable (variable); 
+	assr->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block AssignmentRule..."
@@ -307,7 +379,7 @@ void readDataBase::setAssignmentRule (
 	//
 	if (text)
 	{
-		operation = assr->setFormula (math);
+		assr->setFormula (math);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Reading Block AssignmentRule..."
@@ -319,7 +391,7 @@ void readDataBase::setAssignmentRule (
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
 			throw StrCacuException ("Invalid MathML string converted!");
-		operation = assr->setMath (astMath);
+		assr->setMath (astMath);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Writing Block Reaction...Invalid object: astMath!"
@@ -341,7 +413,7 @@ void readDataBase::setRateRule (
 	//
 	//  setVariable
 	//
-	operation = rater->setVariable (variable); 
+	 rater->setVariable (variable); 
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block RateRule..."
@@ -358,7 +430,7 @@ void readDataBase::setRateRule (
 	//
 	if (text)
 	{
-		operation = rater->setFormula (math);
+		 rater->setFormula (math);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Reading Block RateRule..."
@@ -370,7 +442,7 @@ void readDataBase::setRateRule (
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
 			throw StrCacuException ("Invalid MathML string converted!");
-		operation = rater->setMath (astMath);
+		rater->setMath (astMath);
 		if (operation == LIBSBML_INVALID_OBJECT)
 			throw StrCacuException (
 					"Writing Block Reaction...Invalid object: astMath!"
@@ -402,7 +474,7 @@ void readDataBase::setCompartment (
 	//
 	//  setId 
 	//
-	operation = comp->setId (id);
+	 comp->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Compartment..."
@@ -414,7 +486,7 @@ void readDataBase::setCompartment (
 	//
 	if (!name.empty ())
 	{
-		operation = comp->setName (name);
+		 comp->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Compartment..."
@@ -425,7 +497,7 @@ void readDataBase::setCompartment (
 	//
 	//  setSpatialDimensions
 	//
-	operation = comp->setSpatialDimensions (spatialDimensions);
+	 comp->setSpatialDimensions (spatialDimensions);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Compartment..."
@@ -449,7 +521,7 @@ void readDataBase::setCompartment (
 	//
 	if (!units.empty ())
 	{
-		operation = comp->setUnits (units);
+		comp->setUnits (units);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Compartment..."
@@ -460,7 +532,7 @@ void readDataBase::setCompartment (
 	//
 	//  setOutside
 	//
-	operation = comp->setOutside (outside);	
+	 comp->setOutside (outside);	
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Compartment..."
@@ -470,7 +542,7 @@ void readDataBase::setCompartment (
 	//
 	//  setConstant
 	//
-	operation = comp->setConstant (constant);
+	 comp->setConstant (constant);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
 			throw StrCacuException (
 					"Reading Block Compartment..."
@@ -505,7 +577,7 @@ void readDataBase::setSpecies (
 	if (!ccid.empty ()) s->setCompTypeId (ccid);
 
 	//  setId 
-	operation = s->setId (id);
+	 s->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 	{
 		cout << "\nid = " << id << endl;
@@ -518,7 +590,7 @@ void readDataBase::setSpecies (
 	//  setName 
 	if (!name.empty ())
 	{
-		operation = s->setName (name);
+		 s->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Species..."
@@ -527,7 +599,7 @@ void readDataBase::setSpecies (
 	}
 
 	//  setCompartment
-	operation = s->setCompartment (compartment);
+	 s->setCompartment (compartment);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Species..."
@@ -536,12 +608,12 @@ void readDataBase::setSpecies (
 
 	//  setInitialAmount
 	if (initialAmount >= 0.0) 
-		operation = s->setInitialAmount (initialAmount);
+		 s->setInitialAmount (initialAmount);
 
 	//  setInitialConcentration
 	if (initialConcentration >= 0.0) 
 	{
-		operation = s->setInitialConcentration (initialConcentration);
+		 s->setInitialConcentration (initialConcentration);
 		if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
 			throw StrCacuException (
 					"Reading Block Species..."
@@ -552,7 +624,7 @@ void readDataBase::setSpecies (
 	//  setSubstanceUnits
 	if (!substanceUnits.empty ())
 	{
-		operation = s->setSubstanceUnits (substanceUnits);
+		 s->setSubstanceUnits (substanceUnits);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block Species..."
@@ -595,7 +667,7 @@ void readDataBase::setUnit (
 	//
 	//  setId
 	//
-	operation = unitdef->setId (id);
+	 unitdef->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block UnitDefinition..."
@@ -607,7 +679,7 @@ void readDataBase::setUnit (
 	//
 	if (!name.empty ())
 	{
-		operation = unitdef->setName (name);
+		unitdef->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block UnitDefinition..."
@@ -629,7 +701,7 @@ void readDataBase::setUnit (
 	//
 	//  setKind
 	//
-	operation = unit->setKind (kind);
+	 unit->setKind (kind);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block Unit..."
@@ -649,7 +721,7 @@ void readDataBase::setUnit (
 	//
 	//  setMultiplier
 	//
-	operation = unit->setMultiplier (multiplier);
+	 unit->setMultiplier (multiplier);
 	if (operation == LIBSBML_UNEXPECTED_ATTRIBUTE)
 		throw StrCacuException (
 				"Reading Block Unit..."
@@ -670,7 +742,7 @@ void readDataBase::setFunction (
 	//
 	//  setId
 	//
-	operation = fdef->setId (id);
+	 fdef->setId (id);
 	if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 		throw StrCacuException (
 				"Reading Block FunctionDefinition..."
@@ -682,7 +754,7 @@ void readDataBase::setFunction (
 	//
 	if (!name.empty ())
 	{
-		operation = fdef->setName (name);
+		 fdef->setName (name);
 		if (operation == LIBSBML_INVALID_ATTRIBUTE_VALUE)
 			throw StrCacuException (
 					"Reading Block FunctionDefinition..."
@@ -703,7 +775,7 @@ void readDataBase::setFunction (
 				);
 	}
 
-	operation = fdef->setMath(astMath);
+	 fdef->setMath(astMath);
 	if (operation == LIBSBML_INVALID_OBJECT)
 		throw StrCacuException (
 				"Reading Block FunctionDefinition..."

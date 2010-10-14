@@ -131,7 +131,6 @@ int main(int argc, char **argv)
 
 int copsi_entry(char *file_name_1)
 {
-	/*
 	char* file_name = "network.xml";
 	int opt_num = 3;
 	char **options = new char*[opt_num];
@@ -165,18 +164,4 @@ int copsi_entry(char *file_name_1)
 	}
 
 	return 0;
-	*/
-
-	char *file_name = "network.xml";
-	int opt_num = 3;
-	char **options = new char*[opt_num];
-
-//    options[0] ;
-	options[1] = new char[3];
-	strcpy(options[1], "-i"); options[1][2] = 0;	
-
-	options[2] = new char[strlen(file_name)+1];
-	memset(options[2], 0, strlen(file_name)+1);
-	strcpy(options[2], file_name);
-	copsi_main(opt_num, options);
 }

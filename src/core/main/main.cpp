@@ -7,7 +7,7 @@ int main ()
 	time (&start);
 
 	Driver driver;
-//    bool errno = driver.beginSimulation ();
+	bool errno = driver.beginSimulation ();
 
 	time (&end);
 	double dif = difftime (end, start);
