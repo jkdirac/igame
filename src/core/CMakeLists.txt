@@ -1,7 +1,11 @@
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
+add_subdirectory (hellocopsi)
+
 INCLUDE_DIRECTORIES( AFTER
 	${IGAME_SOURCE_DIR}/core/strcacu
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/sbml
 	)
 
 #source file
@@ -30,7 +34,7 @@ TARGET_LINK_LIBRARIES( igame
   qwt5
   sbml_solver
   dbxml
-  sbml
+  sbml-4.0.1
   bdinterface
   utility
   str_cacu
@@ -45,7 +49,7 @@ TARGET_LINK_LIBRARIES( helloplot
   ${QT_LIBRARIES}
   qwt5
   plot
-  sbml
+  sbml-4.0.1
   sbml_solver
   utility
   )

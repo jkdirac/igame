@@ -43,8 +43,8 @@ SET( QT_USE_QTCORE TRUE )
 SET( QT_USE_QTGUI TRUE )
 SET( QT_USE_QTXML TRUE )
 SET( QT_USE_QTOPENGL TRUE )
+SET( QT_USE_QT3SUPPORT TRUE)
 SET( QT_USE_QTSVG TRUE )
-SET( QT_USE_QT3SUPPORT FALSE )
 #SET( QT_USE_QTSVG TRUE )
 INCLUDE( ${QT_USE_FILE} )
 
@@ -65,6 +65,7 @@ INCLUDE_DIRECTORIES( BEFORE
 	${IGAME_SOURCE_DIR}/
 	${IGAME_SOURCE_DIR}/utility
 	${IGAME_SOURCE_DIR}/ExternalCode/qwt/include
+	${IGAME_SOURCE_DIR}/ExternalCode/qwtplot3d/include
 	${IGAME_SOURCE_DIR}/ExternalCode/bdbxml
 	${IGAME_SOURCE_DIR}/ExternalCode/bdbxml/include/
 	${IGAME_SOURCE_DIR}/ExternalCode/bdbxml/include/dbxml
@@ -75,8 +76,6 @@ INCLUDE_DIRECTORIES( BEFORE
 	${IGAME_SOURCE_DIR}/ExternalCode/SBML_odeSolver-1.6.0/src/sbmlsolver
 	${IGAME_SOURCE_DIR}/ExternalCode/sundials-2.1.1/include
 	${IGAME_SOURCE_DIR}/ExternalCode/
-	${IGAME_SOURCE_DIR}/ExternalCode/sbml/
-	${IGAME_SOURCE_DIR}/ExternalCode/sbml/xml
 	)
 
 add_subdirectory (ExternalCode)

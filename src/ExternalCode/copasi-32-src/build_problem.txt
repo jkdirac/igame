@@ -1,0 +1,49 @@
+copasi-32-src:
+
+dependencies:
+1 libsbml-3.4.1:
+		./configure --enable-layout=true
+2 lapack
+3 qwt qwt3d
+
+QT 4 
+The binary packages are statically linked against QT 4.5, but all version of QT 4 newer than
+4.5 should work. If you only intend to build a non-GUI version of COPASI, Qt 4 version older than
+4.5 should work as well as long as qmake is available. If you have a recent linux distribution, Qt
+4.5 might already be preinstalled or there will be packages that can be installed. Since Qt 4 is
+usually distributed as several packages, make sure the development tools and the headers files are
+installed.
+
+LAPACK, CLAPACK, or Intel 
+MKL The binary packages are statically linked against Intel MKL. Just grab
+the latest version you can find and you should be fine
+Expat The binary packages are statically linked against 2.0.1, older version will usually work, but
+you might miss out on some bugfixes. Usually the version that comes with your linux distribution
+should do.
+
+libsbml-3.4.1
+we are using a patched version of libsbml 3.4.1 which contains some bugfixes from
+libsbml 4. Currently COPASI will not compile against libsbml 4 without some additional work, but we
+hope to change this starting with Build-33. We build libsbml without support for reading and writing
+of compressed files. If you want file compression, you have additional dependencies to zlib and the
+bzip2 library. libsbml has to be compiled with support for the SBML layout extension. (./configure
+		--enable-layout=yes --enable-compression=no --with-expat)
+
+raptor 
+The latest version of this RDF parsing library should be OK. We are currently using version
+1.4.19. The version we are using is build against expat and without www support. (configure options
+		--with-xml-parser=expat --with-www=none). If you are using a version that comes with your linux
+distribution, it will probably be compiled against libxml2 and you will have to include this
+dependency into COPASI build system before COPASI will compile.
+
+additional library dependencies for the GUI version
+Qt 4 
+was already mentioned above, but if you want to build the GUI version, you have to make sure
+that Qt 4 has been build with Qt 3 compatibility support since parts of the GUI have not been fully
+converted to Qt 4 yet. This will hopefully change soon.
+Qwt Just get the latest version and make sure it is compiled against Qt 4 QwtPlot3D Get the latest 
+version of this 3D plotting library and make sure it is compiled against Qt 4.
+
+SBW 
+Systems Biology Workbench allows us to send and receive SBML models from other SBW enabled
+programs. The latest version should be OK. COPASI can also be build without SBW support.
