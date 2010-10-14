@@ -1,7 +1,0 @@
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/BdInterface/CMakeFiles/bdinterface.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/core/CMakeFiles/helloplot.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/core/CMakeFiles/igame.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/QwtPlot/CMakeFiles/plot.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/BdInterface/CMakeFiles/test_bdbinterface.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/core/CMakeFiles/test_strcacu.dir
-/home/liaochen/workspace/IGEM/git-hub/igame/src/BUILD/utility/CMakeFiles/utility.dir
