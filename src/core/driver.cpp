@@ -30,6 +30,7 @@ bool Driver::beginSimulation ()
 		SBMLok  = validateExampleSBML(mysbmldoc);
 		if (SBMLok) writeExampleSBML(mysbmldoc, "network.xml");
 		delete mysbmldoc;
+		ofs.flush();
 		if (!SBMLok) return 1;
 	}
 	catch (XmlException& xe)
