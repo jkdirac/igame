@@ -1,0 +1,33 @@
+                      dbparser - License
+
+   This package is Free Software available under licenses below. 
+
+   The GNU Lesser General Public License (LGPL) Version 2.1
+
+   See http://www.gnu.org/copyleft/lesser.html or COPYING.LIB for the full
+   license text.
+     __________________________________________________________________
+
+     Copyright (C) iGem 2010 USTC_Software Team. All Rights Reserved.
+
+     This package is free software; you can redistribute it and/or modify
+     it under the terms of the GNU Lesser General Public License Version
+     2.1 as published by the Free Software Foundation or any newer
+     version.
+
+     This package is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+     Lesser General Public License Version 2.1 for more details.
+
+     You should have received a copy of the GNU Lesser General Public
+     License Version 2.1 along with this package; if not, write to the
+     Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+     MA 02110-1301 USA
+     __________________________________________________________________
+
+   NOTE - under Term 3 of the LGPL Version 2.1, you may choose to license
+   the entire package under the GPL. If that option is chosen, then this
+   package is licensed under the terms of the GPL Version 2 or
+   alternatively, any newer version of the GPL. See COPYING for the full
+   GPL license text.

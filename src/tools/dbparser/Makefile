@@ -1,10 +1,10 @@
-LIBS = libsbml.a libxerces-c.a libxml2.a -lz
-LDFLAG = -static -L../../../ExternalLib/linux
 CC = cc
 CXX = g++
 LEX = flex
 YACC = yacc
 CCFLAGS = -g -I../../ExternalCode/sbml -I../../ExternalCode
+LIBS = libsbml.a libxerces-c.a libxml2.a -lz
+LDFLAG = -static
 
 parser:	parseryac.o parserlex.o genXml.o trans.o
 	${CXX} ${LDFLAG} ${CCFLAGS} -o $@ $^ ${LIBS}
