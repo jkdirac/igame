@@ -1,0 +1,55 @@
+SET(LIBRARY_OUTPUT_PATH ${EXTERNAL_LIB_OUTPUT_PATH})
+
+SET( QT_USE_QT3SUPPORT TRUE)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DLinux -DWITH_CSPMETHOD -DCOPASI_DEBUG -DCOPASI_EXTUNIT -DUSE_CLAPACK -DQT_QT3SUPPORT_LIB -DQT3_SUPPORT -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED")
+
+INCLUDE_DIRECTORIES( BEFORE
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-3.4.1
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-3.4.1/sbml
+	${IGAME_SOURCE_DIR}/ExternalCode/CLAPACK-3.2.1/include
+	${IGAME_SOURCE_DIR}/ExternalCode/raptor-1.4.19/src
+	${IGAME_SOURCE_DIR}/ExternalCode/copasi-32-src/copasi
+	${IGAME_SOURCE_DIR}/ExternalCode/copasi-32-src
+	)
+
+FILE(GLOB PRO_CORE_SRC
+	*.cpp
+	)
+
+ADD_LIBRARY( copsi_wrapper 
+	SHARED
+	${PRO_CORE_SRC}
+	)
+
+TARGET_LINK_LIBRARIES( copsi_wrapper
+	COPASIUI 
+	COPASISE 
+	sbml-3.4.1
+	expat 
+	raptor 
+	lapack 
+	blas 
+	F77
+	qwt
+	qwtplot3d
+	${QT_LIBRARIES}
+  )
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_EXE")
+ADD_EXECUTABLE( hellocopsi
+	main.cpp
+  )
+
+TARGET_LINK_LIBRARIES( hellocopsi
+	COPASIUI 
+	COPASISE 
+	sbml-3.4.1
+	expat 
+	raptor 
+	lapack 
+	blas 
+	F77
+	qwt
+	qwtplot3d
+	${QT_LIBRARIES}
+  )
