@@ -14,7 +14,7 @@
 						<part>
 							<partReference>ANYUB</partReference>
 							<partLabel>ANYUB</partLabel>
-							<partType>FowardRNA</partType>
+							<partType>ForwardRNA</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>

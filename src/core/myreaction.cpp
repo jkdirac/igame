@@ -204,6 +204,7 @@ void MyReaction::createReactionsFromTemplate (
 	delete mixture;
 
 	//  add products
+	set<int> remove;
 	vector< vector<int> > degenerate;
 
 	for (int i=0; i< splits.size (); i++)
@@ -231,6 +232,7 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
+				
 				if (__CU_splits.count (c->getLabel ())) {
 					__deg.push_back (j); cout << "\n__deg = " << j << endl; break;
 				}
@@ -242,21 +244,20 @@ void MyReaction::createReactionsFromTemplate (
 		 * However, in present version, undefined species (unknown compartment)
 		 * will be omitted!
 		 */
-		if (__deg.empty ())
-		{
-			vector<MySpecies*>::iterator pos = splits.begin () + i;
-			splits.erase (pos); delete split;
-		}
+		if (__deg.empty ()) remove.insert (i);
 		else degenerate.push_back (__deg);
 	}
 
-	assert (splits.size () == degenerate.size ());
-
 	//	set stoichiometry
-	double* stoiMath = new double[listOfMyProducts.size ()];
-	for (int i=0; i< degenerate.size (); i++) 
-		for (int j=0; j < degenerate[i].size (); j++)
-			stoiMath[degenerate[i][j]] = 1.0 / degenerate[i].size ();
+	double* stoiMath = NULL;
+	if (listOfMyProducts.size () > 0)
+	{
+		stoiMath = new double[listOfMyProducts.size ()];
+		for (int i=0; i< degenerate.size (); i++) 
+			for (int j=0; j < degenerate[i].size (); j++)
+				stoiMath[degenerate[i][j]] = 
+					1.0 / degenerate[i].size ();
+	}
 
 	/**
 	 * create products for each product template
@@ -265,6 +266,7 @@ void MyReaction::createReactionsFromTemplate (
 	cout << "\nsplits_size = " << splits.size () << endl;
 	for (int i=0; i < splits.size (); i++)
 	{
+		if (remove.count (i)) continue;
 		MySpecies* splitted = splits[i];
 
 		//	for each species in listOfMyProducts
@@ -337,9 +339,10 @@ void MyReaction::createReactionsFromTemplate (
 			cout << "\ndelete!!!!	=	"<< degenerate[i][j] << endl;
 			delete __product_tm;
 		}
-
-		delete splitted;
 	}
+
+	//	remove all splits
+	for (int i=0; i < splits.size (); i++) delete splits[i];
 
 	//
 	//  complete components of Reaction object needed for SBML
@@ -416,8 +419,8 @@ void MyReaction::createReactionsFromTemplate (
 				"Writing Block Reaction...Invalid object: astMath!"
 				);
 
-	delete astMath;
-	delete stoiMath;
+	if (astMath != NULL) delete astMath;
+	if (astMath != NULL) delete stoiMath;
 }
 
 void MyReaction::addSpecialReaction (

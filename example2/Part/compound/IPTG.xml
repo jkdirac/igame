@@ -3,17 +3,18 @@
 <!-- Authored by USTC 2010 SOFTWARE TEAM BIONOVO -->
 <MoDeL>
 	<part>
-		<biobrick id="TE_X_100" name="TE_X_100">
+		<compound id="IPTG" name="IPTG">
 			<interface>
-				<shortDesc>Terminator of 100% Efficiency in Both Direction</shortDesc>
+				<url>http://en.wikipedia.org/wiki/Isopropyl_%CE%B2-D-1-thiogalactopyranoside</url>
+				<shortDesc>Isopropyl-beta-D-thiogalactopyranoside, abbreviated IPTG, is a molecular biology reagent</shortDesc>
 			</interface>
 			<listOfConditionalParameters>
-			  <conditionalParameter id="forwardTerminatorEfficiency" commonValue="1.0" units="dimensionless"/>
-			  <conditionalParameter id="reverseTerminatorEfficiency" commonValue="1.0" units="dimensionless"/>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
+				<referencedSpecies partType="Compound">IPTG_compound</referencedSpecies>
+				<referencedSpecies partType="Compound">IPTGlacI153_4</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
-		</biobrick>
+		</compound>
 	</part>
 </MoDeL>

@@ -23,7 +23,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="reactant">tm_dilution</referencedReaction>
+			<referencedReaction speciesType="reactant">tm_dil_ecoli</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

@@ -232,11 +232,14 @@ void readXMLComponent::readSpecies (
 	else compartmentLabel = temp[0];
 
 	//
-	//	read attribute relation
+	//	read attribute itself
 	//
 	const string path_rel = prefix + "compartmentLabel/@itself";
 	get_node_attr (cind, &doc, &path_rel, temp);
 	if (!temp.empty ()) ccid = temp[0];
+
+//    cout << "\nccid = " << ccid << endl;
+//    cout << "\nempty = " << boolalpha << ccid.empty () << endl;
 }
 
 void readXMLComponent::readCompartment (
@@ -723,8 +726,8 @@ void readXMLComponent::readRule (
 	//
 	//  read attribute variable
 	//
-	const string path_var = prefix + "@variable";
-	get_node_attr (cind, &doc, &path_var, temp); 
+	const string path_var = prefix + "variable";
+	get_node_element (cind, &doc, &path_var, temp); 
 	if (temp.empty ())
 	{
 		string errno = string (

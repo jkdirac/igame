@@ -4,9 +4,23 @@
 <MoDeL>
 	<system>
 		<listOfGlobalParameters>
-			<id>Avogadro</id>
-			<value>6.022E23</value>
-			<units>item_per_mole</units>
+			<globalParameter>
+				<id>Avogadro</id>
+				<value>6.022E23</value>
+				<units>item_per_mole</units>
+				<constant> true </constant>
+			</globalParameter>
+			<globalParameter>
+				<id>sigma</id>
+				<value>1</value>
+				<units>second</units>
+				<constant> false </constant>
+			</globalParameter>
+			<globalParameter>
+				<id> t </id>
+				<units> second </units>
+				<constant> false </constant>
+			</globalParameter>
 		</listOfGlobalParameters>
 	</system>
 </MoDeL>

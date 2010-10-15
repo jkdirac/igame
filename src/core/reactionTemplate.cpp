@@ -380,108 +380,59 @@ bool reactionTemplate::findSpeciesMatch (
 	//	find reactants match
 	if (listOfMyReactants.size () > 0)
 	{
-		bool fail2match = false; 
 		reactant_sam = new speciesArrayMatch [listOfMyReactants.size ()]; 
 
 		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
 			MySpecies* tmReactant = listOfMyReactants[i];
-			if (tmReactant->getDB_ref () == dbref)
+			for (int j=0; j <= index; j++)
 			{
-				MySpecies* currSpe = listOfMySpecies[index];
+				MySpecies* prevSpe = listOfMySpecies[j];
 				bool same = isSameType (
-						currSpe->getCompTypeId (), 
+						prevSpe->getCompTypeId (), 
 						tmReactant->getCompTypeId ()
 						);
 
 				cMatchsArray trym;
-				if (same && currSpe->match (tmReactant, trym))
+				if (same && prevSpe->match (tmReactant, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
-						reactant_sam[i].push_back (make_pair (index, trym[k]));
-					perm_reactants *= reactant_sam[i].size ();
+						reactant_sam[i].push_back (make_pair (j, trym[k]));
 				}
-				else {fail2match = true; break;}
 			}
-			else
-			{
-				for (int j=0; j <= index; j++)
-				{
-					MySpecies* prevSpe = listOfMySpecies[j];
-					bool same = isSameType (
-							prevSpe->getCompTypeId (), 
-							tmReactant->getCompTypeId ()
-							);
 
-					cMatchsArray trym;
-					if (same && prevSpe->match (tmReactant, trym))
-					{
-						for (int k=0; k < trym.size (); k++)
-							reactant_sam[i].push_back (make_pair (j, trym[k]));
-					}
-				}
-
-				if (reactant_sam[i].empty ()) {fail2match = true; break;}
-				else perm_reactants *= reactant_sam[i].size ();
-			}
+			if (reactant_sam[i].empty ()) return false;
+			else perm_reactants *= reactant_sam[i].size ();
 		}
-
-		//	no reactant match
-		if (fail2match) return false;
-		else cout << "\nNumber of Matchings of Reactant TEMPLATEs = " << perm_reactants << endl;
 	}
 
 	//	find modifiers match
 	if (listOfMyModifiers.size () > 0)
 	{
-		bool fail2match = false; 
 		modifier_sam = new speciesArrayMatch [listOfMyModifiers.size ()]; 
 	
 		for (int i=0; i < listOfMyModifiers.size (); i++)
 		{
 			MySpecies* tmModifier = listOfMyModifiers[i];
-			if (tmModifier->getDB_ref () == dbref)
+			for (int j=0; j <= index; j++)
 			{
-				MySpecies* currSpe = listOfMySpecies[index];
+				MySpecies* prevSpe = listOfMySpecies[j];
 				bool same = isSameType (
-						currSpe->getCompTypeId (), 
+						prevSpe->getCompTypeId (), 
 						tmModifier->getCompTypeId ()
 						);
 
 				cMatchsArray trym;
-				if (same && currSpe->match (tmModifier, trym)) 
+				if (same && prevSpe->match (tmModifier, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
-						modifier_sam[i].push_back (make_pair (index, trym[k]));
-					perm_modifiers *= modifier_sam[i].size ();
+						modifier_sam[i].push_back (make_pair (j, trym[k]));
 				}
-				else {fail2match = true; break;} 
 			}
-			else
-			{
-				for (int j=0; j <= index; j++)
-				{
-					MySpecies* prevSpe = listOfMySpecies[j];
-					bool same = isSameType (
-							prevSpe->getCompTypeId (), 
-							tmModifier->getCompTypeId ()
-							);
 
-					cMatchsArray trym;
-					if (same && prevSpe->match (tmModifier, trym))
-					{
-						for (int k=0; k < trym.size (); k++)
-							modifier_sam[i].push_back (make_pair (j, trym[k]));
-					}
-				}
-
-				if (modifier_sam[i].empty ()) {fail2match = true; break;}
-				else perm_modifiers *= modifier_sam[i].size ();
-			}
+			if (modifier_sam[i].empty ()) return false; 
+			else perm_modifiers *= modifier_sam[i].size ();
 		}
-
-		if (fail2match) return false;
-		else cout << "\nNumber of Matchings of Reactant TEMPLATEs = " << perm_modifiers << endl;
 	}
 
 	/**
@@ -502,7 +453,6 @@ bool reactionTemplate::findSpeciesMatch (
 			tryMS.push_back (reactant_sam[j][indperm]);
 			divide /= reactant_sam[j].size ();
 		}
-
 		possibleReactantMatch.push_back (tryMS);
 	}
 
@@ -517,12 +467,13 @@ bool reactionTemplate::findSpeciesMatch (
 			tryMS.push_back (modifier_sam[j][indperm]);
 			divide /= modifier_sam[j].size ();
 		}
-
 		possibleModifierMatch.push_back (tryMS);
 	}
 
 	//	free memory
 	if (reactant_sam != NULL) delete [] reactant_sam;
+
+	//	free memory
 	if (modifier_sam != NULL) delete [] modifier_sam;
 
 	/**
@@ -537,14 +488,35 @@ bool reactionTemplate::findSpeciesMatch (
 	 */
 
 	cout << "\n!_!	TRY POSSIBLE COMBINATIONS	...	!_!\n";
-	cout << "\nReactants Candidates	=	" << possibleReactantMatch.size ();
-	cout << "\nModifiers Candidates	=	" << possibleModifierMatch.size ();
+	cout << "Reactants Candidates	=	" 
+		 << possibleReactantMatch.size () 
+		 << endl;
+	cout << "Modifiers Candidates	=	" 
+		 << possibleModifierMatch.size ()
+		 << endl;
 
 	for (int i =0; i < possibleReactantMatch.size (); i++)
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
 			cout << "\ntrying	...	c(" << i << ", " << j << ")\n";
+
+			//	check if this set of reactants and modifiers include 
+			//	index of current species handling
+			
+			set<int> match_index;
+			for (int k=0; k < listOfMyReactants.size (); k++)
+				match_index.insert (possibleReactantMatch[i][k].first);
+			for (int k=0; k < listOfMyModifiers.size (); k++)
+				match_index.insert (possibleModifierMatch[j][k].first);
+
+			cout << "\nindex = " << index << endl;
+			set<int>::iterator iter = match_index.begin ();
+			while (iter != match_index.end ()) cout << "\nit = " << *iter++;
+
+			if (!match_index.count (index)) continue;
+			
+			cout << "\nstop1" << endl;
 
 			/**
 			 * COMPARTMENT CONSTRAINTS
@@ -621,7 +593,9 @@ bool reactionTemplate::findSpeciesMatch (
 					if (fail) possible.erase (n1);
 				}
 			}
-				
+			
+			cout << "\nstop2" << endl;
+
 			if (possible.empty ()) continue;
 
 			//	compartment-type species constraints
@@ -629,45 +603,42 @@ bool reactionTemplate::findSpeciesMatch (
 			{
 				map<string, int> itself;
 
-				//	for reactants
-				if (listOfMyReactants.size () > 0)
+				if (!possible.count (n1)) continue;
+				for (int n2 =0; n2 < listOfMyReactants.size (); n2++)
 				{
-					if (!possible.count (n1)) continue;
-					for (int n2 =0; n2 < possibleReactantMatch[i].size (); n2++)
+					MySpecies* tmr = listOfMyReactants[n2];
+//                    cout << "\nempty = " << boolalpha << __species_itself.empty() << endl;
+//                    cout << "\n__species_itself = " << __species_itself << endl;
+					if (tmr->isCompartment ())
 					{
-						string __species_itself = listOfMyReactants[n2]->getCompTypeId ();
-						if (!__species_itself.empty ())
-						{
-							int __species_index = possibleReactantMatch[i][n2].first;
-							if (!itself.count (__species_itself)) 
-								itself[__species_itself] = __species_index;
-							else if (itself[__species_itself] != __species_index) {
-								possible.erase (n1); break;
-							}
+						string __species_itself = tmr->getCompTypeId ();
+						int __species_index = possibleReactantMatch[i][n2].first;
+						if (!itself.count (__species_itself)) 
+							itself[__species_itself] = __species_index;
+						else if (itself[__species_itself] != __species_index) {
+							possible.erase (n1); break;
 						}
 					}
 				}
 
-				//	for modifiers
-				if (listOfMyModifiers.size () > 0)
+				if (!possible.count (n1)) continue;
+				for (int n2 =0; n2 < listOfMyModifiers.size (); n2++)
 				{
-					if (!possible.count (n1)) continue;
-					for (int n2 =0; n2 < possibleModifierMatch[i].size (); n2++)
+					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
+					if (!__species_itself.empty ())
 					{
-						string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
-						if (!__species_itself.empty ())
-						{
-							int __species_index = possibleModifierMatch[i][n2].first;
-							if (!itself.count (__species_itself)) 
-								itself[__species_itself] = __species_index;
-							else if (itself[__species_itself] != __species_index) {
-								possible.erase (n1); break;
-							}
+						cout << "\ni = " << i << " n2 = " << n2 << " modifier size = " << listOfMyModifiers.size () << endl;
+						int __species_index = possibleModifierMatch[j][n2].first;
+						if (!itself.count (__species_itself)) 
+							itself[__species_itself] = __species_index;
+						else if (itself[__species_itself] != __species_index) {
+							possible.erase (n1); break;
 						}
 					}
 				}
 			}
 
+			cout << "\nstop3" << endl;
 			if (possible.empty ()) continue;
 
 			/**

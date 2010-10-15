@@ -20,13 +20,13 @@
 			</compartment>
 		</listOfCompartments>
 		<listOfReactants>
-			<reactant>
+		</listOfReactants>
+		<listOfModifiers>
+			<modifier>
 				<speciesReference>tm_pSB1A3</speciesReference>
 				<speciesLabel>tm_pSB1A3_0</speciesLabel>
 				<compartmentLabel>E_coli</compartmentLabel>
-			</reactant>
-		</listOfReactants>
-		<listOfModifiers>
+			</modifier>
 			<modifier>
 				<speciesReference>tm_pSB1A3</speciesReference>
 				<speciesLabel>tm_pSB1A3_1</speciesLabel>
@@ -34,21 +34,35 @@
 			</modifier>
 		</listOfModifiers>
 		<listOfProducts>
+			<product>
+				<speciesReference>tm_pSB1A3</speciesReference>
+				<speciesLabel>tm_pSB1A3_2</speciesLabel>
+				<compartmentLabel>E_coli</compartmentLabel>
+			</product>
 		</listOfProducts>
 		<listOfSubstituentTransfers>
+			<substituentTransfer>
+				<from speciesLabel="tm_pSB1A3_0">X0</from>
+				<to speciesLabel="tm_pSB1A3_2">X0</to>
+			</substituentTransfer>
+			<substituentTransfer>
+				<from speciesLabel="tm_pSB1A3_0">X1</from>
+				<to speciesLabel="tm_pSB1A3_2">X1</to>
+			</substituentTransfer>
 		</listOfSubstituentTransfers>
 		<kineticLaw>
 			<forwardKineticLaw>
 				<math>
 				  <apply>
 				    <times/>
+					<cn> -1 </cn>
 				    <ci> ksup </ci>
 				    <apply>
 				      <divide/>
-				      <ci> tm_pSB1A3_1 </ci>
+				      <ci> tm_pSB1A3_0 </ci>
 				      <ci> copynum </ci>
 				    </apply>
-				    <ci> tm_pSB1A3_0 </ci>
+				    <ci> tm_pSB1A3_1 </ci>
 					<ci> E_coli </ci>
 					<ci> E_coli </ci>
 					<ci> Avogadro </ci>

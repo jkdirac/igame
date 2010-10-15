@@ -10,9 +10,6 @@
 			</interface>
 			<listOfConditionalParameters>
 			</listOfConditionalParameters>
-			<listOfReferencedSpecies>
-				<referencedSpecies>anyubspecies</referencedSpecies>
-			</listOfReferencedSpecies>
 		</substituent>
 	</part>
 </MoDeL>

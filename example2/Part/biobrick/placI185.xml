@@ -17,6 +17,7 @@
 				<referencedSpecies partType="ForwardDNA">placI185_dna</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">anyub_forwardprotein</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">anyub_forwardrna</referencedSpecies>
+				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
 	</part>

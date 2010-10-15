@@ -17,8 +17,10 @@
 				<referencedSpecies partType="ForwardProtein">lacI153_dimer</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">lacI153_tetramer</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">placI185lacI153_4</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">IPTGlacI153_4</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">anyub_forwardprotein</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">anyub_forwardrna</referencedSpecies>
+				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
 	</part>

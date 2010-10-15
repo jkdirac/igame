@@ -2,6 +2,53 @@
 <MoDeL>
 	<system>
 		<listOfFunctionDefinitions>
+			<functionDefinition id="gaussian">
+				<math>
+					<lambda>
+						<bvar><ci> S </ci></bvar>
+					 	<bvar><ci> t </ci></bvar>
+						<bvar><ci> t0 </ci></bvar>
+						<bvar><ci> sigma </ci></bvar>
+						<apply>
+							<times/>
+							<apply>
+								<divide/>
+								<apply>
+									<divide/>
+									<ci> S </ci>
+									<ci> sigma </ci>
+								</apply>
+								<apply>
+									<root/>
+									<degree>
+										<cn type="integer"> 2 </cn>
+									</degree>
+									<pi/>
+								</apply>
+							</apply>
+							<apply>
+								<exp/>
+								<apply>
+									<power/>
+									<apply>
+										<minus/>
+										<apply>
+											<divide/>
+											<apply>
+												<minus/>
+												<ci> t  </ci>
+												<ci> t0 </ci>
+											</apply>
+											<ci> sigma </ci>
+										</apply>
+									</apply>
+									<cn type="integer"> 2 </cn>
+								</apply>
+							</apply>
+						</apply>
+					</lambda>
+				</math>
+			</functionDefinition>
 		</listOfFunctionDefinitions>
 	</system>
 </MoDeL>
