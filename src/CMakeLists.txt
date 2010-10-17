@@ -24,11 +24,11 @@ SET(EXECUTABLE_OUTPUT_PATH
  ${IGAME_BINARY_DIR}/bin
  CACHE PATH "Single output directory for building all executables.")
 SET(CPP_LIBRARY_OUTPUT_PATH
- ${IGAME_BINARY_DIR}/bin/Plugins/
+ ${IGAME_BINARY_DIR}/bin/libs/
  CACHE PATH "Single output directory for building all cpp libraries."
 )
 SET(C_LIBRARY_OUTPUT_PATH
- ${IGAME_BINARY_DIR}/bin/Plugins/c/
+ ${IGAME_BINARY_DIR}/bin/libs/
  CACHE PATH "Single output directory for building all c libraries."
 )
 

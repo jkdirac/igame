@@ -1,6 +1,5 @@
 file = [test.xml]
-module
-id=[a] , name=[b], class=[c], time=[10]
+module id=[a] , name=[b], class=[c], time=[10]
 {
 	submodule1: [helloworld] id = [abcvd];
 	submodule2: [helloworld] id = [abcvd];
