@@ -15,3 +15,5 @@ ADD_LIBRARY (utility
 	${PRO_CORE_CPP_SRC}
 	${PRO_CORE_C_SRC}
 	)
+
+INSTALL_PROJECT( utility )
