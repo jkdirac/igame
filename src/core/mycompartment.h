@@ -24,6 +24,10 @@ class MyCompartment:
 
 	void addMySpeciesIn (MySpecies*);
 	void addMyCompartmentIn (MyCompartment*);
+	void addParentCompartment (MyCompartment*);
+
+	MyCompartment* getParentCompartment ();
+	const MyCompartment* getParentCompartment () const;
 
 	MySpecies* isMySpeciesIn (const string&);
 	const MySpecies* isMySpeciesIn (const string&) const;
@@ -35,12 +39,18 @@ class MyCompartment:
 
 	void setDB_ref (const string&);
 	string getDB_ref () const;
+	
+	void setCounterPart (const string&);
+	string getCounterPart () const;
 
   private:
 
 	string reference_db;
+	string counterpart;
 
 	vector<MySpecies*> listOfMySpeciesIn;
+
+	MyCompartment* parent;
 	vector<MyCompartment*> listOfMyCompartmentsIn;
 
 };

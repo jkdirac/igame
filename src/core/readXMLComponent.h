@@ -126,7 +126,6 @@ class readXMLComponent :
 				string& substanceUnits,
 				bool& hasOnlySubstanceUnits,
 				bool& boundaryCondition,
-				int& charge,
 				bool& constant
 				);
 

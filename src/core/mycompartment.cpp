@@ -1,11 +1,19 @@
 #include "mycompartment.h"
 
 MyCompartment::MyCompartment ():
-	Compartment (2,4)
+	Compartment (2,4), parent (NULL)
 {}
 
 MyCompartment::~MyCompartment ()
 {}
+
+void MyCompartment::setCounterPart (const string& _counterp) {
+	counterpart = _counterp;
+}
+
+string MyCompartment::getCounterPart () const {
+	return counterpart;
+}
 
 void MyCompartment::setDB_ref (const string& ref) {
 	reference_db = ref;
@@ -22,6 +30,13 @@ void MyCompartment::addMySpeciesIn (MySpecies* s) {
 void MyCompartment::addMyCompartmentIn (MyCompartment* comp) {
 	listOfMyCompartmentsIn.push_back (comp);
 }
+
+void MyCompartment::addParentCompartment (MyCompartment* comp) {
+	parent = comp;
+}
+
+MyCompartment* MyCompartment::getParentCompartment () {return parent;}
+const MyCompartment* MyCompartment::getParentCompartment () const {return parent;}
 
 MySpecies* MyCompartment::isMySpeciesIn (const string& ref) 
 {

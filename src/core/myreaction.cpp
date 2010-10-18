@@ -149,8 +149,8 @@ void MyReaction::createReactionsFromTemplate (
 		MySpecies* s = listOfMyProducts[i];
 
 		//TEST
-		cout << "\nPRODUCT BODY: i = " << i;
-		s->Output ();
+//        cout << "\nPRODUCT BODY: i = " << i;
+//        s->Output ();
 
 		for (int j=0; j< s->getNumOfChains (); j++) 
 		{
@@ -165,15 +165,14 @@ void MyReaction::createReactionsFromTemplate (
 
 		for (int j=0; j< s->getNumOfTrees (); j++) 
 		{
-			cout << "\nj = " << j;
 			s->getTree (j)->Output (cout);
 			mixture->createTree (s->getTree (j));
 		}
 	}
 
 	//	mixed species
-    cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
-    mixture->Output ();
+//    cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
+//    mixture->Output ();
 
 	/**
 	 * split mixed species and store results in splits
@@ -184,16 +183,11 @@ void MyReaction::createReactionsFromTemplate (
 	/**
 	 * check splits
 	 */
-	cout << "\n**********************************\n";
-	cout << "\n**********************************\n\n";
-
-	cout << "\nChecking Species Spliting ...";
-	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+//    cout << "\nChecking Species Spliting ...";
+//    for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 	
 //    cout << "\nChecking PRODUCTs ...";
 //    for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
-	cout << "\n\n**********************************\n";
-	cout << "\n**********************************\n";
 
 	// 	splits are only partial copies of mixture 
 	delete mixture;
@@ -204,8 +198,6 @@ void MyReaction::createReactionsFromTemplate (
 
 	for (int i=0; i< splits.size (); i++)
 	{
-		cout << "\nsplits	i = " << i << endl;
-
 		MySpecies* split = splits[i];
 
 		//	gather chainLabels of split
@@ -213,11 +205,7 @@ void MyReaction::createReactionsFromTemplate (
 		for (int j =0; j < split->getNumOfChains (); j++)
 		{
 			Chain* c = split->getChain (j);
-			if (!c->getLabel ().empty ())
-			{
-				cout << "\nc->getLabel = " << c->getLabel () << endl;
-				__CU_splits.insert (c->getLabel ());
-			}
+			if (!c->getLabel ().empty ()) __CU_splits.insert (c->getLabel ());
 		}
 
 		vector<int> __deg;
@@ -227,9 +215,8 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k =0; k < __prod->getNumOfChains (); k++)
 			{
 				Chain* c = __prod->getChain (k);
-				
 				if (__CU_splits.count (c->getLabel ())) {
-					__deg.push_back (j); cout << "\n__deg = " << j << endl; break;
+					__deg.push_back (j); break;
 				}
 			}
 		}
@@ -250,15 +237,13 @@ void MyReaction::createReactionsFromTemplate (
 		stoiMath = new double[listOfMyProducts.size ()];
 		for (int i=0; i< degenerate.size (); i++) 
 			for (int j=0; j < degenerate[i].size (); j++)
-				stoiMath[degenerate[i][j]] = 
-					1.0 / degenerate[i].size ();
+				stoiMath[degenerate[i][j]] = 1.0 / degenerate[i].size ();
 	}
 
 	/**
 	 * create products for each product template
 	 */
 
-	cout << "\nsplits_size = " << splits.size () << endl;
 	for (int i=0; i < splits.size (); i++)
 	{
 		if (remove.count (i)) continue;
@@ -267,7 +252,6 @@ void MyReaction::createReactionsFromTemplate (
 		//	for each species in listOfMyProducts
 		for (int j=0; j < degenerate[i].size (); j++)
 		{
-//            cout << "\nj = " << j << " deg = " << degenerate[i].size () << endl;
 			/**
 			 * new species 
 			 * create and set its id and compartment, and initialAmount
@@ -331,7 +315,6 @@ void MyReaction::createReactionsFromTemplate (
 			for (int k=0; k < __product->getNumOfChains (); k++)
 				__product->getChain (k)->setLabel ("");
 			
-			cout << "\ndelete!!!!	=	"<< degenerate[i][j] << endl;
 			delete __product_tm;
 		}
 	}
@@ -354,6 +337,8 @@ void MyReaction::createReactionsFromTemplate (
 	{
 		SpeciesReference* spr = createProduct ();
 
+//        cout << "\ni = " << i << endl;
+//        listOfMyProducts[i]->Output ();
 //        cout << "\nid = " << listOfMyProducts[i]->getId ();
 
 		 spr->setSpecies (listOfMyProducts[i]->getId ());

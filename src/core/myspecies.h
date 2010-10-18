@@ -79,7 +79,7 @@ class MySpecies:
 		MySpecies (const MySpecies*);
 		~MySpecies ();
 
-		void rearrange ();
+		void rearrange (const bool&);
 		bool equal (const MySpecies*);
 		void split (bdbXMLInterface&, vector<MySpecies*>&);
 		void addPrefix (const string&);

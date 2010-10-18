@@ -39,7 +39,7 @@ class MySBMLDocument:
 		void addMySpecies (MySpecies*);
 		void addMyCompartment (MyCompartment*);
 		void addMyReaction (MyReaction*);
-		void addMyCompartmentChildren ();
+		void setRelationOfCompartments ();
 
 		MySpecies* getMySpecies (const string&);
 		const MySpecies* getMySpecies (const string&) const;
@@ -47,14 +47,16 @@ class MySBMLDocument:
 		const MySpecies* getMySpecies (const MySpecies*) const;
 		
 		MyCompartment* getMyCompartment (const string&);
+		MyCompartment* getMyCompartment (const int&);
 		const MyCompartment* getMyCompartment (const string&) const;
-
+		const MyCompartment* getMyCompartment (const int&) const;
 		int getNumOfMyCompartments () const;
 		int getNumOfMySpecies () const;
 
 	public:
 		
 		void run (readDataBase&);
+		void output ();
 
 	private:
 
@@ -82,7 +84,6 @@ class MySBMLDocument:
 
 	private:
 		
-		int startpos;
 		void write ();
 
 	private:

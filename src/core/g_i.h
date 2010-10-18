@@ -31,6 +31,7 @@
 #include <utility>
 #include <vector>
 #include <list>
+#include <stack>
 #include <map>
 #include <set>
 #include <stdexcept>

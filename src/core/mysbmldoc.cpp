@@ -6,26 +6,36 @@ MySBMLDocument::MySBMLDocument ():
 
 MySBMLDocument::~MySBMLDocument ()
 {
-	for (int i=0; i < listOfMySpecies.size (); i++)
+	for (int i=0; i < listOfMySpecies.size (); i++) {
 		delete listOfMySpecies[i];
-	for (int i=0; i < listOfMyCompartments.size (); i++)
+	}
+	for (int i=0; i < listOfMyCompartments.size (); i++) {
 		delete listOfMyCompartments[i];
-	for (int i=0; i < listOfMyReactions.size (); i++)
-		delete listOfMyReactions[i];
+	}
+	for (int i=0; i < listOfMyReactions.size (); i++) {
+	   	delete listOfMyReactions[i];
+	}
 }
 
 //	make sure species added has never existed before
 void MySBMLDocument::addMySpecies (MySpecies* s) 
 {
 	listOfMySpecies.push_back (s);
-	MyCompartment* c = getMyCompartment (
-			s->getCompartment ()
-			);
-	if (c == NULL) throw CoreException (
-			"No compartment existed in compartment list"
-			" for given species!"
-			);
-	else c->addMySpeciesIn (s);
+	MyCompartment* c = getMyCompartment (s->getCompartment ());
+	
+	//	add species to compartment
+	assert (c != NULL);
+	c->addMySpeciesIn (s);
+
+	//	set counterpart of compartment
+	if (!s->getCompTypeId ().empty ())
+	{
+		MyCompartment* itself = getMyCompartment (s->getCompTypeId ());
+		if (itself == NULL) throw CoreException (
+				"No corresponding compartment for species with non-empty comp_type_id!"
+				);
+		else itself->setCounterPart (s->getId ());
+	}
 }
 
 void MySBMLDocument::addMyCompartment (MyCompartment* c) 
@@ -33,7 +43,7 @@ void MySBMLDocument::addMyCompartment (MyCompartment* c)
 	listOfMyCompartments.push_back (c);
 }
 
-void MySBMLDocument::addMyCompartmentChildren ()
+void MySBMLDocument::setRelationOfCompartments ()
 {
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{
@@ -41,11 +51,14 @@ void MySBMLDocument::addMyCompartmentChildren ()
 		if (child->getOutside () != "ROOT")
 		{
 			MyCompartment* parent = getMyCompartment (child->getOutside ());
-			if (parent != NULL) parent->addMyCompartmentIn (child);
-			else throw CoreException (
-					"No compartment existed in compartment list"
-					" for given compartment!"
+			if (parent == NULL) throw CoreException (
+					"No compartment existed in compartment list for given compartment!"
 					);
+			else 
+			{
+				child->addParentCompartment (parent);
+				parent->addMyCompartmentIn (child);
+			}
 		}
 	}
 }
@@ -96,6 +109,11 @@ MyCompartment* MySBMLDocument::getMyCompartment (const string& ref)
 	return NULL;
 }
 
+MyCompartment* MySBMLDocument::getMyCompartment (const int& i)
+{
+	if (i < 0 || i >= listOfMyCompartments.size ()) return NULL;
+	else return listOfMyCompartments[i];
+}
 const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const
 {
 	for (int i=0; i < listOfMyCompartments.size (); i++)
@@ -104,6 +122,12 @@ const MyCompartment* MySBMLDocument::getMyCompartment (const string& ref) const
 		if (comp->getId () == ref) return comp;
 	}
 	return NULL;
+}
+
+const MyCompartment* MySBMLDocument::getMyCompartment (const int& i) const
+{
+	if (i < 0 || i >= listOfMyCompartments.size ()) return NULL;
+	else return listOfMyCompartments[i];
 }
 
 int MySBMLDocument::getNumOfMyCompartments () const
@@ -162,10 +186,6 @@ const MySpecies* MySBMLDocument::getMySpecies (const MySpecies* s) const
 
 void MySBMLDocument::run (readDataBase& dbreader)
 {
-	
-	//	set start position of new generated species
-	startpos = listOfMySpecies.size ();
-
 	//
 	//  listOfMySpecies size may be updated while 
 	//  developing biological system network
@@ -198,21 +218,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 				searchTranslationReactions (i, j, k, dbreader);
 
 				//	read species containing this part 
-				string speciesLinkPath =
-					"/MoDeL/part/" + p->getPartCtg () + 
-					"/listOfReferencedSpecies/"
-					"referencedSpecies";
+				string speciesLinkPath = "/MoDeL/part/" + p->getPartCtg () + 
+					"/listOfReferencedSpecies/referencedSpecies";
 				string doc_1 = p->getPartRef ();
 
-				int numOfSpeciesLinks = 
-					dbreader.get_node_element_num (
+				int numOfSpeciesLinks = dbreader.get_node_element_num (
 							PART, &doc_1, &speciesLinkPath
 							);
 
-				cout << "\n------------------------------------------------------";
-				cout << "\nNumber of Referenced Species 	= 	" 
-					 << numOfSpeciesLinks << endl;
-				cout << "\n------------------------------------------------------\n";
 
 				for (int t=1; t <= numOfSpeciesLinks; t++)
 				{
@@ -222,69 +235,34 @@ void MySBMLDocument::run (readDataBase& dbreader)
 							t, speciesReference, partType
 							);
 
-					cout << "\n========================================================";
-					cout << "\nHandling Referenced Species	" 
-						 << t << "	...		DOC	:	" 
-						 << speciesReference << "	TYPE :	"
-						 << partType;
-					cout << "\n========================================================\n";
-
 					//	if partType is not empty, it has to check
 					//	part type matching
-					if (!partType.empty () && 
-							p->getPartType () != partType)
-						continue;
+					if (!partType.empty () && p->getPartType () != partType) continue;
 
 					//	check if this species has been searched
 					if (speciesUsed.count (speciesReference)) continue;
 					else speciesUsed.insert (speciesReference);
 
-					//
 					//	read searched species
-					//
-
 					MySpecies* sLink = new MySpecies;
 					sLink->setDB_ref (speciesReference);  
-					dbreader.read_cnModel (
-							sLink, 
-							SPECIES, 
-							speciesReference, 
-							"/MoDeL/species", 
-							true
-							);
+					dbreader.read_cnModel (sLink, SPECIES, speciesReference, "/MoDeL/species", true);
 
-					cout << "\nSpecies Referenced 	...	";
+					cout << "\n------------	TEMPLATES " << t << "	------------\n";
 					sLink->Output ();
 
-					//
-					//  is this species template match?
-					//
+					//  Does this template match this species?
 					cMatchsArray trym;
-					if (!s->match (sLink, trym)) 
-					{
-						cout << "\n^_^	Does not MATCH! Continue to NEXT...\n";
-						continue;
-					}
+					if (!s->match (sLink, trym)) continue;
 
 					//
 					//  read reaction Links
-					//
-					string reactionLinkPath =
-						"/MoDeL/species/"
-						"listOfReferencedReactions/"
-						"referencedReaction";
+					string reactionLinkPath = "/MoDeL/species/"
+						"listOfReferencedReactions/referencedReaction";
 
-					int numOfReactionLinks = 
-						dbreader.get_node_element_num (
-							SPECIES, 
-							&speciesReference, 
-							&reactionLinkPath
+					const int numOfReactionLinks = dbreader.get_node_element_num (
+							SPECIES, &speciesReference, &reactionLinkPath
 							);
-
-					cout << "\n------------------------------------------------------";
-					cout << "\nNumber of Referenced Reactions 	= 	" 
-												<< numOfReactionLinks << endl;
-					cout << "\n------------------------------------------------------\n";
 
 					for (int r=1; r <= numOfReactionLinks; r++)
 					{
@@ -299,7 +277,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								);
 
 						cout << "\nHandling Referenced Reaction	" 
-							<< t << "	...		DOC	:	" 
+							<< "	...		DOC	:	" 
 							<< reactionReference << "	TYPE :	"
 							<< speciesRole << endl;
 
@@ -316,7 +294,6 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		}
 
 		numOfSpecies = listOfMySpecies.size ();
-		cout << "\nnumOfSpecies = " << listOfMySpecies.size () << endl;
 	}
 
 	//	update
@@ -404,8 +381,6 @@ void MySBMLDocument::handleReactionTemplate (
 				products
 				);
 		
-		cout << "\n<--	Create PRODUCTS	---	...	---	DONE!" << endl;
-
 		/**
 		 * init species of new reaction 
 		 */
@@ -547,7 +522,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setIsBinded (false);
 						}
 					}
-					mrna->rearrange ();
+					mrna->rearrange (false);
 
 					//	check existance of myspecies
 					MySpecies* found = getMySpecies (mrna);
@@ -666,7 +641,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setIsBinded (false);
 						}
 					}
-					mrna->rearrange ();
+					mrna->rearrange (false);
 
 					//	check existance of myspecies
 					MySpecies* found = getMySpecies (mrna);
@@ -819,7 +794,7 @@ void MySBMLDocument::searchTranslationReactions (
 								prot_part->setIsBinded (false);
 							}
 						}
-						prot->rearrange ();
+						prot->rearrange (false);
 
 						//	check existance of myspecies
 						MySpecies* found = getMySpecies (prot);
@@ -846,38 +821,18 @@ void MySBMLDocument::searchTranslationReactions (
 
 void MySBMLDocument::write ()
 {
-	//  add species, compartment and reaction to SBML file
-	cout << "\n=========================================================";
-	cout << "\n	 COPY MYOBJECTS TO SBML COMPONENTS... 		";
-	cout << "\n=========================================================";
-	cout <<	endl;
-
 	Model* m = getModel ();
 
-#ifndef _CXX_DEBUG
-		cout << "\n================="
-		     << "  LIST OF SPECIES  "
-			 << "=================\n\n";
-#endif
+	int operation = 0;
 
 	for (int i=0; i < listOfMySpecies.size (); i++)
 	{
-		MySpecies* myspe = listOfMySpecies[i];
-
-#ifndef _CXX_DEBUG
-		cout << "\n~~~~~~	SPECIES	" << i << "	~~~~~~" << endl;
-		myspe->Output ();
-#endif
-
-		if (i >= startpos)
-		{
-			myspe->setHasOnlySubstanceUnits (false);
-			myspe->setConstant (false);
-			myspe->setBoundaryCondition (false);
-			myspe->setCharge (0);
-		}
-
 		m->addSpecies (listOfMySpecies[i]);
+		
+		cout << "\n------------ OUTPUT SPECIES " << i << "\n";
+		listOfMySpecies[i]->Output ();
+		
+		
 	}
 
 	for (int i=0; i < listOfMyCompartments.size (); i++)
@@ -894,34 +849,164 @@ void MySBMLDocument::write ()
 	{
 		m->addReaction (listOfMyReactions[i]);
 	}
+}
 
-	cout << "\nREAL RULEs Number: " 
-		 << m->getNumRules () 
-		 << endl;
+void MySBMLDocument::output ()
+{
+	cout << setiosflags (ios::right);
 
-	cout << "\nREAL FUNCTIONDEFINITIONs Number: " 
-		 << m->getNumFunctionDefinitions () 
-		 << endl;
+	//version and level
+	unsigned int level = getLevel();
+	unsigned int version = getVersion();
 
-	cout << "\nREAL PARAMETERs Number: " 
-		 << m->getNumParameters () 
-		 << endl;
+	cout << endl;
+	cout << "  level: " << level << "  	version: " << version << endl;
+	cout << endl;
 
-	cout << "\nREAL UNITs Number: " 
-		 << m->getNumUnitDefinitions () 
-		 << endl;
+	//getmodel
+	Model* model = getModel ();
 
-	cout << "\nREAL SPECIES Number: " 
-		 << m->getNumSpecies () 
-		 << endl;
+	/*****************************************************************
+	  COMPARTMENTS
+	 ******************************************************************/
+	unsigned int NumCompartments = model->getNumCompartments();
 
-	cout << "\nREAL COMPARTMENTs Number: " 
-		 << m->getNumCompartments () 
-		 << endl;
+	cout << endl;
+	cout << "  NumberOfCompartments: " << NumCompartments << endl;
+	cout << endl;
 
-	cout << "\nREAL REACTIONs Number: " 
-		 << m->getNumReactions () 
-		 << endl;
+	for (int i = 0; i < NumCompartments; i++)
+	{
+		Compartment* comp;
+		comp = model->getCompartment (i);
 
-	cout << "\nDONE!..." << endl;
+		cout << endl;
+		cout << setw(10) << "  id: " << comp->getId () << setw(10) 
+			<< "  		name: " << comp->getName () << setw(10)
+			<< "  		size: " << comp->getSize () << setw(10)
+			<< "  		units: " << comp->getUnits () << endl;
+	}
+
+	/*****************************************************************
+	  SPIECES
+	 ******************************************************************/
+	unsigned int NumSpecies = model->getNumSpecies ();
+
+	cout << endl;
+	cout << "  NumberOfSpecies: " << NumSpecies << endl;
+	cout << endl;
+
+	for (int i = 0; i < NumSpecies; i++)
+	{
+		Species* sp;
+		sp = model->getSpecies (i);
+
+		cout << endl;
+		cout << setw(10) << "  id: " << sp->getId () << setw(10)
+			<< "  name: " << sp->getName () << setw(10)
+			<< "  type: " << sp->getSpeciesType () << setw(10)
+			<< "  InitialAmount: " << sp->getInitialAmount () << setw(10)
+			<< "  unit: " << sp->getSubstanceUnits () << setw(10)
+			<< "  compartment: " << sp->getCompartment () <<  endl;
+	}
+
+	/******************************************************************
+	 * 					    REACTIONS
+	 *****************************************************************/
+
+	unsigned int NumReactions = model->getNumReactions ();
+
+	cout << endl;
+	cout << "  NumOfReactions: " << NumReactions << endl;
+	cout << endl;
+
+	Reaction* re;
+	KineticLaw* kl;
+	SpeciesReference* SpRef;
+
+	for (int i = 0; i < NumReactions; i++)
+	{
+		re = model->getReaction (i);
+
+		cout << endl;
+
+		unsigned int NumReactants = re->getNumReactants ();
+		unsigned int NumProducts = re->getNumProducts ();
+
+		//		cout << "\nNumR = " << NumReactants << " NumP = " << NumProducts << endl;
+		cout << setw(40) << re->getName () << ": ";
+		cout.setf(ios::right, ios::adjustfield);
+
+		for (int ir = 0; ir < NumReactants; ir++)
+		{
+			if (ir > 0) cout << " + " ;
+
+			SpRef = re->getReactant (ir);
+			cout << "  " << SpRef->getSpecies ();
+		}
+
+		cout << " --> ";
+
+		for (int ip = 0; ip < NumProducts; ip++)
+		{
+			if (ip > 0) cout << " + " ;
+
+			SpRef = re->getProduct (ip);
+			cout << "  " << SpRef->getSpecies ();
+		}
+
+		//kinetic law
+		cout << "\t";
+		kl = re->getKineticLaw ();
+		cout << kl->getFormula ();
+
+		cout << endl;
+
+	}
+
+	/******************************************************************
+	 * 					    PARAMETERS
+	 *****************************************************************/
+	unsigned int NumParameters = model->getNumParameters ();
+
+	cout << endl;
+	cout << "  NumOfParameters: " << NumParameters << endl;
+	cout << endl;
+
+	Parameter * pm;
+
+	for (int i = 0; i < NumParameters; i++)
+	{
+		pm = model->getParameter (i);
+
+		cout << endl << setw(10);
+		cout << "  id: " << pm->getId () << setw(10)
+			<< "  name: " << pm->getName () << setw(10)
+			<< "  unit: " << pm->getUnits () << setw(10)
+			<< "  value: " << pm->getValue () << setw(10) 
+			<< "  constant: " << pm->getConstant () << endl;
+	}
+
+	/******************************************************************
+	 * 					    RULES
+	 ******************************************************************/
+	unsigned int NumRules = model->getNumRules ();
+
+	cout << endl;
+	cout << "  NumOfRules: " << NumRules << endl;
+	cout << endl;
+
+	Rule * rl;
+
+	for (int i =0; i < NumRules; i++)
+	{
+		rl = model->getRule (i);
+
+		cout << endl << setw(10);
+		cout << "  variable: " << rl->getVariable () << setw(10)
+			<< "  unit: " << rl->getUnits () << setw(10)
+			<< "  Formula: " << rl->getFormula () << endl;
+	}
+
+	cout << endl << endl << endl;
 }

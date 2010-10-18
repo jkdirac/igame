@@ -112,7 +112,6 @@ class readDataBase:
 				const string& substanceUnits,
 				const bool& hasOnlySubstanceUnits,
 				const bool& boundaryCondition,
-				const int& charge,
 				const bool& constant
 				) const;
 

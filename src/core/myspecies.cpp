@@ -179,7 +179,7 @@ void MySpecies::split (
 		}
 	}
 
-	for (int i=0; i<pieces.size (); i++) pieces[i]->rearrange ();
+	for (int i=0; i<pieces.size (); i++) pieces[i]->rearrange (false);
 }
 
 const Node* MySpecies::findBindedNode (
@@ -332,21 +332,34 @@ string MySpecies::getCompTypeId () const {
 	return comp_type_id;
 }
 
-void MySpecies::rearrange ()
+void MySpecies::rearrange (const bool& isTemplate)
 {
-	//	sort chains
-	for (int i =0; i < listOfChains.size (); i++)
-		listOfChains[i]->genUnicode ();
+	int symmstate = 1;
+	bool* csymm = new bool[listOfChains.size ()];
+	for (int i = 0; i < listOfChains.size (); i++)
+	{
+		Chain* c = listOfChains[i];
+		c->chainNum = i;
+
+		if (!isTemplate)
+		{
+			csymm[i] = c->isCsymm ();
+			if (csymm[i]) symmstate *= 2;
+		}
+		else 
+		{
+			csymm[i] = false;
+			c->unicode = c->genUnicode (
+					0, c->listOfParts.size ()-1, true
+					);
+		}
+	}
 
 	stable_sort (
 			listOfChains.begin(), 
 			listOfChains.end (),
 			IsLess_c ()
 			);
-
-	for (int i=0; i < listOfChains.size (); i++)
-		listOfChains[i]->chainNum = i;
-
 
 	//	find equal chains
 	vector<markType> psEquiv; 
@@ -373,81 +386,120 @@ void MySpecies::rearrange ()
 	 */
 
 	vector< vector<int> > minWperm;
-	for (int i = 0; i < numPerm; i++)
+	vector< bool > turnstate;
+
+	for (int i=0; i < numPerm; i++)
 	{
-		//	permute equivalent chains
+		//	permute equal chains
 		vector<int> order;
 		perm (i, psEquiv, permAll, order);
 
-		//	generate weight for leaf nodes
-		for (int i=0; i<listOfChains.size(); i++)
+		for (int j=0; j < symmstate; j++)
 		{
-			Chain* c = listOfChains[i];
-			for (int j=0; j<c->listOfParts.size (); j++)
+			vector<bool> tmpstate;
+
+			if (!isTemplate)
 			{
-				Part* p = c->listOfParts[j];
-				if (p->getIsBinded ())
+				int divide = j;
+				for (int k=0; k < listOfChains.size (); k++)
 				{
-					string label = p->getPartLabel ();
-					Node* n = findBindedNode (label);
-					if (n) n->setNodeWeight (i,j);
+					if (csymm[k]) 
+					{
+						tmpstate.push_back (static_cast<bool> (divide % 2));
+						if (tmpstate[k]) listOfChains[k]->turnover ();
+						divide /= 2;
+					}
+					else tmpstate.push_back (false);
 				}
 			}
-		}
+			else tmpstate = vector<bool> (listOfChains.size (), false);
 
-		//	generate weight for all nodes
-		for (int i=0; i<listOfTrees.size (); i++) 
-		{
-			Tree* t = listOfTrees[i];
-			t->genWeight ("ROOT");
+			//	generate weight for leaf nodes
+			for (int k=0; k<listOfChains.size(); k++)
+			{
+				Chain* c = listOfChains[k];
+				for (int l=0; l<c->listOfParts.size (); l++)
+				{
+					Part* p = c->listOfParts[l];
+					if (p->getIsBinded ())
+					{
+						string label = p->getPartLabel ();
+						Node* n = findBindedNode (label);
+						if (n) n->setNodeWeight (k,l);
+					}
+				}
+			}
+
+			//	generate weight for all nodes
+			for (int k=0; k<listOfTrees.size (); k++) 
+			{
+				Tree* t = listOfTrees[k];
+				t->genWeight ("ROOT");
+				stable_sort (
+						t->listOfNodes.begin (), 
+						t->listOfNodes.end (),
+						IsLess_n ()
+						);
+			}
+
+			//	sort trees
 			stable_sort (
-					t->listOfNodes.begin (), 
-					t->listOfNodes.end (),
-					IsLess_n ()
+					listOfTrees.begin(), 
+					listOfTrees.end (), 
+					IsLess_t ()
 					);
-		}
 
-		//	sort trees
-		stable_sort (
-				listOfTrees.begin(), 
-				listOfTrees.end (), 
-				IsLess_t ()
-				);
+			//	generate huffman code for all nodes
+			//	create a unique tree code 
 
-		//	generate huffman code for all nodes
-		//	create a unique tree code 
-		
-		string tryuni;
-		for (int i=0; i < listOfTrees.size (); i++)
-		{
-			Tree* t = listOfTrees[i];
-			t->genHuffman ("ROOT");
-			t->genUnicode ();
-			tryuni += t->unicode;
-		}
+			string tryuni;
+			for (int k=0; k < listOfTrees.size (); k++)
+			{
+				Tree* t = listOfTrees[k];
+				t->genHuffman ("ROOT");
+				t->genUnicode ();
+				tryuni += t->unicode;
+			}
 
-		if (minW.empty ()) 
-		{
-			minW = tryuni;
-			minWperm.push_back (order);
-		}
-		else if (minW > tryuni)
-		{
-			minW = tryuni;
-			minWperm.clear ();
-			minWperm.push_back (order);
-		}
-		else if (minW == tryuni)
-		{
-			minWperm.push_back (order);
-		}
+			if (minW.empty ()) 
+			{
+				minW = tryuni;
+				minWperm.push_back (order);
+				turnstate= tmpstate;
+			}
+			else if (minW > tryuni)
+			{
+				minW = tryuni;
+				minWperm.clear ();
+				minWperm.push_back (order);
+				turnstate = tmpstate;
+			}
+			else if (minW == tryuni)
+			{
+				minWperm.push_back (order);
+			}
 
-		//	recover to orginal order
-		stable_sort (
-				listOfChains.begin(), 
-				listOfChains.end (),
-				IsLess_no ()
-				);
+			//	recover to orginal order
+			stable_sort (
+					listOfChains.begin(), 
+					listOfChains.end (),
+					IsLess_no ()
+					);
+
+			//	recover to original direction
+			if (!isTemplate)
+			{
+				for (int k=0; k < listOfChains.size (); k++)
+					if (tmpstate[k]) listOfChains[k]->turnover ();
+			}
+		}
+	}
+
+	//	set unique turn state
+	if (!isTemplate)
+	{
+		for (int i=0; i < listOfChains.size (); i++)
+			if (turnstate[i]) listOfChains[i]->turnover ();
 	}
 
 	//	find equivalent chains
@@ -458,17 +510,22 @@ void MySpecies::rearrange ()
 		{
 			const vector<int>& elem_j = minWperm[j];
 			
-			//	for each (i,j) pair, find equivalent chains
-			int found_i = -1;
-			int found_j = -1;
-			for (int k=0; k < equiv.size (); k++)
+			assert (elem_i.size () == elem_j.size ());
+			for (int m=0; m < elem_i.size (); m++)
 			{
-				if (equiv[k].count (i)) {found_i = k;}
-				if (equiv[k].count (j)) {found_i = j;}
-				if (found_i != -1 && found_j != -1) break;
-			}
+				if (elem_i[m] == elem_j[m]) continue;
 
-			if (found_i == -1 && found_j == -1)
+				//	for each (i,j) pair, find equivalent chains
+				int found_i = -1;
+				int found_j = -1;
+				for (int k=0; k < equiv.size (); k++)
+				{
+					if (equiv[k].count (elem_i[m])) {found_i = k;}
+					if (equiv[k].count (elem_j[m])) {found_j = k;}
+					if (found_i != -1 && found_j != -1) break;
+				}
+
+				if (found_i == -1 && found_j == -1)
 			{
 				set<int> newequiv;
 				newequiv.insert (i);
@@ -479,15 +536,18 @@ void MySpecies::rearrange ()
 			if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
 			if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
 
-			if (found_i != -1 && found_j != -1 && found_i != found_j)
-			{
-				//	merge set found_i and found_j
-				set<int>::iterator iterf = equiv[found_j].begin ();
-				while (iterf != equiv[found_j].end ()) equiv[found_i].insert (*iterf++);
-				equiv.erase (equiv.begin () + found_j);
+				if (found_i != -1 && found_j != -1 && found_i != found_j)
+				{
+					//	merge set found_i and found_j
+					set<int>::iterator iterf = equiv[found_j].begin ();
+					while (iterf != equiv[found_j].end ()) equiv[found_i].insert (*iterf++);
+					equiv.erase (equiv.begin () + found_j);
+				}
 			}
 		}
 	}
+
+	delete [] csymm;
 }
 
 void MySpecies::Output () const
@@ -659,13 +719,14 @@ bool MySpecies::match (
 			 << "--	..	--	" << i;
 		
 		Chain* c1 = s->listOfChains[i];
+		cout << "\nunicode = " << c1->unicode << "	found = " << uniMap.count (c1->unicode) << endl;
 		if (!uniMap.count (c1->unicode))
 		{
 			cMatchsType2 record;
 			for (int j = 0; j < numc_m; j++)
 			{
-//                cout << "\nchain number in current species"
-//                    << "	--	..	--	" << j << endl;
+				cout << "\nchain number in current species"
+					<< "	--	..	--	" << j << endl;
 
 				cMatchsType record2;
 				listOfChains[j]->match (c1, record2);
@@ -953,6 +1014,6 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 		p->setIsBinded (false);
 	}
 
-	rearrange ();
+	rearrange (false);
 }
 

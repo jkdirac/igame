@@ -115,6 +115,8 @@ void readDataBase::read_cnModel (
 				p->setPart (__ref, __label, __type, __ctg);
 			}
 		}
+
+		c->setIsDNA ();
 	}
 
 	//read tree map
@@ -159,7 +161,7 @@ void readDataBase::read_cnModel (
 	/**
 	 * ATTENTION: even a template need to rearrange its structure
 	 */
-	s->rearrange ();
+	s->rearrange (isTemplate);
 }
 
 void readDataBase::setParameter (
@@ -350,9 +352,10 @@ void readDataBase::setCompartment (
 	//
 	//  setConstant
 	//
-	 comp->setConstant (constant);
-
-	return;
+	
+	//	since we have special strategy for size of compartments,
+	//	the constant attribute will be alwasy false
+	comp->setConstant (false); //   comp->setConstant (constant);
 }
 
 void readDataBase::setSpecies (
@@ -367,7 +370,6 @@ void readDataBase::setSpecies (
 		const string& substanceUnits,
 		const bool& hasOnlySubstanceUnits,
 		const bool& boundaryCondition,
-		const int& charge,
 		const bool& constant
 		) const
 {
@@ -782,6 +784,7 @@ void readDataBase::readReaction (
 	while (myproduct != NULL)
 	{
 		oss.str (""); oss << prefix << __index << "::";
+//        cout << "\nprefix = " << oss.str () << endl;
         myproduct->addPrefix (oss.str ());
 
 //        cout << "\nprefix = " << prefix << endl;

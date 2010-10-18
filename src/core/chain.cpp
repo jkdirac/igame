@@ -5,7 +5,8 @@ Chain::Chain (const Chain* orig)
 	:
 		unicode (orig->unicode),
 		chainLabel (orig->chainLabel),
-		chainNum (orig->chainNum)
+		chainNum (orig->chainNum),
+		isDNA (orig->isDNA)
 {
 	for (int i =0; i < orig->listOfParts.size (); i++)
 		this->createPart (orig->listOfParts[i]);
@@ -15,6 +16,22 @@ Chain::~Chain ()
 {
 	for (int i =0; i < listOfParts.size (); i++)
 		delete listOfParts[i];
+}
+
+void Chain::setIsDNA ()
+{
+	isDNA = true;
+
+	for (int i=0; i < listOfParts.size (); i++)
+	{
+		Part* p = listOfParts[i];
+		if (p->getPartType () != "ForwardDNA"
+				&& p->getPartType () != "ReverseDNA")
+		{
+			isDNA = false;
+			return;
+		}
+	}
 }
 
 Part* Chain::createPart ()
@@ -50,58 +67,81 @@ int Chain::getNumOfParts () const
 	return listOfParts.size ();
 }
 
+void Chain::turnover ()
+{
+	stack<Part*> stack_part;
+	const int numparts = listOfParts.size ();
+
+	for (int i=0; i < numparts; i++)
+	{
+		Part* p = listOfParts[i];
+		stack_part.push (p);
+
+		if (p->getPartType () == "ForwardDNA") 
+			p->setPartType ("ReverseDNA");
+		else if (p->getPartType () == "ReverseDNA") 
+			p->setPartType ("ForwardDNA");
+	}
+
+	listOfParts.clear ();
+
+	for (int i=0; i < numparts; i++) {
+		listOfParts.push_back (stack_part.top ());	
+		stack_part.pop ();
+	}
+}
+
+bool Chain::isCsymm ()
+{
+	if (isDNA)
+	{
+		string fw_unicode = genUnicode (0, listOfParts.size ()-1, true);
+		string rev_unicode = genUnicode (0, listOfParts.size ()-1, false);
+		if (rev_unicode < fw_unicode) {turnover (); unicode = rev_unicode; return false;}
+		else if (rev_unicode > fw_unicode) {unicode = fw_unicode; return false;}
+		else {unicode = fw_unicode; return true;}
+	}
+	else
+	{
+		unicode = genUnicode (0, listOfParts.size ()-1, true);
+		return false;
+	}
+}
+
 string Chain::genUnicode (
-		const int& start,
-		const int& end
+		const int& start, const int& end, const bool& dir
 		) const
 {
 	string _unicode ("");
-	for (int i=start; i<= end; i++)
+
+	if (dir)
 	{
-		const Part* p = listOfParts[i];
-
-		//database id
-		_unicode += "[" + p->getPartRef ();
-
-		//database type
-		_unicode += ":" + p->getPartType ();
-
-		//is binded?
-		if (p->isBinded) _unicode += ":*";
-
-		_unicode += "]";
+		for (int i=start; i<= end; i++)
+		{
+			const Part* p = listOfParts[i];
+			_unicode += "[" + p->getPartRef ()
+					 +	":" + p->getPartType ();
+			if (p->isBinded) _unicode += ":*";
+			_unicode += "]";
+		}
 	}
+	else
+	{
+		for (int i=end; i >= start; i--)
+		{
+			const Part* p = listOfParts[i];
+			_unicode += "[" + p->getPartRef () + ":";
+		   	
+			if (p->getPartType () == "ForwardDNA") _unicode += "ReverseDNA";
+			else if (p->getPartType () == "ReverseDNA") _unicode += "ForwardDNA";
+			else _unicode += p->getPartType ();
+
+			if (p->isBinded) _unicode += ":*]";
+			else _unicode += "]";
+		}
+	}
+
 	return _unicode;
-}
-
-void Chain::genUnicode ()
-{
-	//clear
-	if (!unicode.empty ()) unicode.clear ();
-
-	//initialize
-	unicode = string ("");
-
-	//traverse each part
-	int numP = listOfParts.size ();
-	for (int cnt =0; cnt < numP; cnt ++)
-	{
-		Part* p = listOfParts[cnt];
-
-		//each part contribute a [id:type:(*)]... 
-		//sub code to the whole 
-
-		//database id
-		unicode += "[" + p->getPartRef ();
-
-		//database type
-		unicode += ":" + p->getPartType ();
-
-		//is binded?
-		if (p->isBinded) unicode += ":*";
-
-		unicode += "]";
-	}
 }
 
 int Chain::getPartIndex (
@@ -165,7 +205,7 @@ void Chain::__add_chain_prefix (
 		Part* p = listOfParts[i]; 
 		p->partLabel = prefix + p->partLabel;
 	}
-	genUnicode ();
+	genUnicode (0, listOfParts.size ()-1, true);
 }
 
 void Chain::Output (ostream& os) const 
@@ -250,10 +290,10 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			int end = ns_t[cnt].second;
 			int diff = end-start;
 
-			string mkey = c->genUnicode (start, end);
+			string mkey = c->genUnicode (start, end, true);
 
-//            cout << "\nunicode = " << unicode;
-//            cout << "\nmkey = " << mkey;
+			cout << "\nunicode = " << unicode;
+			cout << "\nmkey = " << mkey;
 
 			for (string::size_type pos = 0;
 					(pos = unicode.find (mkey, pos)) 
@@ -275,7 +315,7 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 			else permAll *= m_pos[cnt].size ();
 		}
 
-//        cout << "\n<--	permAll for all non-substituent blocks	=	\n" << permAll << endl;
+		cout << "\n<--	permAll for all non-substituent blocks	=	\n" << permAll << endl;
 
 		//
 		//	find possible matching combinations

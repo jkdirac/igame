@@ -581,7 +581,6 @@ void readXMLComponent::readSpecies (
 		string& substanceUnits,
 		bool& hasOnlySubstanceUnits,
 		bool& boundaryCondition,
-		int& charge,
 		bool& constant
 		)
 {
@@ -689,14 +688,6 @@ void readXMLComponent::readSpecies (
 	get_node_element (cind, &doc, &path_const, temp); 
 	if (temp.empty ()) constant = false;
 	else constant = (temp[0] == "true");
-
-	//
-	//  read node charge
-	//
-	const string path_charge = prefix + "charge";
-	get_node_element (cind, &doc, &path_charge, temp); 
-	if (temp.empty ()) charge = 0;
-	else charge = atoi (temp[0].c_str ());
 
 	//
 	//  read node boundaryCondition

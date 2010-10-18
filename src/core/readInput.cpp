@@ -238,12 +238,8 @@ void readInput::config (
 	//	==================================
 	//  (3) read listOfCompartments
 	//	==================================
-	const string pathComp = 
-		"/MoDeL/dbInterface/input/"
-		"listOfCompartments/"
-		"compartment";
-	const int numOfComps = 
-		get_node_element_num (DBINTERFACE, &DOC, &pathComp);
+	const string pathComp = "/MoDeL/dbInterface/input/listOfCompartments/compartment";
+	const int numOfComps = get_node_element_num (DBINTERFACE, &DOC, &pathComp);
 
 	for (int i=1; i <= numOfComps; i++)
 	{
@@ -259,7 +255,7 @@ void readInput::config (
 		setCompartment (comp, db, id, name, spatialDimensions, 
 				size, units, outside, constant);
 	}
-	mysbmldoc->addMyCompartmentChildren ();
+	mysbmldoc->setRelationOfCompartments ();
 
 	cout << "\nread species	(input)	..." << endl;
 
@@ -278,19 +274,18 @@ void readInput::config (
 		string db, ccid, id, name, compartment, substanceUnits;
 		double initialAmount, initialConcentration;
 		bool hasOnlySubstanceUnits, boundaryCondition, constant;
-		int charge;
 
 		readSpecies (DBINTERFACE, DOC, pathSpe, i, db, ccid, id, name,
 				compartment, initialAmount, initialConcentration,
 				substanceUnits, hasOnlySubstanceUnits, 
-				boundaryCondition, charge, constant);
+				boundaryCondition, constant);
 
 		MySpecies* s = new MySpecies;  
 		setSpecies (s, db, ccid, id, name, compartment, initialAmount, 
 				initialConcentration, substanceUnits, hasOnlySubstanceUnits, 
-				boundaryCondition, charge, constant);
+				boundaryCondition, constant);
 
-//        cout << "\ncompartment = " << s->getCompartment ();
+		//	set counterpart
 
 		//
 		//	read species container if db attr has been specified
@@ -310,10 +305,10 @@ void readInput::config (
 		}
 
 		//	sort chain-node model
-		s->rearrange ();
+		s->rearrange (false);
 
 		//	add species in compartment
-		if (mysbmldoc->getMySpecies (s) ==NULL) mysbmldoc->addMySpecies (s); 
+		if (mysbmldoc->getMySpecies (s) == NULL) mysbmldoc->addMySpecies (s); 
 	}
 
 	cout << "\nread parameters (db)	..." << endl;
@@ -411,8 +406,59 @@ void readInput::config (
 		}
 	}
 	
+	//	=========================================
+	//	PART4: ADD RULES FOR COMPARTMENT SIZE 
+	//	=========================================
+	cout << "\nset compartment size	..." << endl;
+	for (int i=0; i< mysbmldoc->getNumOfMyCompartments (); i++)
+	{
+		MyCompartment* mycomp = mysbmldoc->getMyCompartment (i);
+		
+		MyCompartment* parent = mycomp->getParentCompartment ();
+		if (parent == NULL) continue;
+
+		MyCompartment* grand_parent = parent->getParentCompartment ();
+
+		//	search rules related to its size
+		string counterpart1 = mycomp->getCounterPart ();
+
+		if (!counterpart1.empty ())
+		{
+			Rule* rule = m->getRule (mycomp->getId ());
+
+			ostringstream oss;
+			string predef_rule;
+
+			if (rule == NULL) 
+			{
+				rule = m->createAssignmentRule (); 
+				rule->setVariable (mycomp->getId ());
+
+				oss << mycomp->getSize ();
+				predef_rule = oss.str ();
+			}
+			else predef_rule = rule->getFormula ();
+
+			//	search rules related to its size
+			oss.str ("");
+			string counterpart2 = parent->getCounterPart ();
+
+			if (counterpart2.empty ())
+				oss << parent->getId () << "*" 
+					<< counterpart1 << "*6.02E23*" 
+					<< predef_rule; 
+			else
+				oss << parent->getId () << "*" 
+					<< counterpart1 << "*6.02E23*" 
+					<< grand_parent->getId () 
+					<< "*" << counterpart2 
+					<< "*6.02E23*" << predef_rule;
+
+			rule->setFormula (oss.str ());
+		}
+	}
+
 	cout << "\n=================	CONFIGURING...Done	===================\n";
-	return;
 }
 
 
