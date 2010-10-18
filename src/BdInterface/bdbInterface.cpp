@@ -37,8 +37,7 @@ bdbXMLInterface::~bdbXMLInterface()
 	}
 }
 
-bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
-	db_container_name("ustc.dbxml")
+bdbXMLInterface::bdbXMLInterface()
 {
 	env_flags = DB_CREATE 
 		| DB_INIT_LOG
@@ -46,6 +45,44 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 		| DB_INIT_LOCK;
 
 	int dberr = 0;
+	bool b_succ = false;
+
+	sys_home_path = QDir::homePath();
+
+	QDir dir(sys_home_path);
+
+	igame_home_path = "/igame";
+	db_env_home = "/dbs";
+
+	if (!dir.exists())
+	{
+		igame_home_path = QDir::currentPath();
+	}
+	else
+	{
+		if (!dir.exists(igame_home_path))
+		{
+			b_succ = dir.mkdir(igame_home_path);
+
+			if (!b_succ)
+				throw XmlException(XmlException::NULL_POINTER, "create igame dir error", __FILE__, __LINE__);
+		}
+	}
+
+	dir.setPath(sys_home_path + igame_home_path);
+	cout << dir.path().toLatin1().constData() << endl;
+	if (!dir.exists(db_env_home))
+	{
+		b_succ = dir.mkdir(db_env_home);
+
+		if (!b_succ)
+		{
+			cout << dir.path().toLatin1().constData() << endl;
+			throw XmlException(XmlException::NULL_POINTER, "db env create dbs dir error", __FILE__, __LINE__);
+		}
+	}
+	db_env_home = dir.path() + db_env_home;
+	db_env_home = dir.path() ;
 
 	try 
 	{
@@ -55,7 +92,7 @@ bdbXMLInterface::bdbXMLInterface():db_env_home("dbs"),
 			throw XmlException(XmlException::NULL_POINTER, "db env create error", __FILE__, __LINE__);
 		}
 
-		db_env->open(db_env, db_env_home.c_str(), env_flags, 0);
+		db_env->open(db_env, db_env_home.toLatin1().constData(), env_flags, 0);
 		m_manager = new XmlManager(db_env, DBXML_ADOPT_DBENV);
 
 		if (!m_manager)

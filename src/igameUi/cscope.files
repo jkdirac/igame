@@ -1,0 +1,5 @@
+./main.cpp
+./mainWindow.h
+./integrate.c
+./mainWindow.cpp
+./integrate.h

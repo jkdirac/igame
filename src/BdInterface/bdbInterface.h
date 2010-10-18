@@ -5,6 +5,8 @@
 #include "dbxml/XmlException.hpp"
 #include "db.h"
 #include <vector>
+#include <QString>
+#include <QDir>
 
 using namespace std;
 using namespace DbXml;
@@ -35,8 +37,9 @@ class bdbXMLInterface
 		XmlContainer m_containers[CONT_IDX_NUM];
 		DB_ENV *db_env;
 		u_int32_t env_flags;
-		const string db_env_home; 
-		const string db_container_name;
+		QString sys_home_path;
+		QString igame_home_path;
+		QString db_env_home; 
 
 		vector<string> container_names;
 		string strip_char(string instring);

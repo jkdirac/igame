@@ -129,7 +129,7 @@ ENDIF(NOT COPASI_INCLUDE_DIR)
 INCLUDE_DIRECTORIES( BEFORE
 	${CPP_LIBRARY_OUTPUT_PATH}
 	${C_LIBRARY_OUTPUT_PATH}
-	${IGAME_BINARY_DIR}
+	${IGAME_BINARY_DIR}/igameUi
 	${QT_INCLUDES}
 	${IGAME_SOURCE_DIR}/
 	${IGAME_SOURCE_DIR}/utility
@@ -150,7 +150,7 @@ add_subdirectory (BdInterface)
 add_subdirectory (utility)
 add_subdirectory (QwtPlot)
 add_subdirectory (core)
-#add_subdirectory (tools)
+add_subdirectory (igameUi)
 #add_subdirectory (ExternalLib)
 #add_subdirectory (SimTool)
 
