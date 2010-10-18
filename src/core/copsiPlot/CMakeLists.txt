@@ -29,23 +29,23 @@ TARGET_LINK_LIBRARIES( copsi_wrapper
 	${QT_LIBRARIES}
   )
 
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_EXE")
-#ADD_EXECUTABLE( hellocopsi
-#	main.cpp
-#  )
-#
-#TARGET_LINK_LIBRARIES( hellocopsi
-#	COPASIUI 
-#	COPASISE 
-#	sbml-3.4.1
-#	expat 
-#	raptor 
-#	lapack 
-#	blas 
-#	F77
-#	qwt
-#	qwtplot3d
-#	${QT_LIBRARIES}
-#  )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_EXE")
+ADD_EXECUTABLE( hellocopsi
+	main.cpp
+  )
+
+TARGET_LINK_LIBRARIES( hellocopsi
+	COPASIUI 
+	COPASISE 
+	sbml-3.4.1
+	expat 
+	raptor 
+	lapack 
+	blas 
+	F77
+	qwt
+	qwtplot3d
+	${QT_LIBRARIES}
+  )
 
 INSTALL_PROJECT( copsi_wrapper )

@@ -26,7 +26,7 @@ TARGET_LINK_LIBRARIES( igameUi
   dbxml
   core
   utility
-  copsi_wrapper 
   )
+  #copsi_wrapper 
 
 INSTALL_PROJECT( igameUi )

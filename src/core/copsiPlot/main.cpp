@@ -53,7 +53,6 @@
 
 int copsi_main(int argc, char **argv, QApplication *a)
 {
-//  QApplication a(argc, argv);
 
   // Parse the commandline options
   try
@@ -94,10 +93,12 @@ int copsi_main(int argc, char **argv, QApplication *a)
 
   if (pWindow != NULL)
     {
-//      a.setMainWidget(pWindow);
+	  a->setMainWidget(pWindow);
       pWindow->getDataModel()->setQApp(a);
 	  pWindow->show();
-//      a.exec();
+#ifdef BUILD_EXE
+	  a->exec();
+#endif
     }
 
 finish:
@@ -119,6 +120,7 @@ int main(int argc, char **argv)
 	int opt_num = 3;
 	char **options = new char*[opt_num];
 
+	QApplication a(argc, argv);
 //    options[0] ;
 	options[1] = new char[3];
 	strcpy(options[1], "-i"); options[1][2] = 0;	
@@ -126,7 +128,7 @@ int main(int argc, char **argv)
 	options[2] = new char[strlen(file_name)+1];
 	memset(options[2], 0, strlen(file_name)+1);
 	strcpy(options[2], file_name);
-	copsi_main(opt_num, options);
+	copsi_main(opt_num, options, &a);
 }
 #endif
 
