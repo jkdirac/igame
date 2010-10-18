@@ -15,6 +15,7 @@ ADD_EXECUTABLE( test_bdbinterface
 TARGET_LINK_LIBRARIES( test_bdbinterface
 	${QT_LIBRARIES}
 	dbxml
+	utility
 	bdinterface
 	)
 
@@ -26,4 +27,5 @@ ADD_LIBRARY( bdinterface
 
 TARGET_LINK_LIBRARIES( bdinterface
 	bdinterface
+	utility
   )

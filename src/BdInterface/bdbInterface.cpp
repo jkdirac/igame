@@ -18,6 +18,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDirIterator>
+#include "globalSetting.h"
 
 using namespace std;
 using namespace DbXml;
@@ -49,28 +50,11 @@ bdbXMLInterface::bdbXMLInterface()
 
 	sys_home_path = QDir::homePath();
 
-	QDir dir(sys_home_path);
-
-	igame_home_path = "/igame";
 	db_env_home = "/dbs";
+	igame_home_path = get_igame_home_dir();
 
-	if (!dir.exists())
-	{
-		igame_home_path = QDir::currentPath();
-	}
-	else
-	{
-		if (!dir.exists(igame_home_path))
-		{
-			b_succ = dir.mkdir(igame_home_path);
-
-			if (!b_succ)
-				throw XmlException(XmlException::NULL_POINTER, "create igame dir error", __FILE__, __LINE__);
-		}
-	}
-
-	dir.setPath(sys_home_path + igame_home_path);
-	cout << dir.path().toLatin1().constData() << endl;
+	if (igame_home_path
+	QDir dir(igame_home_path);
 	if (!dir.exists(db_env_home))
 	{
 		b_succ = dir.mkdir(db_env_home);

@@ -146,8 +146,8 @@ INCLUDE_DIRECTORIES( BEFORE
 #	${IGAME_SOURCE_DIR}/ExternalCode/
 
 add_subdirectory (ExternalCode)
-add_subdirectory (BdInterface)
 add_subdirectory (utility)
+add_subdirectory (BdInterface)
 add_subdirectory (QwtPlot)
 add_subdirectory (core)
 add_subdirectory (igameUi)

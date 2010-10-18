@@ -24,6 +24,8 @@ TARGET_LINK_LIBRARIES( igameUi
   ${QT_LIBRARIES}
   bdinterface
   dbxml
+  core
+  utility
   )
 
 INSTALL_PROJECT( igameUi )
