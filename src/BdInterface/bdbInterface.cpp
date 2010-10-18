@@ -50,7 +50,7 @@ bdbXMLInterface::bdbXMLInterface()
 
 	sys_home_path = QDir::homePath();
 
-	db_env_home = "/dbs";
+	db_env_home = "dbs";
 	igame_home_path = get_igame_home_dir();
 
 	QDir dir(igame_home_path);

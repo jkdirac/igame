@@ -9,7 +9,7 @@ bool init_global_dir_setting()
 {
 	QDir dir = QDir::home();
 
-	QString igame_home_path = "/igame";
+	QString igame_home_path = "igame";
 
 	bool b_succ = true;
 
@@ -32,7 +32,7 @@ bool init_global_dir_setting()
 
 	if (b_succ)
 	{
-		QString dir_path = dir.path() + igame_home_path;
+		QString dir_path = dir.path() + "/" +  igame_home_path;
 		set_igame_home(dir_path.toLatin1().constData());
 	}
 	else
