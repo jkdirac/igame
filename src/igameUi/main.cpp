@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
 	app.setApplicationName("Hello SBML");
 
 	MainWindow mainWin(NULL);
+	mainWin.setQApp(&app);
 	mainWin.show();
 
 	return app.exec();

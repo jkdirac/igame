@@ -18,7 +18,7 @@ bool Driver::beginSimulation ()
 	try
 	{
 		MySBMLDocument* mysbmldoc = new MySBMLDocument;
-		dbreader.add_directory (DB_PATH);
+//        dbreader.add_directory (DB_PATH);
 		dbreader.config (mysbmldoc);
 		mysbmldoc->run (dbreader);
 

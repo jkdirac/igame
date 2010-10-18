@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>355</height>
+    <width>354</width>
+    <height>269</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,22 +21,10 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>413</width>
+     <width>354</width>
      <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSave_as"/>
-    <addaction name="actionImport_SBML"/>
-    <addaction name="actionExport_SBML"/>
-    <addaction name="actionAnaly_sbml"/>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
@@ -49,23 +37,14 @@
     </property>
     <addaction name="actionImport_data"/>
    </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuHelp"/>
+   <widget class="QMenu" name="menuSimulate">
+    <property name="title">
+     <string>simulate</string>
+    </property>
+   </widget>
    <addaction name="menuDatabase"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionNew"/>
-   <addaction name="actionOpen"/>
-   <addaction name="actionSave"/>
+   <addaction name="menuSimulate"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">

@@ -53,7 +53,6 @@ bdbXMLInterface::bdbXMLInterface()
 	db_env_home = "/dbs";
 	igame_home_path = get_igame_home_dir();
 
-	if (igame_home_path
 	QDir dir(igame_home_path);
 	if (!dir.exists(db_env_home))
 	{

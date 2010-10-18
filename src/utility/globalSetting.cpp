@@ -1,6 +1,7 @@
 #include "globalSetting.h"
+#include <QDir>
 
-string system_igame_home = "/./";
+string system_igame_home = QDir::currentPath().toLatin1().constData();
 
 /** 
  * @breif  set the global home path

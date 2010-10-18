@@ -14,6 +14,7 @@ class MainWindow: public QMainWindow
 
 	public:
 		MainWindow( QWidget* parent );
+		void setQApp(QApplication* app);
 
 		private slots:
 			void open();
@@ -26,6 +27,7 @@ class MainWindow: public QMainWindow
 		Ui::MainWindow ui;
 		void setCurrentFile(const QString &fileName);
 		void loadFile(const QString &fileName);
+		QApplication* m_app;
 };
 
 #endif

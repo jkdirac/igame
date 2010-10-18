@@ -115,6 +115,36 @@ IsLess_t::IsLess_t	myspecies.h	/^		IsLess_t () {}$/;"	f	class:IsLess_t	access:pu
 IsLess_t::operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_t	access:public	signature:( const Tree* x, const Tree* y ) const
 LEX	strcacu/Makefile	/^LEX = flex$/;"	m
 LIBS	strcacu/Makefile	/^LIBS = $/;"	m
+LIBSBML_DUPLICATE_OBJECT_ID	myreaction.cpp	/^  , LIBSBML_DUPLICATE_OBJECT_ID     = -6$/;"	e	enum:__anon2	file:
+LIBSBML_DUPLICATE_OBJECT_ID	mysbmldoc.cpp	/^  , LIBSBML_DUPLICATE_OBJECT_ID     = -6$/;"	e	enum:__anon3	file:
+LIBSBML_DUPLICATE_OBJECT_ID	readDataBase.cpp	/^  , LIBSBML_DUPLICATE_OBJECT_ID     = -6$/;"	e	enum:__anon1	file:
+LIBSBML_INDEX_EXCEEDS_SIZE	myreaction.cpp	/^  , LIBSBML_INDEX_EXCEEDS_SIZE      = -1$/;"	e	enum:__anon2	file:
+LIBSBML_INDEX_EXCEEDS_SIZE	mysbmldoc.cpp	/^  , LIBSBML_INDEX_EXCEEDS_SIZE      = -1$/;"	e	enum:__anon3	file:
+LIBSBML_INDEX_EXCEEDS_SIZE	readDataBase.cpp	/^  , LIBSBML_INDEX_EXCEEDS_SIZE      = -1$/;"	e	enum:__anon1	file:
+LIBSBML_INVALID_ATTRIBUTE_VALUE	myreaction.cpp	/^  , LIBSBML_INVALID_ATTRIBUTE_VALUE = -4$/;"	e	enum:__anon2	file:
+LIBSBML_INVALID_ATTRIBUTE_VALUE	mysbmldoc.cpp	/^  , LIBSBML_INVALID_ATTRIBUTE_VALUE = -4$/;"	e	enum:__anon3	file:
+LIBSBML_INVALID_ATTRIBUTE_VALUE	readDataBase.cpp	/^  , LIBSBML_INVALID_ATTRIBUTE_VALUE = -4$/;"	e	enum:__anon1	file:
+LIBSBML_INVALID_OBJECT	myreaction.cpp	/^  , LIBSBML_INVALID_OBJECT          = -5$/;"	e	enum:__anon2	file:
+LIBSBML_INVALID_OBJECT	mysbmldoc.cpp	/^  , LIBSBML_INVALID_OBJECT          = -5$/;"	e	enum:__anon3	file:
+LIBSBML_INVALID_OBJECT	readDataBase.cpp	/^  , LIBSBML_INVALID_OBJECT          = -5$/;"	e	enum:__anon1	file:
+LIBSBML_INVALID_XML_OPERATION	myreaction.cpp	/^  , LIBSBML_INVALID_XML_OPERATION   = -9$/;"	e	enum:__anon2	file:
+LIBSBML_INVALID_XML_OPERATION	mysbmldoc.cpp	/^  , LIBSBML_INVALID_XML_OPERATION   = -9$/;"	e	enum:__anon3	file:
+LIBSBML_INVALID_XML_OPERATION	readDataBase.cpp	/^  , LIBSBML_INVALID_XML_OPERATION   = -9$/;"	e	enum:__anon1	file:
+LIBSBML_LEVEL_MISMATCH	myreaction.cpp	/^  , LIBSBML_LEVEL_MISMATCH          = -7$/;"	e	enum:__anon2	file:
+LIBSBML_LEVEL_MISMATCH	mysbmldoc.cpp	/^  , LIBSBML_LEVEL_MISMATCH          = -7$/;"	e	enum:__anon3	file:
+LIBSBML_LEVEL_MISMATCH	readDataBase.cpp	/^  , LIBSBML_LEVEL_MISMATCH          = -7$/;"	e	enum:__anon1	file:
+LIBSBML_OPERATION_FAILED	myreaction.cpp	/^  , LIBSBML_OPERATION_FAILED        = -3$/;"	e	enum:__anon2	file:
+LIBSBML_OPERATION_FAILED	mysbmldoc.cpp	/^  , LIBSBML_OPERATION_FAILED        = -3$/;"	e	enum:__anon3	file:
+LIBSBML_OPERATION_FAILED	readDataBase.cpp	/^  , LIBSBML_OPERATION_FAILED        = -3$/;"	e	enum:__anon1	file:
+LIBSBML_OPERATION_SUCCESS	myreaction.cpp	/^    LIBSBML_OPERATION_SUCCESS       = 0$/;"	e	enum:__anon2	file:
+LIBSBML_OPERATION_SUCCESS	mysbmldoc.cpp	/^    LIBSBML_OPERATION_SUCCESS       = 0$/;"	e	enum:__anon3	file:
+LIBSBML_OPERATION_SUCCESS	readDataBase.cpp	/^    LIBSBML_OPERATION_SUCCESS       = 0$/;"	e	enum:__anon1	file:
+LIBSBML_UNEXPECTED_ATTRIBUTE	myreaction.cpp	/^  , LIBSBML_UNEXPECTED_ATTRIBUTE    = -2$/;"	e	enum:__anon2	file:
+LIBSBML_UNEXPECTED_ATTRIBUTE	mysbmldoc.cpp	/^  , LIBSBML_UNEXPECTED_ATTRIBUTE    = -2$/;"	e	enum:__anon3	file:
+LIBSBML_UNEXPECTED_ATTRIBUTE	readDataBase.cpp	/^  , LIBSBML_UNEXPECTED_ATTRIBUTE    = -2$/;"	e	enum:__anon1	file:
+LIBSBML_VERSION_MISMATCH	myreaction.cpp	/^  , LIBSBML_VERSION_MISMATCH        = -8$/;"	e	enum:__anon2	file:
+LIBSBML_VERSION_MISMATCH	mysbmldoc.cpp	/^  , LIBSBML_VERSION_MISMATCH        = -8$/;"	e	enum:__anon3	file:
+LIBSBML_VERSION_MISMATCH	readDataBase.cpp	/^  , LIBSBML_VERSION_MISMATCH        = -8$/;"	e	enum:__anon1	file:
 MATH_H	imath.h	13;"	d
 MSG_BUFF	strcacu/cacu_main.h	10;"	d
 MSG_BUFF	strcacu/str_cacu.h	10;"	d
@@ -340,6 +370,9 @@ Node::setNodeWeight	node.h	/^	void setNodeWeight (const int&, const int&);$/;"	p
 Node::weight	node.h	/^	markType weight;$/;"	m	class:Node	access:private
 Node::~Node	node.cpp	/^Node::~Node ()$/;"	f	class:Node	signature:()
 Node::~Node	node.h	/^	~Node ();$/;"	p	class:Node	access:public	signature:()
+OperationReturnValues_t	myreaction.cpp	/^} OperationReturnValues_t;$/;"	t	typeref:enum:__anon2	file:
+OperationReturnValues_t	mysbmldoc.cpp	/^} OperationReturnValues_t;$/;"	t	typeref:enum:__anon3	file:
+OperationReturnValues_t	readDataBase.cpp	/^} OperationReturnValues_t;$/;"	t	typeref:enum:__anon1	file:
 Output	chain.cpp	/^void Chain::Output (ostream& os) const $/;"	f	class:Chain	signature:(ostream& os) const
 Output	chain.h	/^	void Output (ostream&) const; $/;"	p	class:Chain	access:public	signature:(ostream&) const
 Output	myspecies.cpp	/^void MySpecies::Output () const$/;"	f	class:MySpecies	signature:() const
@@ -675,6 +708,7 @@ YY_USE_CONST	strcacu/caculex.c	100;"	d	file:
 YY_USE_CONST	strcacu/caculex.c	93;"	d	file:
 _CACU_MAIN_H_	strcacu/cacu_main.h	2;"	d
 _COPSI_INTERFACE_H_	copsiPlot/CopsiInterface.h	2;"	d
+_GLOBAL_SETTING_H_	globalSetting.h	2;"	d
 _INTEGRATE_H_	plotTest/integrate.h	2;"	d
 _STDLIB_H	strcacu/cacuyac.c	284;"	d	file:
 _STDLIB_H	strcacu/cacuyac.c	312;"	d	file:
@@ -745,7 +779,7 @@ config	readInput.cpp	/^void readInput::config ($/;"	f	class:readInput	signature:
 config	readInput.h	/^	void config ($/;"	p	class:readInput	access:public	signature:( MySBMLDocument* mysbmldoc )
 constraintType	g_i.h	/^typedef pair<vector<string>, string> constraintType;$/;"	t
 copsi_entry	copsiPlot/CopsiInterface.h	/^int copsi_entry(char *file_name);$/;"	p	signature:(char *file_name)
-copsi_entry	copsiPlot/main.cpp	/^int copsi_entry(char *file_name)$/;"	f	signature:(char *file_name)
+copsi_entry	copsiPlot/main.cpp	/^int copsi_entry(char *file_name_1)$/;"	f	signature:(char *file_name_1)
 copsi_main	copsiPlot/main.cpp	/^int copsi_main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
 createChain	myspecies.cpp	/^Chain* MySpecies::createChain ($/;"	f	class:MySpecies	signature:( const Chain* orig )
 createChain	myspecies.cpp	/^Chain* MySpecies::createChain ()$/;"	f	class:MySpecies	signature:()
@@ -789,6 +823,9 @@ equiv	myspecies.h	/^		vector< set<int> > equiv; \/\/ each set is an equivalent c
 err_msg	strcacu/str_cacu.cpp	/^char err_msg[MSG_BUFF];$/;"	v
 err_no	strcacu/str_cacu.cpp	/^int err_no;$/;"	v
 expression	strcacu/cacu.y	/^expression: assignexp ';' cacuexpr ';'$/;"	l
+f	cvodeTest/ram_plot.c	/^static int f(realtype t, N_Vector y, N_Vector ydot, void *f_data)$/;"	f	file:	signature:(realtype t, N_Vector y, N_Vector ydot, void *f_data)
+f	plotTest/ram_plot.c	/^static int f(realtype t, N_Vector y, N_Vector ydot, void *f_data)$/;"	f	file:	signature:(realtype t, N_Vector y, N_Vector ydot, void *f_data)
+f_network	cvodeTest/ram_plot.c	/^static int f_network(realtype t, N_Vector y, N_Vector ydot, void *f_data)$/;"	f	file:	signature:(realtype t, N_Vector y, N_Vector ydot, void *f_data)
 fast	reactionTemplate.h	/^		bool fast;$/;"	m	class:reactionTemplate	access:private
 final_time	plotTest/plot_main.cpp	/^int final_time;$/;"	v
 findBindedNode	myspecies.cpp	/^Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label )
@@ -938,6 +975,8 @@ get_data_point	plotTest/integrate.h	/^		const QVector < QVector<double> >& get_d
 get_err_msg	strcacu/cacu_main.h	/^const char* get_err_msg();$/;"	p	signature:()
 get_err_msg	strcacu/str_cacu.cpp	/^const char *get_err_msg()$/;"	f	signature:()
 get_err_msg	strcacu/str_cacu.h	/^const char* get_err_msg();$/;"	p	signature:()
+get_igame_home_dir	globalSetting.cpp	/^const char* get_igame_home_dir()$/;"	f	signature:()
+get_igame_home_dir	globalSetting.h	/^const char* get_igame_home_dir();$/;"	p	signature:()
 get_labels	plotTest/integrate.cpp	/^const QVector <QString>& intgrtOutData::get_labels() const$/;"	f	class:intgrtOutData	signature:() const
 get_labels	plotTest/integrate.h	/^		const QVector <QString>& get_labels() const;$/;"	p	class:intgrtOutData	access:public	signature:() const
 get_msg	strcacu/StrCacuException.cpp	/^const string& StrCacuException::get_msg() const throw()$/;"	f	class:StrCacuException	signature:() const
@@ -1035,8 +1074,11 @@ mMaxDataY	plotTest/integrate.h	/^	double mMaxDataY;$/;"	m	class:intgrtOutData	ac
 mMinDataX	plotTest/integrate.h	/^		double mMinDataX;$/;"	m	class:intgrtOutData	access:private
 mMinDataY	plotTest/integrate.h	/^		double mMinDataY;$/;"	m	class:intgrtOutData	access:private
 mPlotRegion	plotTest/integrate.h	/^		QRectF mPlotRegion;$/;"	m	class:intgrtOutData	access:private
-main	main.cpp	/^int main ()$/;"	f	signature:()
+main	copsiPlot/main.cpp	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	cvodeTest/ram_plot.c	/^int main(int argc, char** argv)$/;"	f	signature:(int argc, char** argv)
+main	main/main.cpp	/^int main ()$/;"	f	signature:()
 main	plotTest/plot_main.cpp	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	plotTest/ram_plot.c	/^int main(int argc, char** argv)$/;"	f	signature:(int argc, char** argv)
 main	strcacu/cacu_main.cpp	/^int main (int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
 malloc	strcacu/cacuyac.c	/^void *malloc (YYSIZE_T); \/* INFRINGES ON USER NAME SPACE *\/$/;"	p	file:
 mapComps	reactionTemplate.h	/^		map <string, string> mapComps;$/;"	m	class:reactionTemplate	access:private
@@ -1354,6 +1396,8 @@ setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase
 setUnit	readDataBase.cpp	/^void readDataBase::setUnit ($/;"	f	class:readDataBase	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
 setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( Unit* unit, const UnitKind_t& kind, const double& exponent, const int& scale, const double& multiplier ) const
 setUnit	readDataBase.h	/^		void setUnit ($/;"	p	class:readDataBase	access:protected	signature:( UnitDefinition* unitdef, const string& id, const string& name ) const
+set_igame_home	globalSetting.cpp	/^void set_igame_home(const char* input)$/;"	f	signature:(const char* input)
+set_igame_home	globalSetting.h	/^void set_igame_home(const char*);$/;"	p	signature:(const char*)
 short	strcacu/cacuyac.c	180;"	d	file:
 speciesArrayMatch	g_i.h	/^typedef vector<speciesMatch> speciesArrayMatch;$/;"	t
 speciesLabel_db	myspecies.h	/^		string speciesLabel_db; \/\/used in reaction templates$/;"	m	class:MySpecies	access:private
@@ -1369,6 +1413,7 @@ substituentType_set	readXMLComponent.h	/^		set<string> substituentType_set;$/;"	
 substituent_m	chain.cpp	/^bool Chain::substituent_m ($/;"	f	class:Chain	signature:( const int& l1, const int& u1, const int& l2, const int& u2, const Chain* c, vector<cMatchType>& result ) const
 substituent_m	chain.h	/^	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; $/;"	p	class:Chain	access:private	signature:(const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const
 symbo_table	strcacu/str_cacu.cpp	/^map<string, double> symbo_table;$/;"	v
+system_igame_home	globalSetting.cpp	/^string system_igame_home = "";$/;"	v
 test_x	plotTest/integrate.h	/^		QVector < double > test_x;$/;"	m	class:intgrtOutData	access:public
 test_y	plotTest/integrate.h	/^		QVector < QVector<double> > test_y;$/;"	m	class:intgrtOutData	access:public
 transferTable	reactionTemplate.h	/^		map<subsp, subsp> transferTable;$/;"	m	class:reactionTemplate	access:private

@@ -51,9 +51,9 @@
 #include "string.h"
 #include "StrCacuException.h"
 
-int copsi_main(int argc, char **argv)
+int copsi_main(int argc, char **argv, QApplication *a)
 {
-  QApplication a(argc, argv);
+//  QApplication a(argc, argv);
 
   // Parse the commandline options
   try
@@ -94,9 +94,10 @@ int copsi_main(int argc, char **argv)
 
   if (pWindow != NULL)
     {
-      a.setMainWidget(pWindow);
-      pWindow->getDataModel()->setQApp(&a);
-      a.exec();
+//      a.setMainWidget(pWindow);
+      pWindow->getDataModel()->setQApp(a);
+	  pWindow->show();
+//      a.exec();
     }
 
 finish:
@@ -129,7 +130,7 @@ int main(int argc, char **argv)
 }
 #endif
 
-int copsi_entry(char *file_name_1)
+int copsi_entry(char *file_name_1, QApplication *app)
 {
 	char* file_name = "network.xml";
 	int opt_num = 3;
@@ -150,7 +151,7 @@ int copsi_entry(char *file_name_1)
 	options[2] = new char[strlen(file_name)+1];
 	memset(options[2], 0, strlen(file_name)+1);
 	strcpy(options[2], file_name);
-	copsi_main(opt_num, options);
+	copsi_main(opt_num, options, app);
 
 	for (int i=1; i<3; i++)
 	{

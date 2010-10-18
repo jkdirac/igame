@@ -136,6 +136,7 @@ INCLUDE_DIRECTORIES( BEFORE
 	${IGAME_SOURCE_DIR}/BdInterface
 	${IGAME_SOURCE_DIR}/QwtPlot
 	${IGAME_SOURCE_DIR}/core
+	${IGAME_SOURCE_DIR}/core/copsiPlot
 	)
 #	${IGAME_SOURCE_DIR}/ExternalCode/qwt/include
 #	${IGAME_SOURCE_DIR}/ExternalCode/qwtplot3d/include

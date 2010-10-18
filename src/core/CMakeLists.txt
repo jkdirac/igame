@@ -3,7 +3,6 @@ SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 INCLUDE_DIRECTORIES( AFTER
 	${IGAME_SOURCE_DIR}/core/strcacu
 	${IGAME_SOURCE_DIR}/core/
-	${IGAME_SOURCE_DIR}/core/copsiPlot
 	)
 #${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/
 #${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/sbml
@@ -69,15 +68,15 @@ TARGET_LINK_LIBRARIES( core
 #  utility
 #  )
 
-ADD_EXECUTABLE( igame
-	${PRO_MAIN_CPP}
-	)
-
-TARGET_LINK_LIBRARIES( igame
-	core
-	copsi_wrapper 
-	)
-
-INSTALL_PROJECT( igame )
+#ADD_EXECUTABLE( igame
+#	${PRO_MAIN_CPP}
+#	)
+#
+#TARGET_LINK_LIBRARIES( igame
+#	core
+#	copsi_wrapper 
+#	)
+#
+#INSTALL_PROJECT( igame )
 INSTALL_PROJECT( core )
 INSTALL_PROJECT( test_strcacu )

@@ -25,6 +25,9 @@
 #include "mainWindow.h"
 #include "bdbInterface.h"
 
+#include "driver.h"
+#include "CopsiInterface.h"
+
 MainWindow::MainWindow( QWidget* parent) : QMainWindow(parent)
 {
 	ui.setupUi( this );
@@ -84,6 +87,22 @@ void MainWindow::import_data2db()
 		BdRetVal bsucc = db_interface.add_files(cur_pathname.toStdString(), cur_filename.toStdString());
 		//add to directory
 	}
+
+	Driver driver;
+	try
+	{
+		bool errno = driver.beginSimulation ();
+		copsi_entry("network.xml", m_app);
+	}
+	catch (StrCacuException &se)
+	{
+		cout << "exceptions" << endl;
+	}
+}
+
+void MainWindow::setQApp(QApplication* app)
+{
+	m_app = app;
 }
 
 void MainWindow::openSBML()
