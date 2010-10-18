@@ -4,26 +4,18 @@ INCLUDE_DIRECTORIES( AFTER
 	${IGAME_SOURCE_DIR}/core/strcacu
 	${IGAME_SOURCE_DIR}/core/
 	)
-#${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/
-#${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/sbml
 
 add_subdirectory (copsiPlot)
+add_subdirectory (strcacu)
 
 #source file
 FILE( GLOB PRO_CORE_HDRS *.h )
-FILE( GLOB PRO_INT_HDRS strcacu/*.h)
 FILE( GLOB PRO_CORE_SRC *.cpp )
-FILE( GLOB PRO_TEST_SRC strcacu/*.cpp )
+FILE( GLOB PRO_INT_HDRS strcacu/*.h)
 FILE( GLOB PRO_PLOT_TEST_SRC plotTest/*.cpp )
 FILE( GLOB PRO_PLOT_TEST_H plotTest/*.h)
 FILE( GLOB PRO_MAIN_CPP main/main.cpp)
 
-ADD_EXECUTABLE( test_strcacu
-	${PRO_TEST_SRC}
-	)
-TARGET_LINK_LIBRARIES( test_strcacu
-	str_cacu
-	)
 ADD_LIBRARY( core
 	SHARED
 	${PRO_CORE_HDRS}
@@ -42,17 +34,6 @@ TARGET_LINK_LIBRARIES( core
   utility
   str_cacu
   )
-
-#TARGET_LINK_LIBRARIES( core
-#  ${QT_LIBRARIES}
-#  qwt5
-#  sbml_solver
-#  dbxml
-#  sbml-4.0.1
-#  bdinterface
-#  utility
-#  str_cacu
-#  )
 
 #ADD_EXECUTABLE( helloplot
 #	${PRO_PLOT_TEST_SRC}
@@ -79,4 +60,3 @@ TARGET_LINK_LIBRARIES( core
 #
 #INSTALL_PROJECT( igame )
 INSTALL_PROJECT( core )
-INSTALL_PROJECT( test_strcacu )

@@ -1,5 +1,5 @@
 %{
-#include "cacuyac.h"
+#include "cacuyac.hpp"
 #include <string.h>
 #include <stdio.h>
 #include "cacu_main.h"
