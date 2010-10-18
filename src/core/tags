@@ -9,13 +9,14 @@ BEGIN	strcacu/caculex.c	125;"	d	file:
 CC	strcacu/Makefile	/^CC = gcc$/;"	m
 CCFLAGS	strcacu/Makefile	/^CCFLAGS = -g$/;"	m
 CHAIN_H	chain.h	13;"	d
+COPASI_MAIN	copsiPlot/main.cpp	22;"	d	file:
 CPULSPLUS	strcacu/Makefile	/^CPULSPLUS = g++$/;"	m
-Chain	chain.cpp	/^Chain::Chain ()$/;"	f	class:Chain	signature:()
+Chain	chain.cpp	/^Chain::Chain () {}$/;"	f	class:Chain	signature:()
 Chain	chain.cpp	/^Chain::Chain (const Chain* orig) $/;"	f	class:Chain	signature:(const Chain* orig)
 Chain	chain.h	/^	Chain ();$/;"	p	class:Chain	access:public	signature:()
 Chain	chain.h	/^	Chain (const Chain*);$/;"	p	class:Chain	access:public	signature:(const Chain*)
 Chain	chain.h	/^class Chain$/;"	c
-Chain::Chain	chain.cpp	/^Chain::Chain ()$/;"	f	class:Chain	signature:()
+Chain::Chain	chain.cpp	/^Chain::Chain () {}$/;"	f	class:Chain	signature:()
 Chain::Chain	chain.cpp	/^Chain::Chain (const Chain* orig) $/;"	f	class:Chain	signature:(const Chain* orig)
 Chain::Chain	chain.h	/^	Chain ();$/;"	p	class:Chain	access:public	signature:()
 Chain::Chain	chain.h	/^	Chain (const Chain*);$/;"	p	class:Chain	access:public	signature:(const Chain*)
@@ -24,6 +25,7 @@ Chain::Output	chain.h	/^	void Output (ostream&) const; $/;"	p	class:Chain	access
 Chain::__add_chain_prefix	chain.cpp	/^void Chain::__add_chain_prefix ($/;"	f	class:Chain	signature:( const string& prefix )
 Chain::__add_chain_prefix	chain.h	/^	void __add_chain_prefix (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
 Chain::chainLabel	chain.h	/^	string chainLabel;$/;"	m	class:Chain	access:private
+Chain::chainNum	chain.h	/^	int chainNum;$/;"	m	class:Chain	access:private
 Chain::createPart	chain.cpp	/^Part* Chain::createPart ($/;"	f	class:Chain	signature:( const string& __ref, const string& __label, const string& __type, const string& __ctg, const bool& __isb )
 Chain::createPart	chain.cpp	/^Part* Chain::createPart ()$/;"	f	class:Chain	signature:()
 Chain::createPart	chain.cpp	/^Part* Chain::createPart (const Part* p)$/;"	f	class:Chain	signature:(const Part* p)
@@ -36,6 +38,8 @@ Chain::genUnicode	chain.cpp	/^string Chain::genUnicode ($/;"	f	class:Chain	signa
 Chain::genUnicode	chain.cpp	/^void Chain::genUnicode ()$/;"	f	class:Chain	signature:()
 Chain::genUnicode	chain.h	/^	string genUnicode (const int&, const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&, const int&) const
 Chain::genUnicode	chain.h	/^	void genUnicode ();$/;"	p	class:Chain	access:public	signature:()
+Chain::getKeywords	chain.cpp	/^int Chain::getKeywords (const string& ref) const$/;"	f	class:Chain	signature:(const string& ref) const
+Chain::getKeywords	chain.h	/^	int getKeywords (const string&) const;$/;"	p	class:Chain	access:private	signature:(const string&) const
 Chain::getLabel	chain.cpp	/^string Chain::getLabel () const {$/;"	f	class:Chain	signature:() const
 Chain::getLabel	chain.h	/^	string getLabel () const;$/;"	p	class:Chain	access:public	signature:() const
 Chain::getNumOfParts	chain.cpp	/^int Chain::getNumOfParts () const$/;"	f	class:Chain	signature:() const
@@ -52,7 +56,6 @@ Chain::getPartIndex	chain.cpp	/^int Chain::getPartIndex ($/;"	f	class:Chain	sign
 Chain::getPartIndex	chain.h	/^	int getPartIndex (const string&) const;$/;"	p	class:Chain	access:public	signature:(const string&) const
 Chain::getUnicode	chain.cpp	/^string Chain::getUnicode () const$/;"	f	class:Chain	signature:() const
 Chain::getUnicode	chain.h	/^	string getUnicode () const;$/;"	p	class:Chain	access:public	signature:() const
-Chain::keywords	chain.h	/^	map<string, int> keywords;$/;"	m	class:Chain	access:private
 Chain::listOfParts	chain.h	/^	vector<Part*> listOfParts;$/;"	m	class:Chain	access:private
 Chain::match	chain.cpp	/^bool Chain::match (const Chain* c, cMatchsType& res	) const $/;"	f	class:Chain	signature:(const Chain* c, cMatchsType& res ) const
 Chain::match	chain.h	/^	bool match (const Chain*, cMatchsType&) const; $/;"	p	class:Chain	access:public	signature:(const Chain*, cMatchsType&) const
@@ -102,6 +105,10 @@ IsLess_n	tree.h	/^		IsLess_n () {}$/;"	f	class:IsLess_n	access:public	signature:
 IsLess_n	tree.h	/^class IsLess_n$/;"	c
 IsLess_n::IsLess_n	tree.h	/^		IsLess_n () {}$/;"	f	class:IsLess_n	access:public	signature:()
 IsLess_n::operator ()	tree.h	/^		inline bool operator () ($/;"	f	class:IsLess_n	access:public	signature:( const Node* x, const Node* y ) const
+IsLess_no	myspecies.h	/^		IsLess_no () {}$/;"	f	class:IsLess_no	access:public	signature:()
+IsLess_no	myspecies.h	/^class IsLess_no$/;"	c
+IsLess_no::IsLess_no	myspecies.h	/^		IsLess_no () {}$/;"	f	class:IsLess_no	access:public	signature:()
+IsLess_no::operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_no	access:public	signature:( const Chain* x, const Chain* y ) const
 IsLess_t	myspecies.h	/^		IsLess_t () {}$/;"	f	class:IsLess_t	access:public	signature:()
 IsLess_t	myspecies.h	/^class IsLess_t$/;"	c
 IsLess_t::IsLess_t	myspecies.h	/^		IsLess_t () {}$/;"	f	class:IsLess_t	access:public	signature:()
@@ -215,6 +222,7 @@ MySBMLDocument::searchTranscriptionReactions	mysbmldoc.cpp	/^void MySBMLDocument
 MySBMLDocument::searchTranscriptionReactions	mysbmldoc.h	/^		void searchTranscriptionReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
 MySBMLDocument::searchTranslationReactions	mysbmldoc.cpp	/^void MySBMLDocument::searchTranslationReactions ($/;"	f	class:MySBMLDocument	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
 MySBMLDocument::searchTranslationReactions	mysbmldoc.h	/^		void searchTranslationReactions ($/;"	p	class:MySBMLDocument	access:private	signature:( const int& i, const int& j, const int& k, readDataBase& dbreader )
+MySBMLDocument::startpos	mysbmldoc.h	/^		int startpos;$/;"	m	class:MySBMLDocument	access:private
 MySBMLDocument::write	mysbmldoc.cpp	/^void MySBMLDocument::write ()$/;"	f	class:MySBMLDocument	signature:()
 MySBMLDocument::write	mysbmldoc.h	/^		void write ();$/;"	p	class:MySBMLDocument	access:private	signature:()
 MySBMLDocument::~MySBMLDocument	mysbmldoc.cpp	/^MySBMLDocument::~MySBMLDocument ()$/;"	f	class:MySBMLDocument	signature:()
@@ -247,13 +255,13 @@ MySpecies::createTree	myspecies.h	/^		Tree* createTree ();$/;"	p	class:MySpecies
 MySpecies::createTree	myspecies.h	/^		Tree* createTree (const Tree* t);$/;"	p	class:MySpecies	access:public	signature:(const Tree* t)
 MySpecies::equal	myspecies.cpp	/^bool MySpecies::equal ($/;"	f	class:MySpecies	signature:( const MySpecies* rhs )
 MySpecies::equal	myspecies.h	/^		bool equal (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
-MySpecies::equiv	myspecies.h	/^		vector<markType> equiv; \/\/record block of same chains$/;"	m	class:MySpecies	access:private
+MySpecies::equiv	myspecies.h	/^		vector< set<int> > equiv; \/\/ each set is an equivalent class$/;"	m	class:MySpecies	access:private
 MySpecies::findBindedNode	myspecies.cpp	/^Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label )
 MySpecies::findBindedNode	myspecies.cpp	/^const Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label ) const
 MySpecies::findBindedNode	myspecies.h	/^		Node* findBindedNode (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
 MySpecies::findBindedNode	myspecies.h	/^		const Node* findBindedNode (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
-MySpecies::findEquiv	myspecies.cpp	/^void MySpecies::findEquiv () $/;"	f	class:MySpecies	signature:()
-MySpecies::findEquiv	myspecies.h	/^		void findEquiv ();$/;"	p	class:MySpecies	access:private	signature:()
+MySpecies::findEquiv	myspecies.cpp	/^void MySpecies::findEquiv (vector<markType>& psEquiv) const $/;"	f	class:MySpecies	signature:(vector<markType>& psEquiv) const
+MySpecies::findEquiv	myspecies.h	/^		void findEquiv (vector<markType>&) const;$/;"	p	class:MySpecies	access:private	signature:(vector<markType>&) const
 MySpecies::getChain	myspecies.cpp	/^Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n )
 MySpecies::getChain	myspecies.cpp	/^const Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n ) const
 MySpecies::getChain	myspecies.h	/^		Chain* getChain (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
@@ -276,15 +284,15 @@ MySpecies::getTree	myspecies.cpp	/^Tree* MySpecies::getTree ($/;"	f	class:MySpec
 MySpecies::getTree	myspecies.cpp	/^const Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n ) const
 MySpecies::getTree	myspecies.h	/^		Tree* getTree (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
 MySpecies::getTree	myspecies.h	/^		const Tree* getTree (const int&) const;$/;"	p	class:MySpecies	access:public	signature:(const int&) const
-MySpecies::isRearranged	myspecies.h	/^		bool isRearranged; \/\/if its structure has been rearranged$/;"	m	class:MySpecies	access:private
+MySpecies::isCompartment	myspecies.cpp	/^bool MySpecies::isCompartment () const$/;"	f	class:MySpecies	signature:() const
+MySpecies::isCompartment	myspecies.h	/^		bool isCompartment () const;$/;"	p	class:MySpecies	access:public	signature:() const
 MySpecies::listOfChains	myspecies.h	/^		vector<Chain*> listOfChains;$/;"	m	class:MySpecies	access:private
 MySpecies::listOfTrees	myspecies.h	/^		vector<Tree*> listOfTrees;$/;"	m	class:MySpecies	access:private
 MySpecies::match	myspecies.cpp	/^bool MySpecies::match ($/;"	f	class:MySpecies	signature:( const MySpecies* s, vector<cMatchsType2>& trym ) const
 MySpecies::match	myspecies.h	/^		bool match (const MySpecies*, cMatchsArray& res) const;$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*, cMatchsArray& res) const
-MySpecies::partialDup	myspecies.cpp	/^void MySpecies::partialDup ($/;"	f	class:MySpecies	signature:( const set<int>& chainSaved, const set<string>& nodeSaved )
-MySpecies::partialDup	myspecies.h	/^		void partialDup (const set<int>&, const set<string>&);$/;"	p	class:MySpecies	access:public	signature:(const set<int>&, const set<string>&)
-MySpecies::perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const permType& permAll )
-MySpecies::perm	myspecies.h	/^		void perm (const int&, const permType&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const permType&)
+MySpecies::minW	myspecies.h	/^		string minW;$/;"	m	class:MySpecies	access:private
+MySpecies::perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const vector<markType>& psEquiv, const permType& permAll, vector<int>& order )
+MySpecies::perm	myspecies.h	/^		void perm (const int&, const vector<markType>&, const permType&, vector<int>&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const vector<markType>&, const permType&, vector<int>&)
 MySpecies::rearrange	myspecies.cpp	/^void MySpecies::rearrange ()$/;"	f	class:MySpecies	signature:()
 MySpecies::rearrange	myspecies.h	/^		void rearrange ();$/;"	p	class:MySpecies	access:public	signature:()
 MySpecies::reference_db	myspecies.h	/^		string reference_db; \/\/id in database for template species $/;"	m	class:MySpecies	access:private
@@ -314,8 +322,6 @@ Node::Node	node.h	/^	Node (const Node*);$/;"	p	class:Node	access:public	signatur
 Node::addChild	node.cpp	/^void Node::addChild ($/;"	f	class:Node	signature:( Node* childNodePtr )
 Node::addChild	node.h	/^	void addChild (Node*);$/;"	p	class:Node	access:public	signature:(Node*)
 Node::children	node.h	/^	vector<Node*> children;$/;"	m	class:Node	access:private
-Node::equal	node.cpp	/^bool Node::equal ($/;"	f	class:Node	signature:( const Node* rhs ) const
-Node::equal	node.h	/^	bool equal (const Node*) const;$/;"	p	class:Node	access:public	signature:(const Node*) const
 Node::getNodeLabel	node.cpp	/^string Node::getNodeLabel () const$/;"	f	class:Node	signature:() const
 Node::getNodeLabel	node.h	/^	string getNodeLabel () const;$/;"	p	class:Node	access:public	signature:() const
 Node::getNodeWeight	node.cpp	/^markType Node::getNodeWeight () const$/;"	f	class:Node	signature:() const
@@ -342,6 +348,8 @@ Output	tree.cpp	/^void Tree::Output (ostream& os) const {$/;"	f	class:Tree	signa
 Output	tree.cpp	/^void Tree::Output (ostream& os, const string& label) const$/;"	f	class:Tree	signature:(ostream& os, const string& label) const
 Output	tree.h	/^	void Output (ostream&) const;$/;"	p	class:Tree	access:public	signature:(ostream&) const
 Output	tree.h	/^	void Output (ostream&, const string&) const; $/;"	p	class:Tree	access:private	signature:(ostream&, const string&) const
+OutputProducts	reactionTemplate.cpp	/^void reactionTemplate::OutputProducts ()$/;"	f	class:reactionTemplate	signature:()
+OutputProducts	reactionTemplate.h	/^		void OutputProducts ();$/;"	p	class:reactionTemplate	access:public	signature:()
 PART_H	part.h	13;"	d
 Part	part.cpp	/^Part::Part () :isBinded (false) {}$/;"	f	class:Part	signature:()
 Part	part.cpp	/^Part::Part (const Part* orig) : $/;"	f	class:Part	signature:(const Part* orig)
@@ -477,8 +485,8 @@ TOKEN_TIMES	strcacu/cacuyac.c	140;"	d	file:
 TOKEN_TIMES	strcacu/cacuyac.h	/^     TOKEN_TIMES = 266,$/;"	e	enum:yytokentype
 TOKEN_TIMES	strcacu/cacuyac.h	68;"	d
 TREE_H	tree.h	13;"	d
-Tree	tree.cpp	/^Tree::Tree ()$/;"	f	class:Tree	signature:()
-Tree	tree.cpp	/^Tree::Tree (const Tree* orig)$/;"	f	class:Tree	signature:(const Tree* orig)
+Tree	tree.cpp	/^Tree::Tree () {}$/;"	f	class:Tree	signature:()
+Tree	tree.cpp	/^Tree::Tree (const Tree* orig) : unicode (orig->unicode)$/;"	f	class:Tree	signature:(const Tree* orig)
 Tree	tree.h	/^	Tree ();$/;"	p	class:Tree	access:public	signature:()
 Tree	tree.h	/^	Tree (const Tree*);$/;"	p	class:Tree	access:public	signature:(const Tree*)
 Tree	tree.h	/^class Tree$/;"	c
@@ -486,30 +494,26 @@ Tree::Output	tree.cpp	/^void Tree::Output (ostream& os) const {$/;"	f	class:Tree
 Tree::Output	tree.cpp	/^void Tree::Output (ostream& os, const string& label) const$/;"	f	class:Tree	signature:(ostream& os, const string& label) const
 Tree::Output	tree.h	/^	void Output (ostream&) const;$/;"	p	class:Tree	access:public	signature:(ostream&) const
 Tree::Output	tree.h	/^	void Output (ostream&, const string&) const; $/;"	p	class:Tree	access:private	signature:(ostream&, const string&) const
-Tree::Tree	tree.cpp	/^Tree::Tree ()$/;"	f	class:Tree	signature:()
-Tree::Tree	tree.cpp	/^Tree::Tree (const Tree* orig)$/;"	f	class:Tree	signature:(const Tree* orig)
+Tree::Tree	tree.cpp	/^Tree::Tree () {}$/;"	f	class:Tree	signature:()
+Tree::Tree	tree.cpp	/^Tree::Tree (const Tree* orig) : unicode (orig->unicode)$/;"	f	class:Tree	signature:(const Tree* orig)
 Tree::Tree	tree.h	/^	Tree ();$/;"	p	class:Tree	access:public	signature:()
 Tree::Tree	tree.h	/^	Tree (const Tree*);$/;"	p	class:Tree	access:public	signature:(const Tree*)
 Tree::__add_tree_prefix	tree.cpp	/^void Tree::__add_tree_prefix (const string& prefix)$/;"	f	class:Tree	signature:(const string& prefix)
 Tree::__add_tree_prefix	tree.h	/^	void __add_tree_prefix (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
-Tree::__label_collection	tree.cpp	/^Node* Tree::__label_collection ($/;"	f	class:Tree	signature:( set<string>& collection, const Node* n ) const
-Tree::__label_collection	tree.h	/^	Node* __label_collection (set<string>&, const Node*) const;$/;"	p	class:Tree	access:private	signature:(set<string>&, const Node*) const
 Tree::addNodeChildren	tree.cpp	/^void Tree::addNodeChildren ()$/;"	f	class:Tree	signature:()
 Tree::addNodeChildren	tree.h	/^	void addNodeChildren ();$/;"	p	class:Tree	access:public	signature:()
-Tree::checkIntegrated	tree.cpp	/^void Tree::checkIntegrated () const$/;"	f	class:Tree	signature:() const
-Tree::checkIntegrated	tree.h	/^	void checkIntegrated () const;$/;"	p	class:Tree	access:public	signature:() const
 Tree::createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const Node* n )
 Tree::createNode	tree.cpp	/^Node* Tree::createNode ($/;"	f	class:Tree	signature:( const string& child, const string& parent )
 Tree::createNode	tree.cpp	/^Node* Tree::createNode ()$/;"	f	class:Tree	signature:()
 Tree::createNode	tree.h	/^	Node* createNode ();$/;"	p	class:Tree	access:public	signature:()
 Tree::createNode	tree.h	/^	Node* createNode (const Node*);$/;"	p	class:Tree	access:public	signature:(const Node*)
 Tree::createNode	tree.h	/^	Node* createNode (const string&, const string&);$/;"	p	class:Tree	access:public	signature:(const string&, const string&)
-Tree::equal	tree.cpp	/^bool Tree::equal ($/;"	f	class:Tree	signature:( const Tree* rhs ) const
-Tree::equal	tree.h	/^	bool equal (const Tree*) const;$/;"	p	class:Tree	access:public	signature:(const Tree*) const
 Tree::genHuffman	tree.cpp	/^void Tree::genHuffman (const string& label)$/;"	f	class:Tree	signature:(const string& label)
-Tree::genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:private	signature:(const string&)
+Tree::genUnicode	tree.cpp	/^void Tree::genUnicode ()$/;"	f	class:Tree	signature:()
+Tree::genUnicode	tree.h	/^	void genUnicode ();$/;"	p	class:Tree	access:private	signature:()
 Tree::genWeight	tree.cpp	/^markType Tree::genWeight (const string& label)$/;"	f	class:Tree	signature:(const string& label)
-Tree::genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+Tree::genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:private	signature:(const string&)
 Tree::getNode	tree.cpp	/^Node* Tree::getNode (const int& n) {$/;"	f	class:Tree	signature:(const int& n)
 Tree::getNode	tree.cpp	/^Node* Tree::getNode (const string& label)$/;"	f	class:Tree	signature:(const string& label)
 Tree::getNode	tree.cpp	/^const Node* Tree::getNode (const int& n) const {$/;"	f	class:Tree	signature:(const int& n) const
@@ -518,11 +522,12 @@ Tree::getNode	tree.h	/^	Node* getNode (const int&);$/;"	p	class:Tree	access:publ
 Tree::getNode	tree.h	/^	Node* getNode (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
 Tree::getNode	tree.h	/^	const Node* getNode (const int&) const;$/;"	p	class:Tree	access:public	signature:(const int&) const
 Tree::getNode	tree.h	/^	const Node* getNode (const string&) const;$/;"	p	class:Tree	access:public	signature:(const string&) const
-Tree::getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {$/;"	f	class:Tree	signature:() const
+Tree::getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {return listOfNodes.size ();}$/;"	f	class:Tree	signature:() const
 Tree::getNumOfNodes	tree.h	/^	int getNumOfNodes () const;$/;"	p	class:Tree	access:public	signature:() const
 Tree::listOfNodes	tree.h	/^	vector<Node*> listOfNodes;$/;"	m	class:Tree	access:private
 Tree::mapNodes	tree.h	/^	map<string, Node*> mapNodes;$/;"	m	class:Tree	access:private
-Tree::~Tree	tree.cpp	/^Tree::~Tree ()$/;"	f	class:Tree	signature:()
+Tree::unicode	tree.h	/^	string unicode;$/;"	m	class:Tree	access:private
+Tree::~Tree	tree.cpp	/^Tree::~Tree () $/;"	f	class:Tree	signature:()
 Tree::~Tree	tree.h	/^	~Tree ();$/;"	p	class:Tree	access:public	signature:()
 UINT16_MAX	strcacu/caculex.c	80;"	d	file:
 UINT32_MAX	strcacu/caculex.c	83;"	d	file:
@@ -669,6 +674,7 @@ YY_USER_ACTION	strcacu/caculex.c	662;"	d	file:
 YY_USE_CONST	strcacu/caculex.c	100;"	d	file:
 YY_USE_CONST	strcacu/caculex.c	93;"	d	file:
 _CACU_MAIN_H_	strcacu/cacu_main.h	2;"	d
+_COPSI_INTERFACE_H_	copsiPlot/CopsiInterface.h	2;"	d
 _INTEGRATE_H_	plotTest/integrate.h	2;"	d
 _STDLIB_H	strcacu/cacuyac.c	284;"	d	file:
 _STDLIB_H	strcacu/cacuyac.c	312;"	d	file:
@@ -679,8 +685,6 @@ __add_chain_prefix	chain.cpp	/^void Chain::__add_chain_prefix ($/;"	f	class:Chai
 __add_chain_prefix	chain.h	/^	void __add_chain_prefix (const string&);$/;"	p	class:Chain	access:public	signature:(const string&)
 __add_tree_prefix	tree.cpp	/^void Tree::__add_tree_prefix (const string& prefix)$/;"	f	class:Tree	signature:(const string& prefix)
 __add_tree_prefix	tree.h	/^	void __add_tree_prefix (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
-__label_collection	tree.cpp	/^Node* Tree::__label_collection ($/;"	f	class:Tree	signature:( set<string>& collection, const Node* n ) const
-__label_collection	tree.h	/^	Node* __label_collection (set<string>&, const Node*) const;$/;"	p	class:Tree	access:private	signature:(set<string>&, const Node*) const
 addChild	node.cpp	/^void Node::addChild ($/;"	f	class:Node	signature:( Node* childNodePtr )
 addChild	node.h	/^	void addChild (Node*);$/;"	p	class:Node	access:public	signature:(Node*)
 addCompartment	reactionTemplate.cpp	/^void reactionTemplate::addCompartment ($/;"	f	class:reactionTemplate	signature:( const string& _compRef, const string& _currComp, const string& _parComp )
@@ -709,8 +713,6 @@ addPrefix	myspecies.cpp	/^void MySpecies::addPrefix (const string& prefix)$/;"	f
 addPrefix	myspecies.h	/^		void addPrefix (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
 addProduct	reactionTemplate.cpp	/^void reactionTemplate::addProduct ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
 addProduct	reactionTemplate.h	/^		void addProduct (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
-addProductPrefix	reactionTemplate.cpp	/^void reactionTemplate::addProductPrefix (const string& prefix) {$/;"	f	class:reactionTemplate	signature:(const string& prefix)
-addProductPrefix	reactionTemplate.h	/^		void addProductPrefix (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
 addReactant	reactionTemplate.cpp	/^void reactionTemplate::addReactant ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
 addReactant	reactionTemplate.h	/^		void addReactant (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
 addSpecialReaction	myreaction.cpp	/^void MyReaction::addSpecialReaction ($/;"	f	class:MyReaction	signature:( MySpecies* modifier, MySpecies* product, const string& paraId, const string& paraName, const double& paraValue, const string& paraUnits )
@@ -736,13 +738,15 @@ cacu_string_exp	strcacu/cacuyac.c	/^int cacu_string_exp(char *par, char *expr)$/
 cacu_string_exp	strcacu/str_cacu.h	/^extern int cacu_string_exp(const char *par, const char *expr);$/;"	p	signature:(const char *par, const char *expr)
 cacuexpr	strcacu/cacu.y	/^cacuexpr :TOKEN_LEFT_BRACKET cacuexpr TOKEN_RIGHT_BRACKET$/;"	l
 chainLabel	chain.h	/^	string chainLabel;$/;"	m	class:Chain	access:private
-checkIntegrated	tree.cpp	/^void Tree::checkIntegrated () const$/;"	f	class:Tree	signature:() const
-checkIntegrated	tree.h	/^	void checkIntegrated () const;$/;"	p	class:Tree	access:public	signature:() const
+chainNum	chain.h	/^	int chainNum;$/;"	m	class:Chain	access:private
 children	node.h	/^	vector<Node*> children;$/;"	m	class:Node	access:private
 comp_type_id	myspecies.h	/^		string comp_type_id; \/\/non-empty if it is a compartment-type species $/;"	m	class:MySpecies	access:private
 config	readInput.cpp	/^void readInput::config ($/;"	f	class:readInput	signature:( MySBMLDocument* mysbmldoc )
 config	readInput.h	/^	void config ($/;"	p	class:readInput	access:public	signature:( MySBMLDocument* mysbmldoc )
 constraintType	g_i.h	/^typedef pair<vector<string>, string> constraintType;$/;"	t
+copsi_entry	copsiPlot/CopsiInterface.h	/^int copsi_entry(char *file_name);$/;"	p	signature:(char *file_name)
+copsi_entry	copsiPlot/main.cpp	/^int copsi_entry(char *file_name)$/;"	f	signature:(char *file_name)
+copsi_main	copsiPlot/main.cpp	/^int copsi_main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
 createChain	myspecies.cpp	/^Chain* MySpecies::createChain ($/;"	f	class:MySpecies	signature:( const Chain* orig )
 createChain	myspecies.cpp	/^Chain* MySpecies::createChain ()$/;"	f	class:MySpecies	signature:()
 createChain	myspecies.h	/^		Chain* createChain ();$/;"	p	class:MySpecies	access:public	signature:()
@@ -781,21 +785,18 @@ equal	chain.cpp	/^bool Chain::equal (const Chain* rhs) const$/;"	f	class:Chain	s
 equal	chain.h	/^	bool equal (const Chain*) const;$/;"	p	class:Chain	access:public	signature:(const Chain*) const
 equal	myspecies.cpp	/^bool MySpecies::equal ($/;"	f	class:MySpecies	signature:( const MySpecies* rhs )
 equal	myspecies.h	/^		bool equal (const MySpecies*);$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*)
-equal	node.cpp	/^bool Node::equal ($/;"	f	class:Node	signature:( const Node* rhs ) const
-equal	node.h	/^	bool equal (const Node*) const;$/;"	p	class:Node	access:public	signature:(const Node*) const
-equal	tree.cpp	/^bool Tree::equal ($/;"	f	class:Tree	signature:( const Tree* rhs ) const
-equal	tree.h	/^	bool equal (const Tree*) const;$/;"	p	class:Tree	access:public	signature:(const Tree*) const
-equiv	myspecies.h	/^		vector<markType> equiv; \/\/record block of same chains$/;"	m	class:MySpecies	access:private
+equiv	myspecies.h	/^		vector< set<int> > equiv; \/\/ each set is an equivalent class$/;"	m	class:MySpecies	access:private
 err_msg	strcacu/str_cacu.cpp	/^char err_msg[MSG_BUFF];$/;"	v
 err_no	strcacu/str_cacu.cpp	/^int err_no;$/;"	v
 expression	strcacu/cacu.y	/^expression: assignexp ';' cacuexpr ';'$/;"	l
 fast	reactionTemplate.h	/^		bool fast;$/;"	m	class:reactionTemplate	access:private
+final_time	plotTest/plot_main.cpp	/^int final_time;$/;"	v
 findBindedNode	myspecies.cpp	/^Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label )
 findBindedNode	myspecies.cpp	/^const Node* MySpecies::findBindedNode ($/;"	f	class:MySpecies	signature:( const string& label ) const
 findBindedNode	myspecies.h	/^		Node* findBindedNode (const string&);$/;"	p	class:MySpecies	access:public	signature:(const string&)
 findBindedNode	myspecies.h	/^		const Node* findBindedNode (const string&) const;$/;"	p	class:MySpecies	access:public	signature:(const string&) const
-findEquiv	myspecies.cpp	/^void MySpecies::findEquiv () $/;"	f	class:MySpecies	signature:()
-findEquiv	myspecies.h	/^		void findEquiv ();$/;"	p	class:MySpecies	access:private	signature:()
+findEquiv	myspecies.cpp	/^void MySpecies::findEquiv (vector<markType>& psEquiv) const $/;"	f	class:MySpecies	signature:(vector<markType>& psEquiv) const
+findEquiv	myspecies.h	/^		void findEquiv (vector<markType>&) const;$/;"	p	class:MySpecies	access:private	signature:(vector<markType>&) const
 findSpeciesMatch	reactionTemplate.cpp	/^bool reactionTemplate::findSpeciesMatch ($/;"	f	class:reactionTemplate	signature:( const string& dbref, const int& index, const vector<MySpecies*>& listOfMySpecies, const vector<MyCompartment*>& listOfMyCompartments, reactionArrayMatch& result )
 findSpeciesMatch	reactionTemplate.h	/^		bool findSpeciesMatch ($/;"	p	class:reactionTemplate	access:public	signature:( const string&, const int&, const vector<MySpecies*>&, const vector<MyCompartment*>&, reactionArrayMatch& )
 flex_int16_t	strcacu/caculex.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
@@ -813,13 +814,15 @@ flex_uint8_t	strcacu/caculex.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file
 free	strcacu/cacuyac.c	/^void free (void *); \/* INFRINGES ON USER NAME SPACE *\/$/;"	p	file:	signature:(void *)
 function_tests	strcacu/cacu_main.cpp	/^void function_tests()$/;"	f	signature:()
 genHuffman	tree.cpp	/^void Tree::genHuffman (const string& label)$/;"	f	class:Tree	signature:(const string& label)
-genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+genHuffman	tree.h	/^	void genHuffman (const string&);$/;"	p	class:Tree	access:private	signature:(const string&)
 genUnicode	chain.cpp	/^string Chain::genUnicode ($/;"	f	class:Chain	signature:( const int& start, const int& end ) const
 genUnicode	chain.cpp	/^void Chain::genUnicode ()$/;"	f	class:Chain	signature:()
 genUnicode	chain.h	/^	string genUnicode (const int&, const int&) const;$/;"	p	class:Chain	access:public	signature:(const int&, const int&) const
 genUnicode	chain.h	/^	void genUnicode ();$/;"	p	class:Chain	access:public	signature:()
+genUnicode	tree.cpp	/^void Tree::genUnicode ()$/;"	f	class:Tree	signature:()
+genUnicode	tree.h	/^	void genUnicode ();$/;"	p	class:Tree	access:private	signature:()
 genWeight	tree.cpp	/^markType Tree::genWeight (const string& label)$/;"	f	class:Tree	signature:(const string& label)
-genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:public	signature:(const string&)
+genWeight	tree.h	/^	markType genWeight (const string&);$/;"	p	class:Tree	access:private	signature:(const string&)
 getChain	myspecies.cpp	/^Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n )
 getChain	myspecies.cpp	/^const Chain* MySpecies::getChain ($/;"	f	class:MySpecies	signature:( const int& n ) const
 getChain	myspecies.h	/^		Chain* getChain (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
@@ -842,6 +845,8 @@ getId	reactionTemplate.cpp	/^string reactionTemplate::getId () const$/;"	f	class
 getId	reactionTemplate.h	/^		string getId () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
 getIsBinded	part.cpp	/^bool Part::getIsBinded () const {return isBinded;}$/;"	f	class:Part	signature:() const
 getIsBinded	part.h	/^	bool getIsBinded () const;$/;"	p	class:Part	access:public	signature:() const
+getKeywords	chain.cpp	/^int Chain::getKeywords (const string& ref) const$/;"	f	class:Chain	signature:(const string& ref) const
+getKeywords	chain.h	/^	int getKeywords (const string&) const;$/;"	p	class:Chain	access:private	signature:(const string&) const
 getLabel	chain.cpp	/^string Chain::getLabel () const {$/;"	f	class:Chain	signature:() const
 getLabel	chain.h	/^	string getLabel () const;$/;"	p	class:Chain	access:public	signature:() const
 getMath	reactionTemplate.cpp	/^string reactionTemplate::getMath () const$/;"	f	class:reactionTemplate	signature:() const
@@ -878,7 +883,7 @@ getNumOfMyCompartments	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMyCompartment
 getNumOfMyCompartments	mysbmldoc.h	/^		int getNumOfMyCompartments () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
 getNumOfMySpecies	mysbmldoc.cpp	/^int MySBMLDocument::getNumOfMySpecies () const$/;"	f	class:MySBMLDocument	signature:() const
 getNumOfMySpecies	mysbmldoc.h	/^		int getNumOfMySpecies () const;$/;"	p	class:MySBMLDocument	access:public	signature:() const
-getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {$/;"	f	class:Tree	signature:() const
+getNumOfNodes	tree.cpp	/^int Tree::getNumOfNodes () const {return listOfNodes.size ();}$/;"	f	class:Tree	signature:() const
 getNumOfNodes	tree.h	/^	int getNumOfNodes () const;$/;"	p	class:Tree	access:public	signature:() const
 getNumOfParts	chain.cpp	/^int Chain::getNumOfParts () const$/;"	f	class:Chain	signature:() const
 getNumOfParts	chain.h	/^	int getNumOfParts () const;$/;"	p	class:Chain	access:public	signature:() const
@@ -910,10 +915,16 @@ getPartRef	part.cpp	/^string Part::getPartRef () const {return partRef;}$/;"	f	c
 getPartRef	part.h	/^	string getPartRef () const;$/;"	p	class:Part	access:public	signature:() const
 getPartType	part.cpp	/^string Part::getPartType () const {return partType;}$/;"	f	class:Part	signature:() const
 getPartType	part.h	/^	string getPartType () const;$/;"	p	class:Part	access:public	signature:() const
+getProduct	reactionTemplate.cpp	/^MySpecies* reactionTemplate::getProduct (const int& n)$/;"	f	class:reactionTemplate	signature:(const int& n)
+getProduct	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getProduct (const int& n) const$/;"	f	class:reactionTemplate	signature:(const int& n) const
+getProduct	reactionTemplate.h	/^		MySpecies* getProduct (const int& n);$/;"	p	class:reactionTemplate	access:public	signature:(const int& n)
+getProduct	reactionTemplate.h	/^		const MySpecies* getProduct (const int& n) const;$/;"	p	class:reactionTemplate	access:public	signature:(const int& n) const
 getReversible	reactionTemplate.cpp	/^bool reactionTemplate::getReversible () const$/;"	f	class:reactionTemplate	signature:() const
 getReversible	reactionTemplate.h	/^		bool getReversible () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
 getSpecies	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getSpecies ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
 getSpecies	reactionTemplate.h	/^		const MySpecies* getSpecies (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+getSpeciesIndex	reactionTemplate.cpp	/^int reactionTemplate::getSpeciesIndex ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+getSpeciesIndex	reactionTemplate.h	/^		int getSpeciesIndex (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
 getTree	myspecies.cpp	/^Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n )
 getTree	myspecies.cpp	/^const Tree* MySpecies::getTree ($/;"	f	class:MySpecies	signature:( const int& n ) const
 getTree	myspecies.h	/^		Tree* getTree (const int&);$/;"	p	class:MySpecies	access:public	signature:(const int&)
@@ -981,6 +992,8 @@ intgrtOutData::push_time_point	plotTest/integrate.h	/^		void push_time_point(dou
 intgrtOutData::test_x	plotTest/integrate.h	/^		QVector < double > test_x;$/;"	m	class:intgrtOutData	access:public
 intgrtOutData::test_y	plotTest/integrate.h	/^		QVector < QVector<double> > test_y;$/;"	m	class:intgrtOutData	access:public
 isBinded	part.h	/^	bool isBinded;$/;"	m	class:Part	access:private
+isCompartment	myspecies.cpp	/^bool MySpecies::isCompartment () const$/;"	f	class:MySpecies	signature:() const
+isCompartment	myspecies.h	/^		bool isCompartment () const;$/;"	p	class:MySpecies	access:public	signature:() const
 isLeaf	node.cpp	/^bool Node::isLeaf () const$/;"	f	class:Node	signature:() const
 isLeaf	node.h	/^	bool isLeaf () const;$/;"	p	class:Node	access:public	signature:() const
 isMyCompartmentIn	mycompartment.cpp	/^MyCompartment* MyCompartment::isMyCompartmentIn ($/;"	f	class:MyCompartment	signature:( const string& ref )
@@ -995,11 +1008,9 @@ isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const MySpecies*);$/;
 isMySpeciesIn	mycompartment.h	/^	MySpecies* isMySpeciesIn (const string&);$/;"	p	class:MyCompartment	access:public	signature:(const string&)
 isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const MySpecies*) const;$/;"	p	class:MyCompartment	access:public	signature:(const MySpecies*) const
 isMySpeciesIn	mycompartment.h	/^	const MySpecies* isMySpeciesIn (const string&) const;$/;"	p	class:MyCompartment	access:public	signature:(const string&) const
-isRearranged	myspecies.h	/^		bool isRearranged; \/\/if its structure has been rearranged$/;"	m	class:MySpecies	access:private
 isSameType	reactionTemplate.cpp	/^bool isSameType (const string& lhs, const string& rhs)$/;"	f	signature:(const string& lhs, const string& rhs)
 isSameType	reactionTemplate.h	/^bool isSameType (const string&, const string&);$/;"	p	signature:(const string&, const string&)
 isatty	strcacu/caculex.c	/^extern int isatty (int );$/;"	p	file:	signature:(int )
-keywords	chain.h	/^	map<string, int> keywords;$/;"	m	class:Chain	access:private
 labels	plotTest/integrate.h	/^		QVector <QString> labels;$/;"	m	class:intgrtOutData	access:private
 lineno	strcacu/cacuyac.c	/^int lineno = 0;$/;"	v
 listOfChains	myspecies.h	/^		vector<Chain*> listOfChains;$/;"	m	class:MySpecies	access:private
@@ -1036,6 +1047,8 @@ match	chain.h	/^	bool match (const Chain*, cMatchsType&) const; $/;"	p	class:Cha
 match	myspecies.cpp	/^bool MySpecies::match ($/;"	f	class:MySpecies	signature:( const MySpecies* s, vector<cMatchsType2>& trym ) const
 match	myspecies.h	/^		bool match (const MySpecies*, cMatchsArray& res) const;$/;"	p	class:MySpecies	access:public	signature:(const MySpecies*, cMatchsArray& res) const
 math	reactionTemplate.h	/^		string math;$/;"	m	class:reactionTemplate	access:private
+max_step	plotTest/plot_main.cpp	/^int max_step;$/;"	v
+minW	myspecies.h	/^		string minW;$/;"	m	class:MySpecies	access:private
 mmapComps	reactionTemplate.h	/^		multimap <string,string> mmapComps;$/;"	m	class:reactionTemplate	access:private
 mmapIndexModifiers	reactionTemplate.h	/^		multimap <string, int> mmapIndexModifiers;$/;"	m	class:reactionTemplate	access:private
 mmapIndexProducts	reactionTemplate.h	/^		multimap <string, int> mmapIndexProducts;$/;"	m	class:reactionTemplate	access:private
@@ -1049,6 +1062,7 @@ n_msg	strcacu/StrCacuException.h	/^		string n_msg;$/;"	m	class:StrCacuException	
 name	reactionTemplate.h	/^		string name;$/;"	m	class:reactionTemplate	access:private
 nodeLabel	node.h	/^	string nodeLabel;$/;"	m	class:Node	access:private
 operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_c	access:public	signature:( const Chain* x, const Chain* y ) const
+operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_no	access:public	signature:( const Chain* x, const Chain* y ) const
 operator ()	myspecies.h	/^		inline bool operator () ($/;"	f	class:IsLess_t	access:public	signature:( const Tree* x, const Tree* y ) const
 operator ()	tree.h	/^		inline bool operator () ($/;"	f	class:IsLess_n	access:public	signature:( const Node* x, const Node* y ) const
 operator =	strcacu/StrCacuException.cpp	/^StrCacuException& StrCacuException::operator = (const StrCacuException& other) throw()$/;"	f	class:StrCacuException	signature:(const StrCacuException& other)
@@ -1062,10 +1076,8 @@ partLabel	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Pa
 partRef	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
 partType	part.h	/^	string partRef, partLabel, partType, partCtg;$/;"	m	class:Part	access:private
 partType_set	readXMLComponent.h	/^		set<string> partType_set;$/;"	m	class:readXMLComponent	access:protected
-partialDup	myspecies.cpp	/^void MySpecies::partialDup ($/;"	f	class:MySpecies	signature:( const set<int>& chainSaved, const set<string>& nodeSaved )
-partialDup	myspecies.h	/^		void partialDup (const set<int>&, const set<string>&);$/;"	p	class:MySpecies	access:public	signature:(const set<int>&, const set<string>&)
-perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const permType& permAll )
-perm	myspecies.h	/^		void perm (const int&, const permType&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const permType&)
+perm	myspecies.cpp	/^void MySpecies::perm ($/;"	f	class:MySpecies	signature:( const int& i, const vector<markType>& psEquiv, const permType& permAll, vector<int>& order )
+perm	myspecies.h	/^		void perm (const int&, const vector<markType>&, const permType&, vector<int>&);$/;"	p	class:MySpecies	access:private	signature:(const int&, const vector<markType>&, const permType&, vector<int>&)
 permType	g_i.h	/^typedef tvi permType;$/;"	t
 printOdes_fromFile	plotTest/plot_main.cpp	/^void printOdes_fromFile(char* filename)$/;"	f	signature:(char* filename)
 push_data_point	plotTest/integrate.cpp	/^void intgrtOutData::push_data_point(int n, double y)$/;"	f	class:intgrtOutData	signature:(int n, double y)
@@ -1080,6 +1092,8 @@ reactionPairMatch	g_i.h	/^typedef pair<reactionMatch, map<string, int> > reactio
 reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
 reactionTemplate	reactionTemplate.h	/^		reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()
 reactionTemplate	reactionTemplate.h	/^class reactionTemplate$/;"	c
+reactionTemplate::OutputProducts	reactionTemplate.cpp	/^void reactionTemplate::OutputProducts ()$/;"	f	class:reactionTemplate	signature:()
+reactionTemplate::OutputProducts	reactionTemplate.h	/^		void OutputProducts ();$/;"	p	class:reactionTemplate	access:public	signature:()
 reactionTemplate::addCompartment	reactionTemplate.cpp	/^void reactionTemplate::addCompartment ($/;"	f	class:reactionTemplate	signature:( const string& _compRef, const string& _currComp, const string& _parComp )
 reactionTemplate::addCompartment	reactionTemplate.h	/^		void addCompartment (const string&, const string&, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&, const string&, const string&)
 reactionTemplate::addConstraint	reactionTemplate.cpp	/^void reactionTemplate::addConstraint ($/;"	f	class:reactionTemplate	signature:( const vector<string>& vars, const string& formula )
@@ -1090,8 +1104,6 @@ reactionTemplate::addParameter	reactionTemplate.cpp	/^void reactionTemplate::add
 reactionTemplate::addParameter	reactionTemplate.h	/^		void addParameter (Parameter*);$/;"	p	class:reactionTemplate	access:public	signature:(Parameter*)
 reactionTemplate::addProduct	reactionTemplate.cpp	/^void reactionTemplate::addProduct ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
 reactionTemplate::addProduct	reactionTemplate.h	/^		void addProduct (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
-reactionTemplate::addProductPrefix	reactionTemplate.cpp	/^void reactionTemplate::addProductPrefix (const string& prefix) {$/;"	f	class:reactionTemplate	signature:(const string& prefix)
-reactionTemplate::addProductPrefix	reactionTemplate.h	/^		void addProductPrefix (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
 reactionTemplate::addReactant	reactionTemplate.cpp	/^void reactionTemplate::addReactant ($/;"	f	class:reactionTemplate	signature:( MySpecies* s, const string& compLabel )
 reactionTemplate::addReactant	reactionTemplate.h	/^		void addReactant (MySpecies*, const string&);$/;"	p	class:reactionTemplate	access:public	signature:(MySpecies*, const string&)
 reactionTemplate::addSubstituentTransfer	reactionTemplate.cpp	/^void reactionTemplate::addSubstituentTransfer ($/;"	f	class:reactionTemplate	signature:( const pair<string,string>& from, const pair<string,string>& to )
@@ -1113,10 +1125,16 @@ reactionTemplate::getName	reactionTemplate.cpp	/^string reactionTemplate::getNam
 reactionTemplate::getName	reactionTemplate.h	/^		string getName () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
 reactionTemplate::getParameter	reactionTemplate.cpp	/^Parameter* reactionTemplate::getParameter ($/;"	f	class:reactionTemplate	signature:( const string& sid )
 reactionTemplate::getParameter	reactionTemplate.h	/^		Parameter* getParameter (const string&);$/;"	p	class:reactionTemplate	access:public	signature:(const string&)
+reactionTemplate::getProduct	reactionTemplate.cpp	/^MySpecies* reactionTemplate::getProduct (const int& n)$/;"	f	class:reactionTemplate	signature:(const int& n)
+reactionTemplate::getProduct	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getProduct (const int& n) const$/;"	f	class:reactionTemplate	signature:(const int& n) const
+reactionTemplate::getProduct	reactionTemplate.h	/^		MySpecies* getProduct (const int& n);$/;"	p	class:reactionTemplate	access:public	signature:(const int& n)
+reactionTemplate::getProduct	reactionTemplate.h	/^		const MySpecies* getProduct (const int& n) const;$/;"	p	class:reactionTemplate	access:public	signature:(const int& n) const
 reactionTemplate::getReversible	reactionTemplate.cpp	/^bool reactionTemplate::getReversible () const$/;"	f	class:reactionTemplate	signature:() const
 reactionTemplate::getReversible	reactionTemplate.h	/^		bool getReversible () const;$/;"	p	class:reactionTemplate	access:public	signature:() const
 reactionTemplate::getSpecies	reactionTemplate.cpp	/^const MySpecies* reactionTemplate::getSpecies ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
 reactionTemplate::getSpecies	reactionTemplate.h	/^		const MySpecies* getSpecies (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
+reactionTemplate::getSpeciesIndex	reactionTemplate.cpp	/^int reactionTemplate::getSpeciesIndex ($/;"	f	class:reactionTemplate	signature:( const string& speciesLabel ) const
+reactionTemplate::getSpeciesIndex	reactionTemplate.h	/^		int getSpeciesIndex (const string&) const;$/;"	p	class:reactionTemplate	access:public	signature:(const string&) const
 reactionTemplate::handle_constraints	reactionTemplate.cpp	/^bool reactionTemplate::handle_constraints ($/;"	f	class:reactionTemplate	signature:( const ListOfParameters* globalpara )
 reactionTemplate::handle_constraints	reactionTemplate.h	/^		bool handle_constraints (const ListOfParameters*);$/;"	p	class:reactionTemplate	access:public	signature:(const ListOfParameters*)
 reactionTemplate::id	reactionTemplate.h	/^		string id;$/;"	m	class:reactionTemplate	access:private
@@ -1343,6 +1361,7 @@ speciesMatch	g_i.h	/^typedef pair<int, cMatchsType2> speciesMatch;$/;"	t
 speciesType_set	readXMLComponent.h	/^		set<string> speciesType_set;$/;"	m	class:readXMLComponent	access:protected
 split	myspecies.cpp	/^void MySpecies::split ($/;"	f	class:MySpecies	signature:( bdbXMLInterface& dbreader, vector<MySpecies*>& pieces )
 split	myspecies.h	/^		void split (bdbXMLInterface&, vector<MySpecies*>&);$/;"	p	class:MySpecies	access:public	signature:(bdbXMLInterface&, vector<MySpecies*>&)
+startpos	mysbmldoc.h	/^		int startpos;$/;"	m	class:MySBMLDocument	access:private
 string	strcacu/cacuyac.c	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	file:	access:public
 string	strcacu/cacuyac.h	/^    char *string;     \/* string buffer *\/$/;"	m	union:YYSTYPE	access:public
 subsp	g_i.h	/^typedef pair<string,string> subsp;$/;"	t
@@ -1357,6 +1376,7 @@ trim	myspecies.cpp	/^void MySpecies::trim (bdbXMLInterface* dbreader)$/;"	f	clas
 trim	myspecies.h	/^		void trim (bdbXMLInterface* dbreader = NULL);$/;"	p	class:MySpecies	access:private	signature:(bdbXMLInterface* dbreader = NULL)
 tvi	g_i.h	/^typedef vector<dvi> tvi;$/;"	t
 unicode	chain.h	/^	string unicode;$/;"	m	class:Chain	access:private
+unicode	tree.h	/^	string unicode;$/;"	m	class:Tree	access:private
 unitMap	readDataBase.h	/^		map <string, UnitKind_t> unitMap;$/;"	m	class:readDataBase	access:private
 unput	strcacu/caculex.c	188;"	d	file:
 validateExampleSBML	driver.cpp	/^bool Driver::validateExampleSBML ($/;"	f	class:Driver	signature:( SBMLDocument* sbmlDoc ) const
@@ -1587,7 +1607,7 @@ yywrap	strcacu/cacuyac.c	/^int yywrap () {$/;"	f
 ~Part	part.h	/^	~Part ();$/;"	p	class:Part	access:public	signature:()
 ~StrCacuException	strcacu/StrCacuException.cpp	/^StrCacuException::~StrCacuException() throw()$/;"	f	class:StrCacuException	signature:()
 ~StrCacuException	strcacu/StrCacuException.h	/^		~StrCacuException() throw();$/;"	p	class:StrCacuException	access:public	signature:()
-~Tree	tree.cpp	/^Tree::~Tree ()$/;"	f	class:Tree	signature:()
+~Tree	tree.cpp	/^Tree::~Tree () $/;"	f	class:Tree	signature:()
 ~Tree	tree.h	/^	~Tree ();$/;"	p	class:Tree	access:public	signature:()
 ~reactionTemplate	reactionTemplate.cpp	/^reactionTemplate::~reactionTemplate ()$/;"	f	class:reactionTemplate	signature:()
 ~reactionTemplate	reactionTemplate.h	/^		~reactionTemplate ();$/;"	p	class:reactionTemplate	access:public	signature:()

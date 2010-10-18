@@ -5,8 +5,15 @@ FILE( GLOB PRO_CORE_HDRS *.h )
 FILE( GLOB PRO_CORE_CPP_SRC *.cpp )
 FILE( GLOB PRO_CORE_C_SRC *.c )
 
+INCLUDE_DIRECTORIES( BEFORE
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/
+	${IGAME_SOURCE_DIR}/ExternalCode/sbml-4.0.1/sbml
+	)
+
 ADD_LIBRARY (utility 
 	${PRO_CORE_MOC}
 	${PRO_CORE_CPP_SRC}
 	${PRO_CORE_C_SRC}
 	)
+
+INSTALL_PROJECT( utility )

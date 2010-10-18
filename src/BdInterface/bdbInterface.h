@@ -1,8 +1,8 @@
 #ifndef _BD_INTERFACE_H_
 #define _BD_INTERFACE_H_
 
-#include "DbXml.hpp"
-#include "XmlException.hpp"
+#include "dbxml/DbXml.hpp"
+#include "dbxml/XmlException.hpp"
 #include "db.h"
 #include <vector>
 
