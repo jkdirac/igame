@@ -30,5 +30,6 @@ ADD_EXECUTABLE( test_strcacu
 	)
 TARGET_LINK_LIBRARIES( test_strcacu
 	str_cacu
+	utility
 	)
 INSTALL_PROJECT( test_strcacu )
