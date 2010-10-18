@@ -154,7 +154,7 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	for (int i = 0; i < CONT_IDX_NUM; i ++)
 	{
 		//这个有点随便了
-		QString q_cont_name("example2/");
+		QString q_cont_name("database/");
 		q_cont_name += (container_names[i].c_str());
 		q_cont_name += "/";
 		if (q_pathname.contains(q_cont_name, Qt::CaseInsensitive))
