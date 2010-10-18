@@ -63,7 +63,7 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: empty node partReference in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else __ref = temp[0];
 
@@ -84,12 +84,12 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: empty node partCategory in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else __ctg = temp[0];
 
 	if (__ctg == "substituent" && !substituentType_set.count (__ref))
-		throw StrCacuException (
+		throw CoreException (
 				"PART: invalid substituent-type part Reference!"
 				);
 
@@ -100,7 +100,7 @@ void readXMLComponent::readPart (
 				"PART: Invalid partCategory value in "
 				) + doc + ".xml!";
 		cout << "\n__ctg = " << __ctg << endl;
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 
 	//
@@ -115,7 +115,7 @@ void readXMLComponent::readPart (
 				"PART: empty node partType for"
 			    " non-substituent type part in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 
 	//	check if it is invalid
@@ -124,7 +124,7 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: Invalid partType value in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 }
 
@@ -153,7 +153,7 @@ void readXMLComponent::readNode (
 		string errno = string (
 				"NODE: empty node currentNodeLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else nCL = temp[0];
 
@@ -167,7 +167,7 @@ void readXMLComponent::readNode (
 		string errno = string (
 				"NODE: empty node parentNodeLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else nPL = temp[0];
 }
@@ -199,7 +199,7 @@ void readXMLComponent::readSpecies (
 		string errno = string (
 				"SPECIES: empty node speciesReference in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else speciesReference = temp[0];
 
@@ -213,7 +213,7 @@ void readXMLComponent::readSpecies (
 		string errno = string (
 				"SPECIES: empty node speciesLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else speciesLabel = temp[0];
 
@@ -227,7 +227,7 @@ void readXMLComponent::readSpecies (
 		string errno = string (
 				"SPECIES: empty node compartmentLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else compartmentLabel = temp[0];
 
@@ -268,7 +268,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty node compartmentReference in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else compartmentReference = temp[0];
 
@@ -282,7 +282,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty node currentCompartmentLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else currentCompartmentLabel = temp[0];
 
@@ -296,7 +296,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty node parentCompartmentLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else parentCompartmentLabel = temp[0];
 }
@@ -331,7 +331,7 @@ void readXMLComponent::readTransfer (
 		string errno = string (
 				"TRANSFER: empty attribute speciesLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else from.first = temp[0];
 
@@ -348,7 +348,7 @@ void readXMLComponent::readTransfer (
 		string errno = string (
 				"TRANSFER: empty node from in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else from.second = temp[0];
 
@@ -367,7 +367,7 @@ void readXMLComponent::readTransfer (
 		string errno = string (
 				"TRANSFER: empty attribute speciesLabel in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else to.first = temp[0];
 
@@ -384,7 +384,7 @@ void readXMLComponent::readTransfer (
 		string errno = string (
 				"TRANSFER: empty node to in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else to.second = temp[0];
 
@@ -427,7 +427,7 @@ void readXMLComponent::readParameter (
 				string ("PARAMETER: empty attribute @id in "
 					) + doc + ".xml!"
 				);
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 
@@ -493,7 +493,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty attribute @db in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else db = temp[0];
 
@@ -507,7 +507,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty node @id in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 
@@ -552,7 +552,7 @@ void readXMLComponent::readCompartment (
 		string errno = string (
 				"COMPARTMENT: empty node @outside in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else outside = temp[0];
 
@@ -616,7 +616,7 @@ void readXMLComponent::readSpecies (
 		string errno = string (
 				"SPECIES: empty node id in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 
@@ -637,7 +637,7 @@ void readXMLComponent::readSpecies (
 		string errno = string (
 				"SPECIES: empty node compartment in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else compartment = temp[0];
 
@@ -664,7 +664,7 @@ void readXMLComponent::readSpecies (
 				"SPECIES: only one of initialAmount/initialConcentration"
 				" could be set to indicate species' initial quantity!"
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 
 	//
@@ -733,7 +733,7 @@ void readXMLComponent::readRule (
 		string errno = string (
 				"RULE: empty node variable in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else variable = temp[0];
 
@@ -749,7 +749,7 @@ void readXMLComponent::readRule (
 			string errno = string (
 					"RULE: empty node math in "
 					) + doc + ".xml!";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		else math = temp[0];
 	}
@@ -762,7 +762,7 @@ void readXMLComponent::readRule (
 			string errno = string (
 					"RULE: empty node math in "
 					) + doc + ".xml!";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		else math = res;
 	}
@@ -793,7 +793,7 @@ void readXMLComponent::readSpeciesLink (
 				"\nReferencedSpecies:"
 			   	" empty node referencedSpcies in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else speciesReference = temp[0];
 
@@ -829,7 +829,7 @@ void readXMLComponent::readReactionLink (
 		string errno = string (
 				"ReferencedReaction: empty node referencedReaction in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else reactionReference = temp[0];
 
@@ -843,7 +843,7 @@ void readXMLComponent::readReactionLink (
 		string errno = string (
 				"\nReferencedReaction: empty attribute @speciesType in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else 
 	{
@@ -858,7 +858,7 @@ void readXMLComponent::readReactionLink (
 			string errno = string (
 					"\nReferencedReaction: invalid speciesType value in "
 					) + doc + ".xml";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		else speciesType = temp[0];
 	}
@@ -892,7 +892,7 @@ void readXMLComponent::readUnit (
 		string errno = string (
 				"UNIT: empty attribute @kind in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else kind = temp[0];
 
@@ -954,7 +954,7 @@ void readXMLComponent::readFunctionDef (
 		string errno = string (
 				"FUNCTION: empty attribute @id in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 	
@@ -975,7 +975,7 @@ void readXMLComponent::readFunctionDef (
 		string errno = string (
 				"FUNCTION: empty node math in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 }
 
@@ -1008,7 +1008,7 @@ void readXMLComponent::readExternalRef (
 		string errno = string (
 				"REACTION: empty node id (extRef) in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 
@@ -1023,7 +1023,7 @@ void readXMLComponent::readExternalRef (
 		string errno = string (
 				"REACTION: empty node extRefSource in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else parameterLabel = temp[0];
 
@@ -1038,7 +1038,7 @@ void readXMLComponent::readExternalRef (
 		string errno = string (
 				"REACTION: empty attribute speciesLabel (extRef) in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else speciesLabel = temp[0];
 
@@ -1053,7 +1053,7 @@ void readXMLComponent::readExternalRef (
 		string errno = string (
 				"REACTION: empty attribute partLabel (extRef) in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else partLabel = temp[0];
 }	
@@ -1106,7 +1106,7 @@ void readXMLComponent::readConditionalParameter (
 				string errno = string (
 						"DEFAULT: no default value: "
 						) + para + " , in " + doc1 + ".xml!";
-				throw StrCacuException (errno);
+				throw CoreException (errno);
 			}
 			else value = atof (temp[0].c_str ());
 		}
@@ -1167,7 +1167,7 @@ void readXMLComponent::readConstraint (
 		string errno = string (
 				"REACTION: no variables defined in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else
 	{
@@ -1193,7 +1193,7 @@ void readXMLComponent::readConstraint (
 		string errno = string (
 				"REACTION: no formula defined in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else formula = temp[0];
 }

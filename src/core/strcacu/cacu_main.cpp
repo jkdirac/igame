@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "str_cacu.h"
-#include "StrCacuException.h"
+#include "CoreException.h"
 
 using namespace std;
 
@@ -46,7 +46,7 @@ void function_tests()
 		{
 			res = cacu_str_exp(pars[i].c_str(), exprs[i].c_str());
 			cout << "-- test cacu_string_exp : " << pars[i] << " (" << exprs[i] << ") = " << res;
-		} catch (StrCacuException &se)
+		} catch (CoreException &se)
 		{
 			cout << "!! cacu err: " << se.what() << " parameter: " << pars[i].c_str() <<  " expression: "
 				<< exprs[i].c_str();

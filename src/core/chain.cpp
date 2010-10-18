@@ -558,7 +558,7 @@ bool Chain::substituent_m (
 				{
 					string errno ("Invalid Substituent Type: ");
 				    errno += partRef + "!";
-					throw StrCacuException (errno);
+					throw CoreException (errno);
 				}
 			}
 			result.push_back (res);
@@ -682,7 +682,7 @@ bool Chain::substituent_m (
 	{
 		string errno ("Invalid Substituent Type: ");
 		errno += partRef + "!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 
 	bool rVal = false;

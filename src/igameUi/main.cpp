@@ -3,7 +3,7 @@
 #include <QString>
 #include "mainWindow.h"
 #include "globalSetting.h"
-#include "StrCacuException.h"
+#include "CoreException.h"
 
 bool init_global_dir_setting()
 {
@@ -39,6 +39,8 @@ bool init_global_dir_setting()
 	{
 		//set current file
 		set_igame_home(QDir::currentPath().toLatin1().constData());
+		// notify the user check the file system full 
+		// or have not the write permission of path %HOME and "./" 
 	}
 
 	return b_succ;

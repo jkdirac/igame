@@ -19,7 +19,7 @@ void MyReaction::init (
 	 * since id has been set when the reaction generates,
 	 * we need only check if it is not empty
 	 */
-	if (getId ().empty ()) throw StrCacuException (
+	if (getId ().empty ()) throw CoreException (
 			"Empty Id in MyReaction Object!"
 			);
 
@@ -75,7 +75,7 @@ void MyReaction::createReactionsFromTemplate (
 		string __new = listOfMyReactants[i]->getId ();
 
 		if (!replacement.count (__old)) replacement[__old] = __new;
-		else throw StrCacuException (
+		else throw CoreException (
 				"Labels of species within one "
 			    "reactions should be different!"
 				);
@@ -87,7 +87,7 @@ void MyReaction::createReactionsFromTemplate (
 		string __new = listOfMyModifiers[i]->getId ();
 
 		if (!replacement.count (__old)) replacement[__old] = __new;
-		else throw StrCacuException (
+		else throw CoreException (
 				"Labels of species within one "
 			    "reactions should be different!"
 				);
@@ -314,7 +314,7 @@ void MyReaction::createReactionsFromTemplate (
 			}	
 			if (!found) 
 			{
-				if (compIndex == -1) throw StrCacuException (
+				if (compIndex == -1) throw CoreException (
 						"No compartment found in listOfMyCompartments!"
 						);
 				else
@@ -391,7 +391,7 @@ void MyReaction::createReactionsFromTemplate (
 
 	ASTNode* astMath = readMathMLFromString(mathXMLString.c_str());
 	if (astMath == NULL) 
-		throw StrCacuException ("Invalid MathML string converted!");
+		throw CoreException ("Invalid MathML string converted!");
 	 kl->setMath (astMath);
 
 	if (astMath != NULL) delete astMath;
@@ -448,7 +448,7 @@ void MyReaction::addSpecialReaction (
 	//    cout << "\nformula = " << formula << endl;
 
 	ASTNode_t* astMath = SBML_parseFormula (formula.c_str ());
-	if (astMath == NULL) throw StrCacuException (
+	if (astMath == NULL) throw CoreException (
 			"Invalid MathML string converted!"
 			);
 

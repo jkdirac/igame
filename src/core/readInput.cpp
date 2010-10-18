@@ -51,7 +51,7 @@ void readInput::config (
 					"UNIT: empty attribute @id in "
 					);
 			errno += unitDoc + ".xml!";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		else id = _id[0];
 
@@ -141,13 +141,13 @@ void readInput::config (
 
 		//	db must be the same with id
 		if (!db.empty () && db != id)
-			throw StrCacuException (
+			throw CoreException (
 					"Attribute db and id must be same"
 					" in Parameter Definition"
 					);
 
 		if (paraUsed.count (id))
-			throw StrCacuException (
+			throw CoreException (
 					string ("Redefinition of Parameter ")
 					+ db + "!"
 					);
@@ -181,7 +181,7 @@ void readInput::config (
 		readRule (DBINTERFACE, DOC, pathAlge, i, variable, math, true);
 
 		if (variableUsed.count (variable))
-			throw StrCacuException (
+			throw CoreException (
 					string ("Redefinition of Variable ")
 					+ variable + "!"
 					);
@@ -202,7 +202,7 @@ void readInput::config (
 		readRule (DBINTERFACE, DOC, pathAssr, i, variable, math, true);
 
 		if (variableUsed.count (variable))
-			throw StrCacuException (
+			throw CoreException (
 					string ("Redefinition of Variable ")
 					+ variable + "!"
 					);
@@ -223,7 +223,7 @@ void readInput::config (
 		readRule (DBINTERFACE, DOC, pathRate, i, variable, math, true);
 
 		if (variableUsed.count (variable))
-			throw StrCacuException (
+			throw CoreException (
 					string ("Redefinition of Variable ")
 					+ variable + "!"
 					);

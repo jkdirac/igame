@@ -45,7 +45,7 @@
 //    JkDirac       //
 //====================
 #include "strcacu/str_cacu.h"
-#include "strcacu/StrCacuException.h"
+#include "strcacu/CoreException.h"
 
 //LIBSBML_CPP_NAMESPACE_USE
 using namespace std;

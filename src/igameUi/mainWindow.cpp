@@ -106,7 +106,7 @@ void MainWindow::import_data2db()
 		QProcess::execute(pro_name, par_list);
 //        QProcess::execute(pro_name);
 	}
-	catch (StrCacuException &se)
+	catch (CoreException &se)
 	{
 		cout << "exceptions" << endl;
 	}

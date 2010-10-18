@@ -85,7 +85,7 @@ Node* Tree::createNode (
 
 	if (!mapNodes.count (child)) 
 		mapNodes[n->nodeLabel] = n;
-	else throw StrCacuException (
+	else throw CoreException (
 			"Two nodes with same label is not permitted!"
 			);
 

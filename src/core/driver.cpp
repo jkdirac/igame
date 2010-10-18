@@ -43,7 +43,7 @@ bool Driver::beginSimulation ()
 		cerr << e.what() << "\n: Unable to allocate memory." << endl;
 		return 1;
 	}
-	catch (StrCacuException& e)
+	catch (CoreException& e)
 	{
 		cerr << e.what () << "\n: Invalid data term." << endl;
 		return 1;

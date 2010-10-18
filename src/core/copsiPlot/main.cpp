@@ -49,7 +49,7 @@
 #endif // Darwin
 
 #include "string.h"
-#include "StrCacuException.h"
+#include "CoreException.h"
 
 int copsi_main(int argc, char **argv, QApplication *a)
 {
@@ -141,7 +141,7 @@ int copsi_entry(char *file_name_1, QApplication *app)
 #ifndef BUILD_EXE
 	if (file_name == NULL)
 	{
-		throw StrCacuException("copsi_entry NULL input pointer");
+		throw CoreException("copsi_entry NULL input pointer");
 	}
 #endif
 

@@ -828,7 +828,7 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 			if (p->getIsBinded ()) 
 			{
 				string partLabel = p->getPartLabel ();
-				if (bindsites.count (partLabel)) throw StrCacuException (
+				if (bindsites.count (partLabel)) throw CoreException (
 						"Part Labels must be different in one species!"
 						);
 				else bindsites[partLabel] = make_pair (i,j);

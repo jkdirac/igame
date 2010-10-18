@@ -92,11 +92,11 @@ void readDataBase::read_cnModel (
 					__ref, __label, __type, __ctg); 
 
 			if (__label_set.count (__label))
-				throw StrCacuException (
+				throw CoreException (
 						"Species: partLabel should be unique within"
 						"one species cnModel definition!"
 						);
-			else if (__label == "ROOT") throw StrCacuException (
+			else if (__label == "ROOT") throw CoreException (
 					"partLabel could not be \"ROOT\""
 					);
 			else __label_set.insert (__label);
@@ -104,7 +104,7 @@ void readDataBase::read_cnModel (
 			//	it is not allow species with substituent-type part
 			//	if it is not a template species
 			if (__ctg == "substituent" && !isTemplate)
-				throw StrCacuException (
+				throw CoreException (
 						"Reading Block cnModel..."
 						"Non-Template species is required!"
 						);
@@ -230,7 +230,7 @@ void readDataBase::setAlgebraicRule (
 	{
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
-			throw StrCacuException ("Invalid MathML string converted!");
+			throw CoreException ("Invalid MathML string converted!");
 		 alger->setMath (astMath);
 	}
 
@@ -259,7 +259,7 @@ void readDataBase::setAssignmentRule (
 	{
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
-			throw StrCacuException ("Invalid MathML string converted!");
+			throw CoreException ("Invalid MathML string converted!");
 		assr->setMath (astMath);
 	}
 
@@ -289,7 +289,7 @@ void readDataBase::setRateRule (
 	{
 		ASTNode* astMath = readMathMLFromString(math.c_str());
 		if (astMath == NULL) 
-			throw StrCacuException ("Invalid MathML string converted!");
+			throw CoreException ("Invalid MathML string converted!");
 		rater->setMath (astMath);
 	}
 
@@ -495,7 +495,7 @@ void readDataBase::setFunction (
 	if (astMath == NULL) 
 	{
 		cout << "\nmath = " << math << endl;
-		throw StrCacuException (
+		throw CoreException (
 				"Reading Block FunctionDefinition..."
 				"Null or Invalid Attribute Value: math!"
 				);
@@ -520,7 +520,7 @@ void readDataBase::readReaction (
 
 	string head ("/MoDeL/reaction");
 
-	if (doc.empty ()) throw StrCacuException (
+	if (doc.empty ()) throw CoreException (
 			"Reading Reaction...No ID Specified!"
 			);
 
@@ -553,7 +553,7 @@ void readDataBase::readReaction (
 					string errno = string (
 							"SPECIES: empty node speciesReference in "
 							) + doc + ".xml!";
-					throw StrCacuException (errno);
+					throw CoreException (errno);
 				}
 				else if (temp[0] == sid) {speciesType = 0; break;}
 			}
@@ -575,7 +575,7 @@ void readDataBase::readReaction (
 					string errno = string (
 							"SPECIES: empty node speciesReference in "
 							) + doc + ".xml!";
-					throw StrCacuException (errno);
+					throw CoreException (errno);
 				}
 				else if (temp[0] == sid) {speciesType = 1; break;}
 			}
@@ -597,13 +597,13 @@ void readDataBase::readReaction (
 					string errno = string (
 							"SPECIES: empty node speciesReference in "
 							) + doc + ".xml!";
-					throw StrCacuException (errno);
+					throw CoreException (errno);
 				}
 				else if (temp[0] == sid) {speciesType = 2; break;}
 			}
 		}
 
-		if (speciesType == -1) throw StrCacuException (
+		if (speciesType == -1) throw CoreException (
 				"Wrong link from species to reaction!"
 				);
 	}
@@ -621,11 +621,11 @@ void readDataBase::readReaction (
 		string errno = string (
 				"REACTION: empty attribute id in "
 				) + doc + ".xml!";
-		throw StrCacuException (errno);
+		throw CoreException (errno);
 	}
 	else id = temp[0];
 
-	if (id != doc) throw StrCacuException (
+	if (id != doc) throw CoreException (
 			"Reading Reaction...Inconsistent ID!"
 			);
 	else tmpR->setId (id);
@@ -676,11 +676,11 @@ void readDataBase::readReaction (
 		string compartmentRef, currComp, parComp;
 		readCompartment (REACTION, doc, pathComp, cnt, compartmentRef, currComp, parComp);
 
-		if (currComp == "ROOT") throw StrCacuException (
+		if (currComp == "ROOT") throw CoreException (
 				"ROOT could not be regarded as child!"
 				);
 
-		if (__read_in_comps.count (currComp)) throw StrCacuException (
+		if (__read_in_comps.count (currComp)) throw CoreException (
 				"REACTION: Different compartments should have different labels!"
 				);
 		else 
@@ -824,7 +824,7 @@ void readDataBase::readReaction (
 		{
 			string errno ("No species Label found in Products list: )");
 			errno += to.first + "!";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 
 //        cout << "\nfrom = (" << from.first << ", " << from.second 
@@ -857,7 +857,7 @@ void readDataBase::readReaction (
 			 << "	path = " << pathMath 
 			 << endl;
 
-		throw StrCacuException (
+		throw CoreException (
 				"Reading Reaction...No Math Specified!"
 				);
 	}
@@ -906,7 +906,7 @@ void readDataBase::readReaction (
 			string errno ("REACTION: species with label ");
 			errno += speciesLabel + " does not exist in"
 			   " reactant/modifier/product definition!";
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		string compartmentLabel = s->getCompartment ();
 
@@ -920,7 +920,7 @@ void readDataBase::readReaction (
 			errno += partLabel + 
 					" could be found in species " 
 					+ speciesLabel + "!"; 
-			throw StrCacuException (errno);
+			throw CoreException (errno);
 		}
 		readConditionalParameter (
 				PART, p->getPartCtg (),

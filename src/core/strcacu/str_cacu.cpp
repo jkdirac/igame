@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "str_cacu.h"
-#include "StrCacuException.h"
+#include "CoreException.h"
 
 using namespace std;
 
@@ -71,21 +71,21 @@ int cacu_str_exp(const char *par, const char *expr)
 
 	if (expr == NULL)
 	{
-		throw StrCacuException("input null pointer");
+		throw CoreException("input null pointer");
 	}
 	
 	if (err_no == STRCACU_SUCCESS)
 		return res;
 	else if (err_no == STRCACU_NULL_POINTER)
 	{
-		throw StrCacuException("null pointer");
+		throw CoreException("null pointer");
 	}
 	else if (err_no == STRCACU_SYNTAX_ERROR)
 	{
-		throw StrCacuException("input error, expression have synatx error");
+		throw CoreException("input error, expression have synatx error");
 	}
 	else if (err_no == STRCACU_SYMBOL_NOT_FOUND)
 	{
-		throw StrCacuException("input error, every variable in expression should be assigned a value");
+		throw CoreException("input error, every variable in expression should be assigned a value");
 	}
 }

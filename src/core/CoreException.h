@@ -6,15 +6,15 @@
 
 using namespace std;
 
-class StrCacuException : public exception
+class CoreException : public exception
 {
 	public:
-		StrCacuException(const string &msg) throw();
-		StrCacuException(const StrCacuException&) throw();
+		CoreException(const string &msg) throw();
+		CoreException(const CoreException&) throw();
 
-		StrCacuException& operator= (const StrCacuException& other) throw();
+		CoreException& operator= (const CoreException& other) throw();
 
-		~StrCacuException() throw();
+		~CoreException() throw();
 		const char* what() const throw();
 
 	private:

@@ -164,7 +164,7 @@ void reactionTemplate::addCompartment (
 		)
 {
 	if (mapComps.count (_currComp))
-		throw StrCacuException (
+		throw CoreException (
 				"Two Many Compartments of the same label!"
 				);
 	else
@@ -245,7 +245,7 @@ void reactionTemplate::setMath (
 		string label = listOfMyProducts[i]->getDB_Label ();
 
 		if (__math.find (label) != string::npos) 
-			throw StrCacuException (
+			throw CoreException (
 					"Products labels are not allowed "
 				    "to be used in math expression!  "
 					);
@@ -314,7 +314,7 @@ bool reactionTemplate::findSpeciesMatch (
 			string __comp_label = compLabels[j];
 			int __comp_index = options[j][divide % options[j].size ()];
 
-			if (conf.count (__comp_label)) throw StrCacuException (
+			if (conf.count (__comp_label)) throw CoreException (
 					"Compartments in Reaction Definition should have different LABELs!"
 					);
 			else conf.insert (make_pair (__comp_label, __comp_index));
@@ -549,7 +549,7 @@ bool reactionTemplate::findSpeciesMatch (
 							MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
 							__compid_tm = c->getId ();
 						}
-						else throw StrCacuException (
+						else throw CoreException (
 								"No compartment read for species in reaction template!"
 								);
 
@@ -580,7 +580,7 @@ bool reactionTemplate::findSpeciesMatch (
 							MyCompartment* c= listOfMyCompartments[compConfig[n1][__compLabel_tm]];
 							__compid_tm = c->getId ();
 						}
-						else throw StrCacuException (
+						else throw CoreException (
 								"No compartment read for species in reaction template!"
 								);
 
@@ -766,10 +766,10 @@ void reactionTemplate::createProductsFromTemplate (
 	const speciesArrayMatch& __cand_modifiers =  table.first.second;
 
 	if (__cand_reactants.size () != listOfMyReactants.size ()) 
-		throw StrCacuException ("Empty reactant candidates to generate products!");
+		throw CoreException ("Empty reactant candidates to generate products!");
 
 	if (__cand_modifiers.size () != listOfMyModifiers.size ()) 
-		throw StrCacuException ("Empty modifier candidates to generate products!");
+		throw CoreException ("Empty modifier candidates to generate products!");
 
 	/**
 	 * core programme to generate products
@@ -789,7 +789,7 @@ void reactionTemplate::createProductsFromTemplate (
 		
 		//	set compartment
 		string __comp_p = __orig_p->getCompartment ();
-		if (!config.count (__comp_p)) throw StrCacuException (
+		if (!config.count (__comp_p)) throw CoreException (
 				"No map for compartment DB Label!"
 				);
 		else 
@@ -803,7 +803,7 @@ void reactionTemplate::createProductsFromTemplate (
 		string __comp_tid = __orig_p->getCompTypeId ();
 		if (!__comp_tid.empty ())
 		{
-			if (!config.count (__comp_tid)) throw StrCacuException (
+			if (!config.count (__comp_tid)) throw CoreException (
 					"No map for compartment DB Label!"
 					);
 			else 
@@ -840,7 +840,7 @@ void reactionTemplate::createProductsFromTemplate (
 							 << destine.second 
 							 << ")" 
 							 << endl;
-						throw StrCacuException (
+						throw CoreException (
 								"Lack Info. for Substituent Transfer!"
 								);
 					}
@@ -917,7 +917,7 @@ void reactionTemplate::createProductsFromTemplate (
 						}
 					}
 
-					if (found == NULL) throw StrCacuException ("species Label NOT found!");
+					if (found == NULL) throw CoreException ("species Label NOT found!");
 
 					/*
 					cout << "\nsource.first = " << source.first

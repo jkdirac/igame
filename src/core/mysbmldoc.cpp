@@ -21,7 +21,7 @@ void MySBMLDocument::addMySpecies (MySpecies* s)
 	MyCompartment* c = getMyCompartment (
 			s->getCompartment ()
 			);
-	if (c == NULL) throw StrCacuException (
+	if (c == NULL) throw CoreException (
 			"No compartment existed in compartment list"
 			" for given species!"
 			);
@@ -42,7 +42,7 @@ void MySBMLDocument::addMyCompartmentChildren ()
 		{
 			MyCompartment* parent = getMyCompartment (child->getOutside ());
 			if (parent != NULL) parent->addMyCompartmentIn (child);
-			else throw StrCacuException (
+			else throw CoreException (
 					"No compartment existed in compartment list"
 					" for given compartment!"
 					);
@@ -464,7 +464,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 			PE_fw, db_comp, value, units, name
 			);
 
-	if (value <0) throw StrCacuException (
+	if (value <0) throw CoreException (
 			"Invalid parameter value: forward/reverse PromoterEfficiency!"
 			);
 
@@ -495,7 +495,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 								PART, p->getPartCtg (), p->getPartRef (),
 								TE_fw, db_comp, termeff, termUnits, termName
 								);
-						if (termeff <0 || termeff > 1) throw StrCacuException (
+						if (termeff <0 || termeff > 1) throw CoreException (
 								"Invalid parameter value: forward/reverse TerminatorEfficiency!"
 								);
 					}
@@ -531,7 +531,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setPartType ("ForwardRNA");
 						else if (tm->getPartType () == "ReverseDNA")
 							mrna_part->setPartType ("ReverseRNA");
-						else throw StrCacuException (
+						else throw CoreException (
 								"Invalid Transcriptional Unit!"
 								);
 
@@ -585,7 +585,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 			PART, p->getPartCtg (), p->getPartRef (),
 			PE_rev, db_comp, value, units, name
 			);
-	if (value <0) throw StrCacuException (
+	if (value <0) throw CoreException (
 			"Invalid parameter value: reverse/forward PromoterEfficiency!"
 			);
 
@@ -616,7 +616,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 								PART, p->getPartCtg (), p->getPartRef (),
 								TE_rev, db_comp, termeff, termUnits, termName
 								);
-						if (termeff <0 || termeff > 1) throw StrCacuException (
+						if (termeff <0 || termeff > 1) throw CoreException (
 								"Invalid parameter value: reverse/forward TerminatorEfficiency!"
 								);
 					}
@@ -650,7 +650,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setPartType ("ReverseRNA");
 						else if (tm->getPartType () == "ReverseDNA")
 							mrna_part->setPartType ("ForwardRNA");
-						else throw StrCacuException (
+						else throw CoreException (
 								"Invalid Transcriptional Unit!"
 								);
 
@@ -719,7 +719,7 @@ void MySBMLDocument::searchTranslationReactions (
 			RE_fw, db_comp, value, units, name
 			);
 
-	if (value <0) throw StrCacuException (
+	if (value <0) throw CoreException (
 			"Invalid parameter value: forward/reverse RbsEfficiency!"
 			);
 
@@ -745,7 +745,7 @@ void MySBMLDocument::searchTranslationReactions (
 					PART, p->getPartCtg (), p->getPartRef (),
 					StartC_fw, db_comp, codonEff, codonUnits, codonName
 					);
-			if (codonEff <0 || codonEff > 1) throw StrCacuException (
+			if (codonEff <0 || codonEff > 1) throw CoreException (
 					"Invalid parameter value: forward/reverse StartCodonEfficiency!"
 					);
 
@@ -768,7 +768,7 @@ void MySBMLDocument::searchTranslationReactions (
 									PART, p->getPartCtg (), p->getPartRef (),
 									StopC_fw, db_comp, codonEff, codonUnits, codonName
 									);
-							if (codonEff <0 || codonEff > 1) throw StrCacuException (
+							if (codonEff <0 || codonEff > 1) throw CoreException (
 									"Invalid parameter value: forward/reverse StopCodonEfficiency!"
 									);
 						}
@@ -803,7 +803,7 @@ void MySBMLDocument::searchTranslationReactions (
 								prot_part->setPartType ("ForwardProtein");
 							else if (tm->getPartType () == "ReverseRNA")
 								prot_part->setPartType ("ReverseProtein");
-							else throw StrCacuException (
+							else throw CoreException (
 									"Invalid Translation Unit!"
 									);
 
