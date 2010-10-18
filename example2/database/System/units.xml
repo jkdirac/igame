@@ -22,12 +22,6 @@
 					<unit kind="second" exponent="-1"/>
 				</listOfUnits>
 			</unitDefinition>
-			<unitDefinition id="item_per_mole">
-				<listOfUnits>
-					<unit kind="item" exponent="1"/>
-					<unit kind="mole" exponent="-1"/>
-				</listOfUnits>
-			</unitDefinition>
 		</listOfUnitDefinitions>
 	</system>
 </MoDeL>

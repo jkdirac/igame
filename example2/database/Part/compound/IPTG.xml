@@ -8,8 +8,6 @@
 				<url>http://en.wikipedia.org/wiki/Isopropyl_%CE%B2-D-1-thiogalactopyranoside</url>
 				<shortDesc>Isopropyl-beta-D-thiogalactopyranoside, abbreviated IPTG, is a molecular biology reagent</shortDesc>
 			</interface>
-			<listOfConditionalParameters>
-			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
 				<referencedSpecies partType="Compound">IPTG_compound</referencedSpecies>
 				<referencedSpecies partType="Compound">IPTGlacI153_4</referencedSpecies>

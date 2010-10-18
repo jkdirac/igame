@@ -2,19 +2,16 @@
 <MoDeL>
 	<part>
 		<listOfValueDefaults>
-			<valueDefault id="forwardPromoterEfficiency"> 0.0 </valueDefault>
-			<valueDefault id="reversePromoterEfficiency"> 0.0 </valueDefault>
-			<valueDefault id="forwardRbsEfficiency"> 0.0 </valueDefault>
-			<valueDefault id="reverseRbsEfficiency"> 0.0 </valueDefault>
-			<valueDefault id="forwardTerminatorEfficiency"> 0.0 </valueDefault>
-			<valueDefault id="reverseTerminatorEfficiency"> 0.0 </valueDefault>
+			<valueDefault id="forwardPromoterEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="reversePromoterEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="forwardRbsEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="reverseRbsEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="forwardTerminatorEfficiency" units="dimensionless"> 0.0 </valueDefault>
+			<valueDefault id="reverseTerminatorEfficiency" units="dimensionless"> 0.0 </valueDefault>
 			<valueDefault id="forwardStartCodonEfficiency"> 0 </valueDefault>
 			<valueDefault id="reverseStartCodonEfficiency"> 0 </valueDefault>
 			<valueDefault id="forwardStopCodonEfficiency"> 0 </valueDefault>
 			<valueDefault id="reverseStopCodonEfficiency"> 0 </valueDefault>
-			<valueDefault id="copyNumber"> 0 </valueDefault>
-			<valueDefault id="growthRate"> 0.0 </valueDefault>
-			<valueDefault id="maxConcentration"> 1E99 </valueDefault>
 		</listOfValueDefaults>
 	</part>
 </MoDeL>

@@ -25,8 +25,8 @@
 		</cnModel>
 		<listOfReferencedReactions>
 			<referencedReaction speciesType="reactant">bid_IPTG_lacI153_4</referencedReaction>
-			<referencedReaction speciesType="reactant">trans_IPTG</referencedReaction>
-			<referencedReaction speciesType="product">trans_IPTG</referencedReaction>
+			<referencedReaction speciesType="reactant">diffusion_IPTG</referencedReaction>
+			<referencedReaction speciesType="product">diffusion_IPTG</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

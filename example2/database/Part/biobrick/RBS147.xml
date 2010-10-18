@@ -10,7 +10,7 @@
 			</interface>
 			<listOfConditionalParameters>
 				<conditionalParameter id="forwardRbsEfficiency" units="per_second">
-					<parameterValue compartment="E_coli">6.93</parameterValue>
+					<parameterValue compartment="E_coli">0.1</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>

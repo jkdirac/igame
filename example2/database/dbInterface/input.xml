@@ -6,23 +6,29 @@
 		<input>
 			<listOfParameters>
 				<parameter>
-					<id> amount </id>
-					<value> 1 </value>
-					<units> mole </units>
+					<id> ts </id>
+					<value> 10000 </value>
+					<units> second </units>
 					<constant> true </constant>
 				</parameter>
 				<parameter>
-					<id> t0 </id>
-					<value> 1 </value>
+					<id> te </id>
+					<value> 10001 </value>
 					<units> second </units>
+					<constant> true </constant>
+				</parameter>
+				<parameter>
+					<id> s </id>
+					<value> 1E-4 </value>
+					<units> mole_per_litre </units>
 					<constant> true </constant>
 				</parameter>
 			</listOfParameters>
 			<listOfRules>
-				<rateRule>
+				<assignmentRule>
 					<variable>sPecIes1</variable>
-					<math>gaussian(amount, t, t0, sigma)</math>
-				</rateRule>
+					<math>square_wave (t, ts, te, s)</math>
+				</assignmentRule>
 			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">
@@ -33,7 +39,7 @@
 				</compartment>
 				<compartment db="E_coli">
 					<id>E_coli</id>
-					<size>1E-14</size>
+					<size>7E-16</size>
 					<outside>Flask</outside>
 					<constant>true</constant>
 				</compartment>
@@ -46,14 +52,15 @@
 				</species>
 				<species db="IPTG_compound">
 					<id>sPecIes1</id>
-					<compartment> Flask </compartment>
+					<compartment>Flask</compartment>
 					<initialConcentration> 0 </initialConcentration>
-					<boundaryCondition>true</boundaryCondition>
+					<constant> false </constant>
+					<boundaryCondition> true </boundaryCondition>
 				</species>
 				<species>
 					<id>sPecIes2</id>
 					<compartment>E_coli</compartment>
-					<initialAmount>1E-22</initialAmount>
+					<initialConcentration>2.4E-9</initialConcentration>
 					<cnModel>
 						<listOfChains>
 							<chain>

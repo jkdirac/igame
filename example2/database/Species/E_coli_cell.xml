@@ -24,7 +24,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="modifier">amp_E_coli</referencedReaction>
+			<referencedReaction speciesType="modifier">repro_ecoli_cell</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

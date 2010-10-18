@@ -14,7 +14,8 @@
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">placI185_dna</referencedSpecies>
+				<referencedSpecies partType="ForwardDNA">fw_placI185_dna</referencedSpecies>
+				<referencedSpecies partType="ReverseDNA">rev_placI185_dna</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">anyub_forwardprotein</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">anyub_forwardrna</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>

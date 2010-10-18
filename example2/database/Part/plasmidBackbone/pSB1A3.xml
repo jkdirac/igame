@@ -8,13 +8,9 @@
 				<url>http://partsregistry.org/cgi/xml/part.cgi?part=pSB1A3</url>
 				<shortDesc>High copy BioBrick assembly plasmid</shortDesc>
 			</interface>
-			<listOfConditionalParameters>
-				<conditionalParameter id="copyNumber" name="copy number" units="item">
-					<parameterValue compartment="E_coli">200</parameterValue>
-				</conditionalParameter>
-			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">tm_pSB1A3</referencedSpecies>
+				<referencedSpecies partType="ForwardDNA">tm_pSB1A3_fw</referencedSpecies>
+				<referencedSpecies partType="ReverseDNA">tm_pSB1A3_rev</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
