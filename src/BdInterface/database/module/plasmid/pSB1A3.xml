@@ -1,7 +1,0 @@
-<module id="pSB1A3" name="pSB1A3" display="pSB1A3" class="plasmid">
-	<extra>
-		<copies>200</copies>
-		<origin>pMB1</origin>
-		<resistance>A</resistance>
-	</extra>
-</module>
