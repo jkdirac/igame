@@ -54,6 +54,7 @@ class Chain
 
 	int getKeywords (const string&) const;
 	bool substituent_m (const int&, const int&, const int&, const int&, const Chain*, cMatchsType& res) const; 
+	bool type_match (const string&, const string&) const;
 	bool isCsymm ();
 	void turnover ();
 
