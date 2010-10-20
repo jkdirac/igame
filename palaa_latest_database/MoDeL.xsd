@@ -8,6 +8,10 @@
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 
+	<xsd:simpleType name="booleantype">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+
 	<xsd:simpleType name="doubletype">
 		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
@@ -195,5 +199,7 @@
 			<xsd:element name="compartment" type="plasmidBackboneType"/>
 		</xsd:choice>
 	</xsd:complexType>
+
+<!--    base type for reaction-->
 
 </xsd:schema>
