@@ -20,6 +20,7 @@ MySBMLDocument::~MySBMLDocument ()
 //	make sure species added has never existed before
 void MySBMLDocument::addMySpecies (MySpecies* s) 
 {
+	s->display_name (listOfMySpecies.size ());
 	listOfMySpecies.push_back (s);
 	MyCompartment* c = getMyCompartment (s->getCompartment ());
 	
@@ -483,7 +484,6 @@ void MySBMLDocument::searchTranscriptionReactions (
 					if (!isvalidseq && ci == k + 1) break;	
 
 					MySpecies* mrna = new MySpecies (listOfMySpecies.size ());
-					mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
@@ -521,6 +521,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setIsBinded (false);
 						}
 					}
+					mrna->display_name (listOfMySpecies.size ());
 					mrna->rearrange (false);
 
 					//	check existance of myspecies
@@ -642,6 +643,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 							mrna_part->setIsBinded (false);
 						}
 					}
+					mrna->display_name (listOfMySpecies.size ());
 					mrna->rearrange (false);
 
 //                    cout << "\nspecies test = " << endl;
@@ -798,6 +800,7 @@ void MySBMLDocument::searchTranslationReactions (
 								prot_part->setIsBinded (false);
 							}
 						}
+						prot->display_name (listOfMySpecies.size ());
 						prot->rearrange (false);
 
 						//	check existance of myspecies

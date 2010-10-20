@@ -116,6 +116,7 @@ class MySpecies:
 		bool isCompartment () const;
 		bool match (const MySpecies*, cMatchsArray& res) const;
 
+		void display_name (const int&);
 		void Output () const;
 
 	private:

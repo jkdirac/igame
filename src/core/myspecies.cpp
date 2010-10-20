@@ -17,7 +17,8 @@ MySpecies::MySpecies (
 	reference_db (orig->reference_db),
 	comp_type_id (orig->comp_type_id),
 	speciesLabel_db (orig->speciesLabel_db),
-	equiv (orig->equiv)
+	equiv (orig->equiv),
+	minW (orig->minW)
 {
 	for (int i=0; i < orig->listOfChains.size (); i++)
 		createChain (orig->listOfChains[i]);
@@ -337,6 +338,11 @@ string MySpecies::getCompTypeId () const {
 
 void MySpecies::rearrange (const bool& isTemplate)
 {
+	//	minW must be cleared!!!!
+	minW.clear ();
+
+	//	start
+	
 	int symmstate = 1;
 	bool* csymm = new bool[listOfChains.size ()];
 	for (int i = 0; i < listOfChains.size (); i++)
@@ -419,6 +425,8 @@ void MySpecies::rearrange (const bool& isTemplate)
 			}
 			else tmpstate = vector<bool> (listOfChains.size (), false);
 
+//            cout << "\ntmpstate = " << tmpstate.size () << endl;
+
 			//	generate weight for leaf nodes
 			for (int k=0; k<listOfChains.size(); k++)
 			{
@@ -466,6 +474,9 @@ void MySpecies::rearrange (const bool& isTemplate)
 				tryuni += t->unicode;
 			}
 
+//            cout << "\nminW = " << minW.empty () << endl;
+//            cout << "\nminW < tryuni: " << (minW < tryuni) << endl;
+
 			if (minW.empty ()) 
 			{
 				minW = tryuni;
@@ -483,6 +494,8 @@ void MySpecies::rearrange (const bool& isTemplate)
 			{
 				minWperm.push_back (order);
 			}
+
+//            cout << "\nturnstate = " << turnstate.size () << endl;
  
 			//	recover to orginal order
 			stable_sort (
@@ -501,8 +514,16 @@ void MySpecies::rearrange (const bool& isTemplate)
 	}
 
 	//	set unique turn state
-	for (int i=0; i < listOfChains.size (); i++)
-		if (turnstate[i]) listOfChains[i]->turnover ();
+//    cout << "\nistemplate = " << isTemplate 
+//         << " chainsize == " << listOfChains.size () 
+//         << " turnsize = " <<turnstate.size () 
+//         << endl;
+
+	if (!isTemplate)
+	{
+		for (int i=0; i < listOfChains.size (); i++)
+			if (turnstate[i]) listOfChains[i]->turnover ();
+	}
 
 	/**
 	 * BE CAREFUL! TREES MUST BE CONSISTENT WITH
@@ -1068,3 +1089,86 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 	rearrange (false);
 }
 
+void MySpecies::display_name (const int& num)
+{
+	ostringstream oss1;
+	oss1 << num;
+	string name (oss1.str ());
+	name += ":";
+
+	set<int> skip;
+
+//    cout << "\noutput_test" << endl;
+//    Output ();
+//    cout << "\nequivalent chains:" << endl;
+//    for (int i=0; i < equiv.size (); i++)
+//    {
+//        set<int>::iterator it = equiv[i].begin ();
+//        while (it != equiv[i].end ()) cout << *it++;
+//        cout << endl;
+//    }
+
+	for (int i=0; i < listOfChains.size (); i++)
+	{
+		if (skip.count (i)) continue;
+
+		int times = 0;
+		for (int j=0; j < equiv.size (); j++)
+		{
+			if (equiv[j].count (i)) 
+			{
+				times = equiv[j].size ();
+				set<int>::iterator it = equiv[j].begin ();
+				while (it != equiv[j].end ()) skip.insert (*it++);
+				break;
+			}
+		}
+
+		Chain* c = listOfChains[i];
+		ostringstream oss;
+
+		if (times != 0) name += "(";
+		
+		//	DNA
+		if (c->isDNA) 
+		{
+			if (times != 0)
+			{
+				oss.str ("");
+				oss << "DNA)" << times << ";";
+				name += oss.str ();
+			}
+			else name += "DNA;";
+		}
+		else if (c->isRNA) 
+		{
+			if (times != 0) 
+			{
+				oss.str ("");
+				oss << "RNA)" << times << ";";
+				name += oss.str ();
+			}
+			else name += "RNA;";
+		}
+		else
+		{
+			string name1 ("");
+			for (int j=0; j < c->listOfParts.size (); j++)
+			{
+				name1 += c->listOfParts[j]->getPartRef ()+ "-";
+			}
+			name1 = name1.substr (0, name1.size ()-1);
+
+			if (times != 0)
+			{
+				oss.str ("");
+				oss << "(" << name1 << ")" << times << ";";
+				name += oss.str ();
+			}
+			else name += name1 + ";";
+		}
+	}
+
+	name = name.substr (0, name.size ()-1);
+	setName (name);
+}
