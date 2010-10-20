@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- Simple Type define start -->
+	<xs:simpleType name="DBId">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="doubletype">
+		<xs:restriction base="xs:double"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="Int_ZOO">
+		<xs:restriction base="xs:decimal">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="stringtype">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<!-- Simple Type define end -->
+
+	<!-- basic complex type for part/biobrick define start -->
+	<xs:complexType name="interfacetype">
+		<xs:sequence>
+			<xs:element name="url" type="stringtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="shortDesc" type="stringtype" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="conditionalParameter_type_1">
+		<xs:attribute name="id" use="required">
+			<xs:simpleType>
+				<xsd:restriction base="DBId">
+					<xsd:enumeration value="forwardPromoterEfficiency"/>
+					<xsd:enumeration value="reversePromoterEfficiency"/>
+					<xsd:enumeration value="forwardRbsEfficiency"/>
+					<xsd:enumeration value="reverseRbsEfficiency"/>
+					<xsd:enumeration value="forwardTerminatorEfficiency"/>
+					<xsd:enumeration value="reverseTerminatorEfficiency"/>
+				</xsd:restriction>
+			</xs:simpleType>
+		</xs:attribute> 
+		<xs:attribute name="name" type="stringtype"/>
+		<xs:attribute name="units" type="DBId"/>
+		<xs:attribute name="commonValue" type="doubletype"/>
+		<xs:sequence>
+			<xs:element name="parameterValue" type="doubletype" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:attribute name="compartment" type="DBId"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="conditionalParameter_type_2">
+		<xs:attribute name="id" use="required">
+			<xs:simpleType>
+				<xsd:restriction base="DBId">
+					<xsd:enumeration value="forwardStartCodonEfficiency"/>
+					<xsd:enumeration value="reverseStartCodonEfficiency"/>
+					<xsd:enumeration value="forwardStopCodonEfficiency"/>
+					<xsd:enumeration value="reverseStopCodonEfficiency"/>
+				</xsd:restriction>
+			</xs:simpleType>
+		</xs:attribute> 
+		<xs:attribute name="name" type="stringtype"/>
+		<xs:attribute name="units" type="DBId"/>
+		<xs:attribute name="commonValue" type="Int_ZOO"/>
+		<xs:sequence>
+			<xs:element name="parameterValue" type="Int_ZOO" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:attribute name="compartment" type="DBId"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="conditionalParameterType">
+		<xs:union>
+			<xs:complexType>
+				<xs:restriction base="conditionalParameter_type_1" />
+			</xs:complexType>
+			<xs:complexType>
+				<xs:restriction base="conditionalParameter_type_2" />
+			</xs:complexType>
+		</xs:union>
+	</xs:complexType>
+
+	<xs:complexType name="listOfConditionalParametersType">
+		<xs:element name="conditionalParameter" type="conditionalParameterType"
+			minOccurs="0"
+			maxOccurs="unbounded"/>
+	</xs:complexType>
+
+	<xs:complexType name="listOfReferencedSpeciesType">
+		<xs:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:attribute name="partType">
+					<simpleType>
+						<xsd:restriction base="stringtype">
+							<xsd:enumeration value="ForwardDNA"/>
+							<xsd:enumeration value="ReverseDNA"/>
+							<xsd:enumeration value="ForwardRNA"/>
+							<xsd:enumeration value="ReverseRNA"/>
+							<xsd:enumeration value="ForwardProtein"/>
+							<xsd:enumeration value="ReverseProtein"/>
+							<xsd:enumeration value="Compound"/>
+							<xsd:enumeration value="Compartment"/>
+							<xsd:enumeration value=""/>
+						</xsd:restriction>
+					</simpleType>
+				</xs:attribute>
+			</xs:complexType>
+		</xs:element>
+	</xs:complexType>
+
+	<xs:complexType name="biobricktype">
+		<xs:attribute name="id" type="DBId" use="required"/>
+		<xs:attribute name="name" type="stringtype"/>
+		<xs:attribute name="originalConformation" type="DBId"/>
+		<xs:sequence>
+			<xs:element name="interface" type="interfacetype"/>
+			<xs:element name="listOfConditionalParameters"
+				type="listOfConditionalParametersType" minOccurs="0"/>
+			<xs:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- basic complex type for part/biobrick define start -->
+
+</xs:schema>
