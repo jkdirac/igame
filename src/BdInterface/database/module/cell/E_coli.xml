@@ -1,7 +1,0 @@
-<module id="E_coli" name="E.coli" display="E.coli" class="cell">
-	<extra>
-		<size>1E-14</size>
-		<units>litre</units>
-		<constant>true</constant>
-	</extra>
-</module>

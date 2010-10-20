@@ -13,6 +13,6 @@ int main ()
 	double dif = difftime (end, start);
 	cout << "\nIt tooks " <<  dif << " seconds.\n";
 
-	copsi_entry("network.xml");
+	if (!errno) copsi_entry("network.xml");
 	return 0;
 }

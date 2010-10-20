@@ -776,13 +776,9 @@ void reactionTemplate::createProductsFromTemplate (
 	 */
 	for (int i=0; i < listOfMyProducts.size (); i++)
 	{
-		cout << "\nproducts template i = " << i;
-
 		MySpecies* __orig_p = listOfMyProducts[i];	//	template product
 		MySpecies* __spe_new_p = new MySpecies;	//	product new body
 
-		__orig_p->Output ();
-		
 		//	set DB Label
 		string __label_p = __orig_p->getDB_Label ();
 		__spe_new_p->setDB_Label (__label_p);
@@ -955,14 +951,16 @@ void reactionTemplate::createProductsFromTemplate (
 					for (int t = cmtf->first; t <= cmtf->second; t++)
 					{
 						Part* pk = ck->getPart (t);
+
+						cout << "\npartLabel = " << pk->getPartLabel ();
 						assert (pk != NULL);
 
 						Part* __new_p = __new_c->createPart (pk);
 
 						//	change its part label
 						string prefix;
-						if (isr) string prefix = "__MoDeL_REACTANT_CXX";
-						else string prefix = "__MoDeL_MODIFIER_CXX";
+						if (isr) prefix = "__MoDeL_REACTANT_CXX";
+						else prefix = "__MoDeL_MODIFIER_CXX";
 
 						ostringstream oss;
 						oss << prefix << index_s << "::" 
@@ -973,10 +971,10 @@ void reactionTemplate::createProductsFromTemplate (
 				else
 				{
 					__new_c->createPart (__orig_part);
-					cout << "\n__new_c->createPart = " 
-						 << __orig_part->getPartRef () << " "
-						 << __orig_part->getIsBinded ()
-						 << endl;
+//                    cout << "\n__new_c->createPart = " 
+//                         << __orig_part->getPartRef () << " "
+//                         << __orig_part->getIsBinded ()
+//                         << endl;
 				}
 			}
 		}

@@ -93,6 +93,10 @@ void Chain::turnover ()
 
 bool Chain::isCsymm ()
 {
+	//	is this chain a DNA chain?
+	this->setIsDNA ();
+
+	//	yes
 	if (isDNA)
 	{
 		string fw_unicode = genUnicode (0, listOfParts.size ()-1, true);
@@ -626,34 +630,26 @@ bool Chain::substituent_m (
 						if (!partType.empty ())
 						{
 							for (int i=l2; i<=u2; i++)
-							{
-								string partType__ = 
-									listOfParts[i]->partType;
-						    if (partType__ != partType) {
+								if (!type_match (listOfParts[i]->partType, partType))
 									endpos = i; break;
-								}
-							}
 						}
 						break;
 					}
 			case 1: {
 						startpos = l2; 
 						endpos = u2+1;
+
 						for (int i=l2; i<=u2; i++)
-							if (listOfParts[i]->isBinded) {
-								endpos = i; break;
-							}
+						{
+							if (listOfParts[i]->isBinded) endpos = i; break;
+						}
 
 						if (!partType.empty ())
 						{
-							for (int i=l2; i<=u2; i++)
+							for (int i=l2; i<= endpos-1; i++)
 							{
-								string partType__ = 
-									listOfParts[i]->partType;
-							    if (partType__ != partType
-										&& i < endpos) {
+								if (!type_match (listOfParts[i]->partType, partType)) 
 									endpos = i; break;
-								}
 							}
 						}
 						break;
@@ -665,54 +661,39 @@ bool Chain::substituent_m (
 						if (!partType.empty ())
 						{
 							for (int i=l2; i<=u2; i++)
-							{
-								string partType__ = 
-									listOfParts[i]->partType;
-							    if (partType__ != partType) {
+								if (!type_match (listOfParts[i]->partType, partType))
 									endpos = i; break;
-								}
-							}
 						}
 						break;
 					}
 			case 3: {
 						startpos = l2+1; 
 						endpos = u2+1;
+
 						for (int i=l2; i<=u2; i++)
-							if (listOfParts[i]->isBinded) {
-								endpos = i; break;
-							}
+						{
+							if (listOfParts[i]->isBinded) endpos = i; break;
+						}
+
 						if (!partType.empty ())
 						{
-							for (int i=l2; i<=u2; i++)
+							for (int i=l2; i<= endpos-1; i++)
 							{
-								string partType__ = 
-									listOfParts[i]->partType;
-							    if (partType__ != partType
-										&& i < endpos) {
+								if (!type_match (listOfParts[i]->partType, partType)) 
 									endpos = i; break;
-								}
 							}
 						}
 						break;
 					}
 			case 4: {
 						startpos = endpos = l2+1; 
-						string partType__ = 
-							listOfParts[l2]->partType;
-						if (!partType.empty () 
-								&& partType__ != partType) 
-							endpos = l2;
+						if (!type_match (listOfParts[l2]->partType, partType)) endpos = l2;
 						break;
 					}
 			case 5: {
-						startpos = l2+1;
+						startpos = endpos = l2+1;
 						if (listOfParts[l2]->isBinded) endpos = l2;
-						string partType__ = 
-							listOfParts[l2]->partType;
-						if (!partType.empty () 
-								&& partType__ != partType) 
-							endpos = l2;
+						if (!type_match (listOfParts[l2]->partType, partType)) endpos = l2;
 						break;
 					}
 			default: break;
@@ -731,16 +712,6 @@ bool Chain::substituent_m (
 	{
 		vector< list< pair<int,int> > > recursive;
 		bool mok = substituent_m (l1+1, u1, i, u2, c, recursive); 
-
-		//	TEST
-		/*
-		cout << "\n i = " << i 
-			 << "\nmok = " << mok 
-			 << " recursive.size = " 
-			 << recursive.size () 
-			 << endl;
-			 */
-		//	TEST	OVER
 
 		if (mok)
 		{
@@ -764,6 +735,31 @@ bool Chain::substituent_m (
 		else continue;
 	}
 	return rVal;
+}
+
+bool Chain::type_match (
+		const string& type1, 
+		const string& type2
+		) const
+{
+	if (type2.empty ()) return true;
+	else if (type1 == type2) return true;
+	else if (type2 == "DNA")
+	{
+		if (type1 == "ForwardDNA" || type1 == "ReverseDNA") return true;
+		else return false;
+	}
+	else if (type2 == "RNA")
+	{
+		if (type1 == "ForwardRNA" || type1 == "ReverseRNA") return true;
+		else return false;
+	}
+	else if (type2 == "PROTEIN")
+	{
+		if (type1 == "ForwardProtein" || type1 == "ReverseProtein") return true;
+		else return false;
+	}
+	else return false;
 }
 
 int Chain::getKeywords (const string& ref) const

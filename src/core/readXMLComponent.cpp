@@ -10,6 +10,9 @@ readXMLComponent::readXMLComponent ()
 	partCtg_set.insert ("compartment");	
 
 	//	set partType
+	partType_set.insert ("DNA");
+	partType_set.insert ("RNA");
+	partType_set.insert ("PROTEIN");
 	partType_set.insert ("ForwardDNA");
 	partType_set.insert ("ForwardRNA");
 	partType_set.insert ("ForwardProtein");

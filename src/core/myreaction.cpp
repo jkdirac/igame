@@ -113,6 +113,8 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
+		cout << "\nmyspecies = " << endl;
+		sr->Output ();
 		
 		//	prefix to be added for part labels and node labels
 		ostringstream oss;
@@ -131,6 +133,8 @@ void MyReaction::createReactionsFromTemplate (
 			if (!chainUsed.count (j)) 
 			{
 				Chain* c = mixture->createChain (sr->getChain (j));
+
+				//	add prefix label for chains
 				c->__add_chain_prefix (oss.str ());
 			}
 		}
@@ -139,6 +143,8 @@ void MyReaction::createReactionsFromTemplate (
 		for (int j=0; j < sr->getNumOfTrees (); j++)
 		{
 			Tree* t = mixture->createTree (sr->getTree (j));
+
+			//	add prefix label for trees
 			t->__add_tree_prefix (oss.str ());
 		}
 	}
@@ -149,8 +155,8 @@ void MyReaction::createReactionsFromTemplate (
 		MySpecies* s = listOfMyProducts[i];
 
 		//TEST
-//        cout << "\nPRODUCT BODY: i = " << i;
-//        s->Output ();
+		cout << "\nPRODUCT BODY: i = " << i;
+		s->Output ();
 
 		for (int j=0; j< s->getNumOfChains (); j++) 
 		{
@@ -165,14 +171,14 @@ void MyReaction::createReactionsFromTemplate (
 
 		for (int j=0; j< s->getNumOfTrees (); j++) 
 		{
-			s->getTree (j)->Output (cout);
+//            s->getTree (j)->Output (cout);
 			mixture->createTree (s->getTree (j));
 		}
 	}
 
 	//	mixed species
-//    cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
-//    mixture->Output ();
+	cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
+	mixture->Output ();
 
 	/**
 	 * split mixed species and store results in splits
@@ -183,8 +189,8 @@ void MyReaction::createReactionsFromTemplate (
 	/**
 	 * check splits
 	 */
-//    cout << "\nChecking Species Spliting ...";
-//    for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+	cout << "\nChecking Species Spliting ...";
+	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 	
 //    cout << "\nChecking PRODUCTs ...";
 //    for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
@@ -261,6 +267,8 @@ void MyReaction::createReactionsFromTemplate (
 			 * 2. comp_type_id should be set previously if it is not empty
 			 */
 			MySpecies* __product = new MySpecies (splitted);
+//            __product->rearrange (false);
+
 			MySpecies* __product_tm = listOfMyProducts[degenerate[i][j]];
 
 			ostringstream oss;
