@@ -202,4 +202,45 @@
 
 <!--    base type for reaction-->
 
+	<!-- basic complex type for Compartment define start -->
+
+	<xsd:complexType name="Compartment">
+		<xsd:attribute name="id" type="DBId" use="required"/>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="originalConformation" type="DBId"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="listOfInnerCompartmentPermitted" type="listOfInnerCompartmentPermitted"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="listOfConditionalParametersType">
+		<xsd:element name="conditionalParameter" type="conditionalParameterType"
+			minOccurs="0"
+			maxOccurs="unbounded"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="listOfInnerCompartmentPermitted">
+		<xsd:element name="compartmentReference" type="DBId" minOccurs="0" maxOccurs="unbounded">
+			<xsd:complexType>
+
+				<xsd:attribute name="partType">
+					<xsd:simpleType>
+						<xsd:restriction base="stringtype">
+							<xsd:enumeration value="ForwardDNA"/>
+							<xsd:enumeration value="ReverseDNA"/>
+							<xsd:enumeration value="ForwardRNA"/>
+							<xsd:enumeration value="ReverseRNA"/>
+							<xsd:enumeration value="ForwardProtein"/>
+							<xsd:enumeration value="ReverseProtein"/>
+							<xsd:enumeration value="Compound"/>
+							<xsd:enumeration value="Compartment"/>
+							<xsd:enumeration value=""/>
+						</xsd:restriction>
+					</simpleType>
+				</xsd:attribute>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:complexType>
+
 </xsd:schema>
