@@ -1,9 +1,0 @@
-<species id="IPTG">
-	<structure>
-		<listOfChains><chain><module id="IPTG" class="molecule"/></chain></listOfChains>
-	</structure>
-	<link>
-		<index>bid_IPTG_lacI153_4</index>
-	</link>
-</species>
-			

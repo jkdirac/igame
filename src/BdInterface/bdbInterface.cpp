@@ -136,7 +136,6 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	QString q_pathname(pathname.c_str());
 	for (int i = 0; i < CONT_IDX_NUM; i ++)
 	{
-		//这个有点随便了
 		QString q_cont_name("database/");
 		q_cont_name += (container_names[i].c_str());
 		q_cont_name += "/";
@@ -761,4 +760,6 @@ BdRetVal bdbXMLInterface::get_ids_bycontainer(container_index container_type, ve
 		{
 				res.push_back(result[i]);
 		}
+
+		return no_error;
 }
