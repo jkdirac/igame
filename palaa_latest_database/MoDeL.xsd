@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.w3.org/1998/Math/MathML" 
+                schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"/>
+
 	<!-- Simple Type define start -->
 	<xsd:simpleType name="DBId">
 		<xsd:restriction base="xsd:string"/>
@@ -97,8 +100,8 @@
 	<xsd:complexType name="listOfReferencedSpeciesType">
 		<xsd:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
 			<xsd:complexType>
-				<xsd:attribute name="partType">
-					<simpleType>
+				<xsd:attribute name="partType" use="required">
+					<xsd:simpleType>
 						<xsd:restriction base="stringtype">
 							<xsd:enumeration value="ForwardDNA"/>
 							<xsd:enumeration value="ReverseDNA"/>
@@ -110,7 +113,7 @@
 							<xsd:enumeration value="Compartment"/>
 							<xsd:enumeration value=""/>
 						</xsd:restriction>
-					</simpleType>
+					</xsd:simpleType>
 				</xsd:attribute>
 			</xsd:complexType>
 		</xsd:element>
@@ -129,5 +132,68 @@
 	</xsd:complexType>
 
 	<!-- basic complex type for part/biobrick define start -->
+
+	<xsd:complexType name="plasmidBackboneType">
+		<xsd:attribute name="id" type="DBId" use="required"/>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="originalConformation" type="DBId"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="compoundType">
+		<xsd:attribute name="id" type="DBId" use="required"/>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="originalConformation" type="DBId"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="compartmentType">
+		<xsd:attribute name="id" type="DBId" use="required"/>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="originalConformation" type="DBId"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="substituentType">
+		<xsd:attribute name="id" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="DBId">
+					<xsd:enumeration value="ANY"/>
+					<xsd:enumeration value="ANYUB"/>
+					<xsd:enumeration value="NZ"/>
+					<xsd:enumeration value="NZUB"/>
+					<xsd:enumeration value="ONE"/>
+					<xsd:enumeration value="ONEUB"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="originalConformation" type="DBId"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Part">
+		<xsd:choice>
+			<xsd:element name="biobrick" type="biobricktype"/>
+			<xsd:element name="plasmidBackbone" type="plasmidBackboneType"/>
+			<xsd:element name="compartment" type="plasmidBackboneType"/>
+		</xsd:choice>
+	</xsd:complexType>
 
 </xsd:schema>
