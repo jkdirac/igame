@@ -93,6 +93,10 @@ void Chain::turnover ()
 
 bool Chain::isCsymm ()
 {
+	//	is this chain a DNA chain?
+	this->setIsDNA ();
+
+	//	yes
 	if (isDNA)
 	{
 		string fw_unicode = genUnicode (0, listOfParts.size ()-1, true);

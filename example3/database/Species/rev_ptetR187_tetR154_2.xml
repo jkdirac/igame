@@ -20,7 +20,7 @@
 						<part>
 							<partReference>ptetR187_bs1</partReference>
 							<partLabel>ptetR187_bs1_0</partLabel>
-							<partType>reverseDNA</partType>
+							<partType>ReverseDNA</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>

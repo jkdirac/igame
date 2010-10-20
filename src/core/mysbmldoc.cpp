@@ -488,7 +488,6 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
 					mrna->setConstant (false);
-//                    mrna->setCharge (0);
 					mrna->setBoundaryCondition (false);
 
 					assert (k+1 <= ci-1);
@@ -609,7 +608,6 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
 					mrna->setConstant (false);
-//                    mrna->setCharge (0);
 					mrna->setBoundaryCondition (false);
 
 					Chain* mrna_chain = mrna->createChain ();
@@ -629,6 +627,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 								"Invalid Transcriptional Unit!"
 								);
 
+//                        cout << "\npartRef = " << mrna_part->getPartRef ()
+//                             << " partType == " << mrna_part->getPartType ();
+
 						//	isbinded and partRef
 						if (tm->getIsBinded ())
 						{
@@ -642,6 +643,9 @@ void MySBMLDocument::searchTranscriptionReactions (
 						}
 					}
 					mrna->rearrange (false);
+
+//                    cout << "\nspecies test = " << endl;
+//                    mrna->Output ();
 
 					//	check existance of myspecies
 					MySpecies* found = getMySpecies (mrna);

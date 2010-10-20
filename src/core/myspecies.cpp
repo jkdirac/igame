@@ -69,6 +69,8 @@ void MySpecies::split (
 	for (int i=0; i < listOfTrees.size (); i++)
 	{
 		Tree* t = listOfTrees[i];
+//        t->Output (cout);
+	
 
 		//int not species associated, found = -1,
 		//else found = species index in cU;
@@ -122,6 +124,7 @@ void MySpecies::split (
 				if (n->isLeaf ())
 				{
 					int chainnum = n->getNodeWeight ().first;
+					cout << "\ntree num = " << i << " chain num = " << chainnum << endl;
 					assert (chainnum >= 0);
 
 					s->createChain (listOfChains[chainnum]);
@@ -165,7 +168,7 @@ void MySpecies::split (
 	{
 		bool found = false;
 		for (int j=0; j < chainUsed.size (); j++)
-			if (chainUsed[j].count (i)) found = true;
+			if (chainUsed[j].count (i)) {found = true;break;}
 		if (!found)	//	not found
 		{
 			MySpecies* s = new MySpecies ();
@@ -339,7 +342,6 @@ void MySpecies::rearrange (const bool& isTemplate)
 	for (int i = 0; i < listOfChains.size (); i++)
 	{
 		Chain* c = listOfChains[i];
-		c->chainNum = i;
 
 		if (!isTemplate)
 		{
@@ -360,6 +362,9 @@ void MySpecies::rearrange (const bool& isTemplate)
 			listOfChains.end (),
 			IsLess_c ()
 			);
+
+	for (int i=0; i < listOfChains.size (); i++) 
+		listOfChains[i]->chainNum = i;
 
 	//	find equal chains
 	vector<markType> psEquiv; 
@@ -478,7 +483,7 @@ void MySpecies::rearrange (const bool& isTemplate)
 			{
 				minWperm.push_back (order);
 			}
-
+ 
 			//	recover to orginal order
 			stable_sort (
 					listOfChains.begin(), 
@@ -496,13 +501,59 @@ void MySpecies::rearrange (const bool& isTemplate)
 	}
 
 	//	set unique turn state
-	if (!isTemplate)
+	for (int i=0; i < listOfChains.size (); i++)
+		if (turnstate[i]) listOfChains[i]->turnover ();
+
+	/**
+	 * BE CAREFUL! TREES MUST BE CONSISTENT WITH
+	 * CHAIN ORDER, SO REWEIGHTING TREE NODES ARE NECESSARY
+	 */
+
+	//	generate weight for leaf nodes
+	for (int i=0; i<listOfChains.size(); i++)
 	{
-		for (int i=0; i < listOfChains.size (); i++)
-			if (turnstate[i]) listOfChains[i]->turnover ();
+		Chain* c = listOfChains[i];
+		for (int j=0; j<c->listOfParts.size (); j++)
+		{
+			Part* p = c->listOfParts[j];
+			if (p->getIsBinded ())
+			{
+				string label = p->getPartLabel ();
+				Node* n = findBindedNode (label);
+				if (n) n->setNodeWeight (i,j);
+			}
+		}
 	}
 
-	//	find equivalent chains
+	//	generate weight for all nodes
+	for (int i=0; i<listOfTrees.size (); i++) 
+	{
+		Tree* t = listOfTrees[i];
+		t->genWeight ("ROOT");
+		stable_sort (
+				t->listOfNodes.begin (), 
+				t->listOfNodes.end (),
+				IsLess_n ()
+				);
+	}
+
+	//	sort trees
+	stable_sort (
+			listOfTrees.begin(), 
+			listOfTrees.end (), 
+			IsLess_t ()
+			);
+
+	for (int i=0; i < listOfTrees.size (); i++)
+	{
+		Tree* t = listOfTrees[i];
+		t->genHuffman ("ROOT");
+		t->genUnicode ();
+	}
+
+	/**
+	 * FIND EQUIVALENT CHAINS
+	 */
 	for (int i=0; i < minWperm.size (); i++)
 	{
 		const vector<int>& elem_i = minWperm[i]; 
@@ -526,15 +577,15 @@ void MySpecies::rearrange (const bool& isTemplate)
 				}
 
 				if (found_i == -1 && found_j == -1)
-			{
-				set<int> newequiv;
-				newequiv.insert (i);
-				newequiv.insert (j);
-				equiv.push_back (newequiv);
-			}
-			
-			if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
-			if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
+				{
+					set<int> newequiv;
+					newequiv.insert (i);
+					newequiv.insert (j);
+					equiv.push_back (newequiv);
+				}
+
+				if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
+				if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
 
 				if (found_i != -1 && found_j != -1 && found_i != found_j)
 				{

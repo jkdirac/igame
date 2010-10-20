@@ -116,7 +116,7 @@ void readDataBase::read_cnModel (
 			}
 		}
 
-		c->setIsDNA ();
+//        c->setIsDNA ();
 	}
 
 	//read tree map
