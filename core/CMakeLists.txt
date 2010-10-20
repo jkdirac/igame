@@ -5,9 +5,9 @@ INCLUDE_DIRECTORIES( AFTER
 	${IGAME_SOURCE_DIR}/core/
 	)
 
-if( NOT WIN32 )
+IF( WIN32 )
 	#add_subdirectory (copsiPlot)
-endif( NOT WIN32 )
+ENDIF( WIN32 )
 
 add_subdirectory (strcacu)
 
