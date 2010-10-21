@@ -301,4 +301,41 @@
 		<xsd:element name="globalParameter" type="globalParameter_type" minOccurs="0"/>
 	</xsd:complexType>
 
+	<!-- the whole definition of Species -->
+	<xsd:complexType name="listOfReferencedReactionsType">
+		<xsd:sequence>
+			<xsd:element name="referencedReaction" type="DBId" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="speciesType" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="stringtype">
+								<xsd:enumeration value="reactant"/>
+								<xsd:enumeration value="modifier"/>
+								<xsd:enumeration value="product"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="listOfChainsType">
+		<xsd:sequence>
+			<xsd:element name="chain" minOccurs="1" maxOccurs="1">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="listOfParts" minOccurs="1" maxOccurs="1">
+							<xsd:complexType>
+								<xsd:element name="part" minOccurs="1" maxOccurs="unbounded">
+									<xsd:complexType>
+										<xsd:sequence>
+										<xsd:element name="partReference" type="DBId">
+										<xsd:element name="partLabel" type="stringtype">
+										<xsd:element name="partType" type="partType">
+
+											kyy
+
+
+		<xsd:sequence>
 </xsd:schema>
