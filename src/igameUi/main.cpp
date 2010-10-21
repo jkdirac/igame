@@ -2,7 +2,7 @@
 #include <QDir>
 #include <QString>
 #include "mainWindow.h"
-#include "globalSetting.h"
+#include "GlobalSetting.h"
 #include "CoreException.h"
 
 bool init_global_dir_setting()

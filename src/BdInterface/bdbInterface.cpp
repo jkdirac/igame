@@ -18,7 +18,8 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDirIterator>
-#include "globalSetting.h"
+#include "GlobalSetting.h"
+#include "DebugOut.h"
 
 using namespace std;
 using namespace DbXml;
@@ -127,6 +128,11 @@ bdbXMLInterface::bdbXMLInterface()
  */
 BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docname)
 {
+	DebugOut::setPrintable(false);
+	debugOut() << "haha" << endl;
+	DebugOut::setPrintable(true);
+	debugOut() << "haha2" << endl;
+	DebugOut::setPrintable(true);
 	XmlContainer* container = NULL;
 	if (m_manager == NULL)
 	{
