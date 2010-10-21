@@ -101,31 +101,35 @@
 		</xsd:complexType>
 		
 		<xsd:complexType name="listOfConditionalParametersType">
-			<xsd:element name="conditionalParameter" type="conditionalParameterType"
-				minOccurs="0"
-				maxOccurs="unbounded"/>
+			<xsd:sequence>
+				<xsd:element name="conditionalParameter" type="conditionalParameterType"
+					minOccurs="0"
+					maxOccurs="unbounded"/>
+			</xsd:sequence>
 		</xsd:complexType>
+
+		<xsd:simpleType name="partType_type">
+			<xsd:restriction base="stringtype">
+				<xsd:enumeration value="ForwardDNA"/>
+				<xsd:enumeration value="ReverseDNA"/>
+				<xsd:enumeration value="ForwardRNA"/>
+				<xsd:enumeration value="ReverseRNA"/>
+				<xsd:enumeration value="ForwardProtein"/>
+				<xsd:enumeration value="ReverseProtein"/>
+				<xsd:enumeration value="Compound"/>
+				<xsd:enumeration value="Compartment"/>
+				<xsd:enumeration value=""/>
+			</xsd:restriction>
+		</xsd:simpleType>
 		
 		<xsd:complexType name="listOfReferencedSpeciesType">
-			<xsd:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
-				<xsd:complexType>
-					<xsd:attribute name="partType" use="required">
-						<xsd:simpleType>
-							<xsd:restriction base="stringtype">
-								<xsd:enumeration value="ForwardDNA"/>
-								<xsd:enumeration value="ReverseDNA"/>
-								<xsd:enumeration value="ForwardRNA"/>
-								<xsd:enumeration value="ReverseRNA"/>
-								<xsd:enumeration value="ForwardProtein"/>
-								<xsd:enumeration value="ReverseProtein"/>
-								<xsd:enumeration value="Compound"/>
-								<xsd:enumeration value="Compartment"/>
-								<xsd:enumeration value=""/>
-							</xsd:restriction>
-						</xsd:simpleType>
-					</xsd:attribute>
-				</xsd:complexType>
-			</xsd:element>
+			<xsd:sequence>
+				<xsd:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="partType" type="partType_type" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
 		</xsd:complexType>
 		
 		<xsd:complexType name="biobricktype">
@@ -351,6 +355,28 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
+	<xsd:complexType name="kineticLaw_type">
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="listOfLocalParameters">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="localParameter" type="localParameter_type"
+							minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="listOfReferencedParameters"> 
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="referencedParameters" type="referencedParameters_type"
+							minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<xsd:complexType name="Reaction_type">
 		<xsd:attribute name="id" type="DBId" use="required"/>
 		<xsd:attribute name="name" type="stringtype"/>
@@ -360,7 +386,37 @@
 			<xsd:element name="interface" type="interfacetype" />
 			<xsd:element name="listOfCompartments">
 				<xsd:complexType>
-					<xsd:element name="compartment" type="Compartment_type" minOccurs="1" maxOccurs="unbounded"/>
+					<xsd:sequence>
+						<xsd:element name="compartment" type="Compartment_type" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="listOfReactants">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="reactant" type="reaRMP_type" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="listOfModifiers">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="modifier" type="reaRMP_type" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="listOfProducts">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="product" type="reaRMP_type" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="listOfSubstituentTransfers">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="substituentTransfer" type="substituentTransfer_type" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
