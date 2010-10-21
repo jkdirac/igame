@@ -66,7 +66,6 @@ bdbXMLInterface::bdbXMLInterface()
 		}
 	}
 	db_env_home = dir.path() + db_env_home;
-	db_env_home = dir.path() ;
 
 	try 
 	{
