@@ -1,207 +1,278 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://www.w3.org/1998/Math/MathML" 
-                schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"/>
-
-	<!-- Simple Type define start -->
-	<xsd:simpleType name="DBId">
-		<xsd:restriction base="xsd:string"/>
-	</xsd:simpleType>
-
-	<xsd:simpleType name="booleantype">
-		<xsd:restriction base="xsd:boolean"/>
-	</xsd:simpleType>
-
-	<xsd:simpleType name="doubletype">
-		<xsd:restriction base="xsd:double"/>
-	</xsd:simpleType>
-
-	<xsd:simpleType name="Int_ZOO">
-		<xsd:restriction base="xsd:decimal">
-			<xsd:enumeration value="0"/>
-			<xsd:enumeration value="1"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-
-	<xsd:simpleType name="stringtype">
-		<xsd:restriction base="xsd:string"/>
-	</xsd:simpleType>
-	<!-- Simple Type define end -->
-
-	<!-- basic complex type for part/biobrick define start -->
-	<xsd:complexType name="interfacetype">
-		<xsd:sequence>
-			<xsd:element name="url" type="stringtype" minOccurs="0" maxOccurs="1"/>
-			<xsd:element name="shortDesc" type="stringtype" minOccurs="0" maxOccurs="1"/>
-		</xsd:sequence>
-	</xsd:complexType>
-
-	<xsd:complexType name="conditionalParameter_type_1">
-		<xsd:attribute name="id" use="required">
-			<xsd:simpleType>
-				<xsd:restriction base="DBId">
-					<xsd:enumeration value="forwardPromoterEfficiency"/>
-					<xsd:enumeration value="reversePromoterEfficiency"/>
-					<xsd:enumeration value="forwardRbsEfficiency"/>
-					<xsd:enumeration value="reverseRbsEfficiency"/>
-					<xsd:enumeration value="forwardTerminatorEfficiency"/>
-					<xsd:enumeration value="reverseTerminatorEfficiency"/>
-				</xsd:restriction>
-			</xsd:simpleType>
-		</xsd:attribute> 
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="units" type="DBId"/>
-		<xsd:attribute name="commonValue" type="doubletype"/>
-		<xsd:sequence>
-			<xsd:element name="parameterValue" type="doubletype" minOccurs="0" maxOccurs="1">
+<xml version="1.0" encoding="ISO-8859-1" ?>
+	<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<xsd:import namespace="http://www.w3.org/1998/Math/MathML" 
+			schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"/>
+		
+		<!-- Simple Type define start -->
+		<xsd:simpleType name="DBId">
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+		
+		<xsd:simpleType name="booleantype">
+			<xsd:restriction base="xsd:boolean"/>
+		</xsd:simpleType>
+		
+		<!-- Int Type (wangzhen) -->
+		<xsd:simpleType name="inttype">
+			<xsd:restriction base="xsd:int"/>
+		</xsd:simpleType>
+		
+		<xsd:simpleType name="doubletype">
+			<xsd:restriction base="xsd:double"/>
+		</xsd:simpleType>
+		
+		<xsd:simpleType name="Int_ZOO">
+			<xsd:restriction base="xsd:decimal">
+				<xsd:enumeration value="0"/>
+				<xsd:enumeration value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+		
+		<xsd:simpleType name="stringtype">
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+		<!-- Simple Type define end -->
+		
+		<!-- basic complex type for part/biobrick define start -->
+		<xsd:complexType name="interfacetype">
+			<xsd:sequence>
+				<xsd:element name="url" type="stringtype" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="shortDesc" type="stringtype" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="conditionalParameter_type_1">
+			<xsd:attribute name="id" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="DBId">
+						<xsd:enumeration value="forwardPromoterEfficiency"/>
+						<xsd:enumeration value="reversePromoterEfficiency"/>
+						<xsd:enumeration value="forwardRbsEfficiency"/>
+						<xsd:enumeration value="reverseRbsEfficiency"/>
+						<xsd:enumeration value="forwardTerminatorEfficiency"/>
+						<xsd:enumeration value="reverseTerminatorEfficiency"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute> 
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="units" type="DBId"/>
+			<xsd:attribute name="commonValue" type="doubletype"/>
+			<xsd:sequence>
+				<xsd:element name="parameterValue" type="doubletype" minOccurs="0" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:attribute name="compartment" type="DBId"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="conditionalParameter_type_2">
+			<xsd:attribute name="id" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="DBId">
+						<xsd:enumeration value="forwardStartCodonEfficiency"/>
+						<xsd:enumeration value="reverseStartCodonEfficiency"/>
+						<xsd:enumeration value="forwardStopCodonEfficiency"/>
+						<xsd:enumeration value="reverseStopCodonEfficiency"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute> 
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="units" type="DBId"/>
+			<xsd:attribute name="commonValue" type="Int_ZOO"/>
+			<xsd:sequence>
+				<xsd:element name="parameterValue" type="Int_ZOO" minOccurs="0" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:attribute name="compartment" type="DBId"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="conditionalParameterType">
+			<xsd:union>
 				<xsd:complexType>
-					<xsd:attribute name="compartment" type="DBId"/>
+					<xsd:restriction base="conditionalParameter_type_1" />
+				</xsd:complexType>
+				<xsd:complexType>
+					<xsd:restriction base="conditionalParameter_type_2" />
+				</xsd:complexType>
+			</xsd:union>
+		</xsd:complexType>
+		
+		<xsd:complexType name="listOfConditionalParametersType">
+			<xsd:element name="conditionalParameter" type="conditionalParameterType"
+				minOccurs="0"
+				maxOccurs="unbounded"/>
+		</xsd:complexType>
+		
+		<xsd:complexType name="listOfReferencedSpeciesType">
+			<xsd:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="partType" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="stringtype">
+								<xsd:enumeration value="ForwardDNA"/>
+								<xsd:enumeration value="ReverseDNA"/>
+								<xsd:enumeration value="ForwardRNA"/>
+								<xsd:enumeration value="ReverseRNA"/>
+								<xsd:enumeration value="ForwardProtein"/>
+								<xsd:enumeration value="ReverseProtein"/>
+								<xsd:enumeration value="Compound"/>
+								<xsd:enumeration value="Compartment"/>
+								<xsd:enumeration value=""/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
 				</xsd:complexType>
 			</xsd:element>
-		</xsd:sequence>
-	</xsd:complexType>
+		</xsd:complexType>
+		
+		<xsd:complexType name="biobricktype">
+			<xsd:attribute name="id" type="DBId" use="required"/>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="originalConformation" type="DBId"/>
+			<xsd:sequence>
+				<xsd:element name="interface" type="interfacetype"/>
+				<xsd:element name="listOfConditionalParameters"
+					type="listOfConditionalParametersType" minOccurs="0"/>
+				<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		
+		
+		<!-- basic complex type for part/plasmidBackbone define start -->
+		<xsd:complexType name="plasmidBackboneType">
+			<xsd:attribute name="id" type="DBId" use="required"/>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="originalConformation" type="DBId"/>
+			<xsd:sequence>
+				<xsd:element name="interface" type="interfacetype"/>
+				<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+				<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="compoundType">
+			<xsd:attribute name="id" type="DBId" use="required"/>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="originalConformation" type="DBId"/>
+			<xsd:sequence>
+				<xsd:element name="interface" type="interfacetype"/>
+				<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+				<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="compartmentType">
+			<xsd:attribute name="id" type="DBId" use="required"/>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="originalConformation" type="DBId"/>
+			<xsd:sequence>
+				<xsd:element name="interface" type="interfacetype"/>
+				<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+				<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="substituentType">
+			<xsd:attribute name="id" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="DBId">
+						<xsd:enumeration value="ANY"/>
+						<xsd:enumeration value="ANYUB"/>
+						<xsd:enumeration value="NZ"/>
+						<xsd:enumeration value="NZUB"/>
+						<xsd:enumeration value="ONE"/>
+						<xsd:enumeration value="ONEUB"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:attribute name="originalConformation" type="DBId"/>
+			<xsd:sequence>
+				<xsd:element name="interface" type="interfacetype"/>
+				<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
+				<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="Part_type">
+			<xsd:choice>
+				<xsd:element name="biobrick" type="biobricktype"/>
+				<xsd:element name="plasmidBackbone" type="plasmidBackboneType"/>
+				<xsd:element name="compartment" type="plasmidBackboneType"/>
+			</xsd:choice>
+		</xsd:complexType>
+		
+<!--    base type for rules-->
 
-	<xsd:complexType name="conditionalParameter_type_2">
-		<xsd:attribute name="id" use="required">
-			<xsd:simpleType>
-				<xsd:restriction base="DBId">
-					<xsd:enumeration value="forwardStartCodonEfficiency"/>
-					<xsd:enumeration value="reverseStartCodonEfficiency"/>
-					<xsd:enumeration value="forwardStopCodonEfficiency"/>
-					<xsd:enumeration value="reverseStopCodonEfficiency"/>
-				</xsd:restriction>
-			</xsd:simpleType>
-		</xsd:attribute> 
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="units" type="DBId"/>
-		<xsd:attribute name="commonValue" type="Int_ZOO"/>
-		<xsd:sequence>
-			<xsd:element name="parameterValue" type="Int_ZOO" minOccurs="0" maxOccurs="1">
-				<xsd:complexType>
-					<xsd:attribute name="compartment" type="DBId"/>
-				</xsd:complexType>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:complexType>
+<!-- basic complex type for Compartment define start (wangzhen) -->
 
-	<xsd:complexType name="conditionalParameterType">
-		<xsd:union>
-			<xsd:complexType>
-				<xsd:restriction base="conditionalParameter_type_1" />
-			</xsd:complexType>
-			<xsd:complexType>
-				<xsd:restriction base="conditionalParameter_type_2" />
-			</xsd:complexType>
-		</xsd:union>
-	</xsd:complexType>
+<xsd:complexType name="Compartment_type">
+	<xsd:attribute name="id" type="DBId" use="required"/>
+	<xsd:attribute name="name" type="stringtype"/>
+	<xsd:attribute name="originalConformation" type="DBId"/>
+	<xsd:sequence>
+		<xsd:element name="interface" type="interfacetype"/>
+		<xsd:element name="listOfInnerCompartmentPermitted" type="listOfInnerCompartmentPermitted"/>
+	</xsd:sequence>
+</xsd:complexType>
 
-	<xsd:complexType name="listOfConditionalParametersType">
-		<xsd:element name="conditionalParameter" type="conditionalParameterType"
-			minOccurs="0"
-			maxOccurs="unbounded"/>
-	</xsd:complexType>
+<xsd:complexType name="listOfConditionalParameters_Type">
+	<xsd:element name="conditionalParameter" type="conditionalParameter_Type"
+		minOccurs="0"
+		maxOccurs="unbounded"/>
+</xsd:complexType>
 
-	<xsd:complexType name="listOfReferencedSpeciesType">
-		<xsd:element name="referencedSpecies" type="DBId" minOccurs="0" maxOccurs="unbounded">
-			<xsd:complexType>
-				<xsd:attribute name="partType" use="required">
-					<xsd:simpleType>
-						<xsd:restriction base="stringtype">
-							<xsd:enumeration value="ForwardDNA"/>
-							<xsd:enumeration value="ReverseDNA"/>
-							<xsd:enumeration value="ForwardRNA"/>
-							<xsd:enumeration value="ReverseRNA"/>
-							<xsd:enumeration value="ForwardProtein"/>
-							<xsd:enumeration value="ReverseProtein"/>
-							<xsd:enumeration value="Compound"/>
-							<xsd:enumeration value="Compartment"/>
-							<xsd:enumeration value=""/>
-						</xsd:restriction>
-					</xsd:simpleType>
-				</xsd:attribute>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:complexType>
+<xsd:complexType name="listOfInnerCompartmentPermitted_type">
+	<xsd:element name="compartmentReference" type="DBId" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:complexType>
 
-	<xsd:complexType name="biobricktype">
-		<xsd:attribute name="id" type="DBId" use="required"/>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
-		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfConditionalParameters"
-				type="listOfConditionalParametersType" minOccurs="0"/>
-			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
-		</xsd:sequence>
-	</xsd:complexType>
+<!-- basic complex type for functionDefinition define start (wangzhen) -->
 
-	<!-- basic complex type for part/biobrick define start -->
+<xsd:complexType name="rule_type_1">
+	<xsd:attribute name="variable" type="DBId" use="required"/>
+	<xsd:sequence>
+		<xsd:any minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+</xsd:complexType>
 
-	<xsd:complexType name="plasmidBackboneType">
-		<xsd:attribute name="id" type="DBId" use="required"/>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
-		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
-			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
-		</xsd:sequence>
-	</xsd:complexType>
+<xsd:complexType name="rule_type_2">
+	<xsd:sequence>
+		<xsd:any minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+</xsd:complexType>
 
-	<xsd:complexType name="compoundType">
-		<xsd:attribute name="id" type="DBId" use="required"/>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
-		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
-			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
-		</xsd:sequence>
-	</xsd:complexType>
+<xsd:complexType name="functionDefinition_type">
+	<xsd:attribute name="id" type="DBId" use="required"/>
+	<xsd:sequence>
+		<xsd:any minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+</xsd:complexType>
 
-	<xsd:complexType name="compartmentType">
-		<xsd:attribute name="id" type="DBId" use="required"/>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
-		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
-			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
-		</xsd:sequence>
-	</xsd:complexType>
+<xsd:complexType name="unit_type">
+	<xsd:attribute name="kind" type="DBId" use="required"/>
+	<xsd:attribute name="exponent" type="inttype"/>
+	<xsd:attribute name="scale" type="inttype"/>
+	<xsd:attribute name="multiplier" type="doubletype"/>
+</xsd:complexType>
 
-	<xsd:complexType name="substituentType">
-		<xsd:attribute name="id" use="required">
-			<xsd:simpleType>
-				<xsd:restriction base="DBId">
-					<xsd:enumeration value="ANY"/>
-					<xsd:enumeration value="ANYUB"/>
-					<xsd:enumeration value="NZ"/>
-					<xsd:enumeration value="NZUB"/>
-					<xsd:enumeration value="ONE"/>
-					<xsd:enumeration value="ONEUB"/>
-				</xsd:restriction>
-			</xsd:simpleType>
-		</xsd:attribute>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
-		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfConditionalParameters" minOccurs="0"/>
-			<xsd:element name="listOfReferencedSpecies" type="listOfReferencedSpeciesType"/>
-		</xsd:sequence>
-	</xsd:complexType>
+<xsd:complexType name="globalParameter_type">
+	<xsd:sequence>
+		<xsd:element name="id" type="DBId" use="required"/>
+		<xsd:element name="name" type="stringtype"/>
+		<xsd:element name="units" type="DBId"/>
+		<xsd:element name="value" type="doubletype" use="required"/>
+		<xsd:element name="constant" type="booleantype"/>
+	</xsd:sequence>
+</xsd:complexType>
 
-	<xsd:complexType name="Part">
-		<xsd:choice>
-			<xsd:element name="biobrick" type="biobricktype"/>
-			<xsd:element name="plasmidBackbone" type="plasmidBackboneType"/>
-			<xsd:element name="compartment" type="plasmidBackboneType"/>
-		</xsd:choice>
-	</xsd:complexType>
+<!-- basic complex type for rule define start (wangzhen) -->
 
 <!--    base type for reaction by jk -->
-	<xsd:complexType name="reaRMPtype">
+	<xsd:complexType name="reaRMP_type">
 		<xsd:sequence>
 			<xsd:element name="speciesReference" type="DBId"/>
 			<xsd:element name="speciesLable" type="stringtype"/>
@@ -212,16 +283,16 @@
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
-
-	<xsd:complexType name="compartment">
+	
+	<xsd:complexType name="compartment_type">
 		<xsd:sequence>
 			<xsd:element name="compartmentReference" type="DBId"/>
 			<xsd:element name="currentCompartmentLabel" type="stringtype"/>
 			<xsd:element name="parentCompartmentLabel" type="stringtype"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
-	<xsd:complexType name="substituentTransfer">
+	
+	<xsd:complexType name="substituentTransfer_type">
 		<xsd:sequence>
 			<xsd:element name="from">
 				<xsd:complexType>
@@ -236,47 +307,88 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-<!--    base type for reaction end by jk-->
-
-	<!-- basic complex type for Compartment define start -->
-
-	<xsd:complexType name="Compartment">
-		<xsd:attribute name="id" type="DBId" use="required"/>
-		<xsd:attribute name="name" type="stringtype"/>
-		<xsd:attribute name="originalConformation" type="DBId"/>
+	<xsd:complexType name="listOfGlobalParameters_type">
 		<xsd:sequence>
-			<xsd:element name="interface" type="interfacetype"/>
-			<xsd:element name="listOfInnerCompartmentPermitted" type="listOfInnerCompartmentPermitted"/>
+			<xsd:element name="globalParameter" type="globalParameter_type" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="listOfConditionalParametersType">
-		<xsd:element name="conditionalParameter" type="conditionalParameterType"
-			minOccurs="0"
-			maxOccurs="unbounded"/>
+	<xsd:complexType name="localParameter_type">
+		<xsd:sequence>
+			<xsd:element name="id" type="stringtype"/>
+			<xsd:element name="name" type="stringtype"/>
+			<xsd:element name="value" type="doubletype"/>
+			<xsd:element name="units" type="DBId"/>
+			<xsd:element name="constant" type="booleantype"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="listOfInnerCompartmentPermitted">
-		<xsd:element name="compartmentReference" type="DBId" minOccurs="0" maxOccurs="unbounded">
-			<xsd:complexType>
-
-				<xsd:attribute name="partType">
-					<xsd:simpleType>
-						<xsd:restriction base="stringtype">
-							<xsd:enumeration value="ForwardDNA"/>
-							<xsd:enumeration value="ReverseDNA"/>
-							<xsd:enumeration value="ForwardRNA"/>
-							<xsd:enumeration value="ReverseRNA"/>
-							<xsd:enumeration value="ForwardProtein"/>
-							<xsd:enumeration value="ReverseProtein"/>
-							<xsd:enumeration value="Compound"/>
-							<xsd:enumeration value="Compartment"/>
-							<xsd:enumeration value=""/>
-						</xsd:restriction>
-					</simpleType>
-				</xsd:attribute>
-			</xsd:complexType>
-		</xsd:element>
+	<xsd:complexType name="referencedParameters_type">
+		<xsd:sequence>
+			<xsd:element name="id" type="stringtype"/>
+			<xsd:element name="extRefSource"> 
+				<xsd:complexType>
+					<xsd:attribute name="speciesLabel" type="stringtype"/>
+					<xsd:attribute name="partLabel" type="stringtype"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="value" type="doubletype"/>
+			<xsd:element name="units" type="DBId"/>
+			<xsd:element name="constant" type="booleantype"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
+	<xsd:complexType name="listofconstraints_type">
+		<xsd:sequence>
+			<xsd:element name="listOfVariable" minOccurs="0"> 
+				<xsd:complexType>
+					<xs:sequence>
+						<xsd:element name="variable" type="stringtype"/> 
+					</xs:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="formula" type="stringtype"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Reaction_type">
+		<xsd:attribute name="id" type="DBId" use="required"/>
+		<xsd:attribute name="name" type="stringtype"/>
+		<xsd:attribute name="reversible" type="booleantype"/>
+		<xsd:attribute name="fast" type="booleantype"/>
+		<xsd:sequence>
+			<xsd:element name="interface" type="interfacetype" />
+			<xsd:element name="listOfCompartments">
+				<xsd:complexType>
+					<xsd:element name="compartment" type="Compartment_type" minOccurs="1" maxOccurs="unbounded"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+<!--    base type for  end by jk-->
+	<xsd:complexType name="listOfFunctionDefinitions_type">
+		<xsd:element name="functionDefinition" type="functionDefinition_type" minOccurs="0"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="listOfUnitDefinitions_type">
+		<xsd:element name="unitDefinition" type="functionDefinition_type" minOccurs="0"/>
+		<xsd:complexType name="unitDefinition_type">
+			<xsd:attribute name="id" type="DBId"/>
+			<xsd:element name="listOfUnits">
+				<xsd:complexType name="listOfUnits_type">
+					<xsd:element name="unit" type="unit_type" minOccurs="0"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:complexType>
+	</xsd:complexType>
+	
+	<xsd:complexType name="listOfRules_type">
+		<xsd:sequence>
+			<xsd:element name="assignmentRule" type="rule_type_1" minOccurs="0"/>
+			<xsd:element name="rateRule" type="rule_type_1" minOccurs="0"/>
+			<xsd:element name="algebraicRule" type="rule_type_2"/ minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
 </xsd:schema>
