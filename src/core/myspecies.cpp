@@ -59,7 +59,6 @@ void MySpecies::split (
 	//	first trim the species
 	trim (&dbreader);
 
-	cout << "\n!!!	--	--	--	--	!!!\n";
 	cout << "\nspecies after trim	=	 "  << endl;
 	Output ();
 
@@ -70,8 +69,6 @@ void MySpecies::split (
 	for (int i=0; i < listOfTrees.size (); i++)
 	{
 		Tree* t = listOfTrees[i];
-//        t->Output (cout);
-	
 
 		//int not species associated, found = -1,
 		//else found = species index in cU;
@@ -125,7 +122,6 @@ void MySpecies::split (
 				if (n->isLeaf ())
 				{
 					int chainnum = n->getNodeWeight ().first;
-					cout << "\ntree num = " << i << " chain num = " << chainnum << endl;
 					assert (chainnum >= 0);
 
 					s->createChain (listOfChains[chainnum]);
@@ -338,11 +334,14 @@ string MySpecies::getCompTypeId () const {
 
 void MySpecies::rearrange (const bool& isTemplate)
 {
+	cout << "\n--------rearrange species structure...--------"<<endl;
+
 	//	minW must be cleared!!!!
 	minW.clear ();
+	equiv.clear ();
 
 	//	start
-	
+
 	int symmstate = 1;
 	bool* csymm = new bool[listOfChains.size ()];
 	for (int i = 0; i < listOfChains.size (); i++)
@@ -376,20 +375,46 @@ void MySpecies::rearrange (const bool& isTemplate)
 	vector<markType> psEquiv; 
 	findEquiv (psEquiv);
 
+	//    cout << "\npsEquiv = " << psEquiv.size () << endl;
+	//    for (int i=0; i<psEquiv.size (); i++)
+	//        cout << "\n(first = " << psEquiv[i].first
+	//             << ", second = " << psEquiv[i].second
+	//             << ")";
+
 	// (1) calculate and generate all permutations
 	// (important! initialize permAll)
 	int numPerm = 1;
-	permType permAll (psEquiv.size());
+	permType permAll;
 	for (int i =0; i < psEquiv.size (); i++)
 	{
 		vector<int> perm;
 		const markType& eqv = psEquiv[i];
 		for (int j = eqv.first; j <= eqv.second; j++) perm.push_back (j);
+		//        cout << "\neqv.first = " << eqv.first << " eqv.second = " << eqv.second << endl;
+		//        cout << "\nperm.size = " << perm.size () << endl;
 
 		//calculate full-array of numbers in perm
-		Math::ordered_FullArray (perm, permAll[i]);
-		numPerm *= (eqv.second-eqv.first+1);
+		vector< vector<int> > tmp_perm;
+		Math::ordered_FullArray (perm, tmp_perm);
+
+		/*
+		   for (int j=0; j < tmp_perm.size (); j++)
+		   {
+		   cout << "\n\n";
+		   assert (tmp_perm[j].size () == perm.size ());
+		   for (int k = 0; k < tmp_perm[j].size (); k++)
+		   {
+		   cout << tmp_perm[j][k] << " ";
+		   }
+		   }
+		   */
+
+		permAll.push_back (tmp_perm);
+
+		//        cout << "\npermAll = " << permAll[i].size () << endl;
+		numPerm *= permAll[i].size ();
 	}
+	assert (permAll.size () == psEquiv.size ());
 
 	/**
 	 * iterate all permutations, and 
@@ -399,33 +424,40 @@ void MySpecies::rearrange (const bool& isTemplate)
 	vector< vector<int> > minWperm;
 	vector< bool > turnstate;
 
-	for (int i=0; i < numPerm; i++)
+	for (int i=0; i < symmstate; i++)
 	{
-		//	permute equal chains
-		vector<int> order;
-		perm (i, psEquiv, permAll, order);
-
-		for (int j=0; j < symmstate; j++)
+		vector<bool> tmpstate;
+		if (!isTemplate)
 		{
-			vector<bool> tmpstate;
-
-			if (!isTemplate)
+			int divide = i;
+			for (int j = 0; j < listOfChains.size (); j++)
 			{
-				int divide = j;
-				for (int k=0; k < listOfChains.size (); k++)
+				if (csymm[j]) 
 				{
-					if (csymm[k]) 
-					{
-						tmpstate.push_back (static_cast<bool> (divide % 2));
-						if (tmpstate[k]) listOfChains[k]->turnover ();
-						divide /= 2;
-					}
-					else tmpstate.push_back (false);
+					tmpstate.push_back (static_cast<bool> (divide % 2));
+					if (tmpstate[j]) listOfChains[j]->turnover ();
+					divide /= 2;
 				}
+				else tmpstate.push_back (false);
 			}
-			else tmpstate = vector<bool> (listOfChains.size (), false);
+		}
+		else tmpstate = vector<bool> (listOfChains.size (), false);
 
-//            cout << "\ntmpstate = " << tmpstate.size () << endl;
+		for (int j=0; j < numPerm; j++)
+		{
+			//	permute equal chains
+			vector<int> order;
+
+			try
+			{
+				perm (j, psEquiv, permAll, order);
+			}
+			catch (std::out_of_range &e)
+			{
+				cout << "\ni = " << i << " j = " << j << endl;
+				cerr << e.what () << "	out_of_range in function perm!\n";
+				throw;
+			}
 
 			//	generate weight for leaf nodes
 			for (int k=0; k<listOfChains.size(); k++)
@@ -474,8 +506,8 @@ void MySpecies::rearrange (const bool& isTemplate)
 				tryuni += t->unicode;
 			}
 
-//            cout << "\nminW = " << minW.empty () << endl;
-//            cout << "\nminW < tryuni: " << (minW < tryuni) << endl;
+			//            cout << "\nminW = " << minW.empty () << endl;
+			//            cout << "\nminW < tryuni: " << (minW < tryuni) << endl;
 
 			if (minW.empty ()) 
 			{
@@ -495,8 +527,8 @@ void MySpecies::rearrange (const bool& isTemplate)
 				minWperm.push_back (order);
 			}
 
-//            cout << "\nturnstate = " << turnstate.size () << endl;
- 
+			//            cout << "\nturnstate = " << turnstate.size () << endl;
+
 			//	recover to orginal order
 			stable_sort (
 					listOfChains.begin(), 
@@ -514,10 +546,10 @@ void MySpecies::rearrange (const bool& isTemplate)
 	}
 
 	//	set unique turn state
-//    cout << "\nistemplate = " << isTemplate 
-//         << " chainsize == " << listOfChains.size () 
-//         << " turnsize = " <<turnstate.size () 
-//         << endl;
+	//    cout << "\nistemplate = " << isTemplate 
+	//         << " chainsize == " << listOfChains.size () 
+	//         << " turnsize = " <<turnstate.size () 
+	//         << endl;
 
 	if (!isTemplate)
 	{
@@ -581,10 +613,15 @@ void MySpecies::rearrange (const bool& isTemplate)
 		for (int j=i+1; j < minWperm.size (); j++)
 		{
 			const vector<int>& elem_j = minWperm[j];
-			
+
 			assert (elem_i.size () == elem_j.size ());
+			//            cout << "\noutput_equivalent_info:" << endl;
+			//            cout << "\ni = " << i << " j = " << j << endl;
+
 			for (int m=0; m < elem_i.size (); m++)
 			{
+				//                cout << elem_i[m] << " " << elem_j[m] << endl;	
+
 				if (elem_i[m] == elem_j[m]) continue;
 
 				//	for each (i,j) pair, find equivalent chains
@@ -597,26 +634,36 @@ void MySpecies::rearrange (const bool& isTemplate)
 					if (found_i != -1 && found_j != -1) break;
 				}
 
+				//                cout << "\nfound_i = " << found_i << " found_j = " << found_j << endl;
 				if (found_i == -1 && found_j == -1)
 				{
 					set<int> newequiv;
-					newequiv.insert (i);
-					newequiv.insert (j);
+					newequiv.insert (elem_i[m]);
+					newequiv.insert (elem_j[m]);
 					equiv.push_back (newequiv);
 				}
-
-				if (found_i != -1 && found_j == -1) equiv[found_i].insert (j);
-				if (found_i == -1 && found_j != -1) equiv[found_j].insert (i);
-
-				if (found_i != -1 && found_j != -1 && found_i != found_j)
+				else if (found_i != -1 && found_j == -1) equiv[found_i].insert (elem_j[m]);
+				else if (found_i == -1 && found_j != -1) equiv[found_j].insert (elem_i[m]);
+				else if (found_i != -1 && found_j != -1 && found_i != found_j)
 				{
 					//	merge set found_i and found_j
 					set<int>::iterator iterf = equiv[found_j].begin ();
 					while (iterf != equiv[found_j].end ()) equiv[found_i].insert (*iterf++);
 					equiv.erase (equiv.begin () + found_j);
 				}
+
+				//                cout << "\nnow equivalent group number = " << equiv.size () << endl;
 			}
+
 		}
+	}
+
+	cout << "\nnumber of equivalent chain groups = " << equiv.size () << endl;
+	for (int i=0; i < equiv.size (); i++)
+	{
+		set<int>::iterator it = equiv[i].begin ();
+		while (it != equiv[i].end ()) cout << *it++;
+		cout << "	";
 	}
 
 	delete [] csymm;
@@ -691,13 +738,20 @@ void MySpecies::findEquiv (vector<markType>& psEquiv) const
 			int curp = i + offset;
 			Chain* c2 = listOfChains[curp];
 
-			if (&c1 == &c2) 
+			//            if (&c1 == &c2) 
+			if (c1->unicode == c2->unicode)
 			{
+				//                cout << "\nc1 = " << c1->unicode 
+				//                     << endl << " c2 = " << c2->unicode 
+				//                     << endl;
+
+				//                cout << "\ncurp = " << curp << " size = " << listOfChains.size ();
+
 				offset++;
 				if (curp+1 == listOfChains.size ()) //last element
 				{
-					i = listOfChains.size ();
 					psEquiv.push_back (make_pair(i, listOfChains.size ()-1));
+					i = listOfChains.size ();
 					break;
 				}
 			}
@@ -724,6 +778,8 @@ void MySpecies::perm (
 	int divide = i;
 	for (int j = 0; j < psEquiv.size (); j++)
 	{
+		//        cout << "\nxml = " << j << endl;
+
 		const markType& eqv = psEquiv[j];
 		const vector<int>& permutedArray = 
 			permAll[j][divide % permAll[j].size ()];
@@ -734,17 +790,21 @@ void MySpecies::perm (
 			first = listOfChains.begin () + eqv.first, 
 				  last = listOfChains.begin () + eqv.second + 1;
 		vector<Chain*> splice (first, last);
+		assert (splice.size () == eqv.second-eqv.first+1);
 
+		//        cout << "\nxml2 = " << j << endl;
 		//	permute
 		for (int perm = eqv.first; perm <= eqv.second; perm++) 
 		{
-			int pos = permutedArray[perm-eqv.first] - eqv.first;
-			listOfChains[perm] = splice.at (pos);
+			int pos = permutedArray.at (perm-eqv.first) - eqv.first;
+			listOfChains.at (perm) = splice.at (pos);
 		}
+
+		//        cout << "\nxml3 = " << j << endl;
 
 		//	record the order
 		for (int k=0; k < permutedArray.size (); k++)
-			order.push_back (permutedArray[k]);
+			order.push_back (permutedArray.at(k));
 
 		divide /= permAll[j].size ();
 	}
@@ -780,7 +840,7 @@ bool MySpecies::match (
 	// for each chain in template species, we find all matchings
 	// in this species, and records them
 	//
-	
+
 	//	for chains with same unicode, we only need to find
 	//	matchings for one of them
 	map<string, int> uniMap;
@@ -788,10 +848,9 @@ bool MySpecies::match (
 	for (int i =0; i < numc_t; i++)
 	{
 		cout << "\n\ntry template pattern	"
-			 << "--	..	--	" << i;
-		
+			<< "--	..	--	" << i;
+
 		Chain* c1 = s->listOfChains[i];
-		cout << "\nunicode = " << c1->unicode << "	found = " << uniMap.count (c1->unicode) << endl;
 		if (!uniMap.count (c1->unicode))
 		{
 			cMatchsType2 record;
@@ -835,7 +894,7 @@ bool MySpecies::match (
 
 		//	cMatchType2 only records details of one chain match
 		//	and vector<cMatchType2> have a complete set of chain match
-		
+
 		set <int> chainUsed;
 		cMatchsType2 tryAssemble;
 
@@ -857,20 +916,42 @@ bool MySpecies::match (
 		vector< set<int> > equivck;
 		for (int j=0; j < s->equiv.size (); j++)
 		{
-			const set<int>& equivset = equiv[j];
+			const set<int>& equivset = s->equiv[j];
 
 			set<int> tmp;
 			set<int>::const_iterator iter = equivset.begin ();
 			while (iter != equivset.end ())
+			{
+				cout << *iter << ", ";
 				tmp.insert (tryAssemble[*iter++].second);
+			}
+			cout << endl;
 			equivck.push_back (tmp);
 		}
+
+		cout << "\ni candidate = " << i << endl;
 
 		/**
 		 * check if this permutation has been added
 		 */
 		if (repeatRemove.count (equivck)) continue;
 		else repeatRemove.insert (equivck);
+
+		cout << "\nrepeatRemove = " << repeatRemove.size () << endl;
+		set< vector<set<int> > >::iterator it1 = repeatRemove.begin ();
+		for (int j=0; j < repeatRemove.size (); j++, it1++)
+		{
+			cout << "\nequiv group = " << it1->size () << endl;
+			for (int k=0; k <it1->size (); k++)
+			{
+				set<int>::iterator it = (*it1)[k].begin ();
+				while (it!=(*it1)[k].end ()) cout << *it++ << " ";
+			}
+			cout << endl;
+		}
+
+		cout << "\ni pass = " << i << endl;
+		for (int j=0; j < numc_t; j++) cout << tryAssemble[j].second << " " ;
 
 		//
 		//	if no trees, a successful match has been found
@@ -881,7 +962,7 @@ bool MySpecies::match (
 			//	generate lhs
 			//	============
 			MySpecies* lhs = new MySpecies;
-			
+
 			//	copy chains that are matched
 			for (int j=0; j<numc_t; j++) lhs->createChain (listOfChains[tryAssemble[j].second]);
 			for (int j=0; j<listOfTrees.size (); j++) lhs->createTree (listOfTrees[j]);
@@ -968,9 +1049,9 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 			}
 		}
 	}
-	
+
 	//	trim condition 1
-	
+
 	/**
 	 * if label of leaf nodes in trees could not be found in all
 	 * parts with isBinded attribute, then this tree will be removed
@@ -1010,7 +1091,7 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 		}
 		else
 		{
-//            cout << "\n<!!!	---	---	---	DELETE TREE	---	---	---\n";
+			//            cout << "\n<!!!	---	---	---	DELETE TREE	---	---	---\n";
 
 			//
 			//	delete tree
@@ -1058,10 +1139,10 @@ void MySpecies::trim (bdbXMLInterface* dbreader)
 	}	
 
 
-//     trim condition 2
-//	if labels in the set could not be mapped to any node in the tree
-//	it will also be replaced by its original conformation
-	
+	//     trim condition 2
+	//	if labels in the set could not be mapped to any node in the tree
+	//	it will also be replaced by its original conformation
+
 	map< string, pair<int,int> >::iterator first = bindsites.begin ();
 	for (int i=0; first != bindsites.end (); i++, first++)
 	{
@@ -1098,15 +1179,15 @@ void MySpecies::display_name (const int& num)
 
 	set<int> skip;
 
-//    cout << "\noutput_test" << endl;
-//    Output ();
-//    cout << "\nequivalent chains:" << endl;
-//    for (int i=0; i < equiv.size (); i++)
-//    {
-//        set<int>::iterator it = equiv[i].begin ();
-//        while (it != equiv[i].end ()) cout << *it++;
-//        cout << endl;
-//    }
+	cout << "\noutput_test" << endl;
+	Output ();
+	cout << "\nequivalent chains groups = " << equiv.size () << endl;
+	for (int i=0; i < equiv.size (); i++)
+	{
+		set<int>::iterator it = equiv[i].begin ();
+		while (it != equiv[i].end ()) cout << *it++;
+		cout << endl;
+	}
 
 	for (int i=0; i < listOfChains.size (); i++)
 	{
@@ -1128,7 +1209,7 @@ void MySpecies::display_name (const int& num)
 		ostringstream oss;
 
 		if (times != 0) name += "(";
-		
+
 		//	DNA
 		if (c->isDNA) 
 		{
@@ -1162,7 +1243,7 @@ void MySpecies::display_name (const int& num)
 			if (times != 0)
 			{
 				oss.str ("");
-				oss << "(" << name1 << ")" << times << ";";
+				oss << name1 << ")" << times << ";";
 				name += oss.str ();
 			}
 			else name += name1 + ";";

@@ -95,16 +95,16 @@ void MainWindow::import_data2db()
 	try
 	{
 		bool errno = driver.beginSimulation ();
-//        copsi_entry("network.xml", m_app);
 
-//        QProcess copasi_pro(NULL);
-		QStringList par_list;
-		QString pro_name("./hellocopsi");
-		QString par_1("-i");
-		QString par_2("network.xml");
-		par_list << par_1 << par_2;
-		QProcess::execute(pro_name, par_list);
-//        QProcess::execute(pro_name);
+		if (errno == 0)
+		{
+			QStringList par_list;
+			QString pro_name("../../../ExternalLib/linux/CopasiUI");
+			QString par_1("-i");
+			QString par_2("network.xml");
+			par_list << par_1 << par_2;
+			QProcess::execute(pro_name, par_list);
+		}
 	}
 	catch (CoreException &se)
 	{

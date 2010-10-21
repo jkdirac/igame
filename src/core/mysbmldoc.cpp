@@ -256,6 +256,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) continue;
 
+					cout << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
+
 					//
 					//  read reaction Links
 					string reactionLinkPath = "/MoDeL/species/"

@@ -382,12 +382,20 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		reactant_sam = new speciesArrayMatch [listOfMyReactants.size ()]; 
 
+		cout << "\nreactant match finding" << endl;
 		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
+			cout << "\ntemplate i = " << endl;
 			MySpecies* tmReactant = listOfMyReactants[i];
+			tmReactant->Output ();
+
 			for (int j=0; j <= index; j++)
 			{
 				MySpecies* prevSpe = listOfMySpecies[j];
+
+				cout << "\nmatching species:	"<<endl;
+				prevSpe->Output ();
+
 				bool same = isSameType (
 						prevSpe->getCompTypeId (), 
 						tmReactant->getCompTypeId ()

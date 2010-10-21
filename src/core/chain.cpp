@@ -106,6 +106,9 @@ void Chain::turnover ()
 		listOfParts.push_back (stack_part.top ());	
 		stack_part.pop ();
 	}
+
+	//	reset unicode
+	unicode = genUnicode (0, listOfParts.size ()-1, true);
 }
 
 bool Chain::isCsymm ()

@@ -267,7 +267,7 @@ void MyReaction::createReactionsFromTemplate (
 			 * 2. comp_type_id should be set previously if it is not empty
 			 */
 			MySpecies* __product = new MySpecies (splitted);
-//            __product->rearrange (false);
+			__product->rearrange (false);
 
 			MySpecies* __product_tm = listOfMyProducts[degenerate[i][j]];
 
