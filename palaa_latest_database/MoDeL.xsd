@@ -108,13 +108,23 @@
 			</xsd:sequence>
 		</xsd:complexType>
 
+		<xsd:simpleType name="partCategory_type">
+			<xsd:restriction base="stringtype">
+				<xsd:enumeration value="biobrick"/>
+				<xsd:enumeration value="compound"/>
+				<xsd:enumeration value="compartment"/>
+				<xsd:enumeration value="substituent"/>
+				<xsd:enumeration value="plasmidBackbone"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+
 		<xsd:simpleType name="partType_type">
 			<xsd:restriction base="stringtype">
-				<xsd:enumeration value="ForwardDNA"/>
+				<xsd:enumeration value="DNA"/>
 				<xsd:enumeration value="ReverseDNA"/>
-				<xsd:enumeration value="ForwardRNA"/>
+				<xsd:enumeration value="RNA"/>
 				<xsd:enumeration value="ReverseRNA"/>
-				<xsd:enumeration value="ForwardProtein"/>
+				<xsd:enumeration value="Protein"/>
 				<xsd:enumeration value="ReverseProtein"/>
 				<xsd:enumeration value="Compound"/>
 				<xsd:enumeration value="Compartment"/>
@@ -472,7 +482,7 @@
 
 	<xsd:complexType name="listOfChainsType">
 		<xsd:sequence>
-			<xsd:element name="chain" minOccurs="1" maxOccurs="1">
+			<xsd:element name="chain" minOccurs="1" maxOccurs="unbounded">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="listOfParts" minOccurs="1" maxOccurs="1">
@@ -480,12 +490,62 @@
 								<xsd:element name="part" minOccurs="1" maxOccurs="unbounded">
 									<xsd:complexType>
 										<xsd:sequence>
-										<xsd:element name="partReference" type="DBId">
-										<xsd:element name="partLabel" type="stringtype">
-										<xsd:element name="partType" type="partType">
+											<xsd:element name="partReference" type="DBId"/>
+											<xsd:element name="partLabel" type="stringtype"/>
+											<xsd:element name="partType" type="partType_type"/>
+											<xsd:element name="partCategory" type="partType_type"/>
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 
-											kyy
-
-
+	<xsd:complexType name="listOfTrees_type">
 		<xsd:sequence>
+			<xsd:element name="tree" minOccurs="1" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="listOfNodes" minOccurs="1" maxOccurs="1">
+							<xsd:complexType>
+								<xsd:element name="node" minOccurs="1" maxOccurs="unbounded">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="currentNodeLabel" type="stringtype"/>
+											<xsd:element name="parentNodeLabel" type="stringtype"/>
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="cnModel_type">
+		<xsd:sequence>
+			<xsd:element name="listOfChains" type="listOfChains_type"/>
+			<xsd:element name="listOfTrees" type="listOfTrees_type"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="species_type">
+		<xsd:sequence>
+			<xsd:attribute name="id" type="DBId" use="required"/>
+			<xsd:attribute name="name" type="stringtype"/>
+			<xsd:element name="interface" type="interfacetype"/>
+			<xsd:element name="cnModel" type="cnModel_type"/>
+			<xsd:element name="listOfReferencedReactions" type="listOfReferencedReactionsType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		
+
+
+
 </xsd:schema>
