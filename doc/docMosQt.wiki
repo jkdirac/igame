@@ -1,0 +1,425 @@
+
+=== MosQt UI Framework ===
+
+* 包含头文件，仅需一行：
+
+ #include <MosQt>
+
+* 声明界面元素：
+
+ namespace uiObjects {
+ MView * mainView;
+ MScene * mainScene[10];
+ MItem *item[100];
+ MWidget *widget[100];
+ };
+ // 所有界面元素（包括：MView*、MScene*、MItem*、MWidget*）都必须在这里定义，否则会产生不可预料的后果= =
+ // namespace名称可自定
+ using namespace uiObjects;
+'''
+
+* 主函数：
+
+ BEGIN(projectName)
+ {
+    /* 函数main()，用于描述和创建界面元素 */
+    
+    // projectName->setPixmap("pixmapPath");
+    // 设置程序splash窗口图片，程序较大启动较慢时可能会需要
+    // 程序启动完成后splash窗口会自动析构，无需程序员管理
+    
+    // mainView = new MView();
+    // 创建窗口
+    // mainView->show();
+    // 设置窗口为显示
+    // mainView->setWindowTitle("projectName");
+    // 设置窗口名称
+    
+    // mainScene = new MScene();
+    // 创建场景
+    // mainView->setScene(mainScene);
+    // 将该场景设置窗口的当前场景
+    // 注意：场景用于管理界面对象
+    // 任何MView窗口必须通过当前场景来显示和处理对象，因此必须给窗口设置一个当前场景
+    // 一个场景可以被设置为多个窗口的当前场景，也可以不被设置为任何一个窗口的当前场景
+    // 显然，只有当前窗口的当前场景中的界面对象才是用户可见的
+    
+    // item[0] = new MItem();
+    // 创建MItem界面对象
+    // mainScene->addItem(item[0]);
+    // 添加该对象到某个场景
+    // item[0]->setText("Hello world");
+    // 对象的各种属性设置。。。
+    // 注意：场景用于管理界面对象，一个对象可以被添加到多个场景，也可以不被添加到任何场景
+    // 显然，只有被添加到当前窗口的当前场景中的界面对象才是用户可见的
+    
+    // QLineEdit* lineEdit = new QLineEdit;
+    // widget[0] = mainScene->addWidget(lineEdit);
+    // 创建MWidget界面对象
+    // MWidget界面对象是用于Qt原生widget的容器
+    // 可以通过MWidget向场景中添加任何Qt原生widget
+    
+ }
+ END(projectName)
+
+* 事件处理函数：
+
+ BEGIN_EVENTS(projectName)
+ {
+    /* 函数handler()，隐藏了Qt的signal-slot机制，
+    便于在一个函数内实现界面逻辑，且不需要创建任何新类 */
+    
+    // MView* EVENT_VIEW 返回发生事件的窗口
+    // MScene* EVENT_SCENE 返回发生事件的场景
+    // MItem* EVENT_ITEM 返回发生事件的对象
+    // QMouseEvent* MOUSE_EVENT 返回发生的键盘事件
+    // QKeyEvent* KEY_EVENT 返回发生的键盘事件
+    
+    // bool MOUSE_LEFT 鼠标左键点击事件
+    // bool MOUSE_RIGHT 鼠标右键点击事件
+ }
+ END_EVENTS(projectName)
+
+=== MView Class Reference ===
+
+The MView class provides a surface for managing scenes.
+
+ #include <MView>
+
+Inherits QGraphicsView.
+
+==== Public Functions ====
+
+* MView(QWidget* parent)
+: Constructor
+
+* ~MView()
+: Destructor
+
+
+
+* QGraphicsScene* scene () const
+: 返回当前场景
+
+* void setScene(QGraphicsScene* scene)
+: 设置当前场景
+
+
+
+=== MScene Class Reference ===
+
+The MScene class provides a surface for managing items.
+
+ #include <MScene>
+
+Inherits QGraphicsScene.
+
+==== Public Functions ====
+
+* MScene(QObject* parent = 0)
+: Constructor
+
+* ~MScene()
+: Destructor
+
+
+
+* void addItem(QGraphicsItem* item)
+: 添加对象到场景
+
+* MItem* selectedItem() const;
+: 返回场景中选中的对象（唯一）
+
+* void selectedItemBringToFront();
+: 将选中对象置于最前端
+
+* void selectedItemSendToBack();
+: 将选中对象置于最底端
+
+void loadXml(const QString& fileName)
+: 读取场景XML
+
+void writeXml(const QString& fileName)
+: 写入场景XML
+
+
+
+=== MItem Class Reference ===
+
+The MItem class provides graphical items.
+
+ #include <MItem>
+
+Inherits QGraphicsItem.
+
+==== Public Functions ====
+
+* MItem()
+: Constructor
+
+* ~MItem()
+: Destructor
+
+
+
+* QString id()
+: 返回对象ID
+
+* void setId(QString id)
+: 设置对象ID，默认值为空串
+
+* QString name()
+: 返回对象名称
+
+* void setName(QString name)
+: 设置对象名称，默认值为空串
+
+* QString category()
+: 返回对象类别
+
+* void setCategory(QString category)
+: 设置对象类别，默认值为空串
+
+
+
+* QPointF pos() 
+: 返回对象坐标
+
+* void setPos(qreal x, qreal y)
+: 设置对象坐标，默认值为QPointF(0, 0)
+
+* qreal x()
+: 返回对象X坐标
+
+* void setX(qreal x)
+: 设置对象X坐标，默认值为0
+
+* qreal y()
+: 返回对象Y坐标
+
+* void setY(qreal y)
+: 设置对象Y坐标，默认值为0
+
+* qreal zValue ()
+: 返回对象Z坐标
+
+* void setZValue(qreal z )
+: 设置对象Z坐标（决定对象的叠放顺序），默认值为0
+
+* void toolTip(const QString& toolTip)
+: 返回鼠标悬停提示文本
+
+* void setToolTip(const QString& toolTip)
+: 设置鼠标悬停提示文本，默认值为空串
+
+* bool isVisible ()
+: 检查对象是否显示
+
+* void setVisible(bool isVisible)
+: 设置对象是否显示，默认值为true
+
+
+
+* QColor color()
+: 返回对象的颜色
+
+* void setColor(QColor color)
+: 设置对象的颜色，默认值为QColor(0, 0, 0)
+: 注意，这里的颜色仅仅为形式上，不起任何作用
+: 对象的事实外观颜色由其几何形状的颜色或像素图等属性决定
+
+* qreal width()
+: 返回对象宽度
+
+* void setWidth(qreal width)
+: 设置对象宽度，默认值为100
+
+* qreal height()
+: 返回对象高度
+
+* void setHeight(qreal height)
+: 设置对象高度，默认值为100
+
+* qreal padding()
+: 返回对象填充宽度
+
+* void setPadding(qreal padding)
+: 设置对象填充宽度，默认值为0
+
+* qreal margin()
+: 返回对象边缘宽度
+
+* void setMargin(qreal margin)
+: 设置对象边缘宽度，默认值为0
+
+
+
+* bool isSelectable()
+: 检查对象是否鼠标点击可选
+
+* void setSelectable(bool isSelectable)
+: 设置对象是否鼠标点击可选，默认值为false
+
+* bool isMouseOverSelectable()
+: 检查对象是否鼠标悬停可选
+
+* void setMouseOverSelectable(bool isMouseOverSelectable)
+: 设置对象是否鼠标悬停可选，默认值为false
+
+* bool isMovable()
+: 检查对象是否可拖动
+
+* void setMovable(bool isMovable)
+: 设置对象是否可拖动，默认值为false
+
+
+
+* QColor outlineColor()
+: 返回对象轮廓的颜色
+
+* void setOutlineColor(QColor outlineColor)
+: 设置对象轮廓的颜色，默认值为QColor(0, 0, 255)
+
+* int outlineWidth()
+: 返回对象轮廓的粗细
+
+* void setOutlineWidth(int outlineWidth)
+: 设置对象轮廓的粗细，默认值为5
+
+* Qt::PenStyle outlineStyle()
+: 返回对象轮廓的线型
+
+* void setOutlineStyle(Qt::PenStyle outlineStyle)
+: 设置对象轮廓的线型，默认值为Qt::SolidLine
+
+* bool isOutlineAvailable()
+: 检查选中时对象轮廓是否显示
+
+* void setOutlineAvailable(bool isOutlineAvailable)
+: 设置选中时对象轮廓是否显示，默认值为false
+
+
+
+* QString text()
+: 返回对象标签文字
+
+* void setText(QString text)
+: 设置对象标签文字，默认值为空串
+
+* QFont textFont()
+: 返回对象标签文字的字体
+
+* void setTextFont(QFont textFont)
+: 设置对象标签文字的字体，默认值为QFont("Arial", 10, QFont::Normal)
+
+* QColor textColor()
+: 返回对象标签文字的颜色
+
+* void setTextColor(QColor textColor)
+: 设置对象标签文字的颜色，默认值为QColor(255, 0, 0)
+
+* bool isTextVisible()
+: 检查对象标签文字是否显示
+
+* void setTextVisible(bool isTextVisible)
+: 设置对象标签文字是否显示，默认值为true
+
+
+
+* QString alternativeText()
+: 返回对象选中时替代标签文字
+
+* void setAlternativeText(QString alternativeText)
+: 设置对象选中时替代标签文字，默认值为空串
+
+* QFont alternativeTextFont()
+: 返回对象选中时替代标签文字的字体
+
+* void setAlternativeTextFont(QFont alternativeTextFont)
+: 设置对象选中时替代标签文字的字体，默认值为QFont("Arial", 10, QFont::Normal)
+
+* QColor alternativeTextColor()
+: 返回对象选中时替代标签文字的颜色
+
+* void setAlternativeTextColor(QColor alternativeTextColor)
+: 设置对象选中时替代标签文字的颜色，默认值为QColor(255, 0, 0)
+
+* bool isAlternativeTextAvailable()
+: 检查对象选中时替代标签文字是否可用
+
+* void setAlternativeTextAvailable(bool isAlternativeTextAvailable)
+: 设置对象选中时替代标签文字是否可用，默认值为false
+
+
+
+* QString figure()
+: 返回对象几何形状
+
+* void setFigure(QString figure)
+: 设置对象几何形状，默认值为"RECTANGLE"
+: 可用几何形状：
+:* "RECTANGLE" - 矩形
+:* "ELLIPSE" - 椭圆形
+:* "ROUND_RECTANGLE" - 圆角矩形
+
+* QColor figureColor()
+: 返回对象几何形状的颜色
+
+* void setFigureColor(QColor figureColor)
+: 设置对象几何形状的颜色，默认值为QColor(0, 0, 0)
+
+* bool isFigureVisible()
+: 检查对象几何形状是否显示
+
+* void setFigureVisible(bool isFigureVisible)
+: 设置对象几何形状是否显示，默认值为false
+
+
+
+* QString alternativeFigure()
+: 返回对象选中时替代几何形状
+
+* void setAlternativeFigure(QString alternativeFigure)
+: 设置对象选中时替代几何形状，默认值为空串
+
+* QColor alternativeFigureColor()
+: 返回对象选中时替代几何形状的颜色
+
+* void setAlternativeFigureColor(QColor alternativeFigureColor)
+: 设置对象选中时替代几何形状的颜色，默认值为QColor(0, 0, 0)
+
+* bool isAlternativeFigureAvailable()
+: 检查对象选中时替代几何形状是否可用
+
+* void setAlternativeFigureAvailable(bool isAlternativeFigureAvailable)
+: 设置对象选中时替代几何形状是否可用，默认值为false
+
+
+
+* QString pixmap()
+: 返回对象像素图的文件路径
+
+* void setPixmap(QString pixmap)
+: 设置对象像素图的文件路径，默认值为空串
+
+* bool isPixmapVisible()
+: 检查对象像素图是否显示
+
+* void setPixmapVisible(bool isPixmapVisible)
+: 设置对象像素图是否显示，默认值为false
+
+
+
+* QString alternativePixmap()
+: 返回对象选中时替代像素图的文件路径
+
+* void setAlternativePixmap(QString alternativePixmap)
+: 设置对象选中时替代像素图的文件路径，默认值为空串
+
+* bool isAlternativePixmapAvailable()
+: 检查对象选中时替代像素图是否可用
+
+* void setAlternativePixmapAvailable(bool isAlternativePixmapAvailable)
+: 设置对象选中时替代像素图是否可用，默认值为false
+
+

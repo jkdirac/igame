@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui id="mainScene"
+    x="0" y="0"
+    width="1280" height="800"
+    isVisible="1" isSelectable="0" isMovable="0"
+    isTextVisible="0">
+    
+    <logo id="logoUSTCSoftware"
+        x="640" y="400"
+        width="400" height="200"
+        isVisible="1" isSelectable="0" isMovable="0"
+        isTextVisible="0"
+        isPixmapVisible="1" pixmap="./iGaME.images/ustc_software.png" />
+    
+    <button id="buttonGettingStarted"
+        x="220" y="400"
+        width="120" height="60"
+        isVisible="1" isSelectable="1" isMovable="0" 
+        isTextVisible="1" text="Getting Started"
+        isFigureVisible="1" figure="ROUND_RECTANGLE" figureColor="#ffffff"
+        isAlternativeFigureAvailable="1" alternativeFigure="ROUND_RECTANGLE" alternativeFigureColor="#000000" />
+    
+    <repo id="repository"
+        x="50" y="100"
+        width="100" height="200"
+        isVisible="1" isSelectable="1" isMovable="1"
+        isTextVisible="0"
+        isFigureVisible="1" figure="ROUND_RECTANGLE" figureColor="#ccffff">
+    
+        <species id="BBa_J23100" name="BBa_J23100" category="Promoter"
+            x="0" y="-75"
+            width="80" height="40"
+            isVisible="1" isSelectable="1" isMovable="1"
+            isTextVisible="1" text="BBa_J23100"
+            isPixmapVisible="1" pixmap="./iGaME.images/bb.png"/>
+        
+        <species id="BBa_B0030" name="BBa_B0030" category="RBS"
+            x="0" y="-25"
+            width="80" height="40"
+            isVisible="1" isSelectable="1" isMovable="1"
+            isTextVisible="1" text="BBa_B0030"
+            isPixmapVisible="1" pixmap="./iGaME.images/bb.png"/>
+        
+        <species id="BBa_E0040" name="BBa_E0040" category="Protein coding sequence"
+            x="0" y="25"
+            width="80" height="40"
+            isVisible="1" isSelectable="1" isMovable="1"
+            isTextVisible="1" text="BBa_E0040"
+            isPixmapVisible="1" pixmap="./iGaME.images/bb.png"/>
+        
+        <species id="BBa_B1001" name="BBa_B1001"
+            x="0" y="75"
+            width="80" height="40"
+            isVisible="1" isSelectable="1" isMovable="1"
+            isTextVisible="1" text="BBa_B1001"
+            isPixmapVisible="1" pixmap="./iGaME.images/bb.png"/>
+    
+    </repo>
+    
+</ui>
+
+

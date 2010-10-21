@@ -1,0 +1,43 @@
+/****************************************************************************
+**
+** MosQt 0.10.14 alpha (2010 Oct 14)
+**
+** Copyright (C) 2010 Mort Yao.
+** All rights reserved.
+** Contact: Mort Yao (mort.yao@gmail.com)
+**
+****************************************************************************/
+
+#ifndef MosQt
+#define MosQt
+
+#define BEGIN(x) int main(int ARGC, char *ARGV[]) { QApplication APP(ARGC, ARGV); MSplashScreen* x = new MSplashScreen(); x->show();
+#define END(x) x->finish(MAINWINDOW); delete x; return APP.exec(); }
+
+#define MAIN_VIEW(v) v = new MView(); MAINWINDOW = v;
+#define VIEW(v) v = new MView();
+#define SCENE(s,v) s = new MScene(); v->setScene(s);
+#define ITEM(i,s) i = new MItem(); s->addItem(i);
+#define WIDGET(w, s, q) w = (MWidget*)s->addWidget(q);
+
+#define BEGIN_EVENTS(x) int handler(MView* EVENT_VIEW, MScene* EVENT_SCENE, MItem* EVENT_ITEM, QMouseEvent* MOUSE_EVENT, QKeyEvent* KEY_EVENT) {
+#define END_EVENTS(x) return 0; }
+
+#define MOUSE_LEFT MOUSE_EVENT && MOUSE_EVENT->button() == Qt::LeftButton
+#define MOUSE_RIGHT MOUSE_EVENT && MOUSE_EVENT->button() == Qt::RightButton
+#define MOUSE_LEFTRIGHT MOUSE_EVENT && MOUSE_EVENT->button() == Qt::LeftButton & Qt::RightButton
+
+#include "MSplashScreen.h"
+#include "MView.h"
+#include "MScene.h"
+#include "MItem.h"
+#include "MWidget.h"
+
+#include <QtCore>
+#include <QtGui>
+
+#include <iostream>
+
+MView* MAINWINDOW = 0;
+
+#endif
