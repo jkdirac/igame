@@ -1,4 +1,5 @@
 #include "readXMLComponent.h"
+#include "DebugOut.h"
 
 readXMLComponent::readXMLComponent ()
 {
@@ -102,7 +103,7 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: Invalid partCategory value in "
 				) + doc + ".xml!";
-		cout << "\n__ctg = " << __ctg << endl;
+		debugOut() << "\n__ctg = " << __ctg << endl;
 		throw CoreException (errno);
 	}
 
@@ -241,8 +242,8 @@ void readXMLComponent::readSpecies (
 	get_node_attr (cind, &doc, &path_rel, temp);
 	if (!temp.empty ()) ccid = temp[0];
 
-//    cout << "\nccid = " << ccid << endl;
-//    cout << "\nempty = " << boolalpha << ccid.empty () << endl;
+//    debugOut() << "\nccid = " << ccid << endl;
+//    debugOut() << "\nempty = " << boolalpha << ccid.empty () << endl;
 }
 
 void readXMLComponent::readCompartment (
@@ -344,7 +345,7 @@ void readXMLComponent::readTransfer (
 	get_node_element (cind, &doc, &path_from, temp); 
 	if (temp.empty ())
 	{
-		cout << "\nnodepath = " 
+		debugOut() << "\nnodepath = " 
 			 << path_from 
 			 << endl;
 
@@ -380,7 +381,7 @@ void readXMLComponent::readTransfer (
 	get_node_element (cind, &doc, &path_to, temp); 
 	if (temp.empty ())
 	{
-		cout << "\nnodepath = " 
+		debugOut() << "\nnodepath = " 
 			 << path_to 
 			 << endl;
 
@@ -1063,7 +1064,7 @@ void readXMLComponent::readConditionalParameter (
 		string& name
 		)
 {
-//    cout << "\ndir = " << dir << " doc = " << doc << 
+//    debugOut() << "\ndir = " << dir << " doc = " << doc << 
 //        " para = " << para << " comp = " << comp << endl;
 
 	//	search conditional parameter value
@@ -1116,7 +1117,7 @@ void readXMLComponent::readConditionalParameter (
 		"conditionalParameter[@id=\""
 		+ para + "\"]/@units";
 
-//    cout << "\nnodepath = " << nodepath << endl;
+//    debugOut() << "\nnodepath = " << nodepath << endl;
 	get_node_attr (cind, &doc, &nodepath, temp);
 	if (!temp.empty ()) units = temp[0];
 

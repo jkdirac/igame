@@ -1,4 +1,5 @@
 #include "reactionTemplate.h"
+#include "DebugOut.h"
 
 reactionTemplate::reactionTemplate ()
 {}
@@ -262,7 +263,7 @@ bool reactionTemplate::findSpeciesMatch (
 		) 
 {
 
-	cout << "\n^_^		FIND SPECIES MATCH		^_^\n";
+	debugOut() << "\n^_^		FIND SPECIES MATCH		^_^\n";
 
 	/**
 	 * Generate a set of compartment configurations
@@ -333,7 +334,7 @@ bool reactionTemplate::findSpeciesMatch (
 			multimap<string,string>::iterator iter = 
 				mmapComps.find (__parent);
 			
-//            cout << "\nparent = " << __parent 
+//            debugOut() << "\nparent = " << __parent 
 //                 << "  j = " << j 
 //                 << "  entries = " << entries << endl;
 
@@ -364,7 +365,7 @@ bool reactionTemplate::findSpeciesMatch (
 	if (compConfig.empty ()) return false;
 	else 
 	{
-		cout << "\nNumber of Compartment Configurations = " 
+		debugOut() << "\nNumber of Compartment Configurations = " 
 			 << compConfig.size () << endl;
 	}
 
@@ -382,10 +383,10 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		reactant_sam = new speciesArrayMatch [listOfMyReactants.size ()]; 
 
-		cout << "\nreactant match finding" << endl;
+		debugOut() << "\nreactant match finding" << endl;
 		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
-			cout << "\ntemplate i = " << endl;
+			debugOut() << "\ntemplate i = " << endl;
 			MySpecies* tmReactant = listOfMyReactants[i];
 			tmReactant->Output ();
 
@@ -393,7 +394,7 @@ bool reactionTemplate::findSpeciesMatch (
 			{
 				MySpecies* prevSpe = listOfMySpecies[j];
 
-				cout << "\nmatching species:	"<<endl;
+				debugOut() << "\nmatching species:	"<<endl;
 				prevSpe->Output ();
 
 				bool same = isSameType (
@@ -495,11 +496,11 @@ bool reactionTemplate::findSpeciesMatch (
 	 * *************************************************
 	 */
 
-	cout << "\n!_!	TRY POSSIBLE COMBINATIONS	...	!_!\n";
-	cout << "Reactants Candidates	=	" 
+	debugOut() << "\n!_!	TRY POSSIBLE COMBINATIONS	...	!_!\n";
+	debugOut() << "Reactants Candidates	=	" 
 		 << possibleReactantMatch.size () 
 		 << endl;
-	cout << "Modifiers Candidates	=	" 
+	debugOut() << "Modifiers Candidates	=	" 
 		 << possibleModifierMatch.size ()
 		 << endl;
 
@@ -507,7 +508,7 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		for (int j =0; j < possibleModifierMatch.size (); j++)
 		{
-			cout << "\ntrying	...	c(" << i << ", " << j << ")\n";
+			debugOut() << "\ntrying	...	c(" << i << ", " << j << ")\n";
 
 			//	check if this set of reactants and modifiers include 
 			//	index of current species handling
@@ -518,13 +519,13 @@ bool reactionTemplate::findSpeciesMatch (
 			for (int k=0; k < listOfMyModifiers.size (); k++)
 				match_index.insert (possibleModifierMatch[j][k].first);
 
-			cout << "\nindex = " << index << endl;
+			debugOut() << "\nindex = " << index << endl;
 			set<int>::iterator iter = match_index.begin ();
-			while (iter != match_index.end ()) cout << "\nit = " << *iter++;
+			while (iter != match_index.end ()) debugOut() << "\nit = " << *iter++;
 
 			if (!match_index.count (index)) continue;
 			
-			cout << "\nstop1" << endl;
+			debugOut() << "\nstop1" << endl;
 
 			/**
 			 * COMPARTMENT CONSTRAINTS
@@ -602,7 +603,7 @@ bool reactionTemplate::findSpeciesMatch (
 				}
 			}
 			
-			cout << "\nstop2" << endl;
+			debugOut() << "\nstop2" << endl;
 
 			if (possible.empty ()) continue;
 
@@ -615,8 +616,8 @@ bool reactionTemplate::findSpeciesMatch (
 				for (int n2 =0; n2 < listOfMyReactants.size (); n2++)
 				{
 					MySpecies* tmr = listOfMyReactants[n2];
-//                    cout << "\nempty = " << boolalpha << __species_itself.empty() << endl;
-//                    cout << "\n__species_itself = " << __species_itself << endl;
+//                    debugOut() << "\nempty = " << boolalpha << __species_itself.empty() << endl;
+//                    debugOut() << "\n__species_itself = " << __species_itself << endl;
 					if (tmr->isCompartment ())
 					{
 						string __species_itself = tmr->getCompTypeId ();
@@ -635,7 +636,7 @@ bool reactionTemplate::findSpeciesMatch (
 					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
 					if (!__species_itself.empty ())
 					{
-						cout << "\ni = " << i << " n2 = " << n2 << " modifier size = " << listOfMyModifiers.size () << endl;
+						debugOut() << "\ni = " << i << " n2 = " << n2 << " modifier size = " << listOfMyModifiers.size () << endl;
 						int __species_index = possibleModifierMatch[j][n2].first;
 						if (!itself.count (__species_itself)) 
 							itself[__species_itself] = __species_index;
@@ -646,7 +647,7 @@ bool reactionTemplate::findSpeciesMatch (
 				}
 			}
 
-			cout << "\nstop3" << endl;
+			debugOut() << "\nstop3" << endl;
 			if (possible.empty ()) continue;
 
 			/**
@@ -670,73 +671,73 @@ bool reactionTemplate::findSpeciesMatch (
 					 * it is important to check tmp
 					 */
 					
-					cout << "\n---------------------------------------------------\n";
-					cout << "^_!	ADD ONE MATCHING RESULTS:	" << result.size ()-1;
-					cout << "\n---------------------------------------------------\n";
+					debugOut() << "\n---------------------------------------------------\n";
+					debugOut() << "^_!	ADD ONE MATCHING RESULTS:	" << result.size ()-1;
+					debugOut() << "\n---------------------------------------------------\n";
 
-					cout << "\n^_^		REACTANTS	:	^_^\n";
+					debugOut() << "\n^_^		REACTANTS	:	^_^\n";
 					if (listOfMyReactants.size () > 0)
 					{
-						cout << "\nspeciesArrayMatch: reactant num = " 
+						debugOut() << "\nspeciesArrayMatch: reactant num = " 
 							<< possibleReactantMatch[i].size () << endl;
 						for (int cnt = 0; cnt < possibleReactantMatch[i].size (); cnt++)
 						{
-							cout << "\nreactant : " << cnt;
+							debugOut() << "\nreactant : " << cnt;
 							listOfMyReactants[cnt]->Output ();
 
-							cout << "\nspecies matched in the system : " 
+							debugOut() << "\nspecies matched in the system : " 
 								<< possibleReactantMatch[i][cnt].first;
 							listOfMySpecies[possibleReactantMatch[j][cnt].first]->Output ();
 
 							cMatchsType2& details = possibleReactantMatch[i][cnt].second;
-							cout << "\nchains of reactant = " << details.size ();
+							debugOut() << "\nchains of reactant = " << details.size ();
 							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
 							{
-								cout << "\nmatched chain of species in reality: " << 
+								debugOut() << "\nmatched chain of species in reality: " << 
 									details[cnt2].second;
-								cout << "\n<--	details	-->";
+								debugOut() << "\n<--	details	-->";
 								cMatchType& __match = details[cnt2].first;
 
-								cout << "\nnumber of parts to be matched:	" 
+								debugOut() << "\nnumber of parts to be matched:	" 
 									<< __match.size () << endl;
 								cMatchType::iterator first = __match.begin ();
 								for (; first != __match.end (); first++)
 								{
-									cout << "(" << first->first << ", " << first->second << ") " << endl; 
+									debugOut() << "(" << first->first << ", " << first->second << ") " << endl; 
 								}	
 							}
 						}	
 					}
 
-					cout << "\n^_^		MODIFIERS	:	^_^\n";
+					debugOut() << "\n^_^		MODIFIERS	:	^_^\n";
 					if (listOfMyModifiers.size () > 0)
 					{
-						cout << "\nspeciesArrayMatch: modifier num = " 
+						debugOut() << "\nspeciesArrayMatch: modifier num = " 
 							<< possibleModifierMatch[j].size () << endl;
 						for (int cnt = 0; cnt < possibleModifierMatch[j].size (); cnt++)
 						{
-							cout << "\nmodifier : " << cnt;
+							debugOut() << "\nmodifier : " << cnt;
 							listOfMyModifiers[cnt]->Output ();
 
-							cout << "\nspecies matched in the system : " 
+							debugOut() << "\nspecies matched in the system : " 
 								<< possibleModifierMatch[j][cnt].first;
 							listOfMySpecies[possibleModifierMatch[j][cnt].first]->Output ();
 
 							cMatchsType2& details = possibleModifierMatch[j][cnt].second;
-							cout << "\nchains of modifier = " << details.size ();
+							debugOut() << "\nchains of modifier = " << details.size ();
 							for (int cnt2 = 0; cnt2 < details.size (); cnt2++)
 							{
-								cout << "\nmatched chain of species in reality: " << 
+								debugOut() << "\nmatched chain of species in reality: " << 
 									details[cnt2].second;
-								cout << "\n<--	details	-->";
+								debugOut() << "\n<--	details	-->";
 								cMatchType& __match = details[cnt2].first;
 
-								cout << "\nnumber of parts to be matched:	" 
+								debugOut() << "\nnumber of parts to be matched:	" 
 									<< __match.size () << endl;
 								cMatchType::iterator first = __match.begin ();
 								for (; first != __match.end (); first++)
 								{
-									cout << "(" << first->first << ", " << first->second << ") "; 
+									debugOut() << "(" << first->first << ", " << first->second << ") "; 
 								}	
 							}
 						}	
@@ -766,7 +767,7 @@ void reactionTemplate::createProductsFromTemplate (
 		vector<MySpecies*>& products
 		)
 {
-	cout << "\n<--	create products from template	--	..	-->" << endl;
+	debugOut() << "\n<--	create products from template	--	..	-->" << endl;
 
 	//	configure 
 	const map<string, int>& config = table.second;
@@ -838,7 +839,7 @@ void reactionTemplate::createProductsFromTemplate (
 					//	transferTabel [to] = from
 					if (!transferTable.count (destine))
 					{
-						cout << "\ndestine	:	(" 
+						debugOut() << "\ndestine	:	(" 
 							 << destine.first 
 							 << ", " 
 							 << destine.second 
@@ -849,7 +850,7 @@ void reactionTemplate::createProductsFromTemplate (
 								);
 					}
 
-//                    cout << "\nj = " << j << "k = " << k << endl;
+//                    debugOut() << "\nj = " << j << "k = " << k << endl;
 					subsp source = transferTable[destine];
 					
 
@@ -924,7 +925,7 @@ void reactionTemplate::createProductsFromTemplate (
 					if (found == NULL) throw CoreException ("species Label NOT found!");
 
 					/*
-					cout << "\nsource.first = " << source.first
+					debugOut() << "\nsource.first = " << source.first
 					     << "  source.second = " << source.second 
 					     << "\nindex_s = " << index_s 
 						 << "  index_c = " << index_c
@@ -935,14 +936,14 @@ void reactionTemplate::createProductsFromTemplate (
 					 * replace substituent-part 
 					 */
 					int chain_lst = -1;
-//                    cout << "\ncand size = " << __cand_reactants.size () << endl;
-//                    if (isr) cout << "\nchain size = " << __cand_reactants[index_s].second.size ();
+//                    debugOut() << "\ncand size = " << __cand_reactants.size () << endl;
+//                    if (isr) debugOut() << "\nchain size = " << __cand_reactants[index_s].second.size ();
 
 					//	chain_lst is the matching of chain number of species found for chain j
 					if (isr) chain_lst = __cand_reactants[index_s].second[index_c].second;
 					else chain_lst = __cand_modifiers[index_s].second[index_c].second;
 
-//                    cout << "\nchain_lst = " << chain_lst << endl;
+//                    debugOut() << "\nchain_lst = " << chain_lst << endl;
 
 					cMatchType cmt;
 					Chain* ck = found->getChain (chain_lst);
@@ -960,7 +961,7 @@ void reactionTemplate::createProductsFromTemplate (
 					{
 						Part* pk = ck->getPart (t);
 
-						cout << "\npartLabel = " << pk->getPartLabel ();
+						debugOut() << "\npartLabel = " << pk->getPartLabel ();
 						assert (pk != NULL);
 
 						Part* __new_p = __new_c->createPart (pk);
@@ -979,7 +980,7 @@ void reactionTemplate::createProductsFromTemplate (
 				else
 				{
 					__new_c->createPart (__orig_part);
-//                    cout << "\n__new_c->createPart = " 
+//                    debugOut() << "\n__new_c->createPart = " 
 //                         << __orig_part->getPartRef () << " "
 //                         << __orig_part->getIsBinded ()
 //                         << endl;
@@ -1075,7 +1076,7 @@ bool reactionTemplate::handle_constraints (
 
 void reactionTemplate::OutputProducts ()
 {
-	cout << "\nTESTING...	...	..." << endl;
+	debugOut() << "\nTESTING...	...	..." << endl;
 	for (int i=0; i < listOfMyProducts.size (); i++)
 		listOfMyProducts[i]->Output ();
 }

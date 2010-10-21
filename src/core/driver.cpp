@@ -1,4 +1,5 @@
 #include "driver.h"
+#include "DebugOut.h"
 
 Driver::Driver ()
 {}
@@ -164,31 +165,31 @@ bool Driver::validateExampleSBML (
 	{
 		if (numConsistencyErrors > 0)
 		{
-			cout << "ERROR: encountered " << numConsistencyErrors 
+			debugOut() << "ERROR: encountered " << numConsistencyErrors 
 				<< " consistency error" << (numConsistencyErrors == 1 ? "" : "s")
 				<< " in model '" << sbmlDoc->getModel()->getId() << "'." << endl;
 		}
 		if (numConsistencyWarnings > 0)
 		{
-			cout << "Notice: encountered " << numConsistencyWarnings
+			debugOut() << "Notice: encountered " << numConsistencyWarnings
 				<< " consistency warning" << (numConsistencyWarnings == 1 ? "" : "s")
 				<< " in model '" << sbmlDoc->getModel()->getId() << "'." << endl;
 		}
-		cout << endl << consistencyMessages;
+		debugOut() << endl << consistencyMessages;
 
 		if (numValidationErrors > 0)
 		{
-			cout << "ERROR: encountered " << numValidationErrors
+			debugOut() << "ERROR: encountered " << numValidationErrors
 				<< " validation error" << (numValidationErrors == 1 ? "" : "s")
 				<< " in model '" << sbmlDoc->getModel()->getId() << "'." << endl;
 		}
 		if (numValidationWarnings > 0)
 		{
-			cout << "Notice: encountered " << numValidationWarnings
+			debugOut() << "Notice: encountered " << numValidationWarnings
 				<< " validation warning" << (numValidationWarnings == 1 ? "" : "s")
 				<< " in model '" << sbmlDoc->getModel()->getId() << "'." << endl;
 		}
-		cout << endl << validationMessages;
+		debugOut() << endl << validationMessages;
 
 		return (numConsistencyErrors == 0 && numValidationErrors == 0);
 	}
@@ -211,7 +212,7 @@ bool Driver::writeExampleSBML(
 
 	if (result)
 	{
-		cout << "Wrote file \"" << filename << "\"" << endl;
+		debugOut() << "Wrote file \"" << filename << "\"" << endl;
 		return true;
 	}
 	else

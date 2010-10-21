@@ -1,4 +1,5 @@
 #include "readInput.h"
+#include "DebugOut.h"
 
 readInput::readInput ()
 {}
@@ -11,7 +12,7 @@ void readInput::config (
 		) 
 {
 
-	cout << "\n=================	CONFIGURING...	===================\n";
+	debugOut() << "\n=================	CONFIGURING...	===================\n";
 
 	//
 	//  create model object in mysbmldoc
@@ -19,7 +20,7 @@ void readInput::config (
 	Model* m = mysbmldoc->createModel ();
 	m->setId ("iGameModel");
 
-	cout << "\nread unit defs (db) ..." << endl;
+	debugOut() << "\nread unit defs (db) ..." << endl;
 
 	//===================================================
 	//	PART1:	LOADING UNITDEFS AND FUNCTIONDEFS FROM DB
@@ -86,7 +87,7 @@ void readInput::config (
 		}
 	}
 
-	cout << "\nread function defs (db) ..." << endl;
+	debugOut() << "\nread function defs (db) ..." << endl;
 
 	//  (1.2) load functionDefinitions
 	const string pathFunc = 
@@ -112,7 +113,7 @@ void readInput::config (
 	//	===================================================
 	const string DOC ("input");
 
-	cout << "\nread parameters (input) ..." << endl;
+	debugOut() << "\nread parameters (input) ..." << endl;
 
 	//	===================================================
 	//  (1) read listOfParameters 
@@ -157,7 +158,7 @@ void readInput::config (
 		setParameter (para, id, name, value, units, constant);
 	}
 
-	cout << "\nread rules (input) ..." << endl;
+	debugOut() << "\nread rules (input) ..." << endl;
 
 	//	======================================================
 	//  (2) read listOfRules
@@ -233,7 +234,7 @@ void readInput::config (
 		setRateRule (rater, variable, math, true);
 	}
 
-	cout << "\nread compartments (input)	..." << endl;
+	debugOut() << "\nread compartments (input)	..." << endl;
 
 	//	==================================
 	//  (3) read listOfCompartments
@@ -257,7 +258,7 @@ void readInput::config (
 	}
 	mysbmldoc->setRelationOfCompartments ();
 
-	cout << "\nread species	(input)	..." << endl;
+	debugOut() << "\nread species	(input)	..." << endl;
 
 	//	=========================================
 	//			READ listOfSpecies
@@ -311,7 +312,7 @@ void readInput::config (
 		if (mysbmldoc->getMySpecies (s) == NULL) mysbmldoc->addMySpecies (s); 
 	}
 
-	cout << "\nread parameters (db)	..." << endl;
+	debugOut() << "\nread parameters (db)	..." << endl;
 	//	=========================================
 	//	PART3: LOADING PARAMETERS AND RULES IN DB
 	//	=========================================
@@ -343,7 +344,7 @@ void readInput::config (
 		}
 	}
 
-	cout << "\nread rules (db)	..." << endl;
+	debugOut() << "\nread rules (db)	..." << endl;
 
 	//  (3.2) read listOfRules
 	//	rule definition in input file will shade that in db
@@ -409,7 +410,7 @@ void readInput::config (
 	//	=========================================
 	//	PART4: ADD RULES FOR COMPARTMENT SIZE 
 	//	=========================================
-	cout << "\nset compartment size	..." << endl;
+	debugOut() << "\nset compartment size	..." << endl;
 	for (int i=0; i< mysbmldoc->getNumOfMyCompartments (); i++)
 	{
 		MyCompartment* mycomp = mysbmldoc->getMyCompartment (i);
@@ -458,7 +459,7 @@ void readInput::config (
 		}
 	}
 
-	cout << "\n=================	CONFIGURING...Done	===================\n";
+	debugOut() << "\n=================	CONFIGURING...Done	===================\n";
 }
 
 

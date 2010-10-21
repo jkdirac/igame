@@ -40,6 +40,8 @@
 #include <string.h>
 #include "libsbml-401-wrapper.h"
 
+#include "DebugOut.h"
+
 using namespace std;
 
 const QVector <QString>& intgrtOutData::get_labels() const
@@ -110,12 +112,12 @@ void intgrtOutData::dump()
 {
 	for (int i=0; i<test_x.size(); i++)
 	{
-		cout << "time point " << test_x[i] << ":";
+		debugOut() << "time point " << test_x[i] << ":";
 		for (int j=0; j<test_y.size(); j++)
 		{
-			cout << "(" << labels[j].toAscii().data() << ")" << test_y[j][i]; 
+			debugOut() << "(" << labels[j].toAscii().data() << ")" << test_y[j][i]; 
 		}
-		cout << endl;
+		debugOut() << endl;
 	}
 }
 
@@ -136,7 +138,7 @@ QRectF& intgrtOutData::getDataBounds()
 	mPlotRegion.setTop(nTop);
 	mPlotRegion.setBottom(nBottom);
 
-	cout << "bounds: ["<< mPlotRegion.left() << ", " << mPlotRegion.right() << ", " << mPlotRegion.top() << ", " <<
+	debugOut() << "bounds: ["<< mPlotRegion.left() << ", " << mPlotRegion.right() << ", " << mPlotRegion.top() << ", " <<
 		mPlotRegion.bottom() << "]" << endl;
 
 	return mPlotRegion;

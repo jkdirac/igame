@@ -1,5 +1,6 @@
 #include "driver.h"
 #include "CopsiInterface.h"
+#include "DebugOut.h"
 
 int main ()
 {
@@ -11,7 +12,7 @@ int main ()
 
 	time (&end);
 	double dif = difftime (end, start);
-	cout << "\nIt tooks " <<  dif << " seconds.\n";
+	debugOut() << "\nIt tooks " <<  dif << " seconds.\n";
 
 	if (!errno) copsi_entry("network.xml");
 	return 0;

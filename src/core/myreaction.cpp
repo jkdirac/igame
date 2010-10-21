@@ -1,4 +1,5 @@
 #include "myreaction.h"
+#include "DebugOut.h"
 
 MyReaction::MyReaction ():
 	Reaction (2, 4)
@@ -113,7 +114,7 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
-		cout << "\nmyspecies = " << endl;
+		debugOut() << "\nmyspecies = " << endl;
 		sr->Output ();
 		
 		//	prefix to be added for part labels and node labels
@@ -155,7 +156,7 @@ void MyReaction::createReactionsFromTemplate (
 		MySpecies* s = listOfMyProducts[i];
 
 		//TEST
-		cout << "\nPRODUCT BODY: i = " << i;
+		debugOut() << "\nPRODUCT BODY: i = " << i;
 		s->Output ();
 
 		for (int j=0; j< s->getNumOfChains (); j++) 
@@ -171,13 +172,13 @@ void MyReaction::createReactionsFromTemplate (
 
 		for (int j=0; j< s->getNumOfTrees (); j++) 
 		{
-//            s->getTree (j)->Output (cout);
+//            s->getTree (j)->Output (debugOut());
 			mixture->createTree (s->getTree (j));
 		}
 	}
 
 	//	mixed species
-	cout << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
+	debugOut() << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
 	mixture->Output ();
 
 	/**
@@ -189,10 +190,10 @@ void MyReaction::createReactionsFromTemplate (
 	/**
 	 * check splits
 	 */
-	cout << "\nChecking Species Spliting ...";
+	debugOut() << "\nChecking Species Spliting ...";
 	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
 	
-//    cout << "\nChecking PRODUCTs ...";
+//    debugOut() << "\nChecking PRODUCTs ...";
 //    for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
 
 	// 	splits are only partial copies of mixture 
@@ -301,7 +302,7 @@ void MyReaction::createReactionsFromTemplate (
 					if (prev != NULL) {
 						found = true; delete __product; __product = prev;
 					}
-//                    cout << "\nfound = " << found << endl;
+//                    debugOut() << "\nfound = " << found << endl;
 					break;
 				}
 			}	
@@ -346,9 +347,9 @@ void MyReaction::createReactionsFromTemplate (
 	{
 		SpeciesReference* spr = createProduct ();
 
-//        cout << "\ni = " << i << endl;
+//        debugOut() << "\ni = " << i << endl;
 //        listOfMyProducts[i]->Output ();
-//        cout << "\nid = " << listOfMyProducts[i]->getId ();
+//        debugOut() << "\nid = " << listOfMyProducts[i]->getId ();
 
 		 spr->setSpecies (listOfMyProducts[i]->getId ());
 		spr->setStoichiometry (stoiMath[i]);
@@ -439,7 +440,7 @@ void MyReaction::addSpecialReaction (
 		+ modifier->getId () + "*"
 		+ modifier->getCompartment ();
 
-	//    cout << "\nformula = " << formula << endl;
+	//    debugOut() << "\nformula = " << formula << endl;
 
 	ASTNode_t* astMath = SBML_parseFormula (formula.c_str ());
 	if (astMath == NULL) throw CoreException (

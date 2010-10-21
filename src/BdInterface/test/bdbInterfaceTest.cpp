@@ -22,6 +22,8 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QVector>
+
+#include "DebugOut.h"
 //#include "debugOutput.h"
 
 using namespace std;
@@ -73,9 +75,9 @@ void test_get_module_num()
 
 	for (int i=0; i<docs.size(); i++)
 	{
-		cout << "test: [" << i << "]" << endl;
+		debugOut() << "test: [" << i << "]" << endl;
 		res = test_inter.get_node_element_num(SPECIES, &docs[i], &paths[i]);
-		cout << "test_get_module_num num:" << res << endl;
+		debugOut() << "test_get_module_num num:" << res << endl;
 	}
 }
 
@@ -89,25 +91,25 @@ void test_get_node_element()
 	types.push_back(SYSTEM); docs.push_back("rules"); paths.push_back("/MoDeL/system/listOfRules/assignmentRule/math/csymbol");
 	vector<string> res_str;
 
-	cout << "-------- test get nodes element start---------" << endl;
+	debugOut() << "-------- test get nodes element start---------" << endl;
 	for (int i=0; i<docs.size(); i++)
 	{
 		try
 		{
 			res_str.clear();
-			cout << "test: [" << i << "]" << endl;
+			debugOut() << "test: [" << i << "]" << endl;
 			test_inter.get_node_element(types[i], &docs[i], &paths[i], res_str);
 			for (int j=0; j<res_str.size(); j++)
 			{
-				cout << "==element: " << j << " " << res_str[j] << endl;
+				debugOut() << "==element: " << j << " " << res_str[j] << endl;
 			}
 		}
 		catch (XmlException &se)
 		{
-			cout << "test get node error" << endl;
+			debugOut() << "test get node error" << endl;
 		}
 	}
-	cout << "-------- test get nodes element end---------" << endl;
+	debugOut() << "-------- test get nodes element end---------" << endl;
 }
 
 void test_get_node()
@@ -122,22 +124,22 @@ void test_get_node()
 	
 	string res_str;
 
-	cout << "-------- test get nodes start---------" << endl;
+	debugOut() << "-------- test get nodes start---------" << endl;
 	for (int i=0; i<docs.size(); i++)
 	{
 		try
 		{
-			cout << "test: [" << i << "]" << endl;
+			debugOut() << "test: [" << i << "]" << endl;
 			res_str.clear();
 			test_inter.get_node(types[i], &docs[i], &paths[i], res_str);
-			cout << "node: " << res_str << endl;
+			debugOut() << "node: " << res_str << endl;
 		}
 		catch (XmlException &se)
 		{
-			cout << "test get node error" << se.what() << endl;
+			debugOut() << "test get node error" << se.what() << endl;
 		}
 	}
-	cout << "-------- test get nodes end---------" << endl;
+	debugOut() << "-------- test get nodes end---------" << endl;
 }
 
 void test_get_node_attr()
@@ -149,25 +151,25 @@ void test_get_node_attr()
 	types.push_back(SYSTEM); docs.push_back("rules"); paths.push_back("/MoDeL/system/listOfRules/assignmentRule/math/csymbol/@encoding");
 	vector<string> res_str;
 
-	cout << "-------- test get nodes attr start---------" << endl;
+	debugOut() << "-------- test get nodes attr start---------" << endl;
 	for (int i=0; i<docs.size(); i++)
 	{
 		try
 		{
 			res_str.clear();
-			cout << "test: [" << i << "]" << endl;
+			debugOut() << "test: [" << i << "]" << endl;
 			test_inter.get_node_attr(types[i], &docs[i], &paths[i], res_str);
 			for (int j=0; j<res_str.size(); j++)
 			{
-				cout << "==attr: " << j << " " << res_str[j] << endl;
+				debugOut() << "==attr: " << j << " " << res_str[j] << endl;
 			}
 		}
 		catch (XmlException &se)
 		{
-			cout << "test get attr error" << se.what() << endl;
+			debugOut() << "test get attr error" << se.what() << endl;
 		}
 	}
-	cout << "-------- test get nodes element end---------" << endl;
+	debugOut() << "-------- test get nodes element end---------" << endl;
 }
 
 void test_get_ids()
@@ -178,25 +180,25 @@ void test_get_ids()
 	types.push_back(COMPARTMENT); 
 	vector<string> res_str;
 
-	cout << "-------- test get ids start---------" << endl;
+	debugOut() << "-------- test get ids start---------" << endl;
 	for (int i=0; i<types.size(); i++)
 	{
 		try
 		{
 			res_str.clear();
-			cout << "test: [" << i << "]" << endl;
+			debugOut() << "test: [" << i << "]" << endl;
 			test_inter.get_ids_bycontainer(types[i], res_str);
 			for (int j=0; j<res_str.size(); j++)
 			{
-				cout << "==id: " << j << " " << res_str[j] << endl;
+				debugOut() << "==id: " << j << " " << res_str[j] << endl;
 			}
 		}
 		catch (XmlException &se)
 		{
-			cout << "test get ids error" << se.what() << endl;
+			debugOut() << "test get ids error" << se.what() << endl;
 		}
 	}
-	cout << "-------- test get ids end---------" << endl;
+	debugOut() << "-------- test get ids end---------" << endl;
 }
 
 int main()
@@ -205,21 +207,21 @@ int main()
 	{
 		test_inter.add_directory(XML_FILE_HOME);
 
-		cout << endl;
+		debugOut() << endl;
 		test_get_node();
-		cout << endl;
+		debugOut() << endl;
 		test_get_node_element();
-		cout << endl;
+		debugOut() << endl;
 		test_get_node_attr();
-		cout << endl;
+		debugOut() << endl;
 		test_get_module_num();
-		cout << endl;
+		debugOut() << endl;
 		test_get_ids();
-		cout << endl;
+		debugOut() << endl;
 	} 
 	catch (XmlException &se)
 	{
-		cout << "[Exception code] " << se.getExceptionCode() << " [description]: " << se.what() << endl;
+		debugOut() << "[Exception code] " << se.getExceptionCode() << " [description]: " << se.what() << endl;
 	}
 
 }

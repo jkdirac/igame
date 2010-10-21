@@ -1,4 +1,5 @@
 #include "mysbmldoc.h"
+#include "DebugOut.h"
 
 MySBMLDocument::MySBMLDocument ():
 	SBMLDocument (2,4)
@@ -199,7 +200,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		cout << "\n===========		SPECIES " << i << "		=============" << endl;
+		debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
 		s->Output ();	
 
 		//a set to store species id that has been used
@@ -249,14 +250,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (sLink, SPECIES, speciesReference, "/MoDeL/species", true);
 
-					cout << "\n------------	TEMPLATES " << t << "	------------\n";
+					debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
 					sLink->Output ();
 
 					//  Does this template match this species?
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) continue;
 
-					cout << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
+					debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
 
 					//
 					//  read reaction Links
@@ -279,7 +280,7 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesRole
 								);
 
-						cout << "\nHandling Referenced Reaction	" 
+						debugOut() << "\nHandling Referenced Reaction	" 
 							<< "	...		DOC	:	" 
 							<< reactionReference << "	TYPE :	"
 							<< speciesRole << endl;
@@ -319,7 +320,7 @@ void MySBMLDocument::handleReactionTemplate (
 	reactionTemplate* tmpR = new reactionTemplate;
 	dbreader.readReaction (doc, dbref, type, tmpR);
 
-	cout << "\n<--  READ Reaction Template	  "
+	debugOut() << "\n<--  READ Reaction Template	  "
 		 << "---	...	---	DONE! " << endl;
 
 	/**
@@ -332,7 +333,7 @@ void MySBMLDocument::handleReactionTemplate (
 	bool expr = tmpR->handle_constraints (listOfMyParameters);
 	if (!expr) {delete tmpR; return;}
 
-	cout << "\n<--  Caculate Reaction Constraints " 
+	debugOut() << "\n<--  Caculate Reaction Constraints " 
 		 << "---	...	---	DONE! " << endl;
 
 	/**
@@ -352,8 +353,8 @@ void MySBMLDocument::handleReactionTemplate (
 			);
 
 #ifndef NDEBUG
-	cout << "\n################		MATCHING...	 DONE	#################\n";
-	cout << "\n^_^	Combinations	=	" << result.size () << endl;
+	debugOut() << "\n################		MATCHING...	 DONE	#################\n";
+	debugOut() << "\n^_^	Combinations	=	" << result.size () << endl;
 #endif
 
 	/**
@@ -361,7 +362,7 @@ void MySBMLDocument::handleReactionTemplate (
 	 */
 	for (int i=0; i < result.size (); i++)
 	{
-		cout << "\n======	new reaction	i=	" 
+		debugOut() << "\n======	new reaction	i=	" 
 			 << i << "	=========" <<	endl;
 		/**
 		 * only set id, name, fast, reversible,
@@ -630,7 +631,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 								"Invalid Transcriptional Unit!"
 								);
 
-//                        cout << "\npartRef = " << mrna_part->getPartRef ()
+//                        debugOut() << "\npartRef = " << mrna_part->getPartRef ()
 //                             << " partType == " << mrna_part->getPartType ();
 
 						//	isbinded and partRef
@@ -648,7 +649,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					mrna->display_name (listOfMySpecies.size ());
 					mrna->rearrange (false);
 
-//                    cout << "\nspecies test = " << endl;
+//                    debugOut() << "\nspecies test = " << endl;
 //                    mrna->Output ();
 
 					//	check existance of myspecies
@@ -838,7 +839,7 @@ void MySBMLDocument::write ()
 	{
 		m->addSpecies (listOfMySpecies[i]);
 		
-		cout << "\n------------ OUTPUT SPECIES " << i << "\n";
+		debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
 		listOfMySpecies[i]->Output ();
 		
 		
@@ -862,15 +863,15 @@ void MySBMLDocument::write ()
 
 void MySBMLDocument::output ()
 {
-	cout << setiosflags (ios::right);
+	debugOut() << setiosflags (ios::right);
 
 	//version and level
 	unsigned int level = getLevel();
 	unsigned int version = getVersion();
 
-	cout << endl;
-	cout << "  level: " << level << "  	version: " << version << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  level: " << level << "  	version: " << version << endl;
+	debugOut() << endl;
 
 	//getmodel
 	Model* model = getModel ();
@@ -880,17 +881,17 @@ void MySBMLDocument::output ()
 	 ******************************************************************/
 	unsigned int NumCompartments = model->getNumCompartments();
 
-	cout << endl;
-	cout << "  NumberOfCompartments: " << NumCompartments << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  NumberOfCompartments: " << NumCompartments << endl;
+	debugOut() << endl;
 
 	for (int i = 0; i < NumCompartments; i++)
 	{
 		Compartment* comp;
 		comp = model->getCompartment (i);
 
-		cout << endl;
-		cout << setw(10) << "  id: " << comp->getId () << setw(10) 
+		debugOut() << endl;
+		debugOut() << setw(10) << "  id: " << comp->getId () << setw(10) 
 			<< "  		name: " << comp->getName () << setw(10)
 			<< "  		size: " << comp->getSize () << setw(10)
 			<< "  		units: " << comp->getUnits () << endl;
@@ -901,17 +902,17 @@ void MySBMLDocument::output ()
 	 ******************************************************************/
 	unsigned int NumSpecies = model->getNumSpecies ();
 
-	cout << endl;
-	cout << "  NumberOfSpecies: " << NumSpecies << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  NumberOfSpecies: " << NumSpecies << endl;
+	debugOut() << endl;
 
 	for (int i = 0; i < NumSpecies; i++)
 	{
 		Species* sp;
 		sp = model->getSpecies (i);
 
-		cout << endl;
-		cout << setw(10) << "  id: " << sp->getId () << setw(10)
+		debugOut() << endl;
+		debugOut() << setw(10) << "  id: " << sp->getId () << setw(10)
 			<< "  name: " << sp->getName () << setw(10)
 			<< "  type: " << sp->getSpeciesType () << setw(10)
 			<< "  InitialAmount: " << sp->getInitialAmount () << setw(10)
@@ -925,9 +926,9 @@ void MySBMLDocument::output ()
 
 	unsigned int NumReactions = model->getNumReactions ();
 
-	cout << endl;
-	cout << "  NumOfReactions: " << NumReactions << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  NumOfReactions: " << NumReactions << endl;
+	debugOut() << endl;
 
 	Reaction* re;
 	KineticLaw* kl;
@@ -937,39 +938,39 @@ void MySBMLDocument::output ()
 	{
 		re = model->getReaction (i);
 
-		cout << endl;
+		debugOut() << endl;
 
 		unsigned int NumReactants = re->getNumReactants ();
 		unsigned int NumProducts = re->getNumProducts ();
 
-		//		cout << "\nNumR = " << NumReactants << " NumP = " << NumProducts << endl;
-		cout << setw(40) << re->getName () << ": ";
+		//		debugOut() << "\nNumR = " << NumReactants << " NumP = " << NumProducts << endl;
+		debugOut() << setw(40) << re->getName () << ": ";
 		cout.setf(ios::right, ios::adjustfield);
 
 		for (int ir = 0; ir < NumReactants; ir++)
 		{
-			if (ir > 0) cout << " + " ;
+			if (ir > 0) debugOut() << " + " ;
 
 			SpRef = re->getReactant (ir);
-			cout << "  " << SpRef->getSpecies ();
+			debugOut() << "  " << SpRef->getSpecies ();
 		}
 
-		cout << " --> ";
+		debugOut() << " --> ";
 
 		for (int ip = 0; ip < NumProducts; ip++)
 		{
-			if (ip > 0) cout << " + " ;
+			if (ip > 0) debugOut() << " + " ;
 
 			SpRef = re->getProduct (ip);
-			cout << "  " << SpRef->getSpecies ();
+			debugOut() << "  " << SpRef->getSpecies ();
 		}
 
 		//kinetic law
-		cout << "\t";
+		debugOut() << "\t";
 		kl = re->getKineticLaw ();
-		cout << kl->getFormula ();
+		debugOut() << kl->getFormula ();
 
-		cout << endl;
+		debugOut() << endl;
 
 	}
 
@@ -978,9 +979,9 @@ void MySBMLDocument::output ()
 	 *****************************************************************/
 	unsigned int NumParameters = model->getNumParameters ();
 
-	cout << endl;
-	cout << "  NumOfParameters: " << NumParameters << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  NumOfParameters: " << NumParameters << endl;
+	debugOut() << endl;
 
 	Parameter * pm;
 
@@ -988,8 +989,8 @@ void MySBMLDocument::output ()
 	{
 		pm = model->getParameter (i);
 
-		cout << endl << setw(10);
-		cout << "  id: " << pm->getId () << setw(10)
+		debugOut() << endl << setw(10);
+		debugOut() << "  id: " << pm->getId () << setw(10)
 			<< "  name: " << pm->getName () << setw(10)
 			<< "  unit: " << pm->getUnits () << setw(10)
 			<< "  value: " << pm->getValue () << setw(10) 
@@ -1001,9 +1002,9 @@ void MySBMLDocument::output ()
 	 ******************************************************************/
 	unsigned int NumRules = model->getNumRules ();
 
-	cout << endl;
-	cout << "  NumOfRules: " << NumRules << endl;
-	cout << endl;
+	debugOut() << endl;
+	debugOut() << "  NumOfRules: " << NumRules << endl;
+	debugOut() << endl;
 
 	Rule * rl;
 
@@ -1011,11 +1012,11 @@ void MySBMLDocument::output ()
 	{
 		rl = model->getRule (i);
 
-		cout << endl << setw(10);
-		cout << "  variable: " << rl->getVariable () << setw(10)
+		debugOut() << endl << setw(10);
+		debugOut() << "  variable: " << rl->getVariable () << setw(10)
 			<< "  unit: " << rl->getUnits () << setw(10)
 			<< "  Formula: " << rl->getFormula () << endl;
 	}
 
-	cout << endl << endl << endl;
+	debugOut() << endl << endl << endl;
 }

@@ -1,4 +1,5 @@
 #include "readDataBase.h"
+#include "DebugOut.h"
 
 readDataBase::readDataBase ()
 {
@@ -496,7 +497,7 @@ void readDataBase::setFunction (
 	ASTNode* astMath = readMathMLFromString(math.c_str());
 	if (astMath == NULL) 
 	{
-		cout << "\nmath = " << math << endl;
+		debugOut() << "\nmath = " << math << endl;
 		throw CoreException (
 				"Reading Block FunctionDefinition..."
 				"Null or Invalid Attribute Value: math!"
@@ -517,7 +518,7 @@ void readDataBase::readReaction (
 		reactionTemplate* tmpR
 		)
 {
-	cout << "\n##############	READING REACTION TEMPLATE:	" 
+	debugOut() << "\n##############	READING REACTION TEMPLATE:	" 
 		 << doc << "	..." << endl;
 
 	string head ("/MoDeL/reaction");
@@ -610,7 +611,7 @@ void readDataBase::readReaction (
 				);
 	}
 
-//    cout << "\nspeciesType = " << speciesType << endl;
+//    debugOut() << "\nspeciesType = " << speciesType << endl;
 
 	/**
 	 *	read attribute Id
@@ -784,10 +785,10 @@ void readDataBase::readReaction (
 	while (myproduct != NULL)
 	{
 		oss.str (""); oss << prefix << __index << "::";
-//        cout << "\nprefix = " << oss.str () << endl;
+//        debugOut() << "\nprefix = " << oss.str () << endl;
         myproduct->addPrefix (oss.str ());
 
-//        cout << "\nprefix = " << prefix << endl;
+//        debugOut() << "\nprefix = " << prefix << endl;
 //        myproduct->Output ();
 
 		myproduct = tmpR->getProduct (++__index);
@@ -830,13 +831,13 @@ void readDataBase::readReaction (
 			throw CoreException (errno);
 		}
 
-//        cout << "\nfrom = (" << from.first << ", " << from.second 
+//        debugOut() << "\nfrom = (" << from.first << ", " << from.second 
 //             << ")	to = (" << to.first << ", " << to.second << endl;
 
 		tmpR->addSubstituentTransfer (from, to);
 	}
 
-//    cout << "\nbegin read kineticlaw " << endl;
+//    debugOut() << "\nbegin read kineticlaw " << endl;
 
 	/**
 	 *	read KineticLaw
@@ -852,11 +853,11 @@ void readDataBase::readReaction (
 
 	const string pathMath = pathKineticLaw + "/math";
 	get_node (REACTION, &doc, &pathMath, math); 
-//    cout << "\nmath	= "<< math;
+//    debugOut() << "\nmath	= "<< math;
 
 	if (math.empty ())
 	{
-		cout << "\ndoc = " << doc 
+		debugOut() << "\ndoc = " << doc 
 			 << "	path = " << pathMath 
 			 << endl;
 

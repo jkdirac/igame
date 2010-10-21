@@ -61,7 +61,7 @@ bdbXMLInterface::bdbXMLInterface()
 
 		if (!b_succ)
 		{
-			cout << dir.path().toLatin1().constData() << endl;
+			debugOut() << dir.path().toLatin1().constData() << endl;
 			throw XmlException(XmlException::NULL_POINTER, "db env create dbs dir error", __FILE__, __LINE__);
 		}
 	}
@@ -106,7 +106,7 @@ bdbXMLInterface::bdbXMLInterface()
 	}
 	catch (XmlException &xe)
 	{
-		cout << "xml exception: " << xe.what() << endl;
+		debugOut() << "xml exception: " << xe.what() << endl;
 		throw xe;
 	}
 }
@@ -128,11 +128,6 @@ bdbXMLInterface::bdbXMLInterface()
  */
 BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docname)
 {
-	DebugOut::setPrintable(false);
-	debugOut() << "haha" << endl;
-	DebugOut::setPrintable(true);
-	debugOut() << "haha2" << endl;
-	DebugOut::setPrintable(true);
 	XmlContainer* container = NULL;
 	if (m_manager == NULL)
 	{
@@ -166,14 +161,14 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	}
 	catch (XmlException &e)
 	{
-//                cout << "open document xml exception: " << e.what() << " file name: " << docname << endl;
+//                debugOut() << "open document xml exception: " << e.what() << " file name: " << docname << endl;
 		if (e.getExceptionCode() != XmlException::DOCUMENT_NOT_FOUND)
 		{
 				throw e;
 		}
 	}
 
-	cout << "putting file: " << pathname << " to container " << container->getName() <<
+	debugOut() << "putting file: " << pathname << " to container " << container->getName() <<
 			" as doc " << docname << endl;
 	try
 	{
@@ -186,7 +181,7 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 	}
 	catch (XmlException &e)
 	{
-			cout << "xml exception: " << e.what() << endl;
+			debugOut() << "xml exception: " << e.what() << endl;
 			throw e;
 	}
 
@@ -260,8 +255,8 @@ BdRetVal bdbXMLInterface::get_node_element (container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout <<"get node element: " << query_string << endl;
-		cout << "get_node_element in prepare xml exception: " << xe.what() << endl;
+		debugOut() <<"get node element: " << query_string << endl;
+		debugOut() << "get_node_element in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
 
@@ -343,8 +338,8 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout << "get node attr: " << query_string << endl;
-		cout << "get_node_attr in prepare xml exception: " << xe.what() << endl;
+		debugOut() << "get node attr: " << query_string << endl;
+		debugOut() << "get_node_attr in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
 
@@ -423,8 +418,8 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout << "get node query string: " << query_string << endl;
-		cout << "get_node in prepare xml exception: " << xe.what() << endl;
+		debugOut() << "get node query string: " << query_string << endl;
+		debugOut() << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
 
@@ -528,8 +523,8 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout << query_string << endl;
-		cout << "get_node in prepare xml exception: " << xe.what() << endl;
+		debugOut() << query_string << endl;
+		debugOut() << "get_node in prepare xml exception: " << xe.what() << endl;
 		throw xe;
 	}
 
@@ -602,7 +597,7 @@ BdRetVal bdbXMLInterface::add_directory(const string &directory)
 		}
 		catch (XmlException &se)
 		{
-			cout << "add files exception" << cur_pathname.toStdString() << endl;
+			debugOut() << "add files exception" << cur_pathname.toStdString() << endl;
 			throw se;
 		}
 
@@ -674,8 +669,8 @@ int bdbXMLInterface::get_node_element_num (container_index container_type,
 	}
 	catch (XmlException &xe)
 	{
-		cout << "get_node_element_num: " << query_string << endl;
-		cout << "get_node_element_num exception: " << xe.what() << endl;
+		debugOut() << "get_node_element_num: " << query_string << endl;
+		debugOut() << "get_node_element_num exception: " << xe.what() << endl;
 		throw xe;
 	}
 

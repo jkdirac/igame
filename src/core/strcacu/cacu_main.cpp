@@ -9,6 +9,7 @@
 
 #include "str_cacu.h"
 #include "CoreException.h"
+#include "DebugOut.h"
 
 using namespace std;
 
@@ -41,17 +42,17 @@ void function_tests()
 
 	for (int i=0; i<pars.size(); i++)
 	{
-		cout << "start test: " << i+1 << " in " << pars.size() << "\t";
+		debugOut() << "start test: " << i+1 << " in " << pars.size() << "\t";
 		try
 		{
 			res = cacu_str_exp(pars[i].c_str(), exprs[i].c_str());
-			cout << "-- test cacu_string_exp : " << pars[i] << " (" << exprs[i] << ") = " << res;
+			debugOut() << "-- test cacu_string_exp : " << pars[i] << " (" << exprs[i] << ") = " << res;
 		} catch (CoreException &se)
 		{
-			cout << "!! cacu err: " << se.what() << " parameter: " << pars[i].c_str() <<  " expression: "
+			debugOut() << "!! cacu err: " << se.what() << " parameter: " << pars[i].c_str() <<  " expression: "
 				<< exprs[i].c_str();
 		}
-		cout << endl;
+		debugOut() << endl;
 	}
 }
 
