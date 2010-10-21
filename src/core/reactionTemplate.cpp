@@ -396,13 +396,17 @@ bool reactionTemplate::findSpeciesMatch (
 				cout << "\nmatching species:	"<<endl;
 				prevSpe->Output ();
 
-				bool same = isSameType (
-						prevSpe->getCompTypeId (), 
-						tmReactant->getCompTypeId ()
-						);
+//                bool same = isSameType (
+//                        prevSpe->getCompTypeId (), 
+//                        tmReactant->getCompTypeId ()
+//                        );
+
+//                cout << "\nsame = " << boolalpha << same;	
+				if (!tmReactant->getCompTypeId ().empty ())
+					if (prevSpe->getCompTypeId ().empty ()) continue;
 
 				cMatchsArray trym;
-				if (same && prevSpe->match (tmReactant, trym))
+				if (prevSpe->match (tmReactant, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
 						reactant_sam[i].push_back (make_pair (j, trym[k]));
@@ -425,13 +429,17 @@ bool reactionTemplate::findSpeciesMatch (
 			for (int j=0; j <= index; j++)
 			{
 				MySpecies* prevSpe = listOfMySpecies[j];
-				bool same = isSameType (
-						prevSpe->getCompTypeId (), 
-						tmModifier->getCompTypeId ()
-						);
+
+//                bool same = isSameType (
+//                        prevSpe->getCompTypeId (), 
+//                        tmModifier->getCompTypeId ()
+//                        );
+			
+				if (!tmModifier->getCompTypeId ().empty ())
+					if (prevSpe->getCompTypeId ().empty ()) continue;
 
 				cMatchsArray trym;
-				if (same && prevSpe->match (tmModifier, trym))
+				if (prevSpe->match (tmModifier, trym))
 				{
 					for (int k=0; k < trym.size (); k++)
 						modifier_sam[i].push_back (make_pair (j, trym[k]));
