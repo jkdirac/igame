@@ -48,11 +48,18 @@ bool Driver::beginSimulation ()
 		cerr << e.what () << "\n: Invalid data term." << endl;
 		return 1;
 	}
+//    /*
+	catch (std::out_of_range &e)
+	{
+		cerr << e.what() << "	: Out of range." << endl;
+		return 1;
+	}
 	catch (...)
 	{
 		cerr << "\nUnexpected exceptional condition encountered." << endl;
 		return 1;
 	}
+//    */
 
 	// A 0 return status is the standard Unix/Linux way to say "all ok".
 	return 0;

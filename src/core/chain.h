@@ -28,6 +28,7 @@ class Chain
 	void setLabel (const string&);
 
 	void setIsDNA ();
+	void setIsRNA ();
 
 	bool equal (const Chain*) const;
 	bool match (const Chain*, cMatchsType&) const; 
@@ -62,6 +63,7 @@ class Chain
 
 	int chainNum;
 	bool isDNA;
+	bool isRNA;
 
 	string unicode;
 	string chainLabel;

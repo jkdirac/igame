@@ -6,7 +6,8 @@ Chain::Chain (const Chain* orig)
 		unicode (orig->unicode),
 		chainLabel (orig->chainLabel),
 		chainNum (orig->chainNum),
-		isDNA (orig->isDNA)
+		isDNA (orig->isDNA),
+		isRNA (orig->isRNA)
 {
 	for (int i =0; i < orig->listOfParts.size (); i++)
 		this->createPart (orig->listOfParts[i]);
@@ -29,6 +30,22 @@ void Chain::setIsDNA ()
 				&& p->getPartType () != "ReverseDNA")
 		{
 			isDNA = false;
+			return;
+		}
+	}
+}
+
+void Chain::setIsRNA ()
+{
+	isRNA = true;
+
+	for (int i=0; i < listOfParts.size (); i++)
+	{
+		Part* p = listOfParts[i];
+		if (p->getPartType () != "ForwardRNA"
+				&& p->getPartType () != "ReverseRNA")
+		{
+			isRNA = false;
 			return;
 		}
 	}
@@ -89,12 +106,18 @@ void Chain::turnover ()
 		listOfParts.push_back (stack_part.top ());	
 		stack_part.pop ();
 	}
+
+	//	reset unicode
+	unicode = genUnicode (0, listOfParts.size ()-1, true);
 }
 
 bool Chain::isCsymm ()
 {
 	//	is this chain a DNA chain?
 	this->setIsDNA ();
+
+	//	is this chain a RNA chain?
+	this->setIsRNA ();
 
 	//	yes
 	if (isDNA)
