@@ -65,8 +65,8 @@ bdbXMLInterface::bdbXMLInterface()
 			throw XmlException(XmlException::NULL_POINTER, "db env create dbs dir error", __FILE__, __LINE__);
 		}
 	}
-	db_env_home = dir.path() + db_env_home;
-	db_env_home = dir.path() ;
+	db_env_home = dir.path() + "/" + db_env_home;
+	debugOut() << db_env_home.toLatin1().constData() << endl;
 
 	try 
 	{
