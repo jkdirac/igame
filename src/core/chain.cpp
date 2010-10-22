@@ -778,7 +778,7 @@ bool Chain::type_match (
 		if (type1 == "ForwardRNA" || type1 == "ReverseRNA") return true;
 		else return false;
 	}
-	else if (type2 == "PROTEIN")
+	else if (type2 == "Protein")
 	{
 		if (type1 == "ForwardProtein" || type1 == "ReverseProtein") return true;
 		else return false;
