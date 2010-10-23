@@ -10,16 +10,12 @@
 			</interface>
 			<listOfConditionalParameters>
 				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
-					<parameterValue compartment="E.coli">0.5</parameterValue>
+					<parameterValue compartment="E_coli">0.5</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
 				<referencedSpecies partType="ForwardDNA">AHL2_luxR2_fw_pluxI</referencedSpecies>
 				<referencedSpecies partType="ReverseDNA">AHL2_luxR2_rev_pluxI</referencedSpecies>
-				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
-				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
-				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>
-				<referencedSpecies partType="ReverseRNA">rna_sc</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>				
 			</listOfReferencedSpecies>
 		</biobrick>

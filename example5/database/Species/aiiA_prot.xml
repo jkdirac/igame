@@ -12,19 +12,19 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
-							<partReference>aiiA159</partReference>
+							<partReference>C0060_aiiA</partReference>
 							<partLabel>aiiA</partLabel>
 							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -34,9 +34,9 @@
 			</listOfChains>
 			<listOfTrees>
 			</listOfTrees>
-			<listOfReferencedReactions>
-				<referencedReaction speciesType="modifier">deg_AHL_by_aiiA</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="modifier">deg_AHL_by_aiiA</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

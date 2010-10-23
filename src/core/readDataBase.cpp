@@ -58,6 +58,7 @@ void readDataBase::read_cnModel (
 		const bool& isTemplate
 		)
 {
+	cout << "\nread cn model = " << doc << endl;
 	//	============
 	//	read chains
 	//	============
@@ -479,32 +480,24 @@ void readDataBase::setFunction (
 {
 	string errno = "Reading Block FunctionDefinition...";
 
-	//
 	//  setId
-	//
-	 fdef->setId (id);
-	//
+	fdef->setId (id);
+
 	//  setName
-	//
 	if (!name.empty ())
 	{
-		 fdef->setName (name);
+		fdef->setName (name);
 	}
 
-	//
 	//  setMath
-	//
 	ASTNode* astMath = readMathMLFromString(math.c_str());
 	if (astMath == NULL) 
-	{
-		debugOut() << "\nmath = " << math << endl;
 		throw CoreException (
 				"Reading Block FunctionDefinition..."
 				"Null or Invalid Attribute Value: math!"
 				);
-	}
 
-	 fdef->setMath(astMath);
+	fdef->setMath(astMath);
 	delete astMath;
 }
 
@@ -518,9 +511,6 @@ void readDataBase::readReaction (
 		reactionTemplate* tmpR
 		)
 {
-	debugOut() << "\n##############	READING REACTION TEMPLATE:	" 
-		 << doc << "	..." << endl;
-
 	string head ("/MoDeL/reaction");
 
 	if (doc.empty ()) throw CoreException (
@@ -610,8 +600,6 @@ void readDataBase::readReaction (
 				"Wrong link from species to reaction!"
 				);
 	}
-
-//    debugOut() << "\nspeciesType = " << speciesType << endl;
 
 	/**
 	 *	read attribute Id
@@ -740,12 +728,13 @@ void readDataBase::readReaction (
 
 		const string path_cnModel = "/MoDeL/species";
 		MySpecies* s = new MySpecies;
+
 		s->setDB_ref (speciesReference);
 		s->setDB_Label (speciesLabel);
 		s->setCompartment (compartmentLabel);
 		if (!ccid.empty ()) s->setCompTypeId (ccid);
 		read_cnModel (s, SPECIES, speciesReference, path_cnModel, true); 
-		
+
 		if (direction) tmpR->addProduct (s, compartmentLabel);
 		else tmpR->addReactant (s, compartmentLabel);
 	}
@@ -785,12 +774,7 @@ void readDataBase::readReaction (
 	while (myproduct != NULL)
 	{
 		oss.str (""); oss << prefix << __index << "::";
-//        debugOut() << "\nprefix = " << oss.str () << endl;
         myproduct->addPrefix (oss.str ());
-
-//        debugOut() << "\nprefix = " << prefix << endl;
-//        myproduct->Output ();
-
 		myproduct = tmpR->getProduct (++__index);
 	}
 
@@ -824,20 +808,8 @@ void readDataBase::readReaction (
 			oss << prefix << sind << "::";
 			to.second = oss.str () + to.second;
 		}
-		else
-		{
-			string errno ("No species Label found in Products list: )");
-			errno += to.first + "!";
-			throw CoreException (errno);
-		}
-
-//        debugOut() << "\nfrom = (" << from.first << ", " << from.second 
-//             << ")	to = (" << to.first << ", " << to.second << endl;
-
 		tmpR->addSubstituentTransfer (from, to);
 	}
-
-//    debugOut() << "\nbegin read kineticlaw " << endl;
 
 	/**
 	 *	read KineticLaw
@@ -848,22 +820,20 @@ void readDataBase::readReaction (
 	else pathKineticLaw = 
 		head + "/kineticLaw/reverseKineticLaw";
 
+//    if (direction) cout << "\nforward reaction";
+//    else cout << "reverse reaction";
+
+
 	//	read math
 	string math;
 
 	const string pathMath = pathKineticLaw + "/math";
 	get_node (REACTION, &doc, &pathMath, math); 
-//    debugOut() << "\nmath	= "<< math;
-
 	if (math.empty ())
 	{
-		debugOut() << "\ndoc = " << doc 
-			 << "	path = " << pathMath 
-			 << endl;
-
-		throw CoreException (
-				"Reading Reaction...No Math Specified!"
-				);
+		string errno ("Reading Reaction...No Math Specified ");
+		errno += " in " + doc + "!";
+		throw CoreException (errno);
 	}
 	else tmpR->setMath (math);
 
@@ -909,7 +879,8 @@ void readDataBase::readReaction (
 		{
 			string errno ("REACTION: species with label ");
 			errno += speciesLabel + " does not exist in"
-			   " reactant/modifier/product definition!";
+			   " reactant/modifier/product definition in doc ";
+			errno += doc + "!";
 			throw CoreException (errno);
 		}
 		string compartmentLabel = s->getCompartment ();
@@ -921,8 +892,7 @@ void readDataBase::readReaction (
 		if (p == NULL)
 		{
 			string errno ("REACTION: no part with label ");
-			errno += partLabel + 
-					" could be found in species " 
+			errno += partLabel + " could be found in species " 
 					+ speciesLabel + "!"; 
 			throw CoreException (errno);
 		}

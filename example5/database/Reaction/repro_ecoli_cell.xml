@@ -59,7 +59,7 @@
 				<listOfLocalParameters>
 					<localParameter>
 						<id>kgr</id>
-						<value>5.766E-4</value>
+						<value>1.7298E-3</value>
 						<units>per_second</units>
 						<constant>true</constant>
 					</localParameter>

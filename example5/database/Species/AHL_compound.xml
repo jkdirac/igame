@@ -22,11 +22,13 @@
 			</listOfChains>
 			<listOfTrees>
 			</listOfTrees>
-			<listOfReferencedReactions>
-				<referencedReaction speciesType="reactant">bid_AHL_luxR</referencedReaction>
-				<referencedReaction speciesType="reactant">diffusion_AHL</referencedReaction>
-				<referencedReaction speciesType="product">diffusion_AHL</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="reactant">bid_AHL_luxR</referencedReaction>
+			<referencedReaction speciesType="reactant">diffusion_AHL</referencedReaction>
+			<referencedReaction speciesType="product">diffusion_AHL</referencedReaction>
+			<referencedReaction speciesType="reactant">deg_AHL_by_aiiA</referencedReaction>
+			<referencedReaction speciesType="reactant">deg_AHL_ecoli</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

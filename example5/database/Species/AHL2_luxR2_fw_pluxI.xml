@@ -22,7 +22,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -34,7 +34,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -54,7 +54,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X2</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -66,7 +66,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X3</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -76,7 +76,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X4</partLabel>
 							<partType>DNA</partType>
 							<partCategory>substituent</partCategory>
@@ -88,7 +88,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X5</partLabel>
 							<partType>DNA</partType>
 							<partCategory>substituent</partCategory>
@@ -138,9 +138,9 @@
 					</listOfNodes>
 				</tree>
 			</listOfTrees>
-			<listOfReferencedReactions>
-			    <referencedReaction speciesType="product">bid_AHL2_luxR2_fw_pluxI</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="product">bid_AHL2_luxR2_fw_pluxI</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

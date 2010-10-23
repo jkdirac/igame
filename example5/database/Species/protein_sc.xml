@@ -24,7 +24,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="reactant">tm_deg_protein_ecoli</referencedReaction>
+<!--            <referencedReaction speciesType="reactant">tm_deg_protein_ecoli</referencedReaction>-->
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

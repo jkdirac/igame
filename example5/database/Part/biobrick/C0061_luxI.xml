@@ -10,10 +10,10 @@
 			</interface>
 			<listOfConditionalParameters>	
 		        <conditionalParameter id="forwardStartCodonEfficiency">
-					<parameterValue compartment="E.coli">1.0</parameterValue>
+					<parameterValue compartment="E_coli">1.0</parameterValue>
 				</conditionalParameter>
 				<conditionalParameter id="forwardStopCodonEfficiency">
-					<parameterValue compartment="E.coli">1.0</parameterValue>
+					<parameterValue compartment="E_coli">1.0</parameterValue>
 				</conditionalParameter>	
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>

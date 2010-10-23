@@ -21,7 +21,23 @@
 								</apply>
 							</piece>
 							<piece>
-								<ci type="real"> s </ci>
+								<apply>
+									<times/>
+									<apply>
+										<minus/>
+										<ci>t</ci>
+										<ci>ts</ci>
+									</apply>
+									<apply>
+										<divide/>
+										<ci>s</ci>
+										<apply>
+											<minus/>
+											<ci>te</ci>
+											<ci>ts</ci>
+										</apply>
+									</apply>
+								</apply>
 								<apply>
 									<and/>
 									<apply>
@@ -37,7 +53,7 @@
 								</apply>
 							</piece>
 							<piece>
-								<cn type="integer"> 0 </cn>
+								<ci>s</ci>
 								<apply>
 									<gt/>
 									<ci>t</ci>

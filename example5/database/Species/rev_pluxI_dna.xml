@@ -12,7 +12,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
 							<partType>DNA</partType>
 							<partCategory>substituent</partCategory>
@@ -24,7 +24,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
 							<partType>DNA</partType>
 							<partCategory>substituent</partCategory>
@@ -34,9 +34,9 @@
 			</listOfChains>
 			<listOfTrees>
 			</listOfTrees>
-			<listOfReferencedReactions>
-				<referencedReaction speciesType="reactant">bid_AHL2_luxR2_rev_pluxI</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="reactant">bid_AHL2_luxR2_rev_pluxI</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

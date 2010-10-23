@@ -50,6 +50,7 @@ void Node::addChild (
 		Node* childNodePtr
 		)
 {
+	assert (childNodePtr != NULL);
 	children.push_back (childNodePtr);
 }
 

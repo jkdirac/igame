@@ -3,24 +3,26 @@
 <!-- author: jkdirac, mail: jiangkun1@gamil.com -->
 <MoDeL>
 	<part>
-		<biobrick id="R0062_pluxI" name="pluxI" registryName="BBa_R0062">
+		<biobrick id="E0040_GFP_mature" name="mature GFP" originalConformation="E0040_GFP">
 			<interface>
-				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_R0062</url>
-				<shortDesc>Promoter (luxR and HSL regulated -- lux pR)</shortDesc>
+				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_E0040</url>
+				<shortDesc>mature GFP</shortDesc>
 			</interface>
 			<listOfConditionalParameters>
-				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
-					<parameterValue compartment="E_coli">0.0005</parameterValue>
+				<conditionalParameter id="forwardStartCodonEfficiency">
+					<parameterValue compartment="E_coli">1.0</parameterValue>
+				</conditionalParameter>
+				<conditionalParameter id="forwardStopCodonEfficiency">
+					<parameterValue compartment="E_coli">1.0</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">fw_pluxI_dna</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">rev_pluxI_dna</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">GFP_mature_prot</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseRNA">rna_sc</referencedSpecies>
-				<referencedSpecies>any_species</referencedSpecies>			
+				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</biobrick>
 	</part>

@@ -22,7 +22,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -34,7 +34,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -60,10 +60,10 @@
 					</listOfNodes>
 				</tree>
 			</listOfTrees>
-			<listOfReferencedReactions>
-				<referencedReaction speciesType="product">bid_AHL_luxR</referencedReaction>
-				<referencedReaction speciesType="reactant">dmr_AHL2_luxR2</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="product">bid_AHL_luxR</referencedReaction>
+			<referencedReaction speciesType="reactant">dmr_AHL2_luxR2</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

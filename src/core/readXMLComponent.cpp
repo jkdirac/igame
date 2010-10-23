@@ -57,9 +57,7 @@ void readXMLComponent::readPart (
 
 	vector<string> temp;
 
-	//
 	//  read node partReference (mandatory)
-	//
 	const string path_pr = prefix + "partReference";
 	get_node_element (cind, &doc, &path_pr, temp); 
 	if (temp.empty ())
@@ -71,16 +69,12 @@ void readXMLComponent::readPart (
 	}
 	else __ref = temp[0];
 
-	//
 	//  read node partLabel (optional)
-	//
 	const string path_pl = prefix + "partLabel";
 	get_node_element (cind, &doc, &path_pl, temp); 
 	if (!temp.empty ()) __label = temp[0];
 
-	//
 	//  read node partCategory
-	//
 	const string path_pc = prefix + "partCategory";
 	get_node_element (cind, &doc, &path_pc, temp); 
 	if (temp.empty ())
@@ -103,7 +97,6 @@ void readXMLComponent::readPart (
 		string errno = string (
 				"PART: Invalid partCategory value in "
 				) + doc + ".xml!";
-		debugOut() << "\n__ctg = " << __ctg << endl;
 		throw CoreException (errno);
 	}
 
@@ -147,9 +140,7 @@ void readXMLComponent::readNode (
 
 	vector<string> temp;
 
-	//
 	//  read node currentNodeLabel
-	//
 	const string path_cnl = prefix + "currentNodeLabel";
 	get_node_element (cind, &doc, &path_cnl, temp); 
 	if (temp.empty ())
@@ -161,9 +152,7 @@ void readXMLComponent::readNode (
 	}
 	else nCL = temp[0];
 
-	//
 	//  read node parentNodeLabel
-	//
 	const string path_pnl = prefix + "parentNodeLabel";
 	get_node_element (cind, &doc, &path_pnl, temp); 
 	if (temp.empty ())
@@ -235,15 +224,10 @@ void readXMLComponent::readSpecies (
 	}
 	else compartmentLabel = temp[0];
 
-	//
 	//	read attribute itself
-	//
 	const string path_rel = prefix + "compartmentLabel/@itself";
 	get_node_attr (cind, &doc, &path_rel, temp);
 	if (!temp.empty ()) ccid = temp[0];
-
-//    debugOut() << "\nccid = " << ccid << endl;
-//    debugOut() << "\nempty = " << boolalpha << ccid.empty () << endl;
 }
 
 void readXMLComponent::readCompartment (
@@ -262,9 +246,7 @@ void readXMLComponent::readCompartment (
 
 	vector<string> temp; 
 
-	//
 	//  read node compartmentLabel
-	//
 	const string path_compref = prefix + "compartmentReference";
 	get_node_element (cind, &doc, &path_compref, temp); 
 	if (temp.empty ())
@@ -276,9 +258,7 @@ void readXMLComponent::readCompartment (
 	}
 	else compartmentReference = temp[0];
 
-	//
 	//  read node currentCompartmentLabel
-	//
 	const string path_curr = prefix + "currentCompartmentLabel";
 	get_node_element (cind, &doc, &path_curr, temp); 
 	if (temp.empty ())

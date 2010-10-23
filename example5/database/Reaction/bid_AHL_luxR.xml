@@ -26,8 +26,8 @@
 				<compartmentLabel>E_coli</compartmentLabel>
 			</reactant>
 			<reactant>
-				<speciesReference>C0062_luxR</speciesReference>
-				<speciesLabel>C0062_luxR</speciesLabel>
+				<speciesReference>luxR_prot</speciesReference>
+				<speciesLabel>luxR_prot</speciesLabel>
 				<compartmentLabel>E_coli</compartmentLabel>
 			</reactant>
 		</listOfReactants>
@@ -42,22 +42,22 @@
 		</listOfProducts>
 		<listOfSubstituentTransfers>
 			<substituentTransfer>
-				<from speciesLabel="C0062_luxR">X0</from>
+				<from speciesLabel="luxR_prot">X0</from>
 				<to speciesLabel="AHL_luxR">X0</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="C0062_luxR">X1</from>
+				<from speciesLabel="luxR_prot">X1</from>
 				<to speciesLabel="AHL_luxR">X1</to>
 			</substituentTransfer>
 		</listOfSubstituentTransfers>
 		<kineticLaw>
-			<forwardKineticlaw>
+			<forwardKineticLaw>
 				<math>
 				  <apply>
 				    <times/>
 				    <ci> kon </ci>
 				    <ci> AHL_compound </ci>
-				    <ci> C0062_luxR </ci>
+				    <ci> luxR_prot </ci>
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
@@ -70,11 +70,7 @@
 						<constant>true</constant>
 					</localParameter>
 				</listOfLocalParameters>
-				<listOfReferencedParameters>
-				</listOfReferencedParameters>
-				<listOfConstraints>
-				</listOfConstraints>
-			</forwardKineticlaw>
+			</forwardKineticLaw>
 			<reverseKineticLaw>
 				<math>
 				  <apply>
@@ -84,7 +80,7 @@
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
-				<listOfLocalparameters>
+				<listOfLocalParameters>
 					<localParameter>
 						<id>koff</id>
 						<name>rate_of_unbinding</name>
@@ -92,7 +88,7 @@
 						<units>per_second</units>
 						<constant>true</constant>
 					</localParameter>
-				</listOfLocalparameters>
+				</listOfLocalParameters>
 				<listOfReferencedParameters>
 				</listOfReferencedParameters>
 				<listOfConstraints>

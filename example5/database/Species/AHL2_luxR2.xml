@@ -22,7 +22,7 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X0</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -34,7 +34,7 @@
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X1</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -54,19 +54,19 @@
 				<chain>
 					<listOfParts>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X2</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
 							<partReference>C0062_luxR</partReference>
-							<partLabel>luxR_2</partLabel>
+							<partLabel>luxR_1</partLabel>
 							<partType>ForwardProtein</partType>
 							<partCategory>biobrick</partCategory>
 						</part>
 						<part>
-							<partReference>X</partReference>
+							<partReference>ANY</partReference>
 							<partLabel>X3</partLabel>
 							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
@@ -91,7 +91,7 @@
 						</node>
 						<node>
 							<currentNodeLabel>luxR_1</currentNodeLabel>
-							<parentNodeLabel>AHlluxR_1</parentNodeLabel>
+							<parentNodeLabel>AHLluxR_1</parentNodeLabel>
 						</node>
 						<node>
 							<currentNodeLabel>AHLluxR_0</currentNodeLabel>
@@ -108,11 +108,11 @@
 					</listOfNodes>
 				</tree>
 			</listOfTrees>
-			<listOfReferencedReactions>
-				<referencedReaction speciesType="reactant">bid_AHL2_luxR2_fw_pluxI</referencedReaction>
-				<referencedReaction speciesType="reactant">bid_AHL2_luxR2_rev_pluxI</referencedReaction>
-				<referencedReaction speciesType="product">dmr_AHL2_luxR2</referencedReaction>
-			</listOfReferencedReactions>
 		</cnModel>
+		<listOfReferencedReactions>
+			<referencedReaction speciesType="reactant">bid_AHL2_luxR2_fw_pluxI</referencedReaction>
+			<referencedReaction speciesType="reactant">bid_AHL2_luxR2_rev_pluxI</referencedReaction>
+			<referencedReaction speciesType="product">dmr_AHL2_luxR2</referencedReaction>
+		</listOfReferencedReactions>
 	</species>
 </MoDeL>

@@ -50,16 +50,16 @@
 				<to speciesLabel="AHL2_luxR2">X1</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="AHL_luxR_1">X2</from>
+				<from speciesLabel="AHL_luxR_1">X0</from>
 				<to speciesLabel="AHL2_luxR2">X2</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="AHL_luxR_1">X3</from>
+				<from speciesLabel="AHL_luxR_1">X1</from>
 				<to speciesLabel="AHL2_luxR2">X3</to>
 			</substituentTransfer>
 		</listOfSubstituentTransfers>
 		<kineticLaw>
-			<forwardKineticlaw>
+			<forwardKineticLaw>
 				<math>
 				  <apply>
 				    <times/>
@@ -82,7 +82,7 @@
 				</listOfReferencedParameters>
 				<listOfConstraints>
 				</listOfConstraints>
-			</forwardKineticlaw>
+			</forwardKineticLaw>
 			<reverseKineticLaw>
 				<math>
 				  <apply>
@@ -92,7 +92,7 @@
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>
-				<listOfLocalparameters>
+				<listOfLocalParameters>
 					<localParameter>
 						<id>koff</id>
 						<name>rate_of_unbinding</name>
@@ -100,7 +100,7 @@
 						<units>per_second</units>
 						<constant>true</constant>
 					</localParameter>
-				</listOfLocalparameters>
+				</listOfLocalParameters>
 				<listOfReferencedParameters>
 				</listOfReferencedParameters>
 				<listOfConstraints>

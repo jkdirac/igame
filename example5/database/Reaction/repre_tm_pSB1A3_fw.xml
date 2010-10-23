@@ -74,7 +74,7 @@
 					</localParameter>
 					<localParameter>
 						<id>maxc</id>
-						<value>4.75E-8</value>
+						<value>4.75E-7</value>
 						<units>mole_per_litre</units>
 						<constant>true</constant>
 					</localParameter>

@@ -20,23 +20,15 @@ void MyReaction::init (
 	 * since id has been set when the reaction generates,
 	 * we need only check if it is not empty
 	 */
-	if (getId ().empty ()) throw CoreException (
-			"Empty Id in MyReaction Object!"
-			);
-
-	//	set name
-	if (!tmpR->name.empty ())
-	{
-		setName (tmpR->name);
-	}
-
+	if (getId ().empty ()) 
+		throw CoreException ("Empty Id in MyReaction Object!");
+	if (!tmpR->name.empty ()) setName (tmpR->name);
 	setFast (tmpR->fast);
 	setReversible (tmpR->reversible);
 
 	/**
 	 * set listOfMyReactants/listOfMyModifiers/listOfMyProducts
 	 */
-
 	const speciesArrayMatch& __reactants = __reaction_match.first;
 	const speciesArrayMatch& __modifiers = __reaction_match.second;
 
@@ -69,17 +61,17 @@ void MyReaction::createReactionsFromTemplate (
 	 * label to that of matched species already in the system
 	 */
 	map <string, string> replacement;
-
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		string __old = tmpR->listOfMyReactants[i]->getDB_Label ();
 		string __new = listOfMyReactants[i]->getId ();
 
 		if (!replacement.count (__old)) replacement[__old] = __new;
-		else throw CoreException (
-				"Labels of species within one "
-			    "reactions should be different!"
-				);
+		else 
+		{
+			string errno ("Two different species should not have same label ( ");
+			errno += __old + ")!"; throw CoreException (errno);
+		}
 	}
 
 	for (int i=0; i < listOfMyModifiers.size (); i++)
@@ -88,10 +80,11 @@ void MyReaction::createReactionsFromTemplate (
 		string __new = listOfMyModifiers[i]->getId ();
 
 		if (!replacement.count (__old)) replacement[__old] = __new;
-		else throw CoreException (
-				"Labels of species within one "
-			    "reactions should be different!"
-				);
+		else 
+		{
+			string errno ("Two different species should not have same label ( ");
+			errno += __old + ")!"; throw CoreException (errno);
+		}
 	}
 
 	/**
@@ -109,14 +102,10 @@ void MyReaction::createReactionsFromTemplate (
 	MySpecies* mixture  = new MySpecies;
 
 	//  (1.1) mix reactants
-	assert (__reactants_m.size () == listOfMyReactants.size ());
-
 	for (int i=0; i < listOfMyReactants.size (); i++)
 	{
 		MySpecies* sr = listOfMySpecies[__reactants_m[i].first];
-		debugOut() << "\nmyspecies = " << endl;
-		sr->Output ();
-		
+
 		//	prefix to be added for part labels and node labels
 		ostringstream oss;
 		string prefix = "__MoDeL_REACTANT_CXX";
@@ -125,8 +114,7 @@ void MyReaction::createReactionsFromTemplate (
 		//	find chains that are defined in reactant template
 		set<int> chainUsed;
 		cMatchsType2 speciesM = __reactants_m[i].second;
-		for (int j=0; j < speciesM.size ();j++) 
-			chainUsed.insert (speciesM[j].second);
+		for (int j=0; j < speciesM.size ();j++) chainUsed.insert (speciesM[j].second);
 
 		//	copy chains that contributes to matching
 		for (int j=0; j < sr->getNumOfChains (); j++)
@@ -134,8 +122,6 @@ void MyReaction::createReactionsFromTemplate (
 			if (!chainUsed.count (j)) 
 			{
 				Chain* c = mixture->createChain (sr->getChain (j));
-
-				//	add prefix label for chains
 				c->__add_chain_prefix (oss.str ());
 			}
 		}
@@ -144,8 +130,6 @@ void MyReaction::createReactionsFromTemplate (
 		for (int j=0; j < sr->getNumOfTrees (); j++)
 		{
 			Tree* t = mixture->createTree (sr->getTree (j));
-
-			//	add prefix label for trees
 			t->__add_tree_prefix (oss.str ());
 		}
 	}
@@ -154,10 +138,6 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i < listOfMyProducts.size () ; i++)
 	{
 		MySpecies* s = listOfMyProducts[i];
-
-		//TEST
-		debugOut() << "\nPRODUCT BODY: i = " << i;
-		s->Output ();
 
 		for (int j=0; j< s->getNumOfChains (); j++) 
 		{
@@ -171,15 +151,13 @@ void MyReaction::createReactionsFromTemplate (
 		}
 
 		for (int j=0; j< s->getNumOfTrees (); j++) 
-		{
-//            s->getTree (j)->Output (debugOut());
 			mixture->createTree (s->getTree (j));
-		}
 	}
 
-	//	mixed species
-	debugOut() << "\n<--	Mixture Before Splitting:	--	..	--	-->" << endl;
+	//	DEBUG
+	debugOut() << "\nMixture:" << endl;
 	mixture->Output ();
+	//	END
 
 	/**
 	 * split mixed species and store results in splits
@@ -187,16 +165,11 @@ void MyReaction::createReactionsFromTemplate (
 	vector<MySpecies*> splits; 
 	mixture->split (dbreader, splits);
 
-	/**
-	 * check splits
-	 */
-	debugOut() << "\nChecking Species Spliting ...";
+	//	DEBUG
+	debugOut() << "\nSplits:" << endl;
 	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+	//	END
 	
-//    debugOut() << "\nChecking PRODUCTs ...";
-//    for (int i=0; i < listOfMyProducts.size (); i++) listOfMyProducts[i]->Output ();
-
-	// 	splits are only partial copies of mixture 
 	delete mixture;
 
 	//  add products
@@ -244,7 +217,8 @@ void MyReaction::createReactionsFromTemplate (
 		stoiMath = new double[listOfMyProducts.size ()];
 		for (int i=0; i< degenerate.size (); i++) 
 			for (int j=0; j < degenerate[i].size (); j++)
-				stoiMath[degenerate[i][j]] = 1.0 / degenerate[i].size ();
+				stoiMath[degenerate[i][j]] = 
+					1.0 / degenerate[i].size ();
 	}
 
 	/**
@@ -268,24 +242,16 @@ void MyReaction::createReactionsFromTemplate (
 			 * 2. comp_type_id should be set previously if it is not empty
 			 */
 			MySpecies* __product = new MySpecies (splitted);
-			__product->rearrange (false);
-
 			MySpecies* __product_tm = listOfMyProducts[degenerate[i][j]];
 
-			ostringstream oss;
+			__product->rearrange (false);
 
-			//	set Id
+			ostringstream oss;
 			oss << "sPecIes" << listOfMySpecies.size ();
 			__product->setId (oss.str ());
 			__product->display_name (listOfMySpecies.size ());
-
-			//	set compTypeId
 			__product->setCompTypeId (__product_tm->getCompTypeId ());
-
-			//	set Compartment	
 			__product->setCompartment (__product_tm->getCompartment ());
-
-			//	set InitialAmount 
 			__product->setInitialAmount (0.0);
 
 			//  add to speciesList
@@ -298,19 +264,20 @@ void MyReaction::createReactionsFromTemplate (
 				{
 					compIndex = k;
 					MySpecies* prev = mycomp->isMySpeciesIn (__product);
-
 					if (prev != NULL) {
-						found = true; delete __product; __product = prev;
+						found = true; delete __product; __product = prev;\
 					}
-//                    debugOut() << "\nfound = " << found << endl;
 					break;
 				}
 			}	
 			if (!found) 
 			{
-				if (compIndex == -1) throw CoreException (
-						"No compartment found in listOfMyCompartments!"
-						);
+				if (compIndex == -1) 
+				{
+					string errno ("No compartment with label ");
+					errno += __product->getCompartment () + " found in compartment list!";
+					throw CoreException (errno);
+				}
 				else
 				{
 					listOfMySpecies.push_back (__product);
@@ -322,20 +289,14 @@ void MyReaction::createReactionsFromTemplate (
 			listOfMyProducts[degenerate[i][j]] = __product;
 
 			//	it is need to make it clear about chain labels
-			for (int k=0; k < __product->getNumOfChains (); k++)
-				__product->getChain (k)->setLabel ("");
-			
+			for (int k=0; k < __product->getNumOfChains (); k++) __product->getChain (k)->setLabel ("");
 			delete __product_tm;
 		}
 	}
 
-	//	remove all splits
 	for (int i=0; i < splits.size (); i++) delete splits[i];
 
-	//
 	//  complete components of Reaction object needed for SBML
-	//
-
 	//  speciesReference and ModifierReference
 	for (int i=0; i<listOfMyReactants.size (); i++)
 	{
@@ -346,12 +307,7 @@ void MyReaction::createReactionsFromTemplate (
 	for (int i=0; i<listOfMyProducts.size (); i++)
 	{
 		SpeciesReference* spr = createProduct ();
-
-//        debugOut() << "\ni = " << i << endl;
-//        listOfMyProducts[i]->Output ();
-//        debugOut() << "\nid = " << listOfMyProducts[i]->getId ();
-
-		 spr->setSpecies (listOfMyProducts[i]->getId ());
+		spr->setSpecies (listOfMyProducts[i]->getId ());
 		spr->setStoichiometry (stoiMath[i]);
 	}
 
@@ -369,7 +325,6 @@ void MyReaction::createReactionsFromTemplate (
 		kl->addParameter (tmpR->listOfParameters[i]);
 
 	//  setMath
-	
 	string mathXMLString = tmpR->math;
 	map<string,string>::const_iterator itMath = replacement.begin ();
 	while (itMath != replacement.end ())
@@ -385,9 +340,8 @@ void MyReaction::createReactionsFromTemplate (
 	}
 
 	ASTNode* astMath = readMathMLFromString(mathXMLString.c_str());
-	if (astMath == NULL) 
-		throw CoreException ("Invalid MathML string converted!");
-	 kl->setMath (astMath);
+	if (astMath == NULL) throw CoreException ("Invalid MathML string converted!");
+	else kl->setMath (astMath);
 
 	if (astMath != NULL) delete astMath;
 	if (astMath != NULL) delete stoiMath;
@@ -405,14 +359,13 @@ void MyReaction::addSpecialReaction (
 	listOfMyModifiers.push_back (modifier);
 	listOfMyProducts.push_back (product);
 
-
 	//	set Modifier
 	ModifierSpeciesReference* mpr = createModifier ();
 	mpr->setSpecies (modifier->getId ());
 
 	//	set Produtct
 	SpeciesReference* spr = createProduct ();
-	 spr->setSpecies (product->getId ());
+	spr->setSpecies (product->getId ());
 
 	//  setKineticLaw
 	KineticLaw* kl = createKineticLaw ();
@@ -421,32 +374,19 @@ void MyReaction::addSpecialReaction (
 	Parameter* para = kl->createParameter ();
 
 	para->setId (paraId);
-	if (!paraName.empty ())
-	{
-		para->setName (paraName);
-	}
-
 	para->setValue (paraValue);
-
-	if (!paraUnits.empty ())
-	{
-		 para->setUnits (paraUnits);
-	}
-
 	para->setConstant (true);
 
-	//  setMath
+	if (!paraName.empty ()) para->setName (paraName);
+	if (!paraUnits.empty ()) para->setUnits (paraUnits);
+
 	string formula = paraId + "*" 
 		+ modifier->getId () + "*"
 		+ modifier->getCompartment ();
 
-	//    debugOut() << "\nformula = " << formula << endl;
-
 	ASTNode_t* astMath = SBML_parseFormula (formula.c_str ());
-	if (astMath == NULL) throw CoreException (
-			"Invalid MathML string converted!"
-			);
-
+	if (astMath == NULL) 
+		throw CoreException ("Invalid MathML string converted!");
 	kl->setMath (astMath);
 	delete astMath;
 }

@@ -36,7 +36,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X2</partLabel>
-							<partType>PROTEIN</partType>
+							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -48,7 +48,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X3</partLabel>
-							<partType>PROTEIN</partType>
+							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
@@ -58,7 +58,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X4</partLabel>
-							<partType>PROTEIN</partType>
+							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 						<part>
@@ -70,7 +70,7 @@
 						<part>
 							<partReference>ANY</partReference>
 							<partLabel>X5</partLabel>
-							<partType>PROTEIN</partType>
+							<partType>Protein</partType>
 							<partCategory>substituent</partCategory>
 						</part>
 					</listOfParts>
