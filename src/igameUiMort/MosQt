@@ -11,7 +11,13 @@
 #ifndef MosQt
 #define MosQt
 
-#define BEGIN(x) int main(int ARGC, char *ARGV[]) { QApplication APP(ARGC, ARGV); MSplashScreen* x = new MSplashScreen(); x->show();
+#define BEGIN(x) int main(int ARGC, char *ARGV[]) \
+		{ \
+		Q_INIT_RESOURCE(IGAME); \
+		QApplication APP(ARGC, ARGV); \
+		MSplashScreen* x = new MSplashScreen(); \
+		x->show();
+
 #define END(x) x->finish(MAINWINDOW); delete x; return APP.exec(); }
 
 #define MAIN_VIEW(v) v = new MView(); MAINWINDOW = v;

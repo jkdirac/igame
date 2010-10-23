@@ -34,7 +34,7 @@ using namespace uiObjects;
 BEGIN(demoUiXml)
 {
     mainView = new MView();
-    
+
     mainView->setWindowTitle("demoUiXml");
     mainView->showMaximized();
     mainView->setSceneRect(0, 0, QApplication::desktop()->width(), QApplication::desktop()->height());
@@ -43,7 +43,14 @@ BEGIN(demoUiXml)
 
     mainScene = new MScene();
     mainScene->loadXml("./demoUiXml.ui.xml");
+
+    QTime time;
+    time.restart();
+    while (time.elapsed() < 5000) {
+	}
+
     mainView->setScene(mainScene);
+
 }
 END(demoUiXml)
 
