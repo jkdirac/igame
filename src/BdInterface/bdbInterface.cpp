@@ -90,6 +90,7 @@ bdbXMLInterface::bdbXMLInterface()
 		container_names[SYSTEM] = "System";
 		container_names[DBINTERFACE] = "dbInterface";
 		container_names[PART] = "Part";
+		container_names[NEW] = "New";
 		container_names[COMPARTMENT] = "Compartment";
 
 		for (int i=0; i < container_names.size(); i++)
@@ -109,6 +110,8 @@ bdbXMLInterface::bdbXMLInterface()
 		debugOut() << "xml exception: " << xe.what() << endl;
 		throw xe;
 	}
+
+	//create newdoc.xml
 }
 
 /** 
@@ -433,112 +436,6 @@ BdRetVal bdbXMLInterface::get_node(container_index container_type,
 	return no_error;
 }
 
-/** 
- * @breif  
- * 	get the node content of a document as a string, see also get_node,
- * 	this function is in developing and should not be called.
- * 
- * @Param container_type
- * 	should be value defined in container_index enum
- * @Param doc
- * 	the document name of xml file
- * @Param node_path
- * 	the xpath path of node to be search
- * @Param res
- * 	output parameter, return the string value of results
- * @Param prefix
- * 	prefix of xml namespace
- * @Param uri
- * 	uri of xml namespace
- *
- * @Returns   
- * 	return no_error for success
- * 	otherwise an XmlException was throwed
- */
-/*
-BdRetVal bdbXMLInterface::get_node(container_index container_type, 
-		const string *doc, 
-		const string *node_path, 
-		string &res,
-		const string &prefix,
-		const string &uri)
-{
-	string query_string;
-
-	if (m_manager == NULL)
-	{
-		throw XmlException(XmlException::NULL_POINTER, "m_manager null", __FILE__, __LINE__);
-	}
-
-
-	if (container_type >= CONT_IDX_NUM)
-	{
-		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
-	}
-
-	if (prefix == "")
-	{
-		query_string += "'declare default element namespace \"";
-		query_string += uri;
-		query_string += "\";";
-	}
-
-	if (doc == NULL)
-	{
-		query_string += "collection('"
-			+ container_names[container_type]
-			+ ".dbxml')";
-	}
-	else
-	{
-		query_string += "doc(\"dbxml:/" 
-			+ container_names[container_type] 
-			+ ".dbxml/" 
-			+ *doc 
-			+ "\")";
-	}
-
-	if (node_path != NULL)
-		query_string += *node_path;
-
-	XmlQueryContext context = m_manager->createQueryContext();
-
-	if (prefix != "")
-	{
-		context.setNamespace(prefix, uri);
-	}
-
-	if (prefix == "")
-	{
-		query_string += "'";
-	}
-
-	XmlQueryExpression qe;
-	XmlResults results;
-	try
-	{
-		
-		qe = m_manager->prepare(query_string, context);
-		results = qe.execute(context);
-	}
-	catch (XmlException &xe)
-	{
-		debugOut() << query_string << endl;
-		debugOut() << "get_node in prepare xml exception: " << xe.what() << endl;
-		throw xe;
-	}
-
-	res.clear();
-	XmlValue value;
-	while (results.next(value))
-	{
-		res = value.asString();
-	}
-
-	return no_error;
-}
-*/
-
 //BdRetVal bdbXMLInterface::get_math(container_index container_type, 
 //                const string *doc, 
 //                const string *node_path, 
@@ -763,4 +660,151 @@ BdRetVal bdbXMLInterface::get_ids_bycontainer(container_index container_type, ve
 		}
 
 		return no_error;
+}
+
+BdRetVal bdbXMLInterface::insert_new_node(container_index container_type, const string& docname, const string &node_path,
+		const string &node_name, vector<string>* attr_list, const string& element)
+{
+	if (m_manager == NULL)
+	{
+		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
+//                return xml_exception;
+	}
+
+
+	if (container_type >= CONT_IDX_NUM)
+	{
+		throw XmlException(XmlException::INVALID_VALUE, "contianer_type", __FILE__, __LINE__);
+//                return para_error;
+	}
+	string query_string = "insert nodes ";
+
+	query_string += "\n<" + node_name;
+	if (attr_list != NULL)
+	{
+		for (int i=0; i < attr_list->size(); i++)
+		{
+			query_string += "\n"; 
+			query_string += (*attr_list)[i];
+		}
+	}
+
+	query_string += ">\n" + element;
+	query_string += "\n</" + node_name + ">\n";
+
+	query_string += " into "; 
+
+	query_string += "doc(\"dbxml:/" 
+		+ container_names[container_type] 
+		+ ".dbxml/" 
+		+ docname
+		+ "\")" + node_path;
+
+	XmlQueryContext context = m_manager->createQueryContext();
+
+	XmlQueryExpression qe;
+	XmlResults results;
+	try
+	{
+		qe = m_manager->prepare(query_string, context);
+		results = qe.execute(context);
+	}
+	catch (XmlException &xe)
+	{
+		debugOut() << "insert operation: " << query_string << endl;
+		debugOut() << "insert exception: " << xe.what() << endl;
+		throw xe;
+	}
+
+	return no_error;
+}
+
+BdRetVal bdbXMLInterface::create_doc(container_index container_type, 
+		const string &doc_name, 
+		const string &root,
+		vector<string>* attr_list,
+		int flag)
+{
+	if (m_manager == NULL)
+	{
+		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
+	}
+
+	XmlContainer* container = NULL;
+	container = &m_containers[container_type];
+	XmlUpdateContext the_context = m_manager->createUpdateContext();
+
+	try
+	{
+		XmlDocument the_doc = container->getDocument(doc_name);
+		if ((flag & DELET_EXIST) != DELET_EXIST)
+		{
+			throw XmlException(XmlException::NULL_POINTER, "xml document exists", __FILE__, __LINE__);
+			return xml_exception;
+		}
+		else
+		{
+			container->deleteDocument(the_doc, the_context);
+		}
+	}
+	catch (XmlException &e)
+	{
+		if (e.getExceptionCode() != XmlException::DOCUMENT_NOT_FOUND)
+		{
+			debugOut() << "xml excepiton" << e.what() << endl;
+			throw XmlException(XmlException::NULL_POINTER, "xml document get error", __FILE__, __LINE__);
+		}
+	}
+
+	//创建一个新的document
+	string content = "<?xml version=\"1.0\"?>";
+	content += "\n<" + root + ">"; 
+	if (attr_list != NULL)
+	{
+		for (int i=0; i < attr_list->size(); i++)
+		{
+			content += "\n";
+			content += (*attr_list)[i];
+		}
+	}
+
+	content += "\n</" + root + ">";
+	try
+	{
+		container->putDocument(doc_name, content, the_context, 0);
+	}
+	catch (XmlException &e)
+	{
+		debugOut() << "xml exception: " << e.what() << endl;
+		throw XmlException(XmlException::NULL_POINTER, "xml document put content error", __FILE__, __LINE__);
+	}
+}
+
+BdRetVal bdbXMLInterface::delete_doc(container_index container_type, const string &doc_name)
+{
+	XmlContainer* container = NULL;
+	if (m_manager == NULL)
+	{
+		throw XmlException(XmlException::NULL_POINTER, "n_manager NULL", __FILE__, __LINE__);
+	}
+
+	container = &m_containers[container_type];
+
+	if (container == NULL)
+	{
+		throw XmlException(XmlException::NULL_POINTER, "container NULL", __FILE__, __LINE__);
+	}
+
+	XmlUpdateContext the_context = m_manager->createUpdateContext();
+	try{
+		XmlDocument the_doc = container->getDocument(doc_name);
+
+		container->deleteDocument(the_doc, the_context);
+	}
+	catch (XmlException &xe)
+	{
+		throw xe;
+	}
+
+	return no_error;
 }
