@@ -23,6 +23,7 @@
 #include <MosQt>
 #include "IdSelWidget.h"
 #include "SceneViewWidget.h"
+#include "SceneManager.h"
 
 namespace uiObjects {
 
@@ -35,22 +36,22 @@ using namespace uiObjects;
 
 BEGIN(demoUiXml)
 {
-    mainView = new MView();
+	SceneManager* sceneMgr = SceneManager::getSceneManger();
 
-    mainView->setWindowTitle("demoUiXml");
-    mainView->showMaximized();
-	mainView->setSceneRect(0, 0, QApplication::desktop()->width(), QApplication::desktop()->height());
-    mainView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    mainView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	int deskWidth = QApplication::desktop()->width();
+	int deskheight = QApplication::desktop()->height();
+
+    MView* mainview = new MView();
+
+    mainview->setWindowTitle("demoUiXml");
+    mainview->showMaximized();
+	mainview->setSceneRect(0, 0, deskWidth, deskheight);
+    mainview->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mainview->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     mainScene = new MScene();
     mainScene->loadXml(":demoUiXml.ui.xml");
-	mainScene->setBackgroundBrush(QPixmap(":/images/demobg.png"));
-
-//    QTime time;
-//    time.restart();
-//    while (time.elapsed() < 5000) {
-//    }
+//    mainScene->setBackgroundBrush(QPixmap(":/images/demobg.png"));
 
 	MWidget* widget[100];
 	// 创建MWidget界面对象
@@ -68,7 +69,9 @@ BEGIN(demoUiXml)
 	widget[2]->setX(0);
 	widget[2]->setY(300);
 
-    mainView->setScene(mainScene);
+	sceneMgr->setMainView(mainview);
+
+	sceneMgr->setCurrentScene(mainScene);
 }
 END(demoUiXml)
 

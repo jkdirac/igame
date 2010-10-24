@@ -14,7 +14,7 @@
 #define BEGIN(x) int main(int ARGC, char *ARGV[]) \
 		{ \
 		Q_INIT_RESOURCE(IGAME); \
-		QApplication APP(ARGC, ARGV); \
+		QApplication APP(ARGC, ARGV);\
 		MSplashScreen* x = new MSplashScreen(); \
 		x->show();
 

@@ -297,4 +297,25 @@ void MScene::writeXml(const QString& fileName)
     return;
 }
 
+void MScene::addChildScene(MScene *child)
+{
+	if (child != NULL)
+	{
+		m_childern.push_back(child);
+		child->setParent(this);
+	}
+}
 
+void MScene::deleteChildScene(int id)
+{
+}
+
+void MScene::setParent(MScene* parent)
+{
+	m_parent = parent;
+}
+
+QVector<MScene*>& MScene::getChildScene()
+{
+	return m_childern;
+}

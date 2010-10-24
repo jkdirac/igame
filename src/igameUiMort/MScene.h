@@ -13,6 +13,7 @@
 
 #include <QGraphicsScene>
 #include <QString>
+#include <QVector>
 
 class MItem;
 
@@ -30,14 +31,22 @@ public:
     void loadXml(const QString& fileName); //&
     void writeXml(const QString& fileName); //&
 
+	QVector<MScene*>& getChildScene();
+	void addChildScene(MScene *child);
+	void deleteChildScene(int id);
+	void setParent(MScene* parent);
+
     MItem* dataScene;
     MItem* dataItem[1024];
     int dataCount;
 
 private:
+	int m_id;
     qreal m_minZValue;
     qreal m_maxZValue;
-
+	QVector<MScene*> m_childern;
+	MItem* m_rootItem;
+	MScene* m_parent;
 };
 
 #endif
