@@ -60,8 +60,8 @@ void MySpecies::split (
 	//	first trim the species
 	trim (&dbreader);
 
-	debugOut() << "\nspecies after trim	=	 "  << endl;
-	Output ();
+//    debugOut() << "\nspecies after trim	=	 "  << endl;
+//    Output ();
 
 	//	container to store chainnum of species
 	//	chainUsed[species][chainnum set]
@@ -335,7 +335,7 @@ string MySpecies::getCompTypeId () const {
 
 void MySpecies::rearrange (const bool& isTemplate)
 {
-	debugOut() << "\n--------rearrange species structure...--------"<<endl;
+//    debugOut() << "\n--------rearrange species structure...--------"<<endl;
 
 	//	minW must be cleared!!!!
 	minW.clear ();
@@ -455,7 +455,6 @@ void MySpecies::rearrange (const bool& isTemplate)
 			}
 			catch (std::out_of_range &e)
 			{
-				debugOut() << "\ni = " << i << " j = " << j << endl;
 				cerr << e.what () << "	out_of_range in function perm!\n";
 				throw;
 			}
@@ -507,9 +506,6 @@ void MySpecies::rearrange (const bool& isTemplate)
 				tryuni += t->unicode;
 			}
 
-			//            debugOut() << "\nminW = " << minW.empty () << endl;
-			//            debugOut() << "\nminW < tryuni: " << (minW < tryuni) << endl;
-
 			if (minW.empty ()) 
 			{
 				minW = tryuni;
@@ -527,8 +523,6 @@ void MySpecies::rearrange (const bool& isTemplate)
 			{
 				minWperm.push_back (order);
 			}
-
-			//            debugOut() << "\nturnstate = " << turnstate.size () << endl;
 
 			//	recover to orginal order
 			stable_sort (
@@ -659,13 +653,13 @@ void MySpecies::rearrange (const bool& isTemplate)
 		}
 	}
 
-	debugOut() << "\nnumber of equivalent chain groups = " << equiv.size () << endl;
-	for (int i=0; i < equiv.size (); i++)
-	{
-		set<int>::iterator it = equiv[i].begin ();
-		while (it != equiv[i].end ()) debugOut() << *it++;
-		debugOut() << "	";
-	}
+//    debugOut() << "\nnumber of equivalent chain groups = " << equiv.size () << endl;
+//    for (int i=0; i < equiv.size (); i++)
+//    {
+//        set<int>::iterator it = equiv[i].begin ();
+//        while (it != equiv[i].end ()) debugOut() << *it++;
+//        debugOut() << "	";
+//    }
 
 	delete [] csymm;
 }
@@ -1180,15 +1174,15 @@ void MySpecies::display_name (const int& num)
 
 	set<int> skip;
 
-	debugOut() << "\noutput_test" << endl;
-	Output ();
-	debugOut() << "\nequivalent chains groups = " << equiv.size () << endl;
-	for (int i=0; i < equiv.size (); i++)
-	{
-		set<int>::iterator it = equiv[i].begin ();
-		while (it != equiv[i].end ()) debugOut() << *it++;
-		debugOut() << endl;
-	}
+//    debugOut() << "\noutput_test" << endl;
+//    Output ();
+//    debugOut() << "\nequivalent chains groups = " << equiv.size () << endl;
+//    for (int i=0; i < equiv.size (); i++)
+//    {
+//        set<int>::iterator it = equiv[i].begin ();
+//        while (it != equiv[i].end ()) debugOut() << *it++;
+//        debugOut() << endl;
+//    }
 
 	for (int i=0; i < listOfChains.size (); i++)
 	{

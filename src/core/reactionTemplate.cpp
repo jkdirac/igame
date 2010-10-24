@@ -246,10 +246,14 @@ void reactionTemplate::setMath (
 		string label = listOfMyProducts[i]->getDB_Label ();
 
 		if (__math.find (label) != string::npos) 
-			throw CoreException (
+		{
+			string errno (
 					"Products labels are not allowed "
 				    "to be used in math expression!  "
 					);
+			errno += "\nlabel = " + label + "	id = " + id;
+			throw CoreException (errno);
+		}
 	}
 	math = __math;
 }
@@ -898,6 +902,12 @@ void reactionTemplate::createProductsFromTemplate (
 								if (index_p >= 0) {index_c = j; break;}
 							}
 
+							if (index_c < 0 || index_p < 0)
+							{
+								string errno ("Error in transferTable! File: ");
+								errno += id;
+								throw CoreException (errno); 
+							}
 							assert (index_c >=0); assert (index_p >= 0);
 
 							break;
@@ -1074,8 +1084,14 @@ bool reactionTemplate::handle_constraints (
 
 		if (!drop && !expression.empty ()) 
 		{
-			expression.substr (0, expression.size ()-1);
-			if (cacu_string_exp (expression.c_str (), formula.c_str ()) == 0) return false;
+			expression = expression.substr (0, expression.size ()-1);
+			bool result = cacu_string_exp (expression.c_str (), formula.c_str ());
+
+			//	test
+			cout << "\nexpression = " << expression 
+				 << "  formula = " << formula 
+				 << "  result  = " << result;
+			if (!result) return false;
 		}
 	}
 

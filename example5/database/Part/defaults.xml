@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoDeL>
+	<part>
+		<listOfValueDefaults>
+			<valueDefault id="forwardPromoterEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="reversePromoterEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="forwardRbsEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="reverseRbsEfficiency" units="per_second"> 0.0 </valueDefault>
+			<valueDefault id="forwardTerminatorEfficiency" units="dimensionless"> 0.0 </valueDefault>
+			<valueDefault id="reverseTerminatorEfficiency" units="dimensionless"> 0.0 </valueDefault>
+			<valueDefault id="forwardStartCodonEfficiency"> 0 </valueDefault>
+			<valueDefault id="reverseStartCodonEfficiency"> 0 </valueDefault>
+			<valueDefault id="forwardStopCodonEfficiency"> 0 </valueDefault>
+			<valueDefault id="reverseStopCodonEfficiency"> 0 </valueDefault>
+		</listOfValueDefaults>
+	</part>
+</MoDeL>

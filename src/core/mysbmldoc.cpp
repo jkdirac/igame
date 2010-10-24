@@ -200,8 +200,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
-		s->Output ();	
+//        debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
+//        s->Output ();	
 
 		//a set to store species id that has been used
 		set<string> speciesUsed;
@@ -250,14 +250,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (sLink, SPECIES, speciesReference, "/MoDeL/species", true);
 
-					debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
-					sLink->Output ();
+//                    debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
+//                    sLink->Output ();
 
 					//  Does this template match this species?
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) continue;
 
-					debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
+//                    debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
 
 					//
 					//  read reaction Links
@@ -280,10 +280,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesRole
 								);
 
-						debugOut() << "\nHandling Referenced Reaction	" 
-							<< "	...		DOC	:	" 
-							<< reactionReference << "	TYPE :	"
-							<< speciesRole << endl;
+//                        debugOut() << "\nHandling Referenced Reaction	" 
+//                            << "	...		DOC	:	" 
+//                            << reactionReference << "	TYPE :	"
+//                            << speciesRole << endl;
 
 						handleReactionTemplate (
 								dbreader, 
@@ -320,9 +320,6 @@ void MySBMLDocument::handleReactionTemplate (
 	reactionTemplate* tmpR = new reactionTemplate;
 	dbreader.readReaction (doc, dbref, type, tmpR);
 
-	debugOut() << "\n<--  READ Reaction Template	  "
-		 << "---	...	---	DONE! " << endl;
-
 	/**
 	 * ===============================
 	 * HANDLE CONSTRAINTS OF PARAMTERS
@@ -331,10 +328,8 @@ void MySBMLDocument::handleReactionTemplate (
 	const ListOfParameters* listOfMyParameters 
 		= getModel ()->getListOfParameters ();
 	bool expr = tmpR->handle_constraints (listOfMyParameters);
+	if (expr == false) cout << "\nconstraint.. = "<< expr <<endl;
 	if (!expr) {delete tmpR; return;}
-
-	debugOut() << "\n<--  Caculate Reaction Constraints " 
-		 << "---	...	---	DONE! " << endl;
 
 	/**
 	 * ================================================
@@ -352,18 +347,16 @@ void MySBMLDocument::handleReactionTemplate (
 			result
 			);
 
-#ifndef NDEBUG
-	debugOut() << "\n################		MATCHING...	 DONE	#################\n";
-	debugOut() << "\n^_^	Combinations	=	" << result.size () << endl;
-#endif
+//    debugOut() << "\n################		MATCHING...	 DONE	#################\n";
+//    debugOut() << "\n^_^	Combinations	=	" << result.size () << endl;
 
 	/**
 	 * create reactions from each matching result
 	 */
 	for (int i=0; i < result.size (); i++)
 	{
-		debugOut() << "\n======	new reaction	i=	" 
-			 << i << "	=========" <<	endl;
+//        debugOut() << "\n======	new reaction	i=	" 
+//             << i << "	=========" <<	endl;
 		/**
 		 * only set id, name, fast, reversible,
 		 * other elements such as math, listOfParameters 
@@ -607,7 +600,7 @@ void MySBMLDocument::searchTranscriptionReactions (
 					if (!isvalidseq && ci == k-1) break;	
 
 					MySpecies* mrna = new MySpecies (listOfMySpecies.size());
-					mrna->setName ("mrna");
+//                    mrna->setName ("mrna");
 					mrna->setCompartment (s->getCompartment ());
 					mrna->setInitialAmount (0.0);
 					mrna->setHasOnlySubstanceUnits (false);
@@ -839,8 +832,8 @@ void MySBMLDocument::write ()
 	{
 		m->addSpecies (listOfMySpecies[i]);
 		
-		debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
-		listOfMySpecies[i]->Output ();
+//        debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
+//        listOfMySpecies[i]->Output ();
 		
 		
 	}
@@ -869,9 +862,9 @@ void MySBMLDocument::output ()
 	unsigned int level = getLevel();
 	unsigned int version = getVersion();
 
-	debugOut() << endl;
-	debugOut() << "  level: " << level << "  	version: " << version << endl;
-	debugOut() << endl;
+//    debugOut() << endl;
+//    debugOut() << "  level: " << level << "  	version: " << version << endl;
+//    debugOut() << endl;
 
 	//getmodel
 	Model* model = getModel ();
@@ -881,9 +874,9 @@ void MySBMLDocument::output ()
 	 ******************************************************************/
 	unsigned int NumCompartments = model->getNumCompartments();
 
-	debugOut() << endl;
-	debugOut() << "  NumberOfCompartments: " << NumCompartments << endl;
-	debugOut() << endl;
+//    debugOut() << endl;
+//    debugOut() << "  NumberOfCompartments: " << NumCompartments << endl;
+//    debugOut() << endl;
 
 	for (int i = 0; i < NumCompartments; i++)
 	{
