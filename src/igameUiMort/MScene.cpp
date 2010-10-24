@@ -47,7 +47,7 @@ MScene::~MScene()
     delete this->dataScene;
 }
 
-int MScene::addItem(MItem *item)
+int MScene::addItemEx(MItem *item)
 {
 	MItem* p = this->dataScene;
 	dataItem[dataCount] = new MItem();
@@ -57,7 +57,7 @@ int MScene::addItem(MItem *item)
 	return dataCount-1;
 }
 
-void MScene::deletItem(int n)
+void MScene::deletItemEx(int n)
 {
 	if ((n < 0) || (n > dataCount))
 		return;
