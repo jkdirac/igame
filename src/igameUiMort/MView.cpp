@@ -51,8 +51,6 @@ void MView::keyPressEvent(QKeyEvent* event)
     if (event->key() == Qt::Key_Escape)
         this->close();
 
-
-
     handler((MView*)this, (MScene*)(this->scene()), (MItem*)0, (QMouseEvent*)0, (QKeyEvent*)event);
 
     return QGraphicsView::keyPressEvent(event);
@@ -71,8 +69,8 @@ void MView::mouseDoubleClickEvent(QMouseEvent* event)
 {
     MItem* item = qgraphicsitem_cast<MItem*> (this->scene()->itemAt(event->pos().x(), event->pos().y()));
 
-    handler((MView*)this, (MScene*)(this->scene()), (MItem*)item, (QMouseEvent*)event, (QKeyEvent*)0);
-
+	handler((MView*)this, (MScene*)(this->scene()), (MItem*)item, (QMouseEvent*)event, (QKeyEvent*)0);
+//    item->mouseDoubleClickEvent(event);
     return QGraphicsView::mouseDoubleClickEvent(event);
 }
 

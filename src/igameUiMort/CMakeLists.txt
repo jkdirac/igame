@@ -33,6 +33,7 @@ ADD_EXECUTABLE( igameUiMort
 
 TARGET_LINK_LIBRARIES( igameUiMort
   ${QT_LIBRARIES}
+  utility
   )
   #copsi_wrapper 
 
@@ -47,6 +48,7 @@ ADD_EXECUTABLE( demoUiXml
 
 TARGET_LINK_LIBRARIES( demoUiXml
   ${QT_LIBRARIES}
+  utility
   )
   #copsi_wrapper 
 

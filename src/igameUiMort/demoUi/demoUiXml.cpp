@@ -24,6 +24,7 @@
 #include "IdSelWidget.h"
 #include "SceneViewWidget.h"
 #include "SceneManager.h"
+#include "ClickableWidget.h"
 
 namespace uiObjects {
 
@@ -68,6 +69,9 @@ BEGIN(demoUiXml)
 	widget[2] = (MWidget*)mainScene->addWidget(sceneView);
 	widget[2]->setX(0);
 	widget[2]->setY(300);
+
+//    ClickableWidget* cItem = new ClickableWidget(":xml/compartement.ui.xml");
+//    int Item_clickable_id = mainScene->addItem(cItem);
 
 	sceneMgr->setMainView(mainview);
 

@@ -47,7 +47,30 @@ MScene::~MScene()
     delete this->dataScene;
 }
 
+int MScene::addItem(MItem *item)
+{
+	MItem* p = this->dataScene;
+	dataItem[dataCount] = new MItem();
+	dataItem[dataCount]->setParentItem(p);
+	dataCount++;
 
+	return dataCount-1;
+}
+
+void MScene::deletItem(int n)
+{
+	if ((n < 0) || (n > dataCount))
+		return;
+
+	delete dataItem[n];
+
+	for (int i = n; i < dataCount; i++)
+	{
+		dataItem[i] = dataItem[i+1];
+	}
+
+	dataCount--;
+}
 
 // Get the only selected item
 MItem* MScene::selectedItem() const
@@ -232,8 +255,6 @@ void MScene::loadXml(const QString& fileName)
 
             if (reader.attributes().hasAttribute("isAlternativeImageAvailable"))
                 dataItem[dataCount - 1]->setAlternativeImageAvailable(reader.attributes().value("isAlternativeImageAvailable").toString().toInt());
-
-
 
             p = dataItem[dataCount - 1];
 

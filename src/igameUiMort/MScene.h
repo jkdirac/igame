@@ -36,6 +36,9 @@ public:
 	void deleteChildScene(int id);
 	void setParent(MScene* parent);
 
+	int addItem(MItem *item);
+	void deletItem(int n);
+
     MItem* dataScene;
     MItem* dataItem[1024];
     int dataCount;

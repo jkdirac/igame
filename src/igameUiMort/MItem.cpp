@@ -23,6 +23,7 @@
 #include <QImage>
 #include <QStyle>
 #include <QGraphicsSceneMouseEvent>
+#include <QXmlStreamReader>
 
 #include <iostream>
 
@@ -79,6 +80,161 @@ MItem::MItem()
 {
     this->renew();
 
+}
+
+MItem::MItem(const QString& fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+        return;
+    QXmlStreamReader reader(&file);
+
+    reader.readNext();
+    while (!reader.atEnd()) {
+        if (reader.isStartElement()) {
+            QString name = reader.name().toString();
+
+            if (reader.attributes().hasAttribute("id"))
+                setId(reader.attributes().value("id").toString());
+
+            if (reader.attributes().hasAttribute("name"))
+                setName(reader.attributes().value("name").toString());
+            else
+                setText(name);
+
+            if (reader.attributes().hasAttribute("category"))
+                setCategory(reader.attributes().value("category").toString());
+
+            if (reader.attributes().hasAttribute("x"))
+                setX(reader.attributes().value("x").toString().toDouble());
+            else
+                setX(200);
+
+            if (reader.attributes().hasAttribute("y"))
+                setY(reader.attributes().value("y").toString().toDouble());
+            else
+                setY(50);
+
+            if (reader.attributes().hasAttribute("zValue"))
+                setZValue(reader.attributes().value("zValue").toString().toDouble());
+
+            if (reader.attributes().hasAttribute("toolTip"))
+                setToolTip(reader.attributes().value("toolTip").toString());
+
+            if (reader.attributes().hasAttribute("isVisible"))
+                setVisible(reader.attributes().value("isVisible").toString().toInt());
+
+            if (reader.attributes().hasAttribute("color"))
+                setColor(QColor(reader.attributes().value("color").toString()));
+
+            if (reader.attributes().hasAttribute("width"))
+                setWidth(reader.attributes().value("width").toString().toDouble());
+            else
+                setWidth(100);
+
+            if (reader.attributes().hasAttribute("height"))
+                setHeight(reader.attributes().value("height").toString().toDouble());
+            else
+                setHeight(50);
+
+            if (reader.attributes().hasAttribute("isSelectable"))
+                setSelectable(reader.attributes().value("isSelectable").toString().toInt());
+            else
+                setSelectable(true);
+
+            if (reader.attributes().hasAttribute("isMouseOverSelectable"))
+                setMouseOverSelectable(reader.attributes().value("isMouseOverSelectable").toString().toInt());
+            else
+                setMouseOverSelectable(false);
+
+            if (reader.attributes().hasAttribute("isMovable"))
+                setMovable(reader.attributes().value("isMovable").toString().toInt());
+            else
+                setMovable(true);
+
+            if (reader.attributes().hasAttribute("isOutlineAvailable"))
+                setOutlineAvailable(reader.attributes().value("isOutlineAvailable").toString().toInt());
+
+            if (reader.attributes().hasAttribute("outlineColor"))
+                setOutlineColor(QColor(reader.attributes().value("outlineColor").toString()));
+
+            if (reader.attributes().hasAttribute("outlineWidth"))
+                setOutlineWidth(reader.attributes().value("outlineWidth").toString().toDouble());
+
+            if (reader.attributes().hasAttribute("isFigureVisible"))
+                setFigureVisible(reader.attributes().value("isFigureVisible").toString().toInt());
+
+            if (reader.attributes().hasAttribute("figure"))
+                setFigure(reader.attributes().value("figure").toString());
+
+            if (reader.attributes().hasAttribute("figureColor"))
+                setFigureColor(QColor(reader.attributes().value("figureColor").toString()));
+
+            if (reader.attributes().hasAttribute("isAlternativeFigureAvailable"))
+                setAlternativeFigureAvailable(reader.attributes().value("isAlternativeFigureAvailable").toString().toInt());
+
+            if (reader.attributes().hasAttribute("alternativeFigure"))
+                setAlternativeFigure(reader.attributes().value("alternativeFigure").toString());
+
+            if (reader.attributes().hasAttribute("alternativeFigureColor"))
+                setAlternativeFigureColor(QColor(reader.attributes().value("alternativeFigureColor").toString()));
+
+            if (reader.attributes().hasAttribute("isTextVisible"))
+                setTextVisible(reader.attributes().value("isTextVisible").toString().toInt());
+
+            if (reader.attributes().hasAttribute("text"))
+                setText(reader.attributes().value("text").toString());
+            else
+                setText(name);
+
+            if (reader.attributes().hasAttribute("textColor"))
+                setTextColor(QColor(reader.attributes().value("textColor").toString()));
+
+            if (reader.attributes().hasAttribute("isAlternativeTextAvailable"))
+                setAlternativeTextAvailable(reader.attributes().value("isAlternativeTextAvailable").toString().toInt());
+
+            if (reader.attributes().hasAttribute("alternativeText"))
+                setAlternativeText(reader.attributes().value("alternativeText").toString());
+
+            if (reader.attributes().hasAttribute("alternativeTextColor"))
+                setAlternativeTextColor(QColor(reader.attributes().value("alternativeTextColor").toString()));
+
+            if (reader.attributes().hasAttribute("pixmap"))
+                setPixmap(reader.attributes().value("pixmap").toString());
+
+            if (reader.attributes().hasAttribute("isPixmapVisible"))
+                setPixmapVisible(reader.attributes().value("isPixmapVisible").toString().toInt());
+
+            if (reader.attributes().hasAttribute("alternativePixmap"))
+                setAlternativePixmap(reader.attributes().value("alternativePixmap").toString());
+
+            if (reader.attributes().hasAttribute("isAlternativePixmapAvailable"))
+                setAlternativePixmapAvailable(reader.attributes().value("isAlternativePixmapAvailable").toString().toInt());
+
+            if (reader.attributes().hasAttribute("image"))
+                setImage(reader.attributes().value("image").toString());
+
+            if (reader.attributes().hasAttribute("isImageVisible"))
+                setImageVisible(reader.attributes().value("isImageVisible").toString().toInt());
+
+            if (reader.attributes().hasAttribute("alternativeImage"))
+                setAlternativeImage(reader.attributes().value("alternativeImage").toString());
+
+            if (reader.attributes().hasAttribute("isAlternativeImageAvailable"))
+                setAlternativeImageAvailable(reader.attributes().value("isAlternativeImageAvailable").toString().toInt());
+
+        } else if (reader.isEndElement())
+		{
+		}
+        else if (reader.isCharacters()) {
+            QString characters = reader.text().toString();
+
+            if (characters != "" && characters != "\n" && characters != "\r" && characters !="\r\n")
+                setData(0, characters);
+        }
+
+        reader.readNext();
+    }
 }
 
 // Class MItem destructor
@@ -277,12 +433,12 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 
 
 
-/* Process MItem mouse double click event - formally
-void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+//Process MItem mouse double click event - formally
+void MItem::mouseDoubleClickEvent(QMouseEvent* event)
 {
-    return QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
+/*
 // Process MItem mouse move event - formally
 void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
@@ -299,6 +455,5 @@ void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     return QGraphicsItem::mouseReleaseEvent(event);
-}*/
-
-
+}
+*/

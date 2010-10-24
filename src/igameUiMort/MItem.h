@@ -18,14 +18,16 @@
 #include <QString>
 #include <QColor>
 #include <QFont>
+#include <QFile>
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
 
 class MItem : public QGraphicsItem {
 
 public:
-    MItem();
-    ~MItem();
+	MItem();
+	MItem(const QString& filename);
+    virtual ~MItem();
 
     QRectF outlineRect() const;
     QRectF boundingRect() const;
@@ -170,12 +172,11 @@ public:
     bool isAlternativeImageAvailable() { return m_isAlternativeImageAvailable; }
     void setAlternativeImageAvailable(bool isAlternativeImageAvailable) { m_isAlternativeImageAvailable = isAlternativeImageAvailable; this->renew(); }
 
-
+	virtual void mouseDoubleClickEvent(QMouseEvent* event);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
-    //void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
     //void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     //void mousePressEvent(QGraphicsSceneMouseEvent* event);
     //void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
