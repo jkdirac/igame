@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include <QApplication>
+#include <QDebug>
+#include "SceneTreeItem.h"
 
 SceneManager* SceneManager::_single_instance = NULL;
 
@@ -8,12 +10,26 @@ SceneManager::SceneManager()
 	m_rootscene(NULL),
 	m_currentscene(NULL),
 	m_browserItem(NULL),
-	m_browserItemId(0),
-	m_rootSceneItem(NULL),
-	m_CurSceneItem(NULL)
+	m_browserItemId(0)
 {
 	m_browserItemX = 200;
 	m_browserItemY = 700;
+
+	m_rootItem = new SceneTreeItem(NULL, NULL);
+}
+
+void SceneManager::startShow()
+{
+	m_rootscene = new MScene();
+	if ( m_rootscene != NULL)
+	{
+		m_rootscene->setId("Flask");
+		m_rootscene->loadXml(":demoUiXml.ui.xml");
+
+		qDebug() << "start to show!";
+		setCurrentScene(m_rootscene);
+		m_rootscene->setTreeItem(m_rootItem);
+	}
 }
 
 SceneManager* SceneManager::getSceneManger()
@@ -37,7 +53,7 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (scene == NULL)
 		return;
 
-	if (m_rootscene = NULL)
+	if (m_rootscene == NULL)
 	{
 		m_rootscene = scene;
 	}
@@ -71,4 +87,9 @@ void SceneManager::browserItem(MItem* item)
 	m_browserItem->setX(m_browserItemX);
 	m_browserItem->setY(m_browserItemY);
 	m_browserItemId = m_currentscene->addItemEx(m_browserItem);
+}
+
+SceneTreeItem* SceneManager::getRootItem()
+{
+	return m_rootItem;
 }

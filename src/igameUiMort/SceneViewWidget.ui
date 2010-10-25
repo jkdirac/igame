@@ -48,11 +48,6 @@
        <string>Scene Overview</string>
       </property>
      </column>
-     <item>
-      <property name="text">
-       <string>root</string>
-      </property>
-     </item>
     </widget>
    </widget>
   </widget>

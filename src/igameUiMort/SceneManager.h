@@ -14,6 +14,8 @@ class SceneManager
 		MScene* m_rootscene;
 		MScene* m_currentscene;
 
+		SceneTreeItem* m_rootItem;
+
 		MView* m_view;
 
 		MItem* m_browserItem;
@@ -26,6 +28,10 @@ class SceneManager
 
 		void setCurrentScene(MScene* scene);
 		void setMainView(MView* view);
+
+		SceneTreeItem* getRootItem();
+
+		void startShow();
 
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);

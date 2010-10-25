@@ -14,11 +14,12 @@
 #include <QGraphicsScene>
 #include <QString>
 #include <QVector>
+#include "MWidget.h"
 
-#include "SceneTreeItem.h"
+//#include "SceneTreeItem.h"
 
-class SceneTreeItem;
 class MItem;
+class SceneTreeItem;
 
 class MScene : public QGraphicsScene {
     Q_OBJECT
@@ -50,6 +51,7 @@ public:
     int dataCount;
 
 	QString& getId();
+	void setId(const QString id);
 
 private:
 	QString m_id;
@@ -60,6 +62,8 @@ private:
 	MItem* m_rootItem;
 	MScene* m_parent;
 
+	MWidget* selWidget;
+	MWidget* overviewWidget;
 	SceneTreeItem* m_treeItem;
 };
 
