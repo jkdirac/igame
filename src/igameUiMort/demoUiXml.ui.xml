@@ -11,7 +11,7 @@
 		width="500" height="500"
 		isVisible="1" isSelectable="1" isMovable="0"
 		isTextVisible="1" text="Flask"
-		isPixmapVisible="1" pixmap="./db_images/culture_dish.png"/>
+		isPixmapVisible="1" pixmap=":iGaME.images/culture_dish.png"/>
 	
 	<region id="regionOperation"
 		x="490" y="400"
@@ -35,36 +35,36 @@
 			width="321" height="200"
 			isVisible="1" isSelectable="1" isMovable="1"
 			isTextVisible="1" text="E.coli"
-			isPixmapVisible="1" pixmap="./db_images/ecoli_input.png"
-			isAlternativePixmapAvailable="1" alternativePixmap="./db_images/ecoli_active.png"/>
+			isPixmapVisible="1" pixmap=":iGaME.images/ecoli_input.png"
+			isAlternativePixmapAvailable="1" alternativePixmap=":iGaME.images/ecoli_active.png"/>
 			
 		<para id="temperature" name="temperature" category="GlobalParameter"
 			x="0" y="-200"
 			width="60" height="60"
 			isVisible="1" isSelectable="1" isMovable="1"
 			isTextVisible="1" text="room T"
-			isPixmapVisible="1" pixmap="./db_images/conditions_active.png"/>
+			isPixmapVisible="1" pixmap=":iGaME.images/conditions_active.png"/>
 			
 		<species id="IPTG" name="IPTG" category="Compound"
 			x="0" y="-150"
 			width="30" height="30"
 			isVisible="1" isSelectable="1" isMovable="1"
 			isTextVisible="1" text="IPTG"
-			isPixmapVisible="1" pixmap="./db_images/molecule_active.png"/>
+			isPixmapVisible="1" pixmap=":iGaME.images/molecule_active.png"/>
 
 		<species id="ATC" name="ATC" category="Compound"
 			x="0" y="-100"
 			width="30" height="30"
 			isVisible="1" isSelectable="1" isMovable="1"
 			isTextVisible="1" text="ATC"
-			isPixmapVisible="1" pixmap="./db_images/molecule_active.png"/>
+			isPixmapVisible="1" pixmap=":iGaME.images/molecule_active.png"/>
 		
 		<species id="pSB1A3" name="pSB1A3" category="PlasmidBackbone"
 			x="0" y="-50"
 			width="50" height="50"
 			isVisible="1" isSelectable="1" isMovable="1"
 			isTextVisible="1" text="pSB1A3"
-			isPixmapVisible="1" pixmap="./db_images/plasmid.png"/>
+			isPixmapVisible="1" pixmap=":iGaME.images/plasmid.png"/>
     
     </region>
 	

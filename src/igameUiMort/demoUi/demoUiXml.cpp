@@ -70,8 +70,8 @@ BEGIN(demoUiXml)
 	widget[2]->setX(0);
 	widget[2]->setY(300);
 
-//    ClickableWidget* cItem = new ClickableWidget(":xml/compartement.ui.xml");
-//    int Item_clickable_id = mainScene->addItem(cItem);
+	ClickableWidget* cItem = new ClickableWidget(":xml/compartement.ui.xml");
+	int Item_clickable_id = mainScene->addItemEx(cItem);
 
 	sceneMgr->setMainView(mainview);
 

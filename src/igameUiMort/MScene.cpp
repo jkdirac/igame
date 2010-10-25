@@ -49,10 +49,13 @@ MScene::~MScene()
 
 int MScene::addItemEx(MItem *item)
 {
-	MItem* p = this->dataScene;
-	dataItem[dataCount] = new MItem();
-	dataItem[dataCount]->setParentItem(p);
+	if (item == NULL)
+		return -1;
+	
+	dataItem[dataCount] = item;
 	dataCount++;
+
+    this->addItem(item);
 
 	return dataCount-1;
 }
@@ -62,11 +65,16 @@ void MScene::deletItemEx(int n)
 	if ((n < 0) || (n > dataCount))
 		return;
 
-	delete dataItem[n];
+	if (dataItem[n] != NULL)
+	{
+		this->removeItem(dataItem[n]);
+		delete dataItem[n];
+	}
 
 	for (int i = n; i < dataCount; i++)
 	{
 		dataItem[i] = dataItem[i+1];
+		dataItem[i+1] = NULL;
 	}
 
 	dataCount--;

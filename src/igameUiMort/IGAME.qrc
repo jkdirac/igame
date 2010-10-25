@@ -1,9 +1,0 @@
-<RCC>
-<qresource>
-<file>demoUiXml.ui.xml</file>
-<file>iGaME.images/bb.png</file>
-<file>iGaME.images/iGaME.ico</file>
-<file>iGaME.images/splash.png</file>
-<file>iGaME.images/ustc_software.png</file>
-</qresource>
-</RCC>
