@@ -29,13 +29,14 @@ IdSelWidget::IdSelWidget(QWidget* parent) : QWidget(parent)
 	}
 
 	QStringList comList;
-	for (int i=0; i < res.size(); i++)
-	{
-		qDebug() <<"id " << i << " " << res[i].c_str();
-		QString qstr(res[i].c_str());
-		comList << qstr;
-	}
+//    for (int i=0; i < res.size(); i++)
+//    {
+//        qDebug() <<"id " << i << " " << res[i].c_str();
+//        QString qstr(res[i].c_str());
+//        comList << qstr;
+//    }
 
+	comList << "abc" << "def" << "hij";
 	setCompartments(comList);
 }
 
