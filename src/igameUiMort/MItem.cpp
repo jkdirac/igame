@@ -26,7 +26,7 @@
 #include <QXmlStreamReader>
 
 #include <iostream>
-#include "DebugOut.h"
+#include <QDebug>
 
 // Class MItem constructor
 MItem::MItem()
@@ -80,14 +80,17 @@ MItem::MItem()
     , m_isAlternativeImageAvailable(false)
 {
     this->renew();
-
 }
 
 MItem::MItem(const QString& fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		qDebug() << "xml file open failed: " << fileName << " " << file.error() << endl;
         return;
+	}
+
     QXmlStreamReader reader(&file);
 
     reader.readNext();
@@ -236,6 +239,8 @@ MItem::MItem(const QString& fileName)
 
         reader.readNext();
     }
+
+	renew();
 }
 
 // Class MItem destructor
@@ -437,7 +442,7 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-	debugOut() << "double click in mitem" << endl;
+	qDebug() << "double click in mitem" << endl;
 	return QGraphicsItem::mouseDoubleClickEvent(event);
 }
 

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
 		<file>demoUiXml.ui.xml</file>
+		<file>xml/compartment.ui.xml</file>
 		<file>iGaME.images/bb.png</file>
 		<file>iGaME.images/coding sequence.png</file>
 		<file>iGaME.images/compartment_non_active.png</file>

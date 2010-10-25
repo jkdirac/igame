@@ -2,6 +2,8 @@
 
 ClickableWidget::ClickableWidget() : MItem()
 {
+	renew();
+
 }
 
 ClickableWidget::~ClickableWidget()

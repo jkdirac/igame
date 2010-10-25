@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "ui_IdSelWidget.h"
+#include "bdbInterface.h"
+#include <string>
 
 class IdSelWidget: public QWidget
 {
@@ -10,9 +12,11 @@ class IdSelWidget: public QWidget
 
 	public:
 		IdSelWidget(QWidget* parent);
+		void setCompartments(QStringList &list);
 
 	private:
 		Ui::IdSelWidget ui;
+		QStringList m_compList;
 };
 
 #endif

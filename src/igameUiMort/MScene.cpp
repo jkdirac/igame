@@ -36,9 +36,6 @@ MScene::MScene(QObject* parent)
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
-
-
-
 }
 
 // Class MScene destructor

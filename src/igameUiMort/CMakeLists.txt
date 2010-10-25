@@ -33,6 +33,9 @@ ADD_EXECUTABLE( igameUiMort
 
 TARGET_LINK_LIBRARIES( igameUiMort
   ${QT_LIBRARIES}
+  dbxml
+  bdinterface
+  core
   utility
   )
   #copsi_wrapper 
@@ -49,6 +52,7 @@ ADD_EXECUTABLE( demoUiXml
 TARGET_LINK_LIBRARIES( demoUiXml
   ${QT_LIBRARIES}
   utility
+  bdinterface
   )
   #copsi_wrapper 
 
