@@ -27,6 +27,8 @@ class SceneManager
 		void setCurrentScene(MScene* scene);
 		void setMainView(MView* view);
 
+		void startShow();
+
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);
 };

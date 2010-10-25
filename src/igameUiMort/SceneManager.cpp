@@ -8,12 +8,22 @@ SceneManager::SceneManager()
 	m_rootscene(NULL),
 	m_currentscene(NULL),
 	m_browserItem(NULL),
-	m_browserItemId(0),
-	m_rootSceneItem(NULL),
-	m_CurSceneItem(NULL)
+	m_browserItemId(0)
 {
 	m_browserItemX = 200;
 	m_browserItemY = 700;
+	
+	m_rootscene = new MScene();
+	m_rootscene->setId("Flask");
+	m_rootscene->loadXml(":demoUiXml.ui.xml");
+}
+
+void SceneManager::startShow()
+{
+	if (m_rootscene != NULL)
+	{
+		setCurrentScene(m_rootscene);
+	}
 }
 
 SceneManager* SceneManager::getSceneManger()

@@ -13,6 +13,7 @@
 #include "MWidget.h"
 #include "IdSelWidget.h"
 #include "SceneViewWidget.h"
+#include "SceneTreeItem.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -39,13 +40,11 @@ MScene::MScene(QObject* parent)
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
-	MWidget* selWidget;
 	IdSelWidget* IdSel = new IdSelWidget(NULL);
 	selWidget = (MWidget*)addWidget(IdSel);
 	selWidget->setX(0);
 	selWidget->setY(0);
 
-	MWidget* overviewWidget;
 	SceneViewWidget* sceneView = new SceneViewWidget(NULL);
 	overviewWidget = (MWidget*)addWidget(sceneView);
 	overviewWidget->setX(0);
@@ -55,7 +54,34 @@ MScene::MScene(QObject* parent)
 // Class MScene destructor
 MScene::~MScene()
 {
-    delete this->dataScene;
+	//递归调用
+	//if child == NULL
+	int nChildren = m_treeItem->childCount();
+	if (nChildren != 0)
+	{
+		for (int i=0; i < nChildren; i++)
+		{
+			SceneTreeItem* pItem = (SceneTreeItem*)m_treeItem->child(i);
+			delete pItem->getScene();
+		}
+	}
+	// return;
+	
+	//call child.deletChildScene
+	
+	//delete childScene;
+	delete m_treeItem;
+
+	//
+    delete dataScene;
+	delete selWidget;
+	delete overviewWidget;
+
+	//delete items
+	for (int i = 0; i < dataCount; i++)
+	{
+		delete dataItem[i];
+	}
 }
 
 int MScene::addItemEx(MItem *item)
@@ -342,7 +368,7 @@ void MScene::addChildScene(MScene *child)
 	if ((m_treeItem != NULL) 
 		&& (child != NULL))
 	{
-		SceneTreeItem* newItem = new SceneTreeItem(m_treeItem, child->getId());
+		SceneTreeItem* newItem = new SceneTreeItem((QTreeWidget*)m_treeItem, child);
 		m_treeItem->addChild(newItem);
 	}
 }
@@ -359,6 +385,11 @@ void MScene::setParent(MScene* parent)
 QVector<MScene*>& MScene::getChildScene()
 {
 	return m_childern;
+}
+
+void MScene::setId(const QString id)
+{
+	m_id = id;
 }
 
 QString& MScene::getId()
