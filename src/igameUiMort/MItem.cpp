@@ -87,7 +87,7 @@ MItem::MItem(const QString& fileName)
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
-		qDebug() << "xml file open failed: " << fileName << " " << file.error() << endl;
+		qDebug() << "xml file open failed: " << fileName << " " << file.error();
         return;
 	}
 
@@ -442,7 +442,7 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-	qDebug() << "double click in mitem" << endl;
+	qDebug() << "double click in mitem";
 	return QGraphicsItem::mouseDoubleClickEvent(event);
 }
 

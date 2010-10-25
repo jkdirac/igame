@@ -121,14 +121,13 @@ BEGIN(demoUiXml)
 	widget[2]->setX(0);
 	widget[2]->setY(300);
 
-	MItem* Item = new MItem(":xml/compartment.ui.xml");
+//    MItem* Item = new MItem(":xml/compartment.ui.xml");
 //    ClickableWidget* cItem = new ClickableWidget(":demoUiXml.ui.xml");
-	int Item_id = mainScene->addItemEx(Item);
+//    int Item_id = mainScene->addItemEx(Item);
 
 //    ClickableWidget* cItem = new ClickableWidget(":xml/compartment.ui.xml");
 //    ClickableWidget* cItem = new ClickableWidget(":demoUiXml.ui.xml");
 //    int Item_clickable_id = mainScene->addItemEx(cItem);
-
 	sceneMgr->setMainView(mainview);
 	sceneMgr->setCurrentScene(mainScene);
 }
