@@ -15,7 +15,8 @@ ClickableWidget::ClickableWidget(const QString& fileName) : MItem(fileName)
     return;
 }
 
-void ClickableWidget::mouseDoubleClickEvent(QMouseEvent* event)
+void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
 	debugOut() << "haha mouseDouble click of clickable item" << endl;
+	QGraphicsItem::mouseDoubleClickEvent(event);
 }

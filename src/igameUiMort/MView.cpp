@@ -44,7 +44,7 @@ MView::~MView()
 }
 
 
-
+#if 0
 // Process MView key press event
 void MView::keyPressEvent(QKeyEvent* event)
 {
@@ -120,4 +120,4 @@ void MView::mouseReleaseEvent(QMouseEvent* event)
     return QGraphicsView::mouseReleaseEvent(event);
 }
 
-
+#endif

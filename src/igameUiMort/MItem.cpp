@@ -26,6 +26,7 @@
 #include <QXmlStreamReader>
 
 #include <iostream>
+#include "DebugOut.h"
 
 // Class MItem constructor
 MItem::MItem()
@@ -434,8 +435,10 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 
 
 //Process MItem mouse double click event - formally
-void MItem::mouseDoubleClickEvent(QMouseEvent* event)
+void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
+	debugOut() << "double click in mitem" << endl;
+	return QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
 /*

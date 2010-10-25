@@ -172,7 +172,7 @@ public:
     bool isAlternativeImageAvailable() { return m_isAlternativeImageAvailable; }
     void setAlternativeImageAvailable(bool isAlternativeImageAvailable) { m_isAlternativeImageAvailable = isAlternativeImageAvailable; this->renew(); }
 
-	virtual void mouseDoubleClickEvent(QMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);

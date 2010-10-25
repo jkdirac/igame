@@ -14,7 +14,7 @@ class ClickableWidget: public MItem
 		ClickableWidget();
 		ClickableWidget(const QString& xmlfile);
 		virtual ~ClickableWidget();
-		void mouseDoubleClickEvent(QMouseEvent* event);
+		void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 };
 
 #endif
