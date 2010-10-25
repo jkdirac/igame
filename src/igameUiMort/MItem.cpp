@@ -83,6 +83,54 @@ MItem::MItem()
 }
 
 MItem::MItem(const QString& fileName)
+    : m_id("")
+    , m_name("")
+    , m_category("")
+
+    , m_color(Qt::black)
+    , m_width(100)
+    , m_height(100)
+    , m_padding(0)
+    , m_margin(0)
+
+    , m_isSelectable(false)
+    , m_isMouseOverSelectable(false)
+    , m_isMovable(false)
+
+    , m_outlineColor(Qt::blue)
+    , m_outlineWidth(5)
+    , m_outlineStyle(Qt::SolidLine)
+    , m_isOutlineAvailable(false)
+
+    , m_text("")
+    , m_textFont(QFont::QFont("Arial", 10, QFont::Normal))
+    , m_textColor(Qt::red)
+    , m_isTextVisible(true)
+
+    , m_alternativeText("")
+    , m_alternativeTextFont(QFont::QFont("Arial", 10, QFont::Bold))
+    , m_alternativeTextColor(Qt::red)
+    , m_isAlternativeTextAvailable(false)
+
+    , m_figure("RECTANGLE")
+    , m_figureColor(Qt::black)
+    , m_isFigureVisible(false)
+
+    , m_alternativeFigure("")
+    , m_alternativeFigureColor(Qt::black)
+    , m_isAlternativeFigureAvailable(false)
+
+    , m_pixmap("")
+    , m_isPixmapVisible(false)
+
+    , m_alternativePixmap("")
+    , m_isAlternativePixmapAvailable(false)
+
+    , m_image("")
+    , m_isImageVisible(false)
+
+    , m_alternativeImage("")
+    , m_isAlternativeImageAvailable(false)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))

@@ -23,37 +23,42 @@
 #include <QXmlStreamWriter>
 
 #include <iostream>
+#include <QDebug>
 
 // Class MScene constructor
 MScene::MScene(QObject* parent)
     : QGraphicsScene(parent)
-
     , dataCount(0)
     , m_minZValue(0)
     , m_maxZValue(0)
 {
-
+	qDebug() << "come here 1";
     this->dataScene = new MItem();
     this->addItem(this->dataScene);
 
+	qDebug() << "come here 2";
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
+	qDebug() << "come here 3";
 	IdSelWidget* IdSel = new IdSelWidget(NULL);
 	selWidget = (MWidget*)addWidget(IdSel);
 	selWidget->setX(0);
 	selWidget->setY(0);
+	qDebug() << "come here 4";
 
 	SceneViewWidget* sceneView = new SceneViewWidget(NULL);
 	overviewWidget = (MWidget*)addWidget(sceneView);
 	overviewWidget->setX(0);
 	overviewWidget->setY(500);
+	qDebug() << "come here 5";
 }
 
 // Class MScene destructor
 MScene::~MScene()
 {
+	qDebug() << "delete mscene";
 	//递归调用
 	//if child == NULL
 	int nChildren = m_treeItem->childCount();

@@ -1,6 +1,7 @@
 #include "IdSelWidget.h"
 #include <QDebug>
 #include "MItem.h"
+#include "ClickableWidget.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ IdSelWidget::IdSelWidget(QWidget* parent) : QWidget(parent)
 			                     this, SLOT(highlightCombx(const QString &)));
 
 	//get datas from bdinterface
+	/*
 	bdbXMLInterface inter;
 	vector<string> res;
 	try
@@ -35,6 +37,10 @@ IdSelWidget::IdSelWidget(QWidget* parent) : QWidget(parent)
 		QString qstr(res[i].c_str());
 		comList << qstr;
 	}
+	*/
+	/*cheat*/
+	QStringList comList;
+	comList << "abc" << "bcd" << "def";
 
 	setCompartments(comList);
 }
@@ -60,13 +66,8 @@ void IdSelWidget::highlightCombx(const QString &name)
 {
 	qDebug() << "highligth partName: " << name;
 
-	MItem* item = new MItem(":xml/compartment.ui.xml");
+	MItem* item = new ClickableWidget(":xml/compartment.ui.xml");
 	item->setId(name);
-	item->setName(name);
-	item->setText(name);
-	item->setMovable(true);
-    item->setMouseOverSelectable(true);
-    item->setSelectable(true);
 	
 	scenemgr->browserItem(item);
 }

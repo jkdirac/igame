@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include <QApplication>
+#include <QDebug>
 
 SceneManager* SceneManager::_single_instance = NULL;
 
@@ -12,16 +13,17 @@ SceneManager::SceneManager()
 {
 	m_browserItemX = 200;
 	m_browserItemY = 700;
-	
-	m_rootscene = new MScene();
-	m_rootscene->setId("Flask");
-	m_rootscene->loadXml(":demoUiXml.ui.xml");
 }
 
 void SceneManager::startShow()
 {
+	m_rootscene = new MScene();
+	m_rootscene->setId("Flask");
+	m_rootscene->loadXml(":demoUiXml.ui.xml");
+
 	if (m_rootscene != NULL)
 	{
+		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
 	}
 }
@@ -47,7 +49,7 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (scene == NULL)
 		return;
 
-	if (m_rootscene = NULL)
+	if (m_rootscene == NULL)
 	{
 		m_rootscene = scene;
 	}
