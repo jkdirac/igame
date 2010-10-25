@@ -13,6 +13,7 @@ class SceneManager
 
 		MScene* m_rootscene;
 		MScene* m_currentscene;
+
 		MView* m_view;
 
 		MItem* m_browserItem;

@@ -8,7 +8,9 @@ SceneManager::SceneManager()
 	m_rootscene(NULL),
 	m_currentscene(NULL),
 	m_browserItem(NULL),
-	m_browserItemId(0)
+	m_browserItemId(0),
+	m_rootSceneItem(NULL),
+	m_CurSceneItem(NULL)
 {
 	m_browserItemX = 200;
 	m_browserItemY = 700;
@@ -36,7 +38,9 @@ void SceneManager::setCurrentScene(MScene* scene)
 		return;
 
 	if (m_rootscene = NULL)
+	{
 		m_rootscene = scene;
+	}
 
 	if (m_view != NULL)
 	{

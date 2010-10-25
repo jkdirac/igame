@@ -2,6 +2,7 @@
 #define _SCENE_VIEW_WIDGET_H_
 
 #include <QWidget>
+#include <QStandardItemModel>
 #include "ui_SceneViewWidget.h"
 
 class SceneViewWidget: public QWidget
@@ -13,6 +14,8 @@ class SceneViewWidget: public QWidget
 
 	private:
 		Ui::SceneViewWidget	ui;
+
+		QStandardItemModel *model;
 };
 
 #endif
