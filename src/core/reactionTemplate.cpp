@@ -415,6 +415,8 @@ bool reactionTemplate::findSpeciesMatch (
 				{
 					for (int k=0; k < trym.size (); k++)
 						reactant_sam[i].push_back (make_pair (j, trym[k]));
+					cout << "\nresults of matching positions = " 
+						 << reactant_sam[i].size () << endl;
 				}
 			}
 
@@ -1088,9 +1090,9 @@ bool reactionTemplate::handle_constraints (
 			bool result = cacu_string_exp (expression.c_str (), formula.c_str ());
 
 			//	test
-			cout << "\nexpression = " << expression 
-				 << "  formula = " << formula 
-				 << "  result  = " << result;
+			cout << "\nexpression: " << expression 
+				 << "\nformula = " << formula 
+				 << "\nresult  = " << result;
 			if (!result) return false;
 		}
 	}

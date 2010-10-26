@@ -42,6 +42,7 @@ class MyReaction:
 				vector<MySpecies*>&, 
 				vector<MyCompartment*>&, 
 				const speciesArrayMatch&,
+				const map<string,int>&,
 				const reactionTemplate*
 				);
 

@@ -24,10 +24,13 @@ void MySBMLDocument::addMySpecies (MySpecies* s)
 	s->display_name (listOfMySpecies.size ());
 	listOfMySpecies.push_back (s);
 	MyCompartment* c = getMyCompartment (s->getCompartment ());
-	
-	//	add species to compartment
-	assert (c != NULL);
-	c->addMySpeciesIn (s);
+	if (c == NULL)
+	{
+		string errno ("Compartment with label ");
+		errno += s->getCompartment () + " is not defined!";
+		throw CoreException (errno);
+	}
+	else c->addMySpeciesIn (s);
 
 	//	set counterpart of compartment
 	if (!s->getCompTypeId ().empty ())
@@ -200,8 +203,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-//        debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
-//        s->Output ();	
+		debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
+		s->Output ();	
 
 		//a set to store species id that has been used
 		set<string> speciesUsed;
@@ -250,14 +253,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (sLink, SPECIES, speciesReference, "/MoDeL/species", true);
 
-//                    debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
-//                    sLink->Output ();
+					debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
+					sLink->Output ();
 
 					//  Does this template match this species?
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) continue;
 
-//                    debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
+					debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
 
 					//
 					//  read reaction Links
@@ -280,10 +283,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesRole
 								);
 
-//                        debugOut() << "\nHandling Referenced Reaction	" 
-//                            << "	...		DOC	:	" 
-//                            << reactionReference << "	TYPE :	"
-//                            << speciesRole << endl;
+						debugOut() << "\nHandling Referenced Reaction	" 
+							<< "	...		DOC	:	" 
+							<< reactionReference << "	TYPE :	"
+							<< speciesRole << endl;
 
 						handleReactionTemplate (
 								dbreader, 
@@ -328,7 +331,6 @@ void MySBMLDocument::handleReactionTemplate (
 	const ListOfParameters* listOfMyParameters 
 		= getModel ()->getListOfParameters ();
 	bool expr = tmpR->handle_constraints (listOfMyParameters);
-	if (expr == false) cout << "\nconstraint.. = "<< expr <<endl;
 	if (!expr) {delete tmpR; return;}
 
 	/**
@@ -396,6 +398,7 @@ void MySBMLDocument::handleReactionTemplate (
 				listOfMySpecies, 
 				listOfMyCompartments, 
 				result[i].first.first,
+				result[i].second,
 				tmpR	
 				);
 	}
@@ -832,8 +835,8 @@ void MySBMLDocument::write ()
 	{
 		m->addSpecies (listOfMySpecies[i]);
 		
-//        debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
-//        listOfMySpecies[i]->Output ();
+		debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
+		listOfMySpecies[i]->Output ();
 		
 		
 	}

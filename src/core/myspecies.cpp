@@ -840,6 +840,9 @@ bool MySpecies::match (
 	//	matchings for one of them
 	map<string, int> uniMap;
 
+	//	test
+	int count_as_equiv_remove = 0;
+
 	for (int i =0; i < numc_t; i++)
 	{
 		debugOut() << "\n\ntry template pattern	"
@@ -851,8 +854,8 @@ bool MySpecies::match (
 			cMatchsType2 record;
 			for (int j = 0; j < numc_m; j++)
 			{
-				debugOut() << "\nchain number in current species"
-					<< "	--	..	--	" << j << endl;
+//                debugOut() << "\nchain number in current species"
+//                    << "	--	..	--	" << j << endl;
 
 				cMatchsType record2;
 				listOfChains[j]->match (c1, record2);
@@ -861,7 +864,7 @@ bool MySpecies::match (
 					record.push_back (make_pair(record2[k], j));
 			}
 
-			debugOut() << "		found =  " << record.size ();
+			debugOut() << "found =  " << record.size ();
 
 
 			if (record.size () == 0) return false; 
@@ -875,10 +878,20 @@ bool MySpecies::match (
 		permuteAll *= records.back ().size ();
 	}
 
+	cout << "\npermuteAll = " << permuteAll << endl;
+
 	//
 	//	Permutation
 	//
-	set< vector< set<int> > > repeatRemove;
+//    set< vector< set<int> > > repeatRemove;
+	typedef pair< 
+		vector< cMatchType2 >, 
+		vector< set<cMatchType2> >
+			> removePair;
+	typedef set<removePair> removeT; 
+	
+	removeT repeatRemove;
+
 	for (int i = 0; i < permuteAll; i++)
 	{
 		int divide = i;
@@ -908,6 +921,12 @@ bool MySpecies::match (
 		}
 		if (!ok) continue;
 
+		/**
+		 * important bug: some matchings are incorrect discarded!
+		 * fixed by liaochen, 2010-10-26
+		 */
+		
+		/*
 		vector< set<int> > equivck;
 		for (int j=0; j < s->equiv.size (); j++)
 		{
@@ -916,38 +935,56 @@ bool MySpecies::match (
 			set<int> tmp;
 			set<int>::const_iterator iter = equivset.begin ();
 			while (iter != equivset.end ())
-			{
-				debugOut() << *iter << ", ";
 				tmp.insert (tryAssemble[*iter++].second);
+			equivck.push_back (tmp);
+		}
+		*/
+		
+		set<int> chains_used;
+		vector< set<cMatchType2> > equivck;
+		vector<cMatchType2> usualck;
+
+		//set equivck
+		for (int j=0; j < s->equiv.size (); j++)
+		{
+			const set<int>& equivset = s->equiv[j];
+
+			set<cMatchType2> tmp;
+			set<int>::const_iterator iter = equivset.begin ();
+			while (iter != equivset.end ())
+			{
+				tmp.insert (tryAssemble[*iter]);
+				chains_used.insert (*iter);
+				iter ++;
 			}
-			debugOut() << endl;
 			equivck.push_back (tmp);
 		}
 
-		debugOut() << "\ni candidate = " << i << endl;
+		//set usualck
+		for (int j= 0; j < numc_t; j++)
+		{
+			if (!chains_used.count (j)) 
+				usualck.push_back (tryAssemble[j]);
+		}
+
+		removePair _tmp_remove = make_pair (usualck, equivck);
 
 		/**
 		 * check if this permutation has been added
 		 */
-		if (repeatRemove.count (equivck)) continue;
-		else repeatRemove.insert (equivck);
+//        if (repeatRemove.count (equivck)) continue;
+//        else {repeatRemove.insert (equivck); count_as_equiv_remove++;}
+			
+		if (repeatRemove.count (_tmp_remove)) continue;
+		else {repeatRemove.insert (_tmp_remove); count_as_equiv_remove++;}
 
-		debugOut() << "\nrepeatRemove = " << repeatRemove.size () << endl;
-		set< vector<set<int> > >::iterator it1 = repeatRemove.begin ();
-		for (int j=0; j < repeatRemove.size (); j++, it1++)
-		{
-			debugOut() << "\nequiv group = " << it1->size () << endl;
-			for (int k=0; k <it1->size (); k++)
-			{
-				set<int>::iterator it = (*it1)[k].begin ();
-				while (it!=(*it1)[k].end ()) debugOut() << *it++ << " ";
-			}
-			debugOut() << endl;
-		}
-
-		debugOut() << "\ni pass = " << i << endl;
-		for (int j=0; j < numc_t; j++) debugOut() << tryAssemble[j].second << " " ;
-
+//        cout << "\nmatching ordering ..." << endl;
+//        for (int j=0; j < numc_t; j++)
+//        {
+//            cout <<"(" << j << ", " << tryAssemble[j].second << ") ";
+//        }
+//        cout << endl;
+		//
 		//
 		//	if no trees, a successful match has been found
 		//
@@ -1001,16 +1038,19 @@ bool MySpecies::match (
 			}
 
 			//	copy trees as well
-			for (int j=0; j<listOfTrees.size (); j++) rhs->createTree (listOfTrees[j]);
+			//	liaochen modifies on 2010-11-26
+			for (int j=0; j< lhs->listOfTrees.size (); j++) rhs->createTree (lhs->listOfTrees[j]);
 
 			//	trim both species
 			lhs->trim (); rhs->trim ();
 
-			if (lhs->equal (rhs)) trym.push_back (tryAssemble);
+			if (lhs->equal (rhs)) {cout << "\nyes!" << endl; trym.push_back (tryAssemble);}
 			delete lhs;	delete rhs;
 		}
-		else trym.push_back (tryAssemble);
+		else {count_as_equiv_remove++; trym.push_back (tryAssemble);}
 	}
+	cout << "\ncount_as_equiv_remove = " << count_as_equiv_remove << endl;
+	cout << "\trym_size = " << trym.size () << endl;
 
 	return !(trym.size () == 0);
 }

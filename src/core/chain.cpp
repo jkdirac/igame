@@ -365,6 +365,8 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 		if (asmb.size () == 0) return false;
 	}
 
+//    cout << "\nasmb.size () == " << asmb.size () << endl;
+
 	//	insert substituent pieces into asmb
 
 	//	if there are only substituent-type parts
@@ -461,18 +463,19 @@ bool Chain::match (const Chain* c, cMatchsType& res	) const
 				
 				if (mok && tmp.size () > 0)
 				{
+					vector<cMatchType> __matchExp;
 					for (int k =0; k < AssembleMatch.size ();k++)
 					{
 						for (int l=0; l< tmp.size (); l++)
 						{
 							cMatchType expandMatch = AssembleMatch[k];
-							expandMatch.insert (
-									expandMatch.end (), tmp[i].begin (), tmp[i].end ()
-									);
-							AssembleMatch.push_back (expandMatch);
+							list<markType>::iterator iter = tmp[l].begin ();
+							while (iter != tmp[l].end ()) expandMatch.push_back (*iter++);
+							__matchExp.push_back (expandMatch);
 						}
-						AssembleMatch.erase (AssembleMatch.begin () + k);	//remove record
 					}
+					AssembleMatch.clear ();
+					AssembleMatch = __matchExp;
 				}
 				else
 				{
