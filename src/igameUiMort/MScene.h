@@ -13,8 +13,13 @@
 
 #include <QGraphicsScene>
 #include <QString>
+#include <QVector>
+#include "MWidget.h"
+
+//#include "SceneTreeItem.h"
 
 class MItem;
+class SceneTreeItem;
 
 class MScene : public QGraphicsScene {
     Q_OBJECT
@@ -30,14 +35,36 @@ public:
     void loadXml(const QString& fileName); //&
     void writeXml(const QString& fileName); //&
 
+	void setTreeItem(SceneTreeItem *item);
+	SceneTreeItem* getTreeItem();
+
+	QVector<MScene*>& getChildScene();
+	void addChildScene(MScene *child);
+	void deleteChildScene(int id);
+	void setParent(MScene* parent);
+
+	int addItemEx(MItem *item);
+	void deletItemEx(int n);
+
     MItem* dataScene;
     MItem* dataItem[1024];
     int dataCount;
 
+	QString& getId();
+	void setId(const QString id);
+
 private:
+	QString m_id;
+	QString m_name;
     qreal m_minZValue;
     qreal m_maxZValue;
+	QVector<MScene*> m_childern;
+	MItem* m_rootItem;
+	MScene* m_parent;
 
+	MWidget* selWidget;
+	MWidget* overviewWidget;
+	SceneTreeItem* m_treeItem;
 };
 
 #endif

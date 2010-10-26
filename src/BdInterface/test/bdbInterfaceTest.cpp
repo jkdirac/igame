@@ -201,6 +201,56 @@ void test_get_ids()
 	debugOut() << "-------- test get ids end---------" << endl;
 }
 
+void test_set_node()
+{
+	vector<string> docs;
+	vector<string> node;
+	vector<string> attributes;
+	string res_str;
+
+	docs.push_back("newdoc");
+	attributes.push_back("a=\"a1\"");
+	attributes.push_back("b=\"b1\"");
+	attributes.push_back("c=\"c1\"");
+	for (int i = 0; i < docs.size(); i++)
+	{
+		try 
+		{
+			test_inter.create_doc(NEW, docs[i], "test", NULL, DELET_EXIST);
+		}
+		catch (XmlException &se)
+		{
+			debugOut() << "xml Exception in create doc" << endl;
+			throw se;
+		}
+
+		try 
+		{
+			test_inter.insert_new_node(NEW, docs[i], "/test", "test1", NULL, "test1" );
+			test_inter.insert_new_node(NEW, docs[i], "/test/test1", "test2", &attributes, "test2" );
+		}
+		catch (XmlException &se)
+		{
+			debugOut() << "xml Exception in insert doc" << endl;
+			throw se;
+		}
+		string search_path = "/test";
+		test_inter.get_node(NEW, &docs[i], &search_path, res_str);
+
+		try 
+		{
+			test_inter.create_doc(NEW, docs[i], "test", NULL, DEFAULT_FLAG);
+		}
+		catch (XmlException &se)
+		{
+			debugOut() << "xml Exception in create doc" << endl;
+			throw se;
+		}
+	}
+
+	debugOut() << "node: " << res_str << endl;
+}
+
 int main()
 {
 	try
@@ -218,6 +268,8 @@ int main()
 		debugOut() << endl;
 		test_get_ids();
 		debugOut() << endl;
+		test_set_node();
+		debugOut() << endl;
 	} 
 	catch (XmlException &se)
 	{
@@ -225,3 +277,4 @@ int main()
 	}
 
 }
+

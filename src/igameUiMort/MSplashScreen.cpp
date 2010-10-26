@@ -21,7 +21,7 @@
 // Class MSplashScreen constructor
 MSplashScreen::MSplashScreen(QWidget* parent)
     : QSplashScreen(parent)
-    , m_pixmap("")
+    , m_pixmap("./iGaME.images/splash.png")
     , m_text("")
     , m_textAlignment(Qt::AlignCenter || Qt::AlignBottom)
     , m_textColor(Qt::black)

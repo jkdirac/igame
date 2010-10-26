@@ -22,7 +22,7 @@ nl        [\n]
 nousedchar [\r]+
 identifer [A-Za-z][\_0-9A-Za-z]*
 numstring [\-]?[0-9]+
-realstring [\-]?[0-9]+[\.][0-9]+
+realstring [\-]?[0-9]+[\.][0-9]+([eE][-+]?[0-9]+)?
 equal ==
 nequal !=
 less_and_eq <=

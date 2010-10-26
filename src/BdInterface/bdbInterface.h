@@ -11,11 +11,14 @@
 using namespace std;
 using namespace DbXml;
 
+#define DEFAULT_FLAG 0x0
+#define DELET_EXIST 0x1
+
 enum BdRetVal {
 	no_error,
 	para_error,
 	xml_exception,
-	no_container
+	no_container,
 };
 
 enum container_index
@@ -26,6 +29,7 @@ enum container_index
 	PART,
 	COMPARTMENT,
 	DBINTERFACE,
+	NEW,
 	CONT_IDX_NUM
 };
 
@@ -65,6 +69,14 @@ class bdbXMLInterface
 				const string *doc, 
 				const string *node_path, 
 				string &res);
+		BdRetVal insert_new_node(container_index container_type, const string& docname, const string &node_path,
+				const string &node_name, vector<string>* attr_list, const string& element);
+		BdRetVal delete_doc(container_index container_type, const string &doc_name);
+		BdRetVal create_doc(container_index container_type, 
+				const string &doc_name, 
+				const string &root,
+				vector<string>* attr_list,
+				int flag);
 //        BdRetVal get_node(container_index container_type, 
 //                const string *doc, 
 //                const string *node_path, 

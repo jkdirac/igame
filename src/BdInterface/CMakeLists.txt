@@ -20,12 +20,13 @@ TARGET_LINK_LIBRARIES( test_bdbinterface
 	)
 
 ADD_LIBRARY( bdinterface
-	STATIC
+	SHARED
 	${PRO_CORE_MOC}
 	${PRO_CORE_SRC}
 	)
 
 TARGET_LINK_LIBRARIES( bdinterface
+	dbxml
 	bdinterface
 	utility
   )

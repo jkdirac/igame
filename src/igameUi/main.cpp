@@ -9,7 +9,7 @@ bool init_global_dir_setting()
 {
 	QDir dir = QDir::home();
 
-	QString igame_home_path = "igame";
+	QString igame_home_path = ".igame";
 
 	bool b_succ = true;
 

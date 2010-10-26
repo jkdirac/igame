@@ -40,6 +40,12 @@ void function_tests()
 	pars.push_back(string("a=1,b=2,c=3,d=4")); exprs.push_back(string("(a-b*2+c <= a+b+d && (a-b*2+c >= a+b+d)"));
 	pars.push_back(string("a=1,b=2")); exprs.push_back(string("(a-b*2+c <= a+b+d) && (a-b*2+c >= a+b+d)"));
 
+	pars.push_back(string("kgr = 0.5766,maxc = 0.16")); 
+	exprs.push_back(string("(kgr > 0.0) && (maxc < 1.0)"));
+
+	pars.push_back(string("kgr = 0.5766,maxc = 1.6e-10")); 
+	exprs.push_back(string("(kgr > 0.0) && (maxc < 1.0)"));
+
 	for (int i=0; i<pars.size(); i++)
 	{
 		debugOut() << "start test: " << i+1 << " in " << pars.size() << "\t";

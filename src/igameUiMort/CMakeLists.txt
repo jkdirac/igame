@@ -1,22 +1,24 @@
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
 #source file
-FILE( GLOB PRO_CORE_HDRS *.h MosQt/*.h)
+FILE( GLOB PRO_CORE_HDRS *.h MosQt/*.h demoUi/*.h iGameUi/*.h *.hxx MosQt)
 FILE( GLOB PRO_CORE_CPP_SRC *.cpp )
 FILE( GLOB PRO_CORE_C_SRC *.c )
 FILE( GLOB PRO_DSG_FILE *.ui )
 FILE( GLOB PRO_RESOURCE_SRC *.qrc )
 
-FILE( GLOB PRO_UI_HDRS iGameUi/*.h)
 FILE( GLOB PRO_UI_CPP_SRC iGameUi/*.cpp )
 
-FILE( GLOB PRO_DEMO_HDRS demoUi/*.h)
 FILE( GLOB PRO_DEMO_CPP_SRC demoUi/*.cpp )
 
 QT4_WRAP_UI( PRO_QDSG_HDR ${PRO_DSG_FILE})
 QT4_WRAP_CPP( PRO_CORE_MOC ${PRO_CORE_HDRS} )
 QT4_ADD_RESOURCES( PRO_RESOURCE ${PRO_RESOURCE_SRC} )
 #QT4_WRAP_CPP( PRO_MOC_CPP ${PRO_MOC_FILE})
+
+INCLUDE_DIRECTORIES( BEFORE
+	${IGAME_BINARY_DIR}/igameUiMort
+	)
 
 ADD_EXECUTABLE( igameUiMort
 	${PRO_CORE_MOC}
@@ -29,6 +31,10 @@ ADD_EXECUTABLE( igameUiMort
 
 TARGET_LINK_LIBRARIES( igameUiMort
   ${QT_LIBRARIES}
+  dbxml
+  bdinterface
+  core
+  utility
   )
   #copsi_wrapper 
 
@@ -43,6 +49,8 @@ ADD_EXECUTABLE( demoUiXml
 
 TARGET_LINK_LIBRARIES( demoUiXml
   ${QT_LIBRARIES}
+  utility
+  bdinterface
   )
   #copsi_wrapper 
 
