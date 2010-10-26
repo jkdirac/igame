@@ -16,7 +16,7 @@ class SceneManager
 
 		SceneTreeItem* m_rootItem;
 
-		MView* m_view;
+		QGraphicsView* m_view;
 
 		MItem* m_browserItem;
 		int m_browserItemId;
@@ -27,7 +27,7 @@ class SceneManager
 		static SceneManager* getSceneManger();
 
 		void setCurrentScene(MScene* scene);
-		void setMainView(MView* view);
+		void setMainView(QGraphicsView* view);
 
 		SceneTreeItem* getRootItem();
 

@@ -42,7 +42,7 @@ SceneManager* SceneManager::getSceneManger()
 	return _single_instance;
 }
 
-void SceneManager::setMainView(MView* view)
+void SceneManager::setMainView(QGraphicsView* view)
 {
 	if (view != NULL)
 		m_view = view;
