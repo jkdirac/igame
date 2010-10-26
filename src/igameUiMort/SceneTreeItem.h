@@ -12,6 +12,7 @@ class SceneTreeItem : public QTreeWidgetItem
 		SceneTreeItem(QTreeWidgetItem *parent, MScene *sce);
 		SceneTreeItem(const QString& str);
 		MScene* getScene();
+		SceneTreeItem* clone();
 		void setScene(MScene* sce);
 };
 

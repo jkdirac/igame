@@ -63,6 +63,7 @@ void IdSelWidget::highlightCombx(const QString &name)
 {
 	MItem* item = new ClickableWidget(":xml/compartment.ui.xml");
 	item->setId(name);
+	qDebug() << "get id: " << item->id();
 	
 	scenemgr->browserItem(item);
 }

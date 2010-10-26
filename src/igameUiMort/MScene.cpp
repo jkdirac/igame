@@ -47,6 +47,7 @@ MScene::MScene(QObject* parent)
 	selWidget->setY(0);
 
 	m_overviewWidget = new SceneViewWidget(NULL);
+//    m_overviewWidget = SceneViewWidget::getSceneView();
 	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
 	overview->setX(0);
 	overview->setY(500);
@@ -396,7 +397,7 @@ QVector<MScene*>& MScene::getChildScene()
 	return m_childern;
 }
 
-void MScene::setId(const QString id)
+void MScene::setId(const QString& id)
 {
 	m_id = id;
 }

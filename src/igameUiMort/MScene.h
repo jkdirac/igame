@@ -52,7 +52,7 @@ public:
     int dataCount;
 
 	QString& getId();
-	void setId(const QString id);
+	void setId(const QString& id);
 
 	void showTreeWidget(SceneTreeItem *item);
 	void showSelWidget(QStringList* list);

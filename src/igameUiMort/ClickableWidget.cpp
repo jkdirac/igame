@@ -28,6 +28,7 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	MScene* newScene = new MScene(NULL);
 	newScene->loadXml(":demoUiXml.ui.xml");
 	newScene->setId(id());
+	qDebug() << "new scene id: " << id();
 
 	if (m_senemgr == NULL)
 	{

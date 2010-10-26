@@ -27,7 +27,6 @@ void SceneManager::startShow()
 		m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
-//        m_rootscene->setTreeItem(m_rootItem);
 		setCurrentScene(m_rootscene);
 	}
 }

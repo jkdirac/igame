@@ -1,5 +1,6 @@
 #include "SceneTreeItem.h"
 #include "MScene.h"
+#include <QDebug>
 
 SceneTreeItem::SceneTreeItem(const QString& str) : QTreeWidgetItem(NULL)
 {
@@ -12,6 +13,7 @@ SceneTreeItem::SceneTreeItem(QTreeWidgetItem *parent, MScene *sce) : QTreeWidget
 		return;
 
 	m_scene = sce;
+	qDebug() << "new Scene tree item " << sce->getId();
 	setText(0, sce->getId());
 }
 
@@ -26,4 +28,8 @@ void SceneTreeItem::setScene(MScene *sce)
 		m_scene = sce;
 
 	setText(0, sce->getId());
+}
+
+SceneTreeItem* SceneTreeItem::clone()
+{
 }
