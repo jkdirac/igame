@@ -53,18 +53,14 @@ void IdSelWidget::setCompartments(QStringList &list)
 
 void IdSelWidget::createNewCompartment(const QString& partname)
 {
-	qDebug() << "idx change partName: " << partname;
 }
 
 void IdSelWidget::activateCombx(const QString& partname)
 {
-	qDebug() << "activate partName: " << partname;
 }
 
 void IdSelWidget::highlightCombx(const QString &name)
 {
-	qDebug() << "highligth partName: " << name;
-
 	MItem* item = new ClickableWidget(":xml/compartment.ui.xml");
 	item->setId(name);
 	

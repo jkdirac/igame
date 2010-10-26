@@ -28,6 +28,8 @@
 #include <iostream>
 #include <QDebug>
 
+#include "MScene.h"
+
 // Class MItem constructor
 MItem::MItem()
     : m_id("")
@@ -485,7 +487,15 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
     return QGraphicsItem::itemChange(change, value);
 }
 
+MScene* MItem::getScene()
+{
+	return m_scene;
+}
 
+void MItem::setScene(MScene* sce)
+{
+	m_scene = sce;
+}
 
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)

@@ -27,32 +27,29 @@
 
 // Class MScene constructor
 MScene::MScene(QObject* parent)
-    : QGraphicsScene(parent)
-    , dataCount(0)
-    , m_minZValue(0)
-    , m_maxZValue(0)
+	: QGraphicsScene(parent)
+	, dataCount(0)
+	, m_minZValue(0)
+	, m_maxZValue(0)
+	, m_treeItem(NULL)
+	  ,m_overviewWidget(NULL)
 {
-	qDebug() << "come here 1";
     this->dataScene = new MItem();
     this->addItem(this->dataScene);
 
-	qDebug() << "come here 2";
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
-	qDebug() << "come here 3";
 	IdSelWidget* IdSel = new IdSelWidget(NULL);
 	selWidget = (MWidget*)addWidget(IdSel);
 	selWidget->setX(0);
 	selWidget->setY(0);
-	qDebug() << "come here 4";
 
-	SceneViewWidget* sceneView = new SceneViewWidget(NULL);
-	overviewWidget = (MWidget*)addWidget(sceneView);
-	overviewWidget->setX(0);
-	overviewWidget->setY(500);
-	qDebug() << "come here 5";
+	m_overviewWidget = new SceneViewWidget(NULL);
+	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
+	overview->setX(0);
+	overview->setY(500);
 }
 
 // Class MScene destructor
@@ -80,7 +77,7 @@ MScene::~MScene()
 	//
     delete dataScene;
 	delete selWidget;
-	delete overviewWidget;
+	delete m_overviewWidget;
 
 	//delete items
 	for (int i = 0; i < dataCount; i++)
@@ -98,6 +95,7 @@ int MScene::addItemEx(MItem *item)
 	dataCount++;
 
     this->addItem(item);
+	item->setScene(this);
 
 	return dataCount-1;
 }
@@ -373,8 +371,10 @@ void MScene::addChildScene(MScene *child)
 	if ((m_treeItem != NULL) 
 		&& (child != NULL))
 	{
-		SceneTreeItem* newItem = new SceneTreeItem((QTreeWidget*)m_treeItem, child);
+		qDebug() << "m_treeItem: " << (int)m_treeItem;
+		SceneTreeItem* newItem = new SceneTreeItem((QTreeWidgetItem*)m_treeItem, child);
 		m_treeItem->addChild(newItem);
+		child->setTreeItem(newItem);
 	}
 }
 
@@ -402,6 +402,12 @@ QString& MScene::getId()
 	return m_id;
 }
 
+/** 
+ * @breif  
+ * Set the item pointer of this scene
+ * 
+ * @Param item
+ */
 void MScene::setTreeItem(SceneTreeItem *item)
 {
 	if (item != NULL)
@@ -414,4 +420,25 @@ void MScene::setTreeItem(SceneTreeItem *item)
 SceneTreeItem* MScene::getTreeItem()
 {
 	return m_treeItem;
+}
+
+/** 
+ * @breif  put tree data to m_overviewWidgetto show
+ * 
+ * @Param item
+ */
+void MScene::showTreeWidget(SceneTreeItem *item)
+{
+	if (item != NULL)
+		m_overviewWidget->setTreeRootItem(item);
+}
+
+/** 
+ * @breif 
+ * Put list data to QCombox widget to select 
+ * 
+ * @Param item
+ */
+void MScene::showSelWidget(QStringList* list)
+{
 }

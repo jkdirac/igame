@@ -20,6 +20,7 @@
 
 class MItem;
 class SceneTreeItem;
+class SceneViewWidget;
 
 class MScene : public QGraphicsScene {
     Q_OBJECT
@@ -53,6 +54,9 @@ public:
 	QString& getId();
 	void setId(const QString id);
 
+	void showTreeWidget(SceneTreeItem *item);
+	void showSelWidget(QStringList* list);
+
 private:
 	QString m_id;
 	QString m_name;
@@ -63,7 +67,7 @@ private:
 	MScene* m_parent;
 
 	MWidget* selWidget;
-	MWidget* overviewWidget;
+	SceneViewWidget* m_overviewWidget;
 	SceneTreeItem* m_treeItem;
 };
 

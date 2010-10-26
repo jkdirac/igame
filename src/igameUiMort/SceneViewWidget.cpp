@@ -4,15 +4,25 @@
 #include <QStringList>
 #include <QList>
 #include <QTreeWidgetItem>
+#include <QDebug>
 
 SceneViewWidget::SceneViewWidget(QWidget* parent) : QWidget(parent)
 {
 	ui.setupUi(this);
 
+	ui.overViewWidget->setColumnCount(1);
 	SceneManager* mgr = SceneManager::getSceneManger();
 	SceneTreeItem* rootItem = mgr->getRootItem();
+
+}
+
+void SceneViewWidget::setTreeRootItem(QTreeWidgetItem* rootItem)
+{
+	qDebug() << "--view widget start: rootItem: " << (int)rootItem;
 	QList<QTreeWidgetItem*> rootList; 
 	rootList << (QTreeWidgetItem*)rootItem; 
+//    SceneTreeItem* leafItem = new SceneTreeItem("test");
+//    rootItem->addChild(leafItem);
 //    QTreeWidget* tree = ui.overViewWidget;
 
 //    tree->setColumnCount(1); 
@@ -29,4 +39,3 @@ SceneViewWidget::SceneViewWidget(QWidget* parent) : QWidget(parent)
 //    rootList << root; 
 	ui.overViewWidget->insertTopLevelItems(0, rootList); 
 }
-

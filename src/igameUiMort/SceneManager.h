@@ -28,6 +28,7 @@ class SceneManager
 
 		void setCurrentScene(MScene* scene);
 		void setMainView(MView* view);
+		void addNewScene(MScene* newScene);
 
 		SceneTreeItem* getRootItem();
 
@@ -35,6 +36,7 @@ class SceneManager
 
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);
+//
 };
 
 #endif

@@ -6,7 +6,7 @@ SceneTreeItem::SceneTreeItem(const QString& str) : QTreeWidgetItem(NULL)
 	setText(0, str);
 }
 
-SceneTreeItem::SceneTreeItem(QTreeWidget *parent, MScene *sce) : QTreeWidgetItem(parent)
+SceneTreeItem::SceneTreeItem(QTreeWidgetItem *parent, MScene *sce) : QTreeWidgetItem(parent)
 {
 	if (sce == NULL)
 		return;

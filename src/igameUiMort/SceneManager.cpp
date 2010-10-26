@@ -27,8 +27,8 @@ void SceneManager::startShow()
 		m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
-		setCurrentScene(m_rootscene);
 		m_rootscene->setTreeItem(m_rootItem);
+		setCurrentScene(m_rootscene);
 	}
 }
 
@@ -61,6 +61,7 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
+		m_currentscene->showTreeWidget(m_rootItem);
 		m_view->setScene(m_currentscene);
 	}
 }
@@ -92,4 +93,13 @@ void SceneManager::browserItem(MItem* item)
 SceneTreeItem* SceneManager::getRootItem()
 {
 	return m_rootItem;
+}
+
+void SceneManager::addNewScene(MScene* newScene)
+{
+	if (newScene == NULL)
+		return;
+	
+	m_currentscene->addChildScene(newScene);
+	setCurrentScene(newScene);
 }

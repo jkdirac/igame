@@ -11,6 +11,7 @@ class SceneViewWidget: public QWidget
 
 	public:
 		SceneViewWidget(QWidget* parent);
+		void setTreeRootItem(QTreeWidgetItem* root);
 
 	private:
 		Ui::SceneViewWidget	ui;
