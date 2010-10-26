@@ -12,20 +12,23 @@ SceneViewWidget::SceneViewWidget(QWidget* parent) : QWidget(parent)
 
 	ui.overViewWidget->setColumnCount(1);
 	SceneManager* mgr = SceneManager::getSceneManger();
-	SceneTreeItem* rootItem = mgr->getRootItem();
-
 }
 
-void SceneViewWidget::setTreeRootItem(QTreeWidgetItem* rootItem)
+void SceneViewWidget::setTreeRootItem(SceneTreeItem* rootItem)
 {
 	qDebug() << "--view widget start: rootItem: " << (int)rootItem;
-	QList<QTreeWidgetItem*> rootList; 
-	rootList << (QTreeWidgetItem*)rootItem; 
+	if (rootItem->getScene())
+	{
+		qDebug() << rootItem->getScene()->getId();
+		qDebug() << rootItem->childCount();
+	}
+
+	/**/
 //    SceneTreeItem* leafItem = new SceneTreeItem("test");
 //    rootItem->addChild(leafItem);
 //    QTreeWidget* tree = ui.overViewWidget;
 
-//    tree->setColumnCount(1); 
+//    tree->setColumnCount(2); 
 //    QTreeWidgetItem *root = new QTreeWidgetItem(tree, QStringList(QString("Root"))); 
 //    QTreeWidgetItem *leaf = new QTreeWidgetItem(root, QStringList(QString("Leaf 1"))); 
 //    root->addChild(leaf); 
@@ -35,7 +38,15 @@ void SceneViewWidget::setTreeRootItem(QTreeWidgetItem* rootItem)
 //    QTreeWidgetItem *leaf3 = new QTreeWidgetItem(leaf, QStringList(QString("Leaf 3"))); 
 //    leaf->addChild(leaf3); 
 
+//    QTreeWidgetItem *root1 = new QTreeWidgetItem(tree, QStringList(QString("Root1"))); 
 //    QList<QTreeWidgetItem *> rootList; 
 //    rootList << root; 
+	/**/
+
+	QList<QTreeWidgetItem*> rootList; 
+	rootList << (QTreeWidgetItem*)rootItem; 
 	ui.overViewWidget->insertTopLevelItems(0, rootList); 
+
+	SceneTreeItem* test1 = new SceneTreeItem("test1");
+	rootItem->addChild(test1);
 }

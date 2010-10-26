@@ -14,20 +14,20 @@ SceneManager::SceneManager()
 {
 	m_browserItemX = 200;
 	m_browserItemY = 700;
-
-	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
 
 void SceneManager::startShow()
 {
 	m_rootscene = new MScene();
+
 	if ( m_rootscene != NULL)
 	{
+		m_rootItem = m_rootscene->getTreeItem();
 		m_rootscene->setId("Flask");
 		m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
-		m_rootscene->setTreeItem(m_rootItem);
+//        m_rootscene->setTreeItem(m_rootItem);
 		setCurrentScene(m_rootscene);
 	}
 }
@@ -92,6 +92,7 @@ void SceneManager::browserItem(MItem* item)
 
 SceneTreeItem* SceneManager::getRootItem()
 {
+	m_rootItem = m_rootscene->getTreeItem();
 	return m_rootItem;
 }
 

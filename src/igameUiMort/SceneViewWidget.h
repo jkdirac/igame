@@ -5,13 +5,14 @@
 #include <QStandardItemModel>
 #include "ui_SceneViewWidget.h"
 
+class SceneTreeItem;
 class SceneViewWidget: public QWidget
 {
 	Q_OBJECT
 
 	public:
 		SceneViewWidget(QWidget* parent);
-		void setTreeRootItem(QTreeWidgetItem* root);
+		void setTreeRootItem(SceneTreeItem* root);
 
 	private:
 		Ui::SceneViewWidget	ui;

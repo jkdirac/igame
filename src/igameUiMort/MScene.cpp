@@ -50,6 +50,9 @@ MScene::MScene(QObject* parent)
 	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
 	overview->setX(0);
 	overview->setY(500);
+
+	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
+	setTreeItem(newItem);
 }
 
 // Class MScene destructor
@@ -372,9 +375,10 @@ void MScene::addChildScene(MScene *child)
 		&& (child != NULL))
 	{
 		qDebug() << "m_treeItem: " << (int)m_treeItem;
-		SceneTreeItem* newItem = new SceneTreeItem((QTreeWidgetItem*)m_treeItem, child);
+		SceneTreeItem* newItem = child->getTreeItem();
+//        SceneTreeItem* newItem = new SceneTreeItem((QTreeWidgetItem*)m_treeItem, child);
 		m_treeItem->addChild(newItem);
-		child->setTreeItem(newItem);
+//        child->setTreeItem(newItem);
 	}
 }
 
