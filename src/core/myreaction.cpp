@@ -53,6 +53,7 @@ void MyReaction::createReactionsFromTemplate (
 		vector<MySpecies*>& listOfMySpecies,
 		vector<MyCompartment*>& listOfMyCompartments,
 		const speciesArrayMatch& __reactants_m,
+		const map<string, int>& config,
 		const reactionTemplate* tmpR
 		)
 {
@@ -85,6 +86,16 @@ void MyReaction::createReactionsFromTemplate (
 			string errno ("Two different species should not have same label ( ");
 			errno += __old + ")!"; throw CoreException (errno);
 		}
+	}
+
+	map<string,string>::const_iterator first = tmpR->mapComps.begin ();
+	for (int i=0; first != tmpR->mapComps.end (); i++, first ++)
+	{
+		assert (config.count (first->first));
+		int compIndex = config.find (first->first)->second;
+
+		string compartment = listOfMyCompartments[compIndex]->getId ();
+		replacement[first->first] = compartment;
 	}
 
 	/**
@@ -265,7 +276,7 @@ void MyReaction::createReactionsFromTemplate (
 					compIndex = k;
 					MySpecies* prev = mycomp->isMySpeciesIn (__product);
 					if (prev != NULL) {
-						found = true; delete __product; __product = prev;\
+						found = true; delete __product; __product = prev;
 					}
 					break;
 				}
@@ -290,6 +301,7 @@ void MyReaction::createReactionsFromTemplate (
 
 			//	it is need to make it clear about chain labels
 			for (int k=0; k < __product->getNumOfChains (); k++) __product->getChain (k)->setLabel ("");
+			__product_tm->Output ();
 			delete __product_tm;
 		}
 	}
@@ -331,6 +343,8 @@ void MyReaction::createReactionsFromTemplate (
 	{
 		string __old = itMath->first;
 		string __new = itMath->second;
+
+		if (__old == __new) {itMath++; continue;}
 
 		string::size_type pos = 0;
 		//	each trip reset pos to the next instance in name
