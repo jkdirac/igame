@@ -40,8 +40,13 @@ public:
 
 
 
-    QString id() { return m_id; }
-    void setId(QString id) { m_id = id; setText(m_id); this->renew(); }
+    const QString& id() { return m_id; }
+    void setId(QString id) 
+	{ 
+		m_id = id; 
+		setText(m_id); 
+		this->renew(); 
+	}
 
     QString name() { return m_name; }
     void setName(QString name) { m_name = name; this->renew(); }

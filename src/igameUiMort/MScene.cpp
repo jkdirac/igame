@@ -56,6 +56,37 @@ MScene::MScene(QObject* parent)
 	setTreeItem(newItem);
 }
 
+MScene::MScene(QObject* parent, const QString& id)
+	: QGraphicsScene(parent)
+	, dataCount(0)
+	, m_minZValue(0)
+	, m_maxZValue(0)
+	, m_treeItem(NULL)
+	  ,m_overviewWidget(NULL)
+{
+	m_id = id;
+    this->dataScene = new MItem();
+    this->addItem(this->dataScene);
+
+    this->dataScene->setPos(0, 0);
+    this->dataScene->setWidth(0);
+    this->dataScene->setHeight(0);
+
+	IdSelWidget* IdSel = new IdSelWidget(NULL);
+	selWidget = (MWidget*)addWidget(IdSel);
+	selWidget->setX(0);
+	selWidget->setY(0);
+
+	m_overviewWidget = new SceneViewWidget(NULL);
+//    m_overviewWidget = SceneViewWidget::getSceneView();
+	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
+	overview->setX(0);
+	overview->setY(500);
+
+	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
+	setTreeItem(newItem);
+}
+
 // Class MScene destructor
 MScene::~MScene()
 {

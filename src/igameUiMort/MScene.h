@@ -27,6 +27,7 @@ class MScene : public QGraphicsScene {
 
 public:
     MScene(QObject* parent = 0);
+    MScene(QObject* parent, const QString& id);
     ~MScene();
 
     MItem* selectedItem() const;

@@ -18,12 +18,11 @@ SceneManager::SceneManager()
 
 void SceneManager::startShow()
 {
-	m_rootscene = new MScene();
+	m_rootscene = new MScene(NULL, "Flask");
 
 	if ( m_rootscene != NULL)
 	{
 		m_rootItem = m_rootscene->getTreeItem();
-		m_rootscene->setId("Flask");
 		m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
