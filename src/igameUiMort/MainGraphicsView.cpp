@@ -46,6 +46,11 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
+	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous)),
+		this , SLOT(broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)));
+	connect(ui.m_overViewWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem * current, int column)),
+		m_scenemgr, SLOT(broswerScene1(QTreeWidgetItem * current, int column)));
+
 	getCompartFromDb();
 	getBackboneFromDb();
 	getBiobricksFromDb();
@@ -405,4 +410,13 @@ void MainGraphicsView::getCompoundFromDb()
 	//        QStringList comList;
 	//        comList << "abc" << "def" << "hij";
 	setCompounds(comList);
+}
+
+void MainGraphicsView::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+{
+	qDebug() << "broswer Scene";
+	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+	MScene* setScene = curSceneItem->getScene();
+	
+	m_scenemgr->setCurrentScene(setScene);
 }
