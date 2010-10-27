@@ -62,6 +62,8 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (scene == NULL)
 		return;
 
+	m_browserItem = NULL;
+
 	if (m_rootscene == NULL)
 	{
 		m_rootscene = scene;
@@ -121,7 +123,11 @@ void SceneManager::addNewScene(MScene* newScene)
 
 void SceneManager::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
 {
+	if (current == NULL)
+		return;
+
 	qDebug() << "broswer Scene";
+
 	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
 	MScene* setScene = curSceneItem->getScene();
 	
@@ -134,4 +140,13 @@ void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
 	MScene* setScene = curSceneItem->getScene();
 	
 	setCurrentScene(setScene);
+}
+
+void SceneManager::deleteAllScene()
+{
+	if (m_rootscene != NULL)
+	{
+		delete m_rootscene;
+		m_rootscene = NULL;
+	}
 }

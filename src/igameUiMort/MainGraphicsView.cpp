@@ -43,6 +43,10 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 			                     this, SLOT(runDemo()));
 	connect(ui.m_scenNext, SIGNAL(pressed()), 
 			                     this, SLOT(sceneNext()));
+
+	connect(ui.m_scenBack, SIGNAL(pressed()), 
+			                     this, SLOT(backToMainMenu()));
+
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
@@ -60,6 +64,11 @@ void MainGraphicsView::setState(STATE curState)
 {
 	setUi(curState);
 	m_state = curState;
+
+	if (m_state == GAMESCENE)
+	{
+		m_scenemgr->startShow();
+	}
 }
 
 void MainGraphicsView::setUi(STATE curState)
@@ -98,8 +107,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_runDemo->setVisible(false);
 
 		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setText(QApplication::translate("MainGraphicsView", "Review", 
-					0, QApplication::UnicodeUTF8));
+        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-review.png);"));
 		ui.m_scenBack->setVisible(true);
 
 		ui.m_fileBrowser->setVisible(false);
@@ -410,11 +418,9 @@ void MainGraphicsView::getCompoundFromDb()
 	setCompounds(comList);
 }
 
-void MainGraphicsView::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+void MainGraphicsView::backToMainMenu()
 {
-	qDebug() << "broswer Scene";
-	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
-	MScene* setScene = curSceneItem->getScene();
-	
-	m_scenemgr->setCurrentScene(setScene);
+	m_scenemgr->deleteAllScene();
+	setState(START);
+	return;
 }

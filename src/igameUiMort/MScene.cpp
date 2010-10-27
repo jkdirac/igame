@@ -93,7 +93,11 @@ MScene::~MScene()
 		for (int i=0; i < nChildren; i++)
 		{
 			SceneTreeItem* pItem = (SceneTreeItem*)m_treeItem->child(i);
-			delete pItem->getScene();
+			if (pItem != NULL)
+			{
+				if(pItem->getScene() != NULL)
+					delete pItem->getScene();
+			}
 		}
 	}
 	// return;

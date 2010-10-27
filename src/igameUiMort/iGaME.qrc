@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="/">
+    <file>iGaME.images/button-start.png</file>
+    <file>iGaME.images/button-bm.png</file>
+    <file>iGaME.images/button-lddb.png</file>
+    <file>iGaME.images/button-review.png</file>
+    <file>iGaME.images/button-rundm.png</file>
     <file>iGaME.images/coding sequence.png</file>
     <file>iGaME.images/compartment.png</file>
     <file>iGaME.images/compound.png</file>

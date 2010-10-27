@@ -57,8 +57,7 @@ class MainGraphicsView : public QWidget
 		void getStart();
 		void sceneNext();
 		void loadDb();
-		void broswerScene(QTreeWidgetItem * current, 
-				QTreeWidgetItem * previous);
+		void backToMainMenu();
 };
 
 #endif

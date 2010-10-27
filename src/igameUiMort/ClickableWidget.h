@@ -9,6 +9,8 @@ class ClickableWidget: public MItem
 {
 	private:
 		SceneManager* m_senemgr;
+		MScene* m_ownScene;
+
 	public:
 		ClickableWidget(SPECIESTYPE type=SPEC_COMPARTMENT);
 		ClickableWidget(const QString& xmlfile, SPECIESTYPE type=SPEC_COMPARTMENT);

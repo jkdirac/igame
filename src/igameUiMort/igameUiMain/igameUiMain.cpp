@@ -95,7 +95,7 @@ BEGIN(demoUiXml)
 //    ClickableWidget* cItem = new ClickableWidget(":demoUiXml.ui.xml");
 //    int Item_clickable_id = mainScene->addItemEx(cItem);
 	sceneMgr->setMainView(mainWindow->ui.m_mainGraph);
-	sceneMgr->startShow();
+//    sceneMgr->startShow();
 	mainWindow->show();
 }
 END(demoUiXml)

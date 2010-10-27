@@ -3,6 +3,7 @@
 
 ClickableWidget::ClickableWidget(SPECIESTYPE type) : MItem(NULL, type)
 	  ,m_senemgr(NULL)
+					  , m_ownScene(NULL)
 {
 	m_senemgr = SceneManager::getSceneManger();
 	renew();
@@ -14,6 +15,7 @@ ClickableWidget::~ClickableWidget()
 
 ClickableWidget::ClickableWidget(const QString& fileName, SPECIESTYPE type) : MItem(fileName, type)
 	  ,m_senemgr(NULL)
+					  , m_ownScene(NULL)
 {
 	m_senemgr = SceneManager::getSceneManger();
 	renew();
@@ -25,10 +27,18 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	qDebug() << "haha mouseDouble click of clickable item";
 	QGraphicsItem::mouseDoubleClickEvent(event);
 
+	//One Item only can has a Scene
+	if (m_ownScene != NULL)
+	{
+		qDebug() << "-- item had a scene";
+		return;
+	}
+
+	//One Item in operation region can create new scene
 	if (!getScene()->itemInCompartment(this))
 		return;
 
-	MScene* newScene = new MScene(NULL, id(), type());
+	m_ownScene = new MScene(NULL, id(), type());
 //    newScene->loadXml(":demoUiXml.ui.xml");
 	qDebug() << "new scene id: " << id();
 
@@ -38,6 +48,6 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	}
 	else
 	{
-		m_senemgr->addNewScene(newScene);
+		m_senemgr->addNewScene(m_ownScene);
 	}
 }
