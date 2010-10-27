@@ -29,6 +29,7 @@ class MainGraphicsView : public QWidget
 	private:
 		int m_state;
 		QRect m_mainRect;
+		QRect m_fullRect;
 
 		QStringList m_compList;
 		QStringList m_speList;

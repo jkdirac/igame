@@ -35,16 +35,19 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QGraphicsView" name="m_mainGraph">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>100</y>
+     <x>270</x>
+     <y>70</y>
      <width>201</width>
      <height>211</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(151, 203, 154);</string>
    </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAsNeeded</enum>
@@ -66,10 +69,14 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>100</y>
-     <width>200</width>
+     <y>0</y>
+     <width>250</width>
      <height>300</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(ff,ff,ff);
+font: 9pt &quot;Verdana&quot;;</string>
    </property>
    <column>
     <property name="text">
@@ -112,6 +119,9 @@
      <height>211</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QGraphicsView" name="m_logo">
    <property name="enabled">
@@ -119,24 +129,24 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>100</y>
-     <width>341</width>
-     <height>341</height>
+     <x>40</x>
+     <y>40</y>
+     <width>611</width>
+     <height>541</height>
     </rect>
    </property>
    <property name="acceptDrops">
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/iGaME.images/ustc_software-600*600.png);</string>
+    <string notr="true">background-image: url(:/iGaME.images/Igame_logo.png);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="m_loadbase">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>20</y>
+     <x>220</x>
+     <y>10</y>
      <width>195</width>
      <height>59</height>
     </rect>
@@ -146,6 +156,10 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(151, 203, 154);
+font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="text">
     <string>load Database</string>
@@ -157,8 +171,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>20</y>
+     <x>20</x>
+     <y>10</y>
      <width>195</width>
      <height>59</height>
     </rect>
@@ -169,6 +183,10 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(151, 203, 154);
+font:75 12pt &quot;Verdana&quot;;</string>
+   </property>
    <property name="text">
     <string>Get Started</string>
    </property>
@@ -176,8 +194,8 @@
   <widget class="QPushButton" name="m_runDemo">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>20</y>
+     <x>430</x>
+     <y>10</y>
      <width>192</width>
      <height>59</height>
     </rect>
@@ -188,6 +206,10 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(151,203,154);
+font: 75 12pt &quot;Verdana&quot;;</string>
+   </property>
    <property name="text">
     <string>Run Demo</string>
    </property>
@@ -196,41 +218,65 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>400</y>
-     <width>201</width>
+     <y>300</y>
+     <width>241</width>
      <height>171</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+font: 9pt &quot;Verdana&quot;;</string>
+      </property>
       <property name="text">
        <string>Compartment</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="com_combx"/>
+     <widget class="QComboBox" name="com_combx">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(239, 239, 239);</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+font: 9pt &quot;Verdana&quot;;</string>
+      </property>
       <property name="text">
        <string>Species</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="spe_combx"/>
+     <widget class="QComboBox" name="spe_combx">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(240, 240, 240);</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+font: 9pt &quot;Verdana&quot;;</string>
+      </property>
       <property name="text">
        <string>Biobrick</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="bio_combx"/>
+     <widget class="QComboBox" name="bio_combx">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(236, 236, 236);</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
