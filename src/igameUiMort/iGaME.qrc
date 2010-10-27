@@ -1,7 +1,6 @@
 <RCC>
   <qresource prefix="/">
     <file>iGaME.images/Igame_logo.png</file>
-    <file>iGaME.images/igame-logo.jpg</file>
     <file>iGaME.images/bb.png</file>
     <file>iGaME.images/border-1.png</file>
     <file>iGaME.images/border-2.png</file>

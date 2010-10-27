@@ -20,7 +20,7 @@
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
-	m_mainRect = QRect(250, 0, 650, 650);
+	m_mainRect = QRect(300, 0, 700, 600);
 			
 	setState(START);
 	connect(ui.com_combx, SIGNAL(highlighted(const QString &)), 
