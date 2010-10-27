@@ -437,6 +437,8 @@ void MItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
             painter->setPen(m_textColor);
             painter->setFont(m_textFont);
             painter->drawText(rect, Qt::AlignCenter, m_text);
+			qDebug() << "draw text " << m_id << " " << rect.x() << " " << rect.y()
+				<< " " << m_width << " " << m_height;
 
         } else { // draw alternative text
             painter->setPen(m_alternativeTextColor);
