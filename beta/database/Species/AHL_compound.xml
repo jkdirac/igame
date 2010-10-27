@@ -24,7 +24,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="reactant">bid_AHL_luxR</referencedReaction>
+			<referencedReaction speciesType="reactant">bid_AHL_LuxR</referencedReaction>
 			<referencedReaction speciesType="reactant">diffusion_AHL</referencedReaction>
 			<referencedReaction speciesType="product">diffusion_AHL</referencedReaction>
 			<referencedReaction speciesType="reactant">diffusion_AHL_2</referencedReaction>

@@ -32,17 +32,31 @@
 			<forwardKineticLaw>
 				<math>
 					<apply>
-						<times/>
-						<ci> k2 </ci>
-						<ci> luxI </ci>
-						<ci> E_coli </ci>
+						<divide/>
+							<apply>
+								<times/>
+								<ci> k0 </ci>
+								<ci> luxI </ci>
+								<ci> E_coli </ci>
+							</apply>
+							<apply>
+								<plus/>
+								<ci> kd </ci>
+								<ci> luxI </ci>
+							</apply>
 					</apply>
 				</math>
 				<listOfLocalParameters>
 					<localParameter>
-						<id>k2</id>
-						<value>1.83E-2</value>
-						<units>per_second</units>
+						<id> k0 </id>
+						<value>1.83E-7</value>
+						<units>mole_per_litre_per_second</units>
+						<constant>true</constant>
+					</localParameter>
+					<localParameter>
+						<id>kd</id>
+						<value>1E-5</value>
+						<units>mole_per_litre</units>
 						<constant>true</constant>
 					</localParameter>
 				</listOfLocalParameters>

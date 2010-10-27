@@ -68,8 +68,8 @@
 							<chain>
 								<listOfParts>
 									<part>
-										<partReference>pSB3C5</partReference>
-										<partLabel>pSB3C5_0</partLabel>
+										<partReference>pSB1A3</partReference>
+										<partLabel>pSB1A3_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -104,8 +104,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>R0062_pluxI</partReference>
-										<partLabel>R0062_pluxI_0</partLabel>
+										<partReference>pLuxTet</partReference>
+										<partLabel>pLuxTet_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -116,8 +116,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>E0040_GFP</partReference>
-										<partLabel>E0040_GFP_0</partLabel>
+										<partReference>ccdB</partReference>
+										<partLabel>ccdB_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>

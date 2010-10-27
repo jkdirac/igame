@@ -17,6 +17,10 @@
 				<referencedSpecies partType="ForwardProtein">tetR154_dimer</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">fw_ptetR187_tetR154_2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">rev_ptetR187_tetR154_2</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">fw_pLuxTet_tetR154_2</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">rev_pLuxTet_tetR154_2</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">fw_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
+				<referencedSpecies partType="ForwardProtein">rev_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">aTctetR154_2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>

@@ -14,8 +14,8 @@
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">fw_pLuxTet_AHL2_luxR2</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">rev_pLuxTet_AHL2_luxR2</referencedSpecies>
+				<referencedSpecies partType="ForwardDNA">fw_pLuxTet_AHL2_LuxR2</referencedSpecies>
+				<referencedSpecies partType="ReverseDNA">rev_pLuxTet_AHL2_LuxR2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>

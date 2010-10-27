@@ -36,7 +36,7 @@
 			</listOfTrees>
 		</cnModel>
 		<listOfReferencedReactions>
-			<referencedReaction speciesType="reactant">bid_AHL2_luxR2_fw_pluxI</referencedReaction>
+			<referencedReaction speciesType="reactant">bid_AHL2_LuxR2_fw_pluxI</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>

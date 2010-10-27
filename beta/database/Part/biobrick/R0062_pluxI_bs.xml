@@ -6,7 +6,7 @@
 		<biobrick id="R0062_pluxI_bs" name="pluxI_bs" originalConformation="R0062_pluxI">
 			<interface>
 				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_R0062</url>
-				<shortDesc>Promoter (luxR and HSL regulated -- lux pR)</shortDesc>
+				<shortDesc>Promoter (LuxR and HSL regulated -- lux pR)</shortDesc>
 			</interface>
 			<listOfConditionalParameters>
 				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
@@ -14,8 +14,8 @@
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">AHL2_luxR2_fw_pluxI</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">AHL2_luxR2_rev_pluxI</referencedSpecies>
+				<referencedSpecies partType="ForwardDNA">AHL2_LuxR2_fw_pluxI</referencedSpecies>
+				<referencedSpecies partType="ReverseDNA">AHL2_LuxR2_rev_pluxI</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>				
 			</listOfReferencedSpecies>
 		</biobrick>

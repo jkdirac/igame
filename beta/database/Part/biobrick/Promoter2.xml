@@ -3,19 +3,16 @@
 <!-- author: jkdirac, mail: jiangkun1@gamil.com -->
 <MoDeL>
 	<part>
-		<biobrick id="R0062_pluxI" name="pluxI" registryName="BBa_R0062">
+		<biobrick id="Promoter2" name="Promoter2">
 			<interface>
-				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_R0062</url>
-				<shortDesc>Promoter (LuxR and HSL regulated -- lux pR)</shortDesc>
+				<shortDesc>constitutive promoter </shortDesc>
 			</interface>
 			<listOfConditionalParameters>
 				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
-					<parameterValue compartment="E_coli">0.0025</parameterValue>
+					<parameterValue compartment="E_coli">0.2</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">fw_pluxI_dna</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">rev_pluxI_dna</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>
