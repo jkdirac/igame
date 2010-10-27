@@ -20,7 +20,8 @@
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
-	m_mainRect = QRect(200, 100, 600, 600);
+	m_mainRect = QRect(250, 0, 650, 650);
+			
 	setState(START);
 	connect(ui.com_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightComCombx(const QString &)));
@@ -76,7 +77,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_mainGraph->setVisible(false);
 		ui.m_mainGraph->setGeometry(QRect(0, 0, 0, 0));
 		ui.m_logo->setVisible(true);
-		ui.m_logo->setGeometry(m_mainRect);
+		ui.m_logo->setGeometry(rect());
 
 		update();
 	}
