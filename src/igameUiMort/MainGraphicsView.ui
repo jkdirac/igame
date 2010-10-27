@@ -94,7 +94,7 @@ font: 9pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>870</x>
-     <y>660</y>
+     <y>570</y>
      <width>120</width>
      <height>30</height>
     </rect>
@@ -110,8 +110,8 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.
   <widget class="QPushButton" name="m_scenBack">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>660</y>
+     <x>310</x>
+     <y>570</y>
      <width>120</width>
      <height>30</height>
     </rect>

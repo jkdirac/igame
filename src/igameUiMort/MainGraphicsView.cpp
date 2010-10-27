@@ -46,10 +46,8 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
-	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous)),
-		this , SLOT(broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)));
-	connect(ui.m_overViewWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem * current, int column)),
-		m_scenemgr, SLOT(broswerScene1(QTreeWidgetItem * current, int column)));
+	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem* , QTreeWidgetItem*)),
+		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , QTreeWidgetItem*)));
 
 	getCompartFromDb();
 	getBackboneFromDb();
