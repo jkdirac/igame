@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<species id="pSB1A3" name="pSB1A3" category="PlasmidBackbone"
+	x="100" y="-150"
+	width="50" height="50"
+	isVisible="1" isSelectable="1" isMovable="1"
+	isTextVisible="1" text="pSB1A3"
+	isPixmapVisible="1" pixmap=":iGaME.images/plasmid.png"/>
