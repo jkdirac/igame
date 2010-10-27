@@ -32,27 +32,22 @@ MScene::MScene(QObject* parent)
     , m_minZValue(0)
     , m_maxZValue(0)
 {
-	qDebug() << "come here 1";
     this->dataScene = new MItem();
     this->addItem(this->dataScene);
 
-	qDebug() << "come here 2";
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
-	qDebug() << "come here 3";
-	IdSelWidget* IdSel = new IdSelWidget(NULL);
-	selWidget = (MWidget*)addWidget(IdSel);
-	selWidget->setX(0);
-	selWidget->setY(0);
-	qDebug() << "come here 4";
+//    IdSelWidget* IdSel = new IdSelWidget(NULL);
+//    selWidget = (MWidget*)addWidget(IdSel);
+//    selWidget->setX(-300);
+//    selWidget->setY(-300);
 
-	SceneViewWidget* sceneView = new SceneViewWidget(NULL);
-	overviewWidget = (MWidget*)addWidget(sceneView);
-	overviewWidget->setX(0);
-	overviewWidget->setY(500);
-	qDebug() << "come here 5";
+//    SceneViewWidget* sceneView = new SceneViewWidget(NULL);
+//    overviewWidget = (MWidget*)addWidget(sceneView);
+//    overviewWidget->setX(-300);
+//    overviewWidget->setY(0);
 }
 
 // Class MScene destructor

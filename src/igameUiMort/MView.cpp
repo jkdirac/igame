@@ -32,8 +32,8 @@ MView::MView(QWidget* parent)
     this->setMouseTracking(true); // enable mouse move tracking
     //this->setDragMode(QGraphicsView::RubberBandDrag);
 
-    this->showMaximized();
-    this->setSceneRect(0, 0, 800, 600);
+//    this->showMaximized();
+//    this->setSceneRect(0, 0, 800, 600);
 
 }
 

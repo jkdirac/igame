@@ -11,6 +11,7 @@ SceneViewWidget::SceneViewWidget(QWidget* parent) : QWidget(parent)
 
 	SceneManager* mgr = SceneManager::getSceneManger();
 	SceneTreeItem* rootItem = mgr->getRootItem();
+
 	QList<QTreeWidgetItem*> rootList; 
 	rootList << (QTreeWidgetItem*)rootItem; 
 //    QTreeWidget* tree = ui.overViewWidget;

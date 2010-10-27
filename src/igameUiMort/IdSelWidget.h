@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <string>
 #include "SceneManager.h"
-#include "ui_IdSelWidget.h"
 #include "bdbInterface.h"
+#include "ui_IdSelWidget.h"
 
 class IdSelWidget: public QWidget
 {

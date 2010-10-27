@@ -12,8 +12,8 @@ SceneManager::SceneManager()
 	m_browserItem(NULL),
 	m_browserItemId(0)
 {
-	m_browserItemX = 200;
-	m_browserItemY = 700;
+	m_browserItemX = -150;
+	m_browserItemY = -250;
 
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
