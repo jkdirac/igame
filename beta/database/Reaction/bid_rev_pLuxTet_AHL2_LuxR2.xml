@@ -22,7 +22,7 @@
 			</reactant>
 			<reactant>
 				<speciesReference>AHL2_LuxR2</speciesReference>
-				<speciesLabel>AHL2_LuxR2_0</speciesLabel>
+				<speciesLabel>AHL2_LuxR2_1</speciesLabel>
 				<compartmentLabel>E_coli</compartmentLabel>
 			</reactant>
 		</listOfReactants>
@@ -45,19 +45,19 @@
 				<to speciesLabel="rev_pLuxTet_AHL2_LuxR2_0">X5</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="tetR154_dimer_0">X0</from>
+				<from speciesLabel="AHL2_LuxR2_1">X0</from>
 				<to speciesLabel="rev_pLuxTet_AHL2_LuxR2_0">X0</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="tetR154_dimer_0">X1</from>
+				<from speciesLabel="AHL2_LuxR2_1">X1</from>
 				<to speciesLabel="rev_pLuxTet_AHL2_LuxR2_0">X1</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="tetR154_dimer_0">X2</from>
+				<from speciesLabel="AHL2_LuxR2_1">X2</from>
 				<to speciesLabel="rev_pLuxTet_AHL2_LuxR2_0">X2</to>
 			</substituentTransfer>
 			<substituentTransfer>
-				<from speciesLabel="tetR154_dimer_0">X3</from>
+				<from speciesLabel="AHL2_LuxR2_1">X3</from>
 				<to speciesLabel="rev_pLuxTet_AHL2_LuxR2_0">X3</to>
 			</substituentTransfer>
 		</listOfSubstituentTransfers>
@@ -68,7 +68,7 @@
 				    <times/>
 				    <ci> kon </ci>
 				    <ci> pLuxTet_dna_0 </ci>
-				    <ci> AHL2_LuxR2_0 </ci>
+				    <ci> AHL2_LuxR2_1 </ci>
 				    <ci> E_coli </ci>
 				  </apply>
 				</math>

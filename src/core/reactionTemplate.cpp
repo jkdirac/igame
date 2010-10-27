@@ -946,7 +946,13 @@ void reactionTemplate::createProductsFromTemplate (
 						}
 					}
 
-					if (found == NULL) throw CoreException ("species Label NOT found!");
+					if (found == NULL) 
+					{
+						cout << "\nid = " << id 
+							 << "  source.first= " << source.first << endl;
+
+						throw CoreException ("species Label NOT found!");
+					}
 
 					/*
 					debugOut() << "\nsource.first = " << source.first
