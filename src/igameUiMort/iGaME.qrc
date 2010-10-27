@@ -1,27 +1,31 @@
 <RCC>
-    <qresource prefix="/">
-		<file>demoUiXml.ui.xml</file>
-		<file>xml/compartment.ui.xml</file>
-		<file>iGaME.images/bb.png</file>
-		<file>iGaME.images/coding sequence.png</file>
-		<file>iGaME.images/compartment_non_active.png</file>
-		<file>iGaME.images/conditions_active.png</file>
-		<file>iGaME.images/conditions_non_active.png</file>
-		<file>iGaME.images/culture_dish.png</file>
-		<file>iGaME.images/ecoli_active.png</file>
-		<file>iGaME.images/ecoli_input.png</file>
-		<file>iGaME.images/iGaME.ico</file>
-		<file>iGaME.images/input(functions)_active.png</file>
-		<file>iGaME.images/input(functions)_non_active.png</file>
-		<file>iGaME.images/molecule_active.png</file>
-		<file>iGaME.images/molecule_non_active.png</file>
-		<file>iGaME.images/plasmid line.png</file>
-		<file>iGaME.images/plasmid.png</file>
-		<file>iGaME.images/promoter.png</file>
-		<file>iGaME.images/rbs.png</file>
-		<file>iGaME.images/splash.png</file>
-		<file>iGaME.images/terminator.png</file>
-		<file>iGaME.images/terminator_selected.png</file>
-		<file>iGaME.images/ustc_software.png</file>
-	</qresource>
+  <qresource prefix="/">
+    <file>iGaME.images/ustc_software-600*600.png</file>
+    <file>demoUiXml.ui.xml</file>
+    <file>xml/compartment.ui.xml</file>
+    <file>xml/new-compartment.ui.xml</file>
+    <file>xml/trash.ui.xml</file>
+    <file>iGaME.images/bb.png</file>
+    <file>iGaME.images/demobg.png</file>
+    <file>iGaME.images/coding sequence.png</file>
+    <file>iGaME.images/compartment_non_active.png</file>
+    <file>iGaME.images/conditions_active.png</file>
+    <file>iGaME.images/conditions_non_active.png</file>
+    <file>iGaME.images/culture_dish.png</file>
+    <file>iGaME.images/ecoli_active.png</file>
+    <file>iGaME.images/ecoli_input.png</file>
+    <file>iGaME.images/iGaME.ico</file>
+    <file>iGaME.images/input(functions)_active.png</file>
+    <file>iGaME.images/input(functions)_non_active.png</file>
+    <file>iGaME.images/molecule_active.png</file>
+    <file>iGaME.images/molecule_non_active.png</file>
+    <file>iGaME.images/plasmid line.png</file>
+    <file>iGaME.images/plasmid.png</file>
+    <file>iGaME.images/promoter.png</file>
+    <file>iGaME.images/rbs.png</file>
+    <file>iGaME.images/splash.png</file>
+    <file>iGaME.images/terminator.png</file>
+    <file>iGaME.images/terminator_selected.png</file>
+    <file>iGaME.images/ustc_software.png</file>
+  </qresource>
 </RCC>

@@ -5,6 +5,7 @@
 #include "MView.h"
 #include "MItem.h"
 
+class MainGraphicsView;
 class SceneManager
 {
 	private:
@@ -16,7 +17,7 @@ class SceneManager
 
 		SceneTreeItem* m_rootItem;
 
-		MView* m_view;
+		QGraphicsView* m_view;
 
 		MItem* m_browserItem;
 		int m_browserItemId;
@@ -26,8 +27,12 @@ class SceneManager
 	public:
 		static SceneManager* getSceneManger();
 
+		MainGraphicsView* m_mainWindow;
+		SceneManager* setMainWindow(MainGraphicsView *win);
+
 		void setCurrentScene(MScene* scene);
-		void setMainView(MView* view);
+		void setMainView(QGraphicsView* view);
+		void addNewScene(MScene* newScene);
 
 		SceneTreeItem* getRootItem();
 
@@ -35,6 +40,7 @@ class SceneManager
 
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);
+//
 };
 
 #endif

@@ -1,3 +1,16 @@
+/********************************************************************
+*
+*            Author: jkdirac- jiangkun1@gmail.com
+*
+*
+*
+*            Last modified: 2010-10-27 12:23
+*
+*            Filename: MItem.cpp
+*
+*            Description: .
+*
+*******************************************************************/
 /****************************************************************************
 **
 ** MosQt 0.10.14 alpha (2010 Oct 14)
@@ -28,9 +41,12 @@
 #include <iostream>
 #include <QDebug>
 
+#include "MScene.h"
+
 // Class MItem constructor
 MItem::MItem()
-    : m_id("")
+	: m_scene(NULL)
+    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -83,7 +99,8 @@ MItem::MItem()
 }
 
 MItem::MItem(const QString& fileName)
-    : m_id("")
+	: m_scene(NULL)
+    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -435,12 +452,12 @@ void MItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
             painter->setPen(m_textColor);
             painter->setFont(m_textFont);
             painter->drawText(rect, Qt::AlignCenter, m_text);
+//            qDebug() << "draw text " << m_id << " " << rect.x() << " " << rect.y() << " " << m_width << " " << m_height;
 
         } else { // draw alternative text
             painter->setPen(m_alternativeTextColor);
             painter->setFont(m_alternativeTextFont);
             painter->drawText(rect, Qt::AlignCenter, m_alternativeText);
-
         }
     }
 
@@ -452,6 +469,8 @@ void MItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 // Renew MItem display
 void MItem::renew()
 {
+	setAcceptDrops(true);
+
     if (m_isSelectable && m_isMovable) {
         this->setFlags(QGraphicsItem::ItemIsSelectable
                        | QGraphicsItem::ItemIsMovable
@@ -485,7 +504,15 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
     return QGraphicsItem::itemChange(change, value);
 }
 
+MScene* MItem::getScene()
+{
+	return m_scene;
+}
 
+void MItem::setScene(MScene* sce)
+{
+	m_scene = sce;
+}
 
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
@@ -513,3 +540,10 @@ void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     return QGraphicsItem::mouseReleaseEvent(event);
 }
 */
+
+void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+	qDebug() << "mouse released";
+	getScene()->itemDropped(this);
+	return QGraphicsItem::mouseReleaseEvent(event);
+}

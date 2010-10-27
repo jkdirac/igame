@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "SceneTreeItem.h"
+#include "MainGraphicsView.h"
 
 SceneManager* SceneManager::_single_instance = NULL;
 
@@ -12,23 +13,31 @@ SceneManager::SceneManager()
 	m_browserItem(NULL),
 	m_browserItemId(0)
 {
-	m_browserItemX = 200;
-	m_browserItemY = 700;
+	m_browserItemX = 140;
+	m_browserItemY = -150;
 
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
 
 void SceneManager::startShow()
 {
-	m_rootscene = new MScene();
+	m_rootscene = new MScene(NULL, "Flask");
+
 	if ( m_rootscene != NULL)
 	{
-		m_rootscene->setId("Flask");
-		m_rootscene->loadXml(":demoUiXml.ui.xml");
+		m_rootItem = m_rootscene->getTreeItem();
+//        m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
-		m_rootscene->setTreeItem(m_rootItem);
+	}
+}
+
+SceneManager* SceneManager::setMainWindow(MainGraphicsView *win)
+{
+	if (win != NULL)
+	{
+		m_mainWindow = win;
 	}
 }
 
@@ -42,7 +51,7 @@ SceneManager* SceneManager::getSceneManger()
 	return _single_instance;
 }
 
-void SceneManager::setMainView(MView* view)
+void SceneManager::setMainView(QGraphicsView* view)
 {
 	if (view != NULL)
 		m_view = view;
@@ -61,6 +70,8 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
+		m_mainWindow->setTreeView();
+//        m_currentscene->showTreeWidget(m_rootItem);
 		m_view->setScene(m_currentscene);
 	}
 }
@@ -79,7 +90,8 @@ void SceneManager::browserItem(MItem* item)
 			&& (m_browserItem->x() == m_browserItemX)
 			&& (m_browserItem->y() == m_browserItemY))
 	{
-		m_currentscene->deletItemEx(m_browserItemId);
+		m_currentscene->deletItemEx(m_browserItem);
+		m_browserItem = NULL;
 //        delete m_browserItem;
 	}
 
@@ -91,5 +103,15 @@ void SceneManager::browserItem(MItem* item)
 
 SceneTreeItem* SceneManager::getRootItem()
 {
+	m_rootItem = m_rootscene->getTreeItem();
 	return m_rootItem;
+}
+
+void SceneManager::addNewScene(MScene* newScene)
+{
+	if (newScene == NULL)
+		return;
+	
+	m_currentscene->addChildScene(newScene);
+	setCurrentScene(newScene);
 }

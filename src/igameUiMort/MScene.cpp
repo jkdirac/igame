@@ -27,32 +27,48 @@
 
 // Class MScene constructor
 MScene::MScene(QObject* parent)
-    : QGraphicsScene(parent)
-    , dataCount(0)
-    , m_minZValue(0)
-    , m_maxZValue(0)
+	: QGraphicsScene(parent)
+	, dataCount(0)
+	, m_minZValue(0)
+	, m_maxZValue(0)
+	, m_treeItem(NULL)
+	  ,m_overviewWidget(NULL)
 {
-	qDebug() << "come here 1";
+	init();
+}
+
+MScene::MScene(QObject* parent, const QString& id)
+	: QGraphicsScene(parent)
+	, dataCount(0)
+	, m_minZValue(0)
+	, m_maxZValue(0)
+	, m_treeItem(NULL)
+	  ,m_overviewWidget(NULL)
+{
+	m_id = id;
+	init();
+}
+
+void MScene::init()
+{
+//    loadXml(":demoUiXml.ui.xml");
     this->dataScene = new MItem();
     this->addItem(this->dataScene);
 
-	qDebug() << "come here 2";
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
-	qDebug() << "come here 3";
-	IdSelWidget* IdSel = new IdSelWidget(NULL);
-	selWidget = (MWidget*)addWidget(IdSel);
-	selWidget->setX(0);
-	selWidget->setY(0);
-	qDebug() << "come here 4";
+	m_comItem = new MItem(":xml/compartment.ui.xml");
+	m_comItem->setId(m_id);
+	addItemEx(m_comItem);
 
-	SceneViewWidget* sceneView = new SceneViewWidget(NULL);
-	overviewWidget = (MWidget*)addWidget(sceneView);
-	overviewWidget->setX(0);
-	overviewWidget->setY(500);
-	qDebug() << "come here 5";
+	m_trashItem = new MItem(":xml/trash.ui.xml");
+	addItemEx(m_trashItem);
+
+	//Displayed item in OverView TreeView
+	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
+	setTreeItem(newItem);
 }
 
 // Class MScene destructor
@@ -80,7 +96,7 @@ MScene::~MScene()
 	//
     delete dataScene;
 	delete selWidget;
-	delete overviewWidget;
+	delete m_overviewWidget;
 
 	//delete items
 	for (int i = 0; i < dataCount; i++)
@@ -95,16 +111,50 @@ int MScene::addItemEx(MItem *item)
 		return -1;
 	
 	dataItem[dataCount] = item;
-	dataCount++;
 
     this->addItem(item);
+	item->setScene(this);
+	item->setSceneId(dataCount);
 
+	dataCount++;
 	return dataCount-1;
+}
+
+void MScene::deletItemEx(MItem* item)
+{
+	bool bfound = false;
+	int n = 0;
+	if (item == NULL)
+		return;
+
+	while (n < dataCount)
+	{
+		if (item == dataItem[n])
+		{
+			bfound = true;
+			break;
+		}
+		n++;
+	}
+
+	if (!bfound)
+		return;
+
+	this->removeItem(item);
+	delete item;
+
+	for (int i = n; i < dataCount-1; i++)
+	{
+		dataItem[i] = dataItem[i+1];
+		dataItem[i+1] = NULL;
+	}
+
+	dataCount--;
 }
 
 void MScene::deletItemEx(int n)
 {
-	if ((n < 0) || (n > dataCount))
+	if ((n < 0) || (n >= dataCount))
 		return;
 
 	if (dataItem[n] != NULL)
@@ -123,7 +173,8 @@ void MScene::deletItemEx(int n)
 }
 
 // Get the only selected item
-MItem* MScene::selectedItem() const
+MItem*
+MScene::selectedItem() const
 {
     QList<QGraphicsItem*> items = this->selectedItems();
 
@@ -373,7 +424,8 @@ void MScene::addChildScene(MScene *child)
 	if ((m_treeItem != NULL) 
 		&& (child != NULL))
 	{
-		SceneTreeItem* newItem = new SceneTreeItem((QTreeWidget*)m_treeItem, child);
+		qDebug() << "m_treeItem: " << (int)m_treeItem;
+		SceneTreeItem* newItem = child->getTreeItem();
 		m_treeItem->addChild(newItem);
 	}
 }
@@ -387,12 +439,7 @@ void MScene::setParent(MScene* parent)
 	m_parent = parent;
 }
 
-QVector<MScene*>& MScene::getChildScene()
-{
-	return m_childern;
-}
-
-void MScene::setId(const QString id)
+void MScene::setId(const QString& id)
 {
 	m_id = id;
 }
@@ -402,6 +449,12 @@ QString& MScene::getId()
 	return m_id;
 }
 
+/** 
+ * @breif  
+ * Set the item pointer of this scene
+ * 
+ * @Param item
+ */
 void MScene::setTreeItem(SceneTreeItem *item)
 {
 	if (item != NULL)
@@ -414,4 +467,33 @@ void MScene::setTreeItem(SceneTreeItem *item)
 SceneTreeItem* MScene::getTreeItem()
 {
 	return m_treeItem;
+}
+
+bool MScene::itemInCompartment(MItem *item)
+{
+	if (item == NULL)
+		return false;
+
+	if (item->collidesWithItem(m_comItem))
+		return true;
+	else
+		return false;
+}
+
+bool MScene::itemDropped(MItem *item)
+{
+	if (item == NULL)
+		return false;
+
+	if (item == m_trashItem)
+		return false;
+
+	if (item->collidesWithItem(m_trashItem))
+	{
+		deletItemEx(item);
+//        deletItemEx(item->sceneId());
+		return true;
+	}
+	else
+		return false;
 }

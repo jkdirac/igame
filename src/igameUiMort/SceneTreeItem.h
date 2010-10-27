@@ -9,9 +9,10 @@ class SceneTreeItem : public QTreeWidgetItem
 		MScene* m_scene;
 
 	public:
-		SceneTreeItem(QTreeWidget *parent, MScene *sce);
+		SceneTreeItem(QTreeWidgetItem *parent, MScene *sce);
 		SceneTreeItem(const QString& str);
 		MScene* getScene();
+		SceneTreeItem* clone();
 		void setScene(MScene* sce);
 };
 

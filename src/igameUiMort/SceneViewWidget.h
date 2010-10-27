@@ -2,20 +2,25 @@
 #define _SCENE_VIEW_WIDGET_H_
 
 #include <QWidget>
-#include <QStandardItemModel>
 #include "ui_SceneViewWidget.h"
 
+class SceneTreeItem;
 class SceneViewWidget: public QWidget
 {
 	Q_OBJECT
 
 	public:
 		SceneViewWidget(QWidget* parent);
+		void setTreeRootItem(SceneTreeItem* root);
+		static SceneViewWidget* getSceneView();
 
 	private:
 		Ui::SceneViewWidget	ui;
+		static SceneViewWidget* _single_instance;
 
-		QStandardItemModel *model;
+//        SceneTreeItem* m_tree;
+		QTreeWidgetItem* m_tree;
+		void copyScene(SceneTreeItem* root);
 };
 
 #endif
