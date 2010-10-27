@@ -40,6 +40,7 @@
 						<times/>
 						<ci> kk </ci>
 						<ci> ccdB </ci>
+						<ci> E_coli_cell_0 </ci>
 						<ci> Flask_0 </ci>
 					</apply>
 				</math>
@@ -47,7 +48,7 @@
 					<localParameter>
 						<id>kk</id>
 						<value>2.95E-3</value>
-						<units>per_second</units>
+						<units>litre_per_mole_per_second</units>
 						<constant>true</constant>
 					</localParameter>
 				</listOfLocalParameters>

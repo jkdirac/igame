@@ -3,7 +3,7 @@
 <!-- Authored by USTC 2010 SOFTWARE TEAM BIONOVO -->
 <MoDeL>
 	<part>
-		<biobrick id="pLuxTet_bs2" originalConformation="pLuxTet_bs2">
+		<biobrick id="pLuxTet_bs2" originalConformation="pLuxTet">
 			<interface>
 				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_K176000</url>
 				<shortDesc>pLux/Tet in its binding state with tetR dimer</shortDesc>
@@ -14,8 +14,8 @@
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">fw_pLuxTet_tetR2</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">rev_pLuxTet_tetR2</referencedSpecies>
+				<referencedSpecies partType="ForwardDNA">fw_pLuxTet_tetR154_2</referencedSpecies>
+				<referencedSpecies partType="ReverseDNA">rev_pLuxTet_tetR154_2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>

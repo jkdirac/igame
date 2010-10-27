@@ -114,8 +114,6 @@
 			<referencedReaction speciesType="reactant">bid_AHL2_LuxR2_rev_pluxI</referencedReaction>
 			<referencedReaction speciesType="reactant">bid_fw_pLuxTet_AHL2_LuxR2</referencedReaction>
 			<referencedReaction speciesType="reactant">bid_rev_pLuxTet_AHL2_LuxR2</referencedReaction>
-			<referencedReaction speciesType="reactant">bid_fw_pLuxTet_AHL2_LuxR2_TetR2</referencedReaction>
-			<referencedReaction speciesType="reactant">bid_rev_pLuxTet_AHL2_LuxR2_TetR2</referencedReaction>
 			<referencedReaction speciesType="product">dmr_AHL2_LuxR2</referencedReaction>
 		</listOfReferencedReactions>
 	</species>

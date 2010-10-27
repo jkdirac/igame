@@ -49,13 +49,13 @@
 				<listOfLocalParameters>
 					<localParameter>
 						<id> k0 </id>
-						<value>1.83E-7</value>
+						<value>1.2E-8</value>
 						<units>mole_per_litre_per_second</units>
 						<constant>true</constant>
 					</localParameter>
 					<localParameter>
 						<id>kd</id>
-						<value>1E-5</value>
+						<value>1E-2</value>
 						<units>mole_per_litre</units>
 						<constant>true</constant>
 					</localParameter>

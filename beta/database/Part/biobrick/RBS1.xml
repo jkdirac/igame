@@ -3,19 +3,16 @@
 <!-- Authored by USTC 2010 SOFTWARE TEAM BIONOVO -->
 <MoDeL>
 	<part>
-		<biobrick id="pLuxTet_bs3" originalConformation="pLuxTet">
+		<biobrick id="RBS1" name="RBS1">
 			<interface>
-				<url>http://partsregistry.org/cgi/xml/part.cgi?part=BBa_K176000</url>
-				<shortDesc>pLux/Tet in its binding state with both tetR dimer and (LuxR-AHL) dimer</shortDesc>
+				<shortDesc>artificial biobrick; RBS1 </shortDesc>
 			</interface>
 			<listOfConditionalParameters>
-				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
-					<parameterValue compartment="E_coli">0.0000</parameterValue>
+				<conditionalParameter id="forwardRbsEfficiency" units="per_second">
+					<parameterValue compartment="E_coli">10</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="ForwardDNA">fw_pLuxTet_AHL2_LuxR2_tetR2</referencedSpecies>
-				<referencedSpecies partType="ReverseDNA">rev_pLuxTet_AHL2_LuxR2_tetR2</referencedSpecies>
 				<referencedSpecies partType="ForwardProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies partType="ForwardRNA">rna_sc</referencedSpecies>

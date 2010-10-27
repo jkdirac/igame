@@ -80,8 +80,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter1</partReference>
-										<partLabel>Promoter1_0</partLabel>
+										<partReference>Promoter3</partReference>
+										<partLabel>Promoter3_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -104,8 +104,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter2</partReference>
-										<partLabel>Promoter2_0</partLabel>
+										<partReference>Promoter1</partReference>
+										<partLabel>Promoter1_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
