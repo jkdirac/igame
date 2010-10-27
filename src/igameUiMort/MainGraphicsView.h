@@ -22,7 +22,6 @@ class MainGraphicsView : public QWidget
 
 		Ui::MainGraphicsView ui;
 		MainGraphicsView(QWidget* parent);
-		void setCompartments(QStringList &list);
 		void setTreeView();
 		void setUi(STATE curState);
 		void setState(STATE curState);
@@ -32,11 +31,22 @@ class MainGraphicsView : public QWidget
 		QRect m_mainRect;
 
 		QStringList m_compList;
+		QStringList m_speList;
+		QStringList m_bioList;
 		SceneManager* m_scenemgr;
+
 		void getCompartFromDb();
+		void getSpeciesFromDb();
+		void getPartsFromDb();
+
+		void setBiobricks(QStringList &list);
+		void setSpecies(QStringList &list);
+		void setCompartments(QStringList &list);
 
 		private slots:
-		void highlightCombx(const QString &name);
+		void highlightComCombx(const QString &name);
+		void highlightSpeCombx(const QString &name);
+		void highlightBioCombx(const QString &name);
 		void createNewCompartment(const QString& partname);
 		void activateCombx(const QString& partname);
 		void runDemo();

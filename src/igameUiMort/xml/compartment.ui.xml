@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <comp id="Flask" name="Flask" category="Compartment"
 	x="-150" y="-150"
-	width="300" height="300"
+	width="400" height="400"
 	isVisible="1" isSelectable="1" isMovable="0"
 	isTextVisible="1" text="Flask"
 	isPixmapVisible="1" pixmap=":iGaME.images/culture_dish.png"/>

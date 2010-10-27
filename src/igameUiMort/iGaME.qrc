@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="/">
+    <file>xml/biobrick.ui.xml</file>
+    <file>xml/compartment.ui.xml</file>
+    <file>xml/new-compartment.ui.xml</file>
+    <file>xml/new-species.ui.xml</file>
+    <file>xml/species.ui.xml</file>
+    <file>xml/trash.ui.xml</file>
     <file>iGaME.images/ustc_software-600*600.png</file>
     <file>demoUiXml.ui.xml</file>
     <file>xml/compartment.ui.xml</file>

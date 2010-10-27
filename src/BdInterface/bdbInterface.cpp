@@ -350,7 +350,12 @@ BdRetVal bdbXMLInterface::get_node_attr(container_index container_type,
 	XmlValue value;
 	while (results.next(value))
 	{
-		res.push_back(value.getNodeValue());
+	    string stripped_str = strip_char(value.getNodeValue());
+
+		if (stripped_str.empty())
+			continue;
+
+		res.push_back(stripped_str);
 	}
 
 	return no_error;
@@ -643,21 +648,22 @@ string bdbXMLInterface::strip_char(string instring)
 BdRetVal bdbXMLInterface::get_ids_bycontainer(container_index container_type, vector<string> &res)
 {
 		vector<string> result;
-		string path_biobrick = "//biobrick/@id";
-		string path_compartment= "//compartment/@id";
+		string path_biobrick = "//@id";
+//        string path_biobrick = "//biobrick/@id";
+//        string path_compartment= "//compartment/@id";
 
 		result.clear();
-		get_node_attr(container_type, NULL, &path_biobrick, result);
-		for (int i=0; i<result.size(); i++)
-		{
-				res.push_back(result[i]);
-		}
+		get_node_attr(container_type, NULL, &path_biobrick, res);
+//        for (int i=0; i<result.size(); i++)
+//        {
+//                res.push_back(result[i]);
+//        }
 
-		get_node_attr(container_type, NULL, &path_compartment, result);
-		for (int i=0; i<result.size(); i++)
-		{
-				res.push_back(result[i]);
-		}
+//        get_node_attr(container_type, NULL, &path_compartment, result);
+//        for (int i=0; i<result.size(); i++)
+//        {
+//                res.push_back(result[i]);
+//        }
 
 		return no_error;
 }

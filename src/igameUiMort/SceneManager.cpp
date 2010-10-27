@@ -86,6 +86,8 @@ void SceneManager::browserItem(MItem* item)
 	//check position
 	//if m_browserItem was not in init region, confirmed inserted in the scene
 	//else delete the m_browserItem 
+	//
+
 	if (m_browserItem 
 			&& (m_browserItem->x() == m_browserItemX)
 			&& (m_browserItem->y() == m_browserItemY))
@@ -94,6 +96,7 @@ void SceneManager::browserItem(MItem* item)
 		m_browserItem = NULL;
 //        delete m_browserItem;
 	}
+	
 
 	m_browserItem = item;
 	m_browserItem->setX(m_browserItemX);

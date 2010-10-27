@@ -32,7 +32,6 @@ MScene::MScene(QObject* parent)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
-	  ,m_overviewWidget(NULL)
 {
 	init();
 }
@@ -43,7 +42,6 @@ MScene::MScene(QObject* parent, const QString& id)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
-	  ,m_overviewWidget(NULL)
 {
 	m_id = id;
 	init();
@@ -95,8 +93,6 @@ MScene::~MScene()
 
 	//
     delete dataScene;
-	delete selWidget;
-	delete m_overviewWidget;
 
 	//delete items
 	for (int i = 0; i < dataCount; i++)
@@ -490,7 +486,7 @@ bool MScene::itemDropped(MItem *item)
 
 	if (item->collidesWithItem(m_trashItem))
 	{
-		deletItemEx(item);
+//        deletItemEx(item);
 //        deletItemEx(item->sceneId());
 		return true;
 	}

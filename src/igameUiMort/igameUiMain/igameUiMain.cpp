@@ -55,6 +55,7 @@ bool init_global_dir_setting()
 		// or have not the write permission of path %HOME and "./" 
 	}
 
+	qDebug() << "home dir: " << get_igame_home_dir();
 	return b_succ;
 }
 
