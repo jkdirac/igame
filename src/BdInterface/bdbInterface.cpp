@@ -633,6 +633,20 @@ string bdbXMLInterface::strip_char(string instring)
 		return string (instring, pos_head, pos_tail-pos_head+1);
 }
 
+BdRetVal bdbXMLInterface::get_ids_byNodePath(container_index container_type, const char* node_path, vector<string> &res)
+{
+	if (node_path == NULL)
+		return para_error;
+
+		string path = node_path;
+
+		res.clear();
+		//may throw exception
+		get_node_attr(container_type, NULL, &path, res);
+
+		return no_error;
+}
+
 /** 
  * @breif 
  * 	This is a function for ui interface.
@@ -647,25 +661,11 @@ string bdbXMLInterface::strip_char(string instring)
  */
 BdRetVal bdbXMLInterface::get_ids_bycontainer(container_index container_type, vector<string> &res)
 {
-		vector<string> result;
 		string path_biobrick = "//@id";
 //        string path_biobrick = "//biobrick/@id";
 //        string path_compartment= "//compartment/@id";
 
-		result.clear();
-		get_node_attr(container_type, NULL, &path_biobrick, res);
-//        for (int i=0; i<result.size(); i++)
-//        {
-//                res.push_back(result[i]);
-//        }
-
-//        get_node_attr(container_type, NULL, &path_compartment, result);
-//        for (int i=0; i<result.size(); i++)
-//        {
-//                res.push_back(result[i]);
-//        }
-
-		return no_error;
+		return get_ids_byNodePath(container_type, path_biobrick.c_str(), res);
 }
 
 BdRetVal bdbXMLInterface::insert_new_node(container_index container_type, const string& docname, const string &node_path,

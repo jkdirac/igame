@@ -4,10 +4,12 @@
 #include "MScene.h"
 #include "MView.h"
 #include "MItem.h"
+#include <QTreeWidgetItem>
 
 class MainGraphicsView;
-class SceneManager
+class SceneManager : public QObject
 {
+	Q_OBJECT
 	private:
 		static SceneManager *_single_instance;
 		SceneManager();
@@ -24,6 +26,10 @@ class SceneManager
 		qreal m_browserItemX;
 		qreal m_browserItemY;
 
+		private slots:
+			void broswerScene(QTreeWidgetItem * current, 
+					QTreeWidgetItem * previous);
+		void broswerScene1(QTreeWidgetItem * current, int column);
 	public:
 		static SceneManager* getSceneManger();
 

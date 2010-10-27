@@ -5,6 +5,7 @@
 #include "SceneViewWidget.h"
 #include "SceneTreeItem.h"
 #include "SceneManager.h"
+#include "Species.h"
 #include <QStringList>
 #include <QList>
 #include <QTreeWidgetItem>
@@ -20,15 +21,20 @@
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
-	m_mainRect = QRect(250, 0, 650, 650);
+	m_mainRect = QRect(300, 0, 700, 600);
 			
 	setState(START);
 	connect(ui.com_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightComCombx(const QString &)));
-	connect(ui.spe_combx, SIGNAL(highlighted(const QString &)), 
-			                     this, SLOT(highlightSpeCombx(const QString &)));
+	connect(ui.backbone_combx, SIGNAL(highlighted(const QString &)), 
+			                     this, SLOT(highlightbackboneCombx(const QString &)));
 	connect(ui.bio_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightBioCombx(const QString &)));
+	connect(ui.compound_combx, SIGNAL(highlighted(const QString &)), 
+			                     this, SLOT(highlightCompoundCombx(const QString &)));
+
+//    connect(ui.const, highlightCompoundCombx(const QString &name)
+
 	connect(ui.m_getStart, SIGNAL(pressed()), 
 			                     this, SLOT(getStart()));
 	connect(ui.m_loadbase, SIGNAL(pressed()), 
@@ -40,10 +46,13 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
-	getCompartFromDb();
-	getSpeciesFromDb();
-	getPartsFromDb();
+	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem* , QTreeWidgetItem*)),
+		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , QTreeWidgetItem*)));
 
+	getCompartFromDb();
+	getBackboneFromDb();
+	getBiobricksFromDb();
+	getCompoundFromDb();
 //    setTreeView();
 }
 
@@ -58,12 +67,8 @@ void MainGraphicsView::setUi(STATE curState)
 	if (curState == START)
 	{
 		ui.m_overViewWidget->setVisible(false);
-		ui.label->setVisible(false);
-		ui.label_2->setVisible(false);
-		ui.label_3->setVisible(false);
-		ui.com_combx->setVisible(false);
-		ui.bio_combx->setVisible(false);
-		ui.spe_combx->setVisible(false);
+
+		ui.m_frame->setVisible(false);
 
 		ui.m_getStart->setVisible(true);
 		ui.m_loadbase->setVisible(true);
@@ -86,12 +91,7 @@ void MainGraphicsView::setUi(STATE curState)
 	{
 		qDebug() << "enter gamescene";
 		ui.m_overViewWidget->setVisible(true);
-		ui.label->setVisible(true);
-		ui.label_2->setVisible(true);
-		ui.label_3->setVisible(true);
-		ui.com_combx->setVisible(true);
-		ui.bio_combx->setVisible(true);
-		ui.spe_combx->setVisible(true);
+		ui.m_frame->setVisible(true);
 
 		ui.m_getStart->setVisible(false);
 		ui.m_loadbase->setVisible(false);
@@ -116,12 +116,7 @@ void MainGraphicsView::setUi(STATE curState)
 	{
 		qDebug() << "enter Review";
 		ui.m_overViewWidget->setVisible(true);
-		ui.label->setVisible(false);
-		ui.label_2->setVisible(false);
-		ui.label_3->setVisible(false);
-		ui.com_combx->setVisible(false);
-		ui.bio_combx->setVisible(false);
-		ui.spe_combx->setVisible(false);
+		ui.m_frame->setVisible(false);
 
 		ui.m_getStart->setVisible(false);
 		ui.m_loadbase->setVisible(false);
@@ -161,16 +156,22 @@ void MainGraphicsView::setBiobricks(QStringList &list)
 	ui.bio_combx->addItems(m_bioList);
 }
 
-void MainGraphicsView::setSpecies(QStringList &list)
+void MainGraphicsView::setBackbone(QStringList &list)
 {
-	m_speList = list;
-	ui.spe_combx->addItems(m_speList);
+	m_backboneList = list;
+	ui.backbone_combx->addItems(m_backboneList);
 }
 
 void MainGraphicsView::setCompartments(QStringList &list)
 {
 	m_compList = list;
 	ui.com_combx->addItems(m_compList);
+}
+
+void MainGraphicsView::setCompounds(QStringList &list)
+{
+	m_compList = list;
+	ui.compound_combx->addItems(m_compList);
 }
 
 void MainGraphicsView::createNewCompartment(const QString& partname)
@@ -187,17 +188,17 @@ void MainGraphicsView::highlightComCombx(const QString &name)
 {
 	qDebug() << "highligth partName: " << name;
 
-	MItem* item = new ClickableWidget(":xml/new-compartment.ui.xml");
+	MItem* item = new ClickableWidget(":/xml/compartment.xml", SPEC_COMPARTMENT);
 	item->setId(name);
 	
 	m_scenemgr->browserItem(item);
 }
 
-void MainGraphicsView::highlightSpeCombx(const QString &name)
+void MainGraphicsView::highlightbackboneCombx(const QString &name)
 {
 	qDebug() << "highligth partName: " << name;
 
-	MItem* item = new ClickableWidget(":xml/new-species.ui.xml");
+	MItem* item = new ClickableWidget(":xml/backbone.ui.xml", SPEC_BACKBONE);
 	item->setId(name);
 	
 	m_scenemgr->browserItem(item);
@@ -207,7 +208,17 @@ void MainGraphicsView::highlightBioCombx(const QString &name)
 {
 	qDebug() << "highligth partName: " << name;
 
-	MItem* item = new ClickableWidget(":xml/biobrick.ui.xml");
+	MItem* item = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
+	item->setId(name);
+	
+	m_scenemgr->browserItem(item);
+}
+
+void MainGraphicsView::highlightCompoundCombx(const QString &name)
+{
+	qDebug() << "highligth partName: " << name;
+
+	MItem* item = new MItem(":xml/compound.ui.xml", SPEC_COMPOUNDS);
 	item->setId(name);
 	
 	m_scenemgr->browserItem(item);
@@ -263,23 +274,25 @@ void MainGraphicsView::loadDb()
 		//add to directory
 	}
 
-	getPartsFromDb();
-	getSpeciesFromDb();
-	getPartsFromDb();
+	getCompartFromDb();
+	getBackboneFromDb();
+	getBiobricksFromDb();
+	getCompoundFromDb();
 }
 
 void MainGraphicsView::runDemo()
 {
 }
 
-void MainGraphicsView::getPartsFromDb()
+void MainGraphicsView::getBiobricksFromDb()
 {
 	//get datas from bdinterface
 	bdbXMLInterface inter;
 	vector<string> res;
 	try
 	{
-		inter.get_ids_bycontainer(PART, res);
+//        inter.get_ids_bycontainer(PART, res);
+		inter.get_ids_byNodePath(PART, "//biobrick/@id", res);
 	}
 	catch (XmlException &se)
 	{
@@ -287,6 +300,7 @@ void MainGraphicsView::getPartsFromDb()
 	}
 
 	QStringList comList;
+	comList.clear();
 	for (int i=0; i < res.size(); i++)
 	{
 		if (res[i].empty())
@@ -303,14 +317,14 @@ void MainGraphicsView::getPartsFromDb()
 	setBiobricks(comList);
 }
 
-void MainGraphicsView::getSpeciesFromDb()
+void MainGraphicsView::getBackboneFromDb()
 {
 	//get datas from bdinterface
 	bdbXMLInterface inter;
 	vector<string> res;
 	try
 	{
-		inter.get_ids_bycontainer(SPECIES, res);
+		inter.get_ids_byNodePath(PART, "//plasmidBackbone/@id", res);
 	}
 	catch (XmlException &se)
 	{
@@ -318,6 +332,7 @@ void MainGraphicsView::getSpeciesFromDb()
 	}
 
 	QStringList comList;
+	comList.clear();
 	for (int i=0; i < res.size(); i++)
 	{
 		if (res[i].empty())
@@ -330,7 +345,7 @@ void MainGraphicsView::getSpeciesFromDb()
 
 	//        QStringList comList;
 	//        comList << "abc" << "def" << "hij";
-	setSpecies(comList);
+	setBackbone(comList);
 }
 
 void MainGraphicsView::getCompartFromDb()
@@ -348,6 +363,7 @@ void MainGraphicsView::getCompartFromDb()
 	}
 
 	QStringList comList;
+	comList.clear();
 	for (int i=0; i < res.size(); i++)
 	{
 		if (res[i].empty())
@@ -361,4 +377,44 @@ void MainGraphicsView::getCompartFromDb()
 	//        QStringList comList;
 	//        comList << "abc" << "def" << "hij";
 	setCompartments(comList);
+}
+
+void MainGraphicsView::getCompoundFromDb()
+{
+	//get datas from bdinterface
+	bdbXMLInterface inter;
+	vector<string> res;
+	try
+	{
+		inter.get_ids_byNodePath(PART, "//compound/@id", res);
+	}
+	catch (XmlException &se)
+	{
+		qDebug() << "read ids error " << se.what() << endl;
+	}
+
+	QStringList comList;
+	comList.clear();
+	for (int i=0; i < res.size(); i++)
+	{
+		if (res[i].empty())
+			continue;
+		qDebug() <<"id " << i << " " << res[i].c_str();
+		QString qstr(res[i].c_str());
+		comList << qstr;
+	}
+	/*cheat*/
+
+	//        QStringList comList;
+	//        comList << "abc" << "def" << "hij";
+	setCompounds(comList);
+}
+
+void MainGraphicsView::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+{
+	qDebug() << "broswer Scene";
+	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+	MScene* setScene = curSceneItem->getScene();
+	
+	m_scenemgr->setCurrentScene(setScene);
 }

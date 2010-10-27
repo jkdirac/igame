@@ -35,12 +35,12 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <string notr="true">background-color: rgb(207, 207, 207);</string>
   </property>
   <widget class="QGraphicsView" name="m_mainGraph">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>340</x>
      <y>70</y>
      <width>201</width>
      <height>211</height>
@@ -70,13 +70,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>250</width>
+     <width>300</width>
      <height>300</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(ff,ff,ff);
+    <string notr="true">background-color: rgb(240, 240, 240);
 font: 9pt &quot;Verdana&quot;;</string>
+   </property>
+   <property name="itemsExpandable">
+    <bool>true</bool>
+   </property>
+   <property name="allColumnsShowFocus">
+    <bool>true</bool>
    </property>
    <column>
     <property name="text">
@@ -87,11 +93,15 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_scenNext">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>590</y>
-     <width>101</width>
-     <height>26</height>
+     <x>870</x>
+     <y>570</y>
+     <width>120</width>
+     <height>30</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;Verdana&quot;;
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));</string>
    </property>
    <property name="text">
     <string>review</string>
@@ -100,11 +110,15 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_scenBack">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>630</y>
-     <width>101</width>
-     <height>26</height>
+     <x>310</x>
+     <y>570</y>
+     <width>120</width>
+     <height>30</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;Verdana&quot;;
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));</string>
    </property>
    <property name="text">
     <string>Back To Menu</string>
@@ -113,14 +127,14 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QTextBrowser" name="m_fileBrowser">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>310</y>
+     <x>330</x>
+     <y>290</y>
      <width>201</width>
      <height>211</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(230, 230, 230);</string>
    </property>
   </widget>
   <widget class="QGraphicsView" name="m_logo">
@@ -129,10 +143,10 @@ font: 9pt &quot;Verdana&quot;;</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>40</y>
-     <width>611</width>
-     <height>541</height>
+     <x>0</x>
+     <y>0</y>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="acceptDrops">
@@ -145,8 +159,8 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_loadbase">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>10</y>
+     <x>740</x>
+     <y>90</y>
      <width>195</width>
      <height>59</height>
     </rect>
@@ -158,7 +172,7 @@ font: 9pt &quot;Verdana&quot;;</string>
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(151, 203, 154);
+    <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="text">
@@ -171,8 +185,8 @@ font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>10</y>
+     <x>740</x>
+     <y>20</y>
      <width>195</width>
      <height>59</height>
     </rect>
@@ -184,7 +198,7 @@ font: 75 12pt &quot;Verdana&quot;;</string>
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(151, 203, 154);
+    <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font:75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="text">
@@ -194,8 +208,8 @@ font:75 12pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_runDemo">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>10</y>
+     <x>740</x>
+     <y>160</y>
      <width>192</width>
      <height>59</height>
     </rect>
@@ -207,27 +221,30 @@ font:75 12pt &quot;Verdana&quot;;</string>
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(151,203,154);
+    <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="text">
     <string>Run Demo</string>
    </property>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QFrame" name="m_frame">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>300</y>
-     <width>241</width>
-     <height>171</height>
+     <width>300</width>
+     <height>240</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 240, 240);</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
       <property name="styleSheet">
-       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+       <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font: 9pt &quot;Verdana&quot;;</string>
       </property>
       <property name="text">
@@ -238,41 +255,60 @@ font: 9pt &quot;Verdana&quot;;</string>
     <item>
      <widget class="QComboBox" name="com_combx">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(239, 239, 239);</string>
+       <string notr="true">background-color: rgb(235, 235, 235);
+</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_3">
       <property name="styleSheet">
-       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+       <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font: 9pt &quot;Verdana&quot;;</string>
       </property>
       <property name="text">
-       <string>Species</string>
+       <string>PlasmidBackbone</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="spe_combx">
+     <widget class="QComboBox" name="backbone_combx">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(240, 240, 240);</string>
+       <string notr="true">background-color: rgb(235, 235, 235);</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
       <property name="styleSheet">
-       <string notr="true">background-color: qconicalgradient(cx:0.944444, cy:0.091, angle:31.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+       <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
 font: 9pt &quot;Verdana&quot;;</string>
       </property>
       <property name="text">
-       <string>Biobrick</string>
+       <string>Biobricks</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QComboBox" name="bio_combx">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(236, 236, 236);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="styleSheet">
+       <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0.535398 rgba(79, 201, 86, 188), stop:1 rgba(255, 255, 255, 255));
+font: 9pt &quot;Verdana&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Compounds</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="compound_combx">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(236, 236, 236);</string>
       </property>

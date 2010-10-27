@@ -1,7 +1,7 @@
 #include "ClickableWidget.h"
 #include <QDebug>
 
-ClickableWidget::ClickableWidget() : MItem()
+ClickableWidget::ClickableWidget(SPECIESTYPE type) : MItem(NULL, type)
 	  ,m_senemgr(NULL)
 {
 	m_senemgr = SceneManager::getSceneManger();
@@ -12,7 +12,7 @@ ClickableWidget::~ClickableWidget()
 {
 }
 
-ClickableWidget::ClickableWidget(const QString& fileName) : MItem(fileName)
+ClickableWidget::ClickableWidget(const QString& fileName, SPECIESTYPE type) : MItem(fileName, type)
 	  ,m_senemgr(NULL)
 {
 	m_senemgr = SceneManager::getSceneManger();
@@ -28,7 +28,7 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	if (!getScene()->itemInCompartment(this))
 		return;
 
-	MScene* newScene = new MScene(NULL, id());
+	MScene* newScene = new MScene(NULL, id(), type());
 //    newScene->loadXml(":demoUiXml.ui.xml");
 	qDebug() << "new scene id: " << id();
 

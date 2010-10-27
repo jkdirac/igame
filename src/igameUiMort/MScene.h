@@ -16,6 +16,8 @@
 #include <QVector>
 #include "MWidget.h"
 
+#include "Species.h"
+
 //#include "SceneTreeItem.h"
 
 class MItem;
@@ -26,8 +28,9 @@ class MScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
-    MScene(QObject* parent = 0);
-    MScene(QObject* parent, const QString& id);
+
+    MScene(QObject* parent = 0, SPECIESTYPE type=SPEC_COMPARTMENT);
+    MScene(QObject* parent, const QString& id, SPECIESTYPE=SPEC_COMPARTMENT);
     ~MScene();
 
     MItem* selectedItem() const;
@@ -61,6 +64,8 @@ public:
 	bool itemInCompartment(MItem *item);
 	bool itemDropped(MItem *item);
 
+	SPECIESTYPE type() {return m_type; }
+
 private:
 	QString m_id;
 	QString m_name;
@@ -69,6 +74,8 @@ private:
 	QVector<MScene*> m_childern;
 	MItem* m_rootItem;
 	MScene* m_parent;
+
+	SPECIESTYPE m_type;
 
 	void init();
 	MWidget* selWidget;

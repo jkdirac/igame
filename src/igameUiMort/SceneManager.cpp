@@ -118,3 +118,20 @@ void SceneManager::addNewScene(MScene* newScene)
 	m_currentscene->addChildScene(newScene);
 	setCurrentScene(newScene);
 }
+
+void SceneManager::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+{
+	qDebug() << "broswer Scene";
+	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+	MScene* setScene = curSceneItem->getScene();
+	
+	setCurrentScene(setScene);
+}
+void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
+{
+	qDebug() << "broswer Scene";
+	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+	MScene* setScene = curSceneItem->getScene();
+	
+	setCurrentScene(setScene);
+}
