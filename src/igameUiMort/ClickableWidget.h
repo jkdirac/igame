@@ -3,7 +3,6 @@
 
 #include "MItem.h"
 #include "SceneManager.h"
-#include "DebugOut.h"
 #include <QFile>
 
 class ClickableWidget: public MItem

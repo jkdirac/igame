@@ -22,6 +22,7 @@
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
 
+class MScene;
 class MItem : public QGraphicsItem {
 
 public:
@@ -39,8 +40,13 @@ public:
 
 
 
-    QString id() { return m_id; }
-    void setId(QString id) { m_id = id; this->renew(); }
+    const QString& id() { return m_id; }
+    void setId(QString id) 
+	{ 
+		m_id = id; 
+		setText(m_id); 
+		this->renew(); 
+	}
 
     QString name() { return m_name; }
     void setName(QString name) { m_name = name; this->renew(); }
@@ -172,6 +178,9 @@ public:
     bool isAlternativeImageAvailable() { return m_isAlternativeImageAvailable; }
     void setAlternativeImageAvailable(bool isAlternativeImageAvailable) { m_isAlternativeImageAvailable = isAlternativeImageAvailable; this->renew(); }
 
+	MScene* getScene();
+	void setScene(MScene* sce);
+
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
@@ -231,7 +240,7 @@ private:
     QString m_alternativeImage;
     bool m_isAlternativeImageAvailable;
 
-
+	MScene* m_scene;
 
 };
 
