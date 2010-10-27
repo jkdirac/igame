@@ -9,7 +9,7 @@
 			</interface>
 			<listOfConditionalParameters>
 				<conditionalParameter id="forwardPromoterEfficiency" units="per_second">
-					<parameterValue compartment="E_coli">0.002</parameterValue>
+					<parameterValue compartment="E_coli">0.1</parameterValue>
 				</conditionalParameter>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>

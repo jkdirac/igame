@@ -4,34 +4,6 @@
 <MoDeL>
 	<dbInterface>
 		<input>
-			<listOfParameters>
-				<parameter>
-					<id> ts </id>
-					<value> 10000 </value>
-					<units> second </units>
-					<constant> true </constant>
-				</parameter>
-				<parameter>
-					<id> te </id>
-					<value> 10001 </value>
-					<units> second </units>
-					<constant> true </constant>
-				</parameter>
-				<parameter>
-					<id> s </id>
-					<value> 1E-9 </value>
-					<units> mole_per_litre </units>
-					<constant> true </constant>
-				</parameter>
-			</listOfParameters>
-			<listOfRules>
-				<assignmentRule>
-					<variable>sPecIes1</variable>
-					<math>step_func (t, ts, te, s)</math>
-				</assignmentRule>
-			</listOfRules>
-			<listOfRules>
-			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">
 					<id>Flask</id>
@@ -40,7 +12,13 @@
 					<constant>true</constant>
 				</compartment>
 				<compartment db="E_coli">
-					<id>E_coli</id>
+					<id>E_coli_0</id>
+					<size>7E-16</size>
+					<outside>Flask</outside>
+					<constant>true</constant>
+				</compartment>
+				<compartment db="E_coli">
+					<id>E_coli_1</id>
 					<size>7E-16</size>
 					<outside>Flask</outside>
 					<constant>true</constant>
@@ -49,19 +27,17 @@
 			<listOfSpecies>
 				<species db="E_coli_cell">
 					<id>sPecIes0</id>
-					<compartment itself="E_coli">Flask</compartment>
+					<compartment itself="E_coli_0">Flask</compartment>
 					<initialConcentration>4.15135E-24</initialConcentration>
 				</species>
-				<species db="AHL_compound">
+				<species db="E_coli_cell">
 					<id>sPecIes1</id>
-					<compartment>Flask</compartment>
-					<initialConcentration> 0 </initialConcentration>
-					<constant> false </constant>
-					<boundaryCondition> true </boundaryCondition>
+					<compartment itself="E_coli_1">Flask</compartment>
+					<initialConcentration>4.15135E-24</initialConcentration>
 				</species>
 				<species>
 					<id>sPecIes2</id>
-					<compartment>E_coli</compartment>
+					<compartment>E_coli_0</compartment>
 					<initialConcentration>2.37E-9</initialConcentration>
 					<cnModel>
 						<listOfChains>
@@ -80,14 +56,86 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter1</partReference>
-										<partLabel>Promoter1_0</partLabel>
+										<partReference>Promoter3</partReference>
+										<partLabel>Promoter3_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
 										<partReference>RBS147</partReference>
 										<partLabel>RBS147_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>E0040_GFP</partReference>
+										<partLabel>E0040_GFP_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS1</partReference>
+										<partLabel>RBS1_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>C0061_luxI</partReference>
+										<partLabel>C0061_luxI_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>tetR154</partReference>
+										<partLabel>tetR154_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>Promoter2</partReference>
+										<partLabel>Promoter2_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_3</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>C0061_luxI</partReference>
+										<partLabel>C0061_luxI_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>Promoter1</partReference>
+										<partLabel>Promoter1_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_4</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -99,7 +147,7 @@
 									</part>
 									<part>
 										<partReference>TE_X_100</partReference>
-										<partLabel>TE_X_100_1</partLabel>
+										<partLabel>TE_X_100_3</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -111,7 +159,7 @@
 									</part>
 									<part>
 										<partReference>RBS147</partReference>
-										<partLabel>RBS147_1</partLabel>
+										<partLabel>RBS147_5</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -123,7 +171,152 @@
 									</part>
 									<part>
 										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_4</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+								</listOfParts>
+							</chain>
+						</listOfChains>
+					</cnModel>
+				</species>
+				<species>
+					<id>sPecIes3</id>
+					<compartment>E_coli_1</compartment>
+					<initialConcentration>2.37E-9</initialConcentration>
+					<cnModel>
+						<listOfChains>
+							<chain>
+								<listOfParts>
+									<part>
+										<partReference>pSB1A3</partReference>
+										<partLabel>pSB1A3_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>Promoter4</partReference>
+										<partLabel>Promoter4_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>E0040_GFP</partReference>
+										<partLabel>E0040_GFP_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS1</partReference>
+										<partLabel>RBS1_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>C0061_luxI</partReference>
+										<partLabel>C0061_luxI_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>tetR154</partReference>
+										<partLabel>tetR154_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>Promoter2</partReference>
+										<partLabel>Promoter2_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_3</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>C0061_luxI</partReference>
+										<partLabel>C0061_luxI_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
 										<partLabel>TE_X_100_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>Promoter1</partReference>
+										<partLabel>Promoter1_1</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_4</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>C0062_LuxR</partReference>
+										<partLabel>C0062_LuxR_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_3</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>pLuxTet</partReference>
+										<partLabel>pLuxTet_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_5</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>ccdB</partReference>
+										<partLabel>ccdB_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_4</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>

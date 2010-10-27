@@ -24,7 +24,7 @@ void MyReaction::init (
 		throw CoreException ("Empty Id in MyReaction Object!");
 	if (!tmpR->name.empty ()) setName (tmpR->name);
 	setFast (tmpR->fast);
-	setReversible (tmpR->reversible);
+	setReversible (false);
 
 	/**
 	 * set listOfMyReactants/listOfMyModifiers/listOfMyProducts
@@ -168,6 +168,7 @@ void MyReaction::createReactionsFromTemplate (
 	//	DEBUG
 	debugOut() << "\nMixture:" << endl;
 	mixture->Output ();
+	debugOut () << "\nEnd Mixture!" << endl;
 	//	END
 
 	/**
@@ -179,6 +180,7 @@ void MyReaction::createReactionsFromTemplate (
 	//	DEBUG
 	debugOut() << "\nSplits:" << endl;
 	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+	debugOut () << "\nEnd Splits!" << endl;
 	//	END
 	
 	delete mixture;
@@ -236,6 +238,7 @@ void MyReaction::createReactionsFromTemplate (
 	 * create products for each product template
 	 */
 
+	cout << "\ncreate products for each product template!" << endl;
 	for (int i=0; i < splits.size (); i++)
 	{
 		if (remove.count (i)) continue;
@@ -305,6 +308,8 @@ void MyReaction::createReactionsFromTemplate (
 			delete __product_tm;
 		}
 	}
+
+	cout << "DONE" << endl;
 
 	for (int i=0; i < splits.size (); i++) delete splits[i];
 

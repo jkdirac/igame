@@ -16,8 +16,6 @@
 				<referencedSpecies partType="Compound">AHL2_LuxR2_rev_pluxI</referencedSpecies>
 				<referencedSpecies partType="Compound">fw_pLuxTet_AHL2_LuxR2</referencedSpecies>
 				<referencedSpecies partType="Compound">rev_pLuxTet_AHL2_LuxR2</referencedSpecies>
-				<referencedSpecies partType="Compound">fw_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
-				<referencedSpecies partType="Compound">rev_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
 				<referencedSpecies partType="Compound">AHL_compound</referencedSpecies>
 				<referencedSpecies partType="Compound">AHL_LuxR</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>

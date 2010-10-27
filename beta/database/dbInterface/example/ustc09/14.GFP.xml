@@ -4,34 +4,6 @@
 <MoDeL>
 	<dbInterface>
 		<input>
-			<listOfParameters>
-				<parameter>
-					<id> ts </id>
-					<value> 10000 </value>
-					<units> second </units>
-					<constant> true </constant>
-				</parameter>
-				<parameter>
-					<id> te </id>
-					<value> 10001 </value>
-					<units> second </units>
-					<constant> true </constant>
-				</parameter>
-				<parameter>
-					<id> s </id>
-					<value> 1E-9 </value>
-					<units> mole_per_litre </units>
-					<constant> true </constant>
-				</parameter>
-			</listOfParameters>
-			<listOfRules>
-				<assignmentRule>
-					<variable>sPecIes1</variable>
-					<math>step_func (t, ts, te, s)</math>
-				</assignmentRule>
-			</listOfRules>
-			<listOfRules>
-			</listOfRules>
 			<listOfCompartments>
 				<compartment db="Flask">
 					<id>Flask</id>
@@ -52,15 +24,8 @@
 					<compartment itself="E_coli">Flask</compartment>
 					<initialConcentration>4.15135E-24</initialConcentration>
 				</species>
-				<species db="AHL_compound">
-					<id>sPecIes1</id>
-					<compartment>Flask</compartment>
-					<initialConcentration> 0 </initialConcentration>
-					<constant> false </constant>
-					<boundaryCondition> true </boundaryCondition>
-				</species>
 				<species>
-					<id>sPecIes2</id>
+					<id>sPecIes1</id>
 					<compartment>E_coli</compartment>
 					<initialConcentration>2.37E-9</initialConcentration>
 					<cnModel>
@@ -80,8 +45,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter1</partReference>
-										<partLabel>Promoter1_0</partLabel>
+										<partReference>Promoter2</partReference>
+										<partLabel>Promoter2_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -104,8 +69,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter2</partReference>
-										<partLabel>Promoter2_0</partLabel>
+										<partReference>Promoter1</partReference>
+										<partLabel>Promoter1_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>

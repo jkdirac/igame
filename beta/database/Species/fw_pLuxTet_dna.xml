@@ -38,7 +38,6 @@
 		<listOfReferencedReactions>
 			<referencedReaction speciesType="reactant">bid_fw_pLuxTet_AHL2_LuxR2</referencedReaction>
 			<referencedReaction speciesType="reactant">bid_fw_pLuxTet_tetR154_2</referencedReaction>
-			<referencedReaction speciesType="reactant">bid_fw_pLuxTet_AHL2_LuxR2_TetR2</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>
