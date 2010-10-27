@@ -21,13 +21,14 @@
 #include <QFile>
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
+#include "Species.h"
 
 class MScene;
 class MItem : public QGraphicsItem {
 
 public:
-	MItem();
-	MItem(const QString& filename);
+	MItem(SPECIESTYPE type = SPEC_COMPARTMENT);
+	MItem(const QString& filename, SPECIESTYPE type=SPEC_COMPARTMENT);
     virtual ~MItem();
 
     QRectF outlineRect() const;
@@ -37,8 +38,6 @@ public:
     QPainter* painter();
 
     void renew();
-
-
 
     const QString& id() { return m_id; }
     void setId(QString id) 
@@ -187,6 +186,8 @@ public:
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
 
+	SPECIESTYPE type() { return m_type; }
+
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
@@ -245,6 +246,7 @@ private:
     bool m_isAlternativeImageAvailable;
 
 	MScene* m_scene;
+	SPECIESTYPE m_type;
 };
 
 #endif

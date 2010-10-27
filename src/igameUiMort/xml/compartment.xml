@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comp category="Compartment"
+	x="100" y="-150"
+	width="100" height="100"
+	isVisible="1" isSelectable="1" isMovable="1"
+	isTextVisible="1" text="E.coli"
+	isPixmapVisible="1" pixmap=":/iGaME.images/compartment.png" >
+</comp>

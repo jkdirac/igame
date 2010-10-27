@@ -26,22 +26,28 @@
 #include <QDebug>
 
 // Class MScene constructor
-MScene::MScene(QObject* parent)
+MScene::MScene(QObject* parent, SPECIESTYPE type)
 	: QGraphicsScene(parent)
 	, dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
+	  ,m_trashItem(NULL)
+	  ,m_comItem(NULL)
+	  ,m_type(type)
 {
 	init();
 }
 
-MScene::MScene(QObject* parent, const QString& id)
+MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 	: QGraphicsScene(parent)
 	, dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
+	  ,m_trashItem(NULL)
+	  ,m_comItem(NULL)
+	  ,m_type(type)
 {
 	m_id = id;
 	init();
@@ -57,12 +63,18 @@ void MScene::init()
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
-	m_comItem = new MItem(":xml/compartment.ui.xml");
+	if (m_type == SPEC_COMPARTMENT)
+		m_comItem = new MItem(":xml/scene-compartment.ui.xml");
+	else
+		m_comItem = new MItem(":xml/scene-backbone.ui.xml");
+
 	m_comItem->setId(m_id);
 	addItemEx(m_comItem);
 
-	m_trashItem = new MItem(":xml/trash.ui.xml");
-	addItemEx(m_trashItem);
+	m_trashItem = NULL;
+
+//    m_trashItem = new MItem(":xml/trash.ui.xml");
+//    addItemEx(m_trashItem);
 
 	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
@@ -479,6 +491,9 @@ bool MScene::itemInCompartment(MItem *item)
 bool MScene::itemDropped(MItem *item)
 {
 	if (item == NULL)
+		return false;
+
+	if (m_trashItem == NULL)
 		return false;
 
 	if (item == m_trashItem)

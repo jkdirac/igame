@@ -32,22 +32,25 @@ class MainGraphicsView : public QWidget
 		QRect m_fullRect;
 
 		QStringList m_compList;
-		QStringList m_speList;
+		QStringList m_backboneList;
 		QStringList m_bioList;
 		SceneManager* m_scenemgr;
 
 		void getCompartFromDb();
-		void getSpeciesFromDb();
-		void getPartsFromDb();
+		void getBackboneFromDb();
+		void getBiobricksFromDb();
+		void getCompoundFromDb();
 
 		void setBiobricks(QStringList &list);
-		void setSpecies(QStringList &list);
+		void setBackbone(QStringList &list);
 		void setCompartments(QStringList &list);
+		void setCompounds(QStringList &list);
 
 		private slots:
 		void highlightComCombx(const QString &name);
-		void highlightSpeCombx(const QString &name);
+		void highlightbackboneCombx(const QString &name);
 		void highlightBioCombx(const QString &name);
+		void highlightCompoundCombx(const QString &name);
 		void createNewCompartment(const QString& partname);
 		void activateCombx(const QString& partname);
 		void runDemo();

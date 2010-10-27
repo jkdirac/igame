@@ -1,0 +1,13 @@
+#ifndef _SPECIES_H_
+#define _SPECIES_H_
+
+typedef enum
+{
+	SPEC_COMPARTMENT,
+	SPEC_BACKBONE,
+	SPEC_BIOBRICK,
+	SPEC_COMPOUNDS
+} SPECIESTYPE;
+
+
+#endif

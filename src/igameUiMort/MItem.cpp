@@ -44,8 +44,9 @@
 #include "MScene.h"
 
 // Class MItem constructor
-MItem::MItem()
+MItem::MItem(SPECIESTYPE type) 
 	: m_scene(NULL)
+	  , m_type(type)
     , m_id("")
     , m_name("")
     , m_category("")
@@ -98,8 +99,9 @@ MItem::MItem()
     this->renew();
 }
 
-MItem::MItem(const QString& fileName)
+MItem::MItem(const QString& fileName, SPECIESTYPE type)
 	: m_scene(NULL)
+	  ,m_type(type)
     , m_id("")
     , m_name("")
     , m_category("")

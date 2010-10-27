@@ -4,4 +4,5 @@
 	width="80" height="40"
 	isVisible="1" isSelectable="1" isMovable="1"
 	isTextVisible="1" text="BBa_J23100"
-	isPixmapVisible="1" pixmap=":/iGaME.images/bb.png"/>
+	isPixmapVisible="1" pixmap=":/iGaME.images/coding sequence.png"
+	/>
