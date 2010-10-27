@@ -854,14 +854,27 @@ bool MySpecies::match (
 			cMatchsType2 record;
 			for (int j = 0; j < numc_m; j++)
 			{
-//                debugOut() << "\nchain number in current species"
-//                    << "	--	..	--	" << j << endl;
+				/**************************************************************
+				//	important bug!
+				//	for dilution reactions, one reaction may be found
+				//	more than once, thus we add constraints on the matching of
+				//	the species "any_species"
+				//
+				//	liaochen modified on 2010-10-27
+				**************************************************************/
+				if (s->reference_db == "any_species" && j!=0) break;
 
 				cMatchsType record2;
 				listOfChains[j]->match (c1, record2);
 
 				for (int k =0; k < record2.size (); k++)
 					record.push_back (make_pair(record2[k], j));
+			}
+
+			if (s->reference_db == "any_species")
+			{
+				cout << "\nany_species ? " << "yes" << endl;
+				assert (record.size() == 1);
 			}
 
 			debugOut() << "found =  " << record.size ();

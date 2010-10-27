@@ -92,8 +92,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>C0062_luxR</partReference>
-										<partLabel>C0062_luxR_0</partLabel>
+										<partReference>C0062_LuxR</partReference>
+										<partLabel>C0062_LuxR_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>

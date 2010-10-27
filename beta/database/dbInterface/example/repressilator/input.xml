@@ -47,7 +47,7 @@
 			<listOfSpecies>
 				<species db="E_coli_cell">
 					<id>sPecIes0</id>
-					<compartment itself="E_coli">Flask</compartment>
+					<compartment itself="E_coli">Chemostat</compartment>
 					<initialConcentration>1.05E-13</initialConcentration>
 				</species>
 				<species db="IPTG_compound">

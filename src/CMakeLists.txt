@@ -151,7 +151,7 @@ INCLUDE_DIRECTORIES( BEFORE
 add_subdirectory (utility)
 add_subdirectory (BdInterface)
 #add_subdirectory (QwtPlot)
-#add_subdirectory (core)
+add_subdirectory (core)
 #add_subdirectory (igameUi)
 add_subdirectory (igameUiMort)
 #add_subdirectory (ExternalLib)

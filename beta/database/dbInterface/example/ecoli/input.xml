@@ -5,24 +5,24 @@
 	<dbInterface>
 		<input>
 			<listOfCompartments>
-				<compartment db="Flask">
-					<id>Flask</id>
-					<size>0.40</size>
+				<compartment db="Chemostat">
+					<id>Chemostat</id>
+					<size>0.10</size>
 					<outside>ROOT</outside>
 					<constant>true</constant>
 				</compartment>
 				<compartment db="E_coli">
 					<id>E_coli</id>
-					<size>1E-14</size>
-					<outside>Flask</outside>
+					<size>7E-16</size>
+					<outside>Chemostat</outside>
 					<constant>true</constant>
 				</compartment>
 			</listOfCompartments>
 			<listOfSpecies>
 				<species>
 					<id>sPecIes0</id>
-					<compartment itself="E_coli">Flask</compartment>
-					<initialConcentration>1E-20</initialConcentration>
+					<compartment itself="E_coli">Chemostat</compartment>
+					<initialConcentration>1.05E-13</initialConcentration>
 					<substanceUnits>mole</substanceUnits>
 					<hasOnlySubstanceUnits>false</hasOnlySubstanceUnits>
 					<boundaryCondition>false</boundaryCondition>

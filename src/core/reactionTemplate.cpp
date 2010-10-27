@@ -422,6 +422,10 @@ bool reactionTemplate::findSpeciesMatch (
 
 			if (reactant_sam[i].empty ()) return false;
 			else perm_reactants *= reactant_sam[i].size ();
+
+			//	TEST
+//            if (tmReactant->reference_db == "any_species") 
+//                assert (reactant_sam[i].size () == index);
 		}
 	}
 

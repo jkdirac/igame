@@ -11,11 +11,15 @@
 			<listOfConditionalParameters>
 			</listOfConditionalParameters>
 			<listOfReferencedSpecies>
-				<referencedSpecies partType="Compound">AHL2_luxR2</referencedSpecies>
-				<referencedSpecies partType="Compound">AHL2_luxR2_fw_pluxI</referencedSpecies>
-				<referencedSpecies partType="Compound">AHL2_luxR2_rev_pluxI</referencedSpecies>
+				<referencedSpecies partType="Compound">AHL2_LuxR2</referencedSpecies>
+				<referencedSpecies partType="Compound">AHL2_LuxR2_fw_pluxI</referencedSpecies>
+				<referencedSpecies partType="Compound">AHL2_LuxR2_rev_pluxI</referencedSpecies>
+				<referencedSpecies partType="Compound">fw_pLuxTet_AHL2_LuxR2</referencedSpecies>
+				<referencedSpecies partType="Compound">rev_pLuxTet_AHL2_LuxR2</referencedSpecies>
+				<referencedSpecies partType="Compound">fw_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
+				<referencedSpecies partType="Compound">rev_pLuxTet_AHL2_LuxR2_TetR2</referencedSpecies>
 				<referencedSpecies partType="Compound">AHL_compound</referencedSpecies>
-				<referencedSpecies partType="Compound">AHL_luxR</referencedSpecies>
+				<referencedSpecies partType="Compound">AHL_LuxR</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
 		</compound>

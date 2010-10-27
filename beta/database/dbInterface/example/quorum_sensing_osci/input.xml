@@ -49,8 +49,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>C0062_luxR</partReference>
-										<partLabel>C0062_luxR_0</partLabel>
+										<partReference>C0062_LuxR</partReference>
+										<partLabel>C0062_LuxR_0</partLabel>
 										<partType>ReverseDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -91,8 +91,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>C0062_luxR</partReference>
-										<partLabel>C0062_luxR_1</partLabel>
+										<partReference>C0062_LuxR</partReference>
+										<partLabel>C0062_LuxR_1</partLabel>
 										<partType>ReverseDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -158,8 +158,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>C0062_luxR</partReference>
-										<partLabel>C0062_luxR_0</partLabel>
+										<partReference>C0062_LuxR</partReference>
+										<partLabel>C0062_LuxR_0</partLabel>
 										<partType>ReverseDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>

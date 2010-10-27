@@ -26,6 +26,8 @@
 		<listOfReferencedReactions>
 			<referencedReaction speciesType="modifier">repro_ecoli_cell</referencedReaction>
 			<referencedReaction speciesType="modifier">repro_ecoli_cell_2</referencedReaction>
+			<referencedReaction speciesType="reactant">ecoli_death_kill_by_ccdb</referencedReaction>
+			<referencedReaction speciesType="reactant">ecoli_death_kill_by_ccdb_2</referencedReaction>
 		</listOfReferencedReactions>
 	</species>
 </MoDeL>
