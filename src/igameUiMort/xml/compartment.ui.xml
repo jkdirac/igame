@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<comp id="E_coli_1" name="E_coli_1" category="Compartment"
-	x="-300" y="-300"
-	width="200" height="100"
-	isVisible="1" isSelectable="1" isMovable="1"
-	isTextVisible="1" text="E.coli"
-	isPixmapVisible="1" pixmap=":iGaME.images/ecoli_active.png" >
+<comp id="Flask" name="Flask" category="Compartment"
+	x="-150" y="-150"
+	width="300" height="300"
+	isVisible="1" isSelectable="1" isMovable="0"
+	isTextVisible="1" text="Flask"
+	isPixmapVisible="1" pixmap=":iGaME.images/culture_dish.png"/>
 </comp>

@@ -182,15 +182,19 @@ public:
 	void setScene(MScene* sce);
 
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+
+	int sceneId() {return sene_id; }
+	void setSceneId(int id) { sene_id = id; }
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
     //void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     //void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
 private:
+	int sene_id;
     QString m_id;
     QString m_name;
     QString m_category;
@@ -241,7 +245,6 @@ private:
     bool m_isAlternativeImageAvailable;
 
 	MScene* m_scene;
-
 };
 
 #endif

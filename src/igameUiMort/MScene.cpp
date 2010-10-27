@@ -34,20 +34,7 @@ MScene::MScene(QObject* parent)
 	, m_treeItem(NULL)
 	  ,m_overviewWidget(NULL)
 {
-    this->dataScene = new MItem();
-    this->addItem(this->dataScene);
-
-    this->dataScene->setPos(0, 0);
-    this->dataScene->setWidth(0);
-    this->dataScene->setHeight(0);
-
-	IdSelWidget* IdSel = new IdSelWidget(NULL);
-	selWidget = (MWidget*)addWidget(IdSel);
-	selWidget->setX(0);
-	selWidget->setY(0);
-
-	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
-	setTreeItem(newItem);
+	init();
 }
 
 MScene::MScene(QObject* parent, const QString& id)
@@ -59,6 +46,12 @@ MScene::MScene(QObject* parent, const QString& id)
 	  ,m_overviewWidget(NULL)
 {
 	m_id = id;
+	init();
+}
+
+void MScene::init()
+{
+//    loadXml(":demoUiXml.ui.xml");
     this->dataScene = new MItem();
     this->addItem(this->dataScene);
 
@@ -66,6 +59,14 @@ MScene::MScene(QObject* parent, const QString& id)
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
 
+	m_comItem = new MItem(":xml/compartment.ui.xml");
+	m_comItem->setId(m_id);
+	addItemEx(m_comItem);
+
+	m_trashItem = new MItem(":xml/trash.ui.xml");
+	addItemEx(m_trashItem);
+
+	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
 	setTreeItem(newItem);
 }
@@ -110,17 +111,50 @@ int MScene::addItemEx(MItem *item)
 		return -1;
 	
 	dataItem[dataCount] = item;
-	dataCount++;
 
     this->addItem(item);
 	item->setScene(this);
+	item->setSceneId(dataCount);
 
+	dataCount++;
 	return dataCount-1;
+}
+
+void MScene::deletItemEx(MItem* item)
+{
+	bool bfound = false;
+	int n = 0;
+	if (item == NULL)
+		return;
+
+	while (n < dataCount)
+	{
+		if (item == dataItem[n])
+		{
+			bfound = true;
+			break;
+		}
+		n++;
+	}
+
+	if (!bfound)
+		return;
+
+	this->removeItem(item);
+	delete item;
+
+	for (int i = n; i < dataCount-1; i++)
+	{
+		dataItem[i] = dataItem[i+1];
+		dataItem[i+1] = NULL;
+	}
+
+	dataCount--;
 }
 
 void MScene::deletItemEx(int n)
 {
-	if ((n < 0) || (n > dataCount))
+	if ((n < 0) || (n >= dataCount))
 		return;
 
 	if (dataItem[n] != NULL)
@@ -139,7 +173,8 @@ void MScene::deletItemEx(int n)
 }
 
 // Get the only selected item
-MItem* MScene::selectedItem() const
+MItem*
+MScene::selectedItem() const
 {
     QList<QGraphicsItem*> items = this->selectedItems();
 
@@ -391,9 +426,7 @@ void MScene::addChildScene(MScene *child)
 	{
 		qDebug() << "m_treeItem: " << (int)m_treeItem;
 		SceneTreeItem* newItem = child->getTreeItem();
-//        SceneTreeItem* newItem = new SceneTreeItem((QTreeWidgetItem*)m_treeItem, child);
 		m_treeItem->addChild(newItem);
-//        child->setTreeItem(newItem);
 	}
 }
 
@@ -404,11 +437,6 @@ void MScene::deleteChildScene(int id)
 void MScene::setParent(MScene* parent)
 {
 	m_parent = parent;
-}
-
-QVector<MScene*>& MScene::getChildScene()
-{
-	return m_childern;
 }
 
 void MScene::setId(const QString& id)
@@ -441,23 +469,31 @@ SceneTreeItem* MScene::getTreeItem()
 	return m_treeItem;
 }
 
-/** 
- * @breif  put tree data to m_overviewWidgetto show
- * 
- * @Param item
- */
-void MScene::showTreeWidget(SceneTreeItem *item)
+bool MScene::itemInCompartment(MItem *item)
 {
-	if (item != NULL)
-		m_overviewWidget->setTreeRootItem(item);
+	if (item == NULL)
+		return false;
+
+	if (item->collidesWithItem(m_comItem))
+		return true;
+	else
+		return false;
 }
 
-/** 
- * @breif 
- * Put list data to QCombox widget to select 
- * 
- * @Param item
- */
-void MScene::showSelWidget(QStringList* list)
+bool MScene::itemDropped(MItem *item)
 {
+	if (item == NULL)
+		return false;
+
+	if (item == m_trashItem)
+		return false;
+
+	if (item->collidesWithItem(m_trashItem))
+	{
+		deletItemEx(item);
+//        deletItemEx(item->sceneId());
+		return true;
+	}
+	else
+		return false;
 }

@@ -90,7 +90,7 @@ void MainGraphicsView::highlightCombx(const QString &name)
 {
 	qDebug() << "highligth partName: " << name;
 
-	MItem* item = new ClickableWidget(":xml/compartment.ui.xml");
+	MItem* item = new ClickableWidget(":xml/new-compartment.ui.xml");
 	item->setId(name);
 	
 	m_scenemgr->browserItem(item);

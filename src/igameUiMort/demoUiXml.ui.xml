@@ -6,12 +6,12 @@
     isVisible="1" isSelectable="0" isMovable="0"
     isTextVisible="0">
 	
-	<comp id="Flask" name="Flask" category="Compartment"
-		x="0" y="0"
-		width="300" height="300"
-		isVisible="1" isSelectable="1" isMovable="0"
-		isTextVisible="1" text="Flask"
-		isPixmapVisible="1" pixmap=":iGaME.images/culture_dish.png"/>
+<!--    <comp id="Flask" name="Flask" category="Compartment"-->
+<!--        x="0" y="0"-->
+<!--        width="300" height="300"-->
+<!--        isVisible="1" isSelectable="1" isMovable="0"-->
+<!--        isTextVisible="1" text="Flask"-->
+<!--        isPixmapVisible="1" pixmap=":iGaME.images/culture_dish.png"/>-->
 	
 <!--    <region id="regionOperation"-->
 <!--        x="490" y="400"-->

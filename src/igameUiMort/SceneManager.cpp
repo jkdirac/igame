@@ -13,8 +13,8 @@ SceneManager::SceneManager()
 	m_browserItem(NULL),
 	m_browserItemId(0)
 {
-	m_browserItemX = -150;
-	m_browserItemY = -250;
+	m_browserItemX = 140;
+	m_browserItemY = -150;
 
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
@@ -26,7 +26,7 @@ void SceneManager::startShow()
 	if ( m_rootscene != NULL)
 	{
 		m_rootItem = m_rootscene->getTreeItem();
-		m_rootscene->loadXml(":demoUiXml.ui.xml");
+//        m_rootscene->loadXml(":demoUiXml.ui.xml");
 
 		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
@@ -90,7 +90,8 @@ void SceneManager::browserItem(MItem* item)
 			&& (m_browserItem->x() == m_browserItemX)
 			&& (m_browserItem->y() == m_browserItemY))
 	{
-		m_currentscene->deletItemEx(m_browserItemId);
+		m_currentscene->deletItemEx(m_browserItem);
+		m_browserItem = NULL;
 //        delete m_browserItem;
 	}
 

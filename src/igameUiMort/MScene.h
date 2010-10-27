@@ -40,23 +40,26 @@ public:
 	void setTreeItem(SceneTreeItem *item);
 	SceneTreeItem* getTreeItem();
 
-	QVector<MScene*>& getChildScene();
 	void addChildScene(MScene *child);
 	void deleteChildScene(int id);
 	void setParent(MScene* parent);
 
 	int addItemEx(MItem *item);
 	void deletItemEx(int n);
+	void deletItemEx(MItem* item);
 
     MItem* dataScene;
+	MItem* m_comItem;
+	MItem* m_trashItem;
     MItem* dataItem[1024];
     int dataCount;
 
 	QString& getId();
 	void setId(const QString& id);
 
-	void showTreeWidget(SceneTreeItem *item);
-	void showSelWidget(QStringList* list);
+	//Item drag and clicked handler
+	bool itemInCompartment(MItem *item);
+	bool itemDropped(MItem *item);
 
 private:
 	QString m_id;
@@ -67,6 +70,7 @@ private:
 	MItem* m_rootItem;
 	MScene* m_parent;
 
+	void init();
 	MWidget* selWidget;
 	SceneViewWidget* m_overviewWidget;
 	SceneTreeItem* m_treeItem;
