@@ -37,8 +37,8 @@
   <widget class="QGraphicsView" name="m_mainGraph">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>0</y>
+     <x>200</x>
+     <y>100</y>
      <width>600</width>
      <height>600</height>
     </rect>
@@ -63,8 +63,8 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-10</y>
-     <width>201</width>
+     <y>100</y>
+     <width>200</width>
      <height>300</height>
     </rect>
    </property>
@@ -78,7 +78,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>290</y>
+     <y>400</y>
      <width>201</width>
      <height>291</height>
     </rect>

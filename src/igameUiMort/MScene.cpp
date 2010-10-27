@@ -46,12 +46,6 @@ MScene::MScene(QObject* parent)
 	selWidget->setX(0);
 	selWidget->setY(0);
 
-	m_overviewWidget = new SceneViewWidget(NULL);
-//    m_overviewWidget = SceneViewWidget::getSceneView();
-	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
-	overview->setX(0);
-	overview->setY(500);
-
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
 	setTreeItem(newItem);
 }
@@ -71,17 +65,6 @@ MScene::MScene(QObject* parent, const QString& id)
     this->dataScene->setPos(0, 0);
     this->dataScene->setWidth(0);
     this->dataScene->setHeight(0);
-
-	IdSelWidget* IdSel = new IdSelWidget(NULL);
-	selWidget = (MWidget*)addWidget(IdSel);
-	selWidget->setX(0);
-	selWidget->setY(0);
-
-	m_overviewWidget = new SceneViewWidget(NULL);
-//    m_overviewWidget = SceneViewWidget::getSceneView();
-	MWidget* overview= (MWidget*)addWidget(m_overviewWidget);
-	overview->setX(0);
-	overview->setY(500);
 
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
 	setTreeItem(newItem);

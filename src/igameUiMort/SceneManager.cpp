@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "SceneTreeItem.h"
+#include "MainGraphicsView.h"
 
 SceneManager* SceneManager::_single_instance = NULL;
 
@@ -29,6 +30,14 @@ void SceneManager::startShow()
 
 		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
+	}
+}
+
+SceneManager* SceneManager::setMainWindow(MainGraphicsView *win)
+{
+	if (win != NULL)
+	{
+		m_mainWindow = win;
 	}
 }
 
@@ -61,7 +70,8 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
-		m_currentscene->showTreeWidget(m_rootItem);
+		m_mainWindow->setTreeView();
+//        m_currentscene->showTreeWidget(m_rootItem);
 		m_view->setScene(m_currentscene);
 	}
 }

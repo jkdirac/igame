@@ -5,6 +5,7 @@
 #include "MView.h"
 #include "MItem.h"
 
+class MainGraphicsView;
 class SceneManager
 {
 	private:
@@ -25,6 +26,9 @@ class SceneManager
 
 	public:
 		static SceneManager* getSceneManger();
+
+		MainGraphicsView* m_mainWindow;
+		SceneManager* setMainWindow(MainGraphicsView *win);
 
 		void setCurrentScene(MScene* scene);
 		void setMainView(QGraphicsView* view);

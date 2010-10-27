@@ -16,6 +16,7 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	connect(ui.com_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightCombx(const QString &)));
 	m_scenemgr = SceneManager::getSceneManger();
+	m_scenemgr->setMainWindow(this);
 
 	//get datas from bdinterface
 	/*
@@ -43,6 +44,8 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	QStringList comList;
 	comList << "abc" << "def" << "hij";
 	setCompartments(comList);
+
+//    setTreeView();
 }
 
 void MainGraphicsView::setTreeView()
