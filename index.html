@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>jkdirac/igame @ GitHub</title>
+	
+	<style type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #97feaf;
+		  font-family: "Helvetica,Arial,FreeSans";
+  		color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+		h1 { font-size: 3.8em; color: #680150; margin-bottom: 3px; }
+		h1 .small { font-size: 0.4em; }
+		h1 a { text-decoration: none }
+		h2 { font-size: 1.5em; color: #680150; }
+    h3 { text-align: center; color: #680150; }
+    a { color: #680150; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	</style>
+	
+</head>
+
+<body>
+  <a href="http://github.com/jkdirac/igame"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/jkdirac/igame/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/jkdirac/igame/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="http://github.com/jkdirac/igame">igame</a>
+      <span class="small">by <a href="http://github.com/jkdirac">jkdirac</a></span></h1>
+
+    <div class="description">
+      iGaME: Synthetic Biology for Gamers
+To promote public awareness of synthetic biology and introduce its basic ideas to the laymen, our team is devoted to the development of an experimental video game which aims at instructing non-biologists to design and improve biological systems. Following the games-with-a-purpose paradigm in which players help solve scientific problems, we apply the human brain's puzzle-solving abilities to the complex designs of biological systems. While most of developed simulation tools are designed for experts to model the reaction networks from scratch, our game integrates a modeling environment in which users only need to submit their assembling of parts for our program to discover and generate the biological model automatically. With a mass of data for the use of modeling, we propose the Standard Biological Parts Automatic Modeling Database Language, which enables descriptions of complicated biological processes. Additionally, previous iGEM project models will be featured to demonstrate the availability of our idea.
+    </div>
+
+    <p>Detailed information please vist
+http://2010.igem.org/Team:USTC_Software</p><h2>Dependencies</h2>
+<p>C++ development environment. In Linux should be GNU C++ Tool Chain And in windows MingW Tool Chain.
+Qt4 develop and run-time environment. Qt4.7 is requirement. Editor or IDE like QtCreator or Vim is also needed.
+CMake, to configure the project and generate the Makefile. CMake 2.8 or later version is a requirement
+dbxml, The Berkeley xml native database, is available at http://sourceforge.net/projects/dbxml-core/
+copasi, copasi 4.6 is a requirement. the source code and executable binary file can be downloaded at http://www.copasi.org/tiki-index.php?page=download, and one can follow those instruction to build it from source code. What should be noticed is that copasi also has prerequisites, including LAPACK/CLAPACK for Maths, Qwt and Qwtplot3D for plotting, expat to parser xml, raptor The latest version of this RDF parsing library, and libsbml for deal with SBML operations.
+libsbml, Version 3.4.1 is required. Not only it is the dependence of copasi, but also the dependence of igame core code.
+And libsbml should be built with configure option "./configure --enable-layout=yes --enable-compression=no --with-expat"
+Bison & Flex
+To compile our code, bison and flex is required. They are used to build a expression parser in igame/core/str_cacu path. To get the those software and more detailed information, please visit Bison site and Flex site.</p>
+<h2>Install</h2>
+<p>The source code is managed by CMake to cross-platform build. But only in linux operation system the build process is tested, So there may be some problems to build the souce code.
+
+Download the source code,  run Cmake to configure, then make install after successful configuration.  </p>
+<h2>License</h2>
+<p>Kun Jiang,
+Chen Liao,
+XiaoMo Yao</p>
+<h2>Authors</h2>
+<p>jiangkun (jkdirac@email.ustc.edu.cn)<br/>liaochen (liaochen@mail.ustc.edu.cn)<br/>retopara (xqqixp@gmail.com)<br/>Mort Yao (yxm1989@hotmail.com)<br/><br/>      </p>
+<h2>Contact</h2>
+<p>jkdirac@email.ustc.edu.cn<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/jkdirac/igame/zipball/master">zip</a> or
+      <a href="http://github.com/jkdirac/igame/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/jkdirac/igame</pre>
+    </p>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/jkdirac/igame">jkdirac/igame</a>
+    </div>
+
+  </div>
+
+  
+</body>
+</html>
