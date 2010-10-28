@@ -18,6 +18,12 @@
 #include <QDirIterator>
 #include <QVector>
 
+#include <QProcess>
+#include <QMessageBox>
+
+#include "driver.h"
+#include "CopsiInterface.h"
+
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
@@ -241,8 +247,60 @@ void MainGraphicsView::getStart()
 	
 void MainGraphicsView::sceneNext()
 {
-	qDebug() << "HaHa get start pressed";
-	setState(REVIEW);
+	qDebug() << "HaHa next pressed";
+
+	//review
+	if (m_state == GAMESCENE)
+	{
+		QString name = "network.xml";
+		QFile file(name);
+		if (!file.open(QFile::ReadOnly | QFile::Text)) {
+			QMessageBox::warning(this, tr("Application"),
+					tr("Cannot read file %1:\n%2.")
+					.arg(name)
+					.arg(file.errorString()));
+			return;
+		}
+		QTextStream in(&file);
+#ifndef QT_NO_CURSOR
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+
+		ui.m_fileBrowser->setPlainText(in.readAll());
+
+#ifndef QT_NO_CURSOR
+		QApplication::restoreOverrideCursor();
+#endif
+	}
+
+	//simulate
+	if (m_state == REVIEW)
+	{
+		Driver driver;
+		try
+		{
+			bool errno = driver.beginSimulation ();
+
+			if (errno == 0)
+			{
+				QStringList par_list;
+				QString pro_name("../../../ExternalLib/linux/CopasiUI");
+				QString par_1("-i");
+				QString par_2("network.xml");
+				par_list << par_1 << par_2;
+				QProcess::execute(pro_name, par_list);
+			}
+		}
+		catch (CoreException &se)
+		{
+			cout << "exceptions" << endl;
+		}
+	}
+
+	if (m_state == GAMESCENE)
+		setState(REVIEW);
+	else if (m_state == REVIEW)
+		setState(SIMULATE);
 }
 
 void MainGraphicsView::loadDb()
