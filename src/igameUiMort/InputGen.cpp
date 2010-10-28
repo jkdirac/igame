@@ -2,11 +2,13 @@
 #include <QQueue>
 #include "SceneManager.h"
 #include <QTreeWidgetItemIterator>
+#include <QDebug>
 
 InputGen::InputGen() : m_scenMgr(NULL)
 {
 	m_listCompartments.clear();
 	m_listParts.clear();
+	m_listScene.clear();
 	m_scenMgr = SceneManager::getSceneManger();
 }
 
@@ -29,9 +31,7 @@ void InputGen::generateInput()
 		MScene* scene = ((SceneTreeItem*)*iter) -> getScene();
 
 		if (scene != NULL)
-			m_listCompartments.push_back(scene);
-		
-		m_listParts.push_back(data);
+			m_listScene.push_back(scene);
 
 		iter++;
 	}

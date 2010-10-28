@@ -13,7 +13,9 @@ class InputGen
 		void generateInput();
 
 	private:
+		QVector<SpeciesData*>  m_listCompartments;
 		QVector<MScene*>  m_listParts;
+		QVector<MScene*>  m_listScene;
 		SceneManager* m_scenMgr;
 };
 

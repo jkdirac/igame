@@ -488,7 +488,7 @@ void MainGraphicsView::compartmentScene()
 	ui.com_combx->setEnabled(true);
 	ui.backbone_combx->setEnabled(true);
 	ui.bio_combx->setEnabled(false);
-	ui.compound_combx->setEnabled(false);
+	ui.compound_combx->setEnabled(true);
 }
 
 void MainGraphicsView::plasmidScene()
@@ -496,5 +496,5 @@ void MainGraphicsView::plasmidScene()
 	ui.com_combx->setEnabled(false);
 	ui.backbone_combx->setEnabled(false);
 	ui.bio_combx->setEnabled(true);
-	ui.compound_combx->setEnabled(true);
+	ui.compound_combx->setEnabled(false);
 }
