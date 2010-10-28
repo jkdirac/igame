@@ -1,9 +1,6 @@
 #ifndef _GLOBAL_SETTING_H_
 #define _GLOBAL_SETTING_H_
 
-#include <string>
-using namespace std;
-
 #if __cplusplus
 extern "C" {
 #endif

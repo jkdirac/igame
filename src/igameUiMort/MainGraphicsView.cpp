@@ -131,7 +131,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_runDemo->setVisible(false);
 
 		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setText(QApplication::translate("MainGraphicsView", "Simulate", 0, QApplication::UnicodeUTF8));
+        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
 		ui.m_scenBack->setVisible(true);
 
 		ui.m_fileBrowser->setVisible(true);
