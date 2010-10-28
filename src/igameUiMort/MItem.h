@@ -169,8 +169,6 @@ public:
     bool isImageVisible() { return m_isImageVisible; }
     void setImageVisible(bool isImageVisible) { m_isImageVisible = isImageVisible; this->renew(); }
 
-
-
     QString alternativeImage() { return m_alternativeImage; }
     void setAlternativeImage(QString alternativeImage) { m_alternativeImage = alternativeImage; setAlternativeImageAvailable(true); }
 
@@ -183,10 +181,13 @@ public:
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
+	//the identifier in the scene
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
 
 	SPECIESTYPE type() { return m_type; }
+
+	SpeciesData* getSpeciesData() { return m_speciesdata; };
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
@@ -247,6 +248,10 @@ private:
 
 	MScene* m_scene;
 	SPECIESTYPE m_type;
+
+	SpeciesData* m_speciesdata;
+
+	void init();
 };
 
 #endif

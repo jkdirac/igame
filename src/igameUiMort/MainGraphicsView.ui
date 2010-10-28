@@ -321,7 +321,7 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_scenNext">
    <property name="geometry">
     <rect>
-     <x>760</x>
+     <x>810</x>
      <y>600</y>
      <width>170</width>
      <height>65</height>

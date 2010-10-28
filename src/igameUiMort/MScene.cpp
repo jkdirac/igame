@@ -544,3 +544,11 @@ QVector<MItem*>& MScene::getValidSubItems()
 			res.push_back(dataItem[i]);
 	}
 }
+
+QString& MScene::generateComXmlString()
+{
+}
+
+QString& MScene::generateSpeXmlString()
+{
+}

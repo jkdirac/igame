@@ -95,8 +95,9 @@ MItem::MItem(SPECIESTYPE type)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
+	, m_speciesdata(NULL)
 {
-    this->renew();
+	init();
 }
 
 MItem::MItem(const QString& fileName, SPECIESTYPE type)
@@ -150,6 +151,7 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
+	, m_speciesdata(NULL)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -307,6 +309,12 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
         reader.readNext();
     }
 
+	init();
+}
+
+void MItem::init()
+{
+	m_speciesdata = new SpeciesData();
 	renew();
 }
 
@@ -513,7 +521,12 @@ MScene* MItem::getScene()
 
 void MItem::setScene(MScene* sce)
 {
+	if (sce == NULL)
+		return;
+
 	m_scene = sce;
+	if (m_speciesdata != NULL)
+		m_speciesdata->setParent(sce->getId(), sce->type());
 }
 
 //Process MItem mouse double click event - formally

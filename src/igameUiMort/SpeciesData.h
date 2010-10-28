@@ -3,6 +3,8 @@
 
 #include <QString>
 
+class MItem;
+
 typedef enum
 {
 	SPEC_COMPARTMENT,
@@ -19,15 +21,23 @@ class SpeciesData
 		QString m_compartment;
 		SPECIESTYPE m_parentType;
 
+		MItem* m_item;
+
 	public:
 		SpeciesData();
-		SpeciesData(SPECIESTYPE type, QString id, SPECIESTYPE parentType, QString parent);
-		SpeciesData(SpeciesData &other);
-		SpeciesData& operator = (SpeciesData &other);
+		SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType=SPEC_COMPARTMENT, const QString& parent="ROOT");
+		SpeciesData(const SpeciesData &other);
+		SpeciesData& operator = (const SpeciesData &other);
 
-		SPECIESTYPE type() { return m_type; }
-		QString id() { return m_id; }
-		QString parent() { return m_compartment; }
-		SPECIESTYPE parentType() { return m_parentType; }
+		SPECIESTYPE type() const { return m_type; }
+		const QString& id() const { return m_id; }
+		const QString& parent() const { return m_compartment; } 
+		SPECIESTYPE parentType() const { return m_parentType; }
+
+		void setParent(QString& id, SPECIESTYPE type) 
+		{ m_compartment = id; m_parentType = type; };
+
+		QString& generatePartsXmlString();
+		QString& generateCompartmentXmlString();
 };
 #endif

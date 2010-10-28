@@ -5,6 +5,7 @@
 #include <QVector>
 
 class SceneManager;
+class MScene;
 class InputGen 
 {
 	public:
@@ -12,8 +13,7 @@ class InputGen
 		void generateInput();
 
 	private:
-		QVector<SpeciesData>  m_listCompartments;
-		QVector<SpeciesData>  m_listParts;
+		QVector<MScene*>  m_listParts;
 		SceneManager* m_scenMgr;
 };
 

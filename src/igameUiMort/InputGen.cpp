@@ -1,6 +1,7 @@
 #include "InputGen.h"
 #include <QQueue>
 #include "SceneManager.h"
+#include <QTreeWidgetItemIterator>
 
 InputGen::InputGen() : m_scenMgr(NULL)
 {
@@ -11,20 +12,30 @@ InputGen::InputGen() : m_scenMgr(NULL)
 
 void InputGen::generateInput()
 {
-	MScene* rootScene = m_scenMgr->getRootScene();
+//    MScene* rootScene = m_scenMgr->getRootScene();
+	SceneTreeItem* rootItem = m_scenMgr->getRootItem();
 
-	if (rootScene == NULL)
+	if (rootItem == NULL)
+	{
+		qDebug() << "error rootItem NULL";
 		return;
+	}
 
-	//iterator the tree
-//    QQueue<MScene *> queue;
-//    queue.enqueue(rootScene);
+	QTreeWidgetItemIterator iter((QTreeWidgetItem*)rootItem); 
 
-//    MScene* tmpScene = queue.head();
-//    while (tmpScene->childrenCount() > 0)
-//    {
-//        QVector<MItem*> subItems = tmpScene->getValidSubItems();
-//        tmpScene = que
-//    }
-//    MScene::iterator* itr = rootScene->getIterator();
+	// collect all validate compartment or plasmid
+	while (*iter)
+	{
+		MScene* scene = ((SceneTreeItem*)*iter) -> getScene();
+
+		if (scene != NULL)
+			m_listCompartments.push_back(scene);
+		
+		m_listParts.push_back(data);
+
+		iter++;
+	}
+
+	//
+
 }
