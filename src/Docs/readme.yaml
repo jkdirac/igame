@@ -1,0 +1,25 @@
+
+MosQt库 (版本号0.10.14 alpha):
+  MView.h, MView.cpp: MView视图类
+  MScene.h, MScene.cpp: MScene场景类
+  MItem.h, MItemPainter.hxx, MItem.cpp: MItem类
+  MWidget.h, MWidget.cpp: MWidget类
+  MSplashScreen.h, MSplashScreen.cpp: MSplashScreen启动窗口类
+  MosQt: 宏定义
+
+示例1 demoUiXml:
+  .session: SciTE工作文件
+  .pro: qmake工程文件
+  .cpp: 源文件
+  .ui.xml: 界面XML
+  .project.xml: 工程XML
+  .make_win.sh: 编译生成 shell (for win)
+  .make_linux.sh:  编译生成 shell (for linux)
+  .make_freebsd.sh:  编译生成 shell (for freebsd)
+  .run_win.sh: 运行 shell (for win)
+  .run_linux.sh: 运行 shell (for linux)
+  .clean.sh: 清除所有 编译生成文件 shell
+
+示例2 iGaME:
+
+

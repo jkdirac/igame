@@ -1,0 +1,54 @@
+books:
+The tolerance proportionality of adaptive ODE solvers
+
+1 CVode 的tolerance设置比较关键，它直接影响每次进行积分的精度，如果 tolerance设置不合适，会造成误差，误差累积过大会导致严重的错误
+
+2 CVode 的CV_NORMAL模式，cv_h是每次运算的步长。cv_h受哪些用户输入量的影响呢？
+	之所以考虑这个问题，是因为在运算时会报 mxstep steps taken before reaching
+tout.的问题，会造成运算不完全。
+	CVode提供一个函数CVodeSetInitStep来设置cv_hin，为用户设置的初始步长。如果不调用这个函数，那么cv_hin在初始化时被赋值为0。cv_h在cvode.c
+中的cvode函数中受到cv_hin的影响。
+    如果没有设置h_in，CVHin(cv_mem, tout)会通过计算得到一个h0, 这个h0也会影响到cv_h的值。
+
+3 参数设置
+Initial Time 
+	specifies the time at which to start the ordinary differential equation (ODE) solver. The default is 0.
+
+Final Time 
+	is the time at which the ODE solver stops.
+
+Time Step 
+	is the interval between the times at which the ODE solver evaluates the model and updates the model output, in 		seconds. LabVIEW uses this parameter only if you select a fixed step-size ODE solver.
+
+Absolute Tolerance 
+	specifies the absolute tolerance the ODE solver uses to control the error. For y' = f(y), the ODE solver maintains 		error ≈ |y| * relative tolerance + absolute tolerance. LabVIEW uses this parameter only if you select a variable 
+	step-size solver. Variable step-size solvers use this error to adjust the step size. If the error is too large, the 		variable step-size solver reduces the step size. If the error is too small, the variable step-size solver increases 		the step size. Absolute tolerance is most significant when y is small.
+
+Relative Tolerance 
+	specifies the relative tolerance the ODE solver uses to control the error. 
+	For y' = f(y), the ODE solver maintains error ≈ |y| * relative tolerance + absolute tolerance. 
+	LabVIEW uses this parameter only if you select a variable step-size solver. Variable step-size solvers use this 	error to adjust the step size. If the error is too large, the variable step-size solver reduces the step size. If 		the error is too small, the variable step-size solver increases the step size. Relative tolerance is most 		significant when y is large.
+
+Minimum Time Step 
+specifies the smallest time step size the ODE solver can use to evaluate the simulation diagram. LabVIEW uses this parameter only if you select a variable step-size solver.
+
+Maximum Time Step 
+specifies the largest time step size the ODE solver can use to evaluate the simulation diagram. LabVIEW uses this parameter only if you select a variable step-size solver.
+
+Initial Time Step 
+specifies the time step size for the first time step of the simulation diagram evaluation. LabVIEW uses this parameter only if you select a variable step-size solver.
+
+Discrete Time Step 
+specifies the base time step to use for discrete functions, in seconds. The ODE solver might not evaluate a discrete function every Discrete Time Step. The ODE solver evaluates the discrete function and updates the function output every n discrete time steps, where n is the sample rate divisor parameter you specify for that function.
+
+error in (no error) 
+describes error conditions that occur before this node runs. This input provides standard error in functionality.
+
+times 
+is the array of points in time at which the differential equation solver stepped or was evaluated. If a fixed step-size solver was selected then times will contain evenly spaced values.
+
+outputs 
+is a two-dimensional array of y values. Each row corresponds to the vector of y-values evaluated at a particular time. Each column is history of a particular y-value over time.
+
+error out 
+contains error information. This output provides standard error out functionality.
