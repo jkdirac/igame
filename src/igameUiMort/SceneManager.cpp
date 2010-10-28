@@ -14,7 +14,7 @@ SceneManager::SceneManager()
 	m_browserItemId(0)
 {
 	m_browserItemX = 140;
-	m_browserItemY = -150;
+	m_browserItemY = -250;
 
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
@@ -75,6 +75,15 @@ void SceneManager::setCurrentScene(MScene* scene)
 		m_mainWindow->setTreeView();
 //        m_currentscene->showTreeWidget(m_rootItem);
 		m_view->setScene(m_currentscene);
+
+		if (m_currentscene->type() == SPEC_COMPARTMENT)
+		{
+			m_mainWindow->compartmentScene();
+		}
+		if (m_currentscene->type() == SPEC_BACKBONE)
+		{
+			m_mainWindow->plasmidScene();
+		}
 	}
 }
 
@@ -121,7 +130,7 @@ void SceneManager::addNewScene(MScene* newScene)
 	setCurrentScene(newScene);
 }
 
-void SceneManager::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+void SceneManager::broswerScene(QTreeWidgetItem * current, int cl)
 {
 	if (current == NULL)
 		return;

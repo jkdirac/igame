@@ -26,6 +26,9 @@ class MainGraphicsView : public QWidget
 		void setUi(STATE curState);
 		void setState(STATE curState);
 
+		void compartmentScene();
+		void plasmidScene();
+
 	private:
 		int m_state;
 		QRect m_mainRect;

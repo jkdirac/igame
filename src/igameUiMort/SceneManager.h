@@ -28,7 +28,7 @@ class SceneManager : public QObject
 
 		private slots:
 			void broswerScene(QTreeWidgetItem * current, 
-					QTreeWidgetItem * previous);
+					int cl);
 		void broswerScene1(QTreeWidgetItem * current, int column);
 	public:
 		static SceneManager* getSceneManger();

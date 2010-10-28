@@ -50,8 +50,8 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
-	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem* , QTreeWidgetItem*)),
-		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , QTreeWidgetItem*)));
+	connect(ui.m_overViewWidget, SIGNAL(itemClicked(QTreeWidgetItem* , int)),
+		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , int)));
 
 	getCompartFromDb();
 	getBackboneFromDb();
@@ -423,4 +423,20 @@ void MainGraphicsView::backToMainMenu()
 	m_scenemgr->deleteAllScene();
 	setState(START);
 	return;
+}
+
+void MainGraphicsView::compartmentScene()
+{
+	ui.com_combx->setEnabled(true);
+	ui.backbone_combx->setEnabled(true);
+	ui.bio_combx->setEnabled(false);
+	ui.compound_combx->setEnabled(false);
+}
+
+void MainGraphicsView::plasmidScene()
+{
+	ui.com_combx->setEnabled(false);
+	ui.backbone_combx->setEnabled(false);
+	ui.bio_combx->setEnabled(true);
+	ui.compound_combx->setEnabled(true);
 }

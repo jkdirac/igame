@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <species id="BBa_J23100" name="BBa_J23100" category="Promoter"
-	x="100" y="-150"
+	x="100" y="-250"
 	width="80" height="40"
 	isVisible="1" isSelectable="1" isMovable="1"
 	isTextVisible="1" text="BBa_J23100"
