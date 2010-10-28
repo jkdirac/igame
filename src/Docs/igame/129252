@@ -1,0 +1,267 @@
+format 66
+"Ui" // Ui
+  revision 1
+  modified_by 100 "jkdirac"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  classview 130404 "ui"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    classdiagram 130404 "ui"
+      draw_all_relations no hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 131812 "Scene"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129252 // <unidirectional association>
+	relation 129252 --->
+	  a role_name "" private
+	    classrelation_ref 129252 // <unidirectional association>
+	  b parent class_ref 131812 // Scene
+      end
+
+      attribute 133988 "parent"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134116 "children"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129764 // <unidirectional association>
+	relation 129764 --->
+	  a role_name "" private
+	    classrelation_ref 129764 // <unidirectional association>
+	  b parent class_ref 131940 // Item
+      end
+
+      classrelation 129892 // <unidirectional association>
+	relation 129892 --->
+	  a role_name "" private
+	    classrelation_ref 129892 // <unidirectional association>
+	  b parent class_ref 132324 // globalModel
+      end
+
+      attribute 134244 "rootItem"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 130020 // <unidirectional association>
+	relation 130020 --->
+	  a role_name "" private
+	    classrelation_ref 130020 // <unidirectional association>
+	  b parent class_ref 132196 // SceneManager
+      end
+
+      classrelation 130276 // <unidirectional association>
+	relation 130276 --->
+	  a role_name "" private
+	    classrelation_ref 130276 // <unidirectional association>
+	  b parent class_ref 132452 // parameterWidget
+      end
+
+      classrelation 130404 // <unidirectional association>
+	relation 130404 --->
+	  a role_name "" private
+	    classrelation_ref 130404 // <unidirectional association>
+	  b parent class_ref 132580 // SelectWidget
+      end
+
+      classrelation 130532 // <unidirectional association>
+	relation 130532 --->
+	  a role_name "" private
+	    classrelation_ref 130532 // <unidirectional association>
+	  b parent class_ref 132708 // overViewWidget
+      end
+    end
+
+    class 131940 "Item"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129636 // <unidirectional association>
+	relation 129636 --->
+	  a role_name "" private
+	    classrelation_ref 129636 // <unidirectional association>
+	  b parent class_ref 131812 // Scene
+      end
+    end
+
+    class 132068 "ClickableItem"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129380 // <generalisation>
+	relation 129380 ---|>
+	  a public
+	    classrelation_ref 129380 // <generalisation>
+	  b parent class_ref 131940 // Item
+      end
+
+      classrelation 130148 // <unidirectional association>
+	relation 130148 --->
+	  a role_name "" private
+	    classrelation_ref 130148 // <unidirectional association>
+	  b parent class_ref 132196 // SceneManager
+      end
+    end
+
+    class 132196 "SceneManager"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129508 // <unidirectional association>
+	relation 129508 --->
+	  a role_name "" private
+	    classrelation_ref 129508 // <unidirectional association>
+	  b parent class_ref 131812 // Scene
+      end
+
+      operation 128100 "switchScene"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	
+	
+	
+      end
+    end
+
+    class 132324 "globalModel"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 132452 "parameterWidget"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 132580 "SelectWidget"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130788 // <unidirectional association>
+	relation 130788 --->
+	  a role_name "" private
+	    classrelation_ref 130788 // <unidirectional association>
+	  b parent class_ref 132324 // globalModel
+      end
+    end
+
+    class 132708 "overViewWidget"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130660 // <unidirectional association>
+	relation 130660 --->
+	  a role_name "" private
+	    classrelation_ref 130660 // <unidirectional association>
+	  b parent class_ref 132324 // globalModel
+      end
+
+      classrelation 130916 // <unidirectional association>
+	relation 130916 --->
+	  a role_name "" private
+	    classrelation_ref 130916 // <unidirectional association>
+	  b parent class_ref 132196 // SceneManager
+      end
+    end
+  end
+end
