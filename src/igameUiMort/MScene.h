@@ -16,7 +16,9 @@
 #include <QVector>
 #include "MWidget.h"
 
-#include "Species.h"
+#include <QTreeWidgetItemIterator>
+#include "SpeciesData.h"
+#include "SceneTreeItem.h"
 
 //#include "SceneTreeItem.h"
 
@@ -26,6 +28,38 @@ class SceneViewWidget;
 
 class MScene : public QGraphicsScene {
     Q_OBJECT
+
+public:
+	class Iterator
+	{
+		private:
+			QTreeWidgetItemIterator* m_iterator;
+			MScene* m_this;
+
+		public:
+			Iterator(MScene* sce) 
+			{ 
+				if (sce == NULL)
+					return;
+
+				m_this = sce;
+				m_iterator = new QTreeWidgetItemIterator((QTreeWidgetItem*)(sce->m_treeItem));
+			};
+
+			MScene* operator * ()
+			{
+				return m_this;
+			}
+
+			Iterator* operator ++ ()
+			{
+				m_iterator++;
+				if (*(*m_iterator) != NULL)
+				{
+					return ((SceneTreeItem*)*(*m_iterator))->getScene()->getIterator();
+				}
+			}
+	};
 
 public:
 
@@ -66,6 +100,12 @@ public:
 
 	SPECIESTYPE type() {return m_type; }
 
+	int childrenCount();
+	MScene* getChild(int n);
+	QVector<MItem*>& getValidSubItems();
+
+	Iterator* getIterator() { return new Iterator(this); };
+
 private:
 	QString m_id;
 	QString m_name;
@@ -81,6 +121,8 @@ private:
 	MWidget* selWidget;
 	SceneViewWidget* m_overviewWidget;
 	SceneTreeItem* m_treeItem;
+
 };
+
 
 #endif

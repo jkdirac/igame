@@ -159,3 +159,8 @@ void SceneManager::deleteAllScene()
 		m_rootscene = NULL;
 	}
 }
+
+MScene* SceneManager::getRootScene()
+{
+	return m_rootscene;
+}

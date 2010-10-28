@@ -21,7 +21,7 @@
 #include <QFile>
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
-#include "Species.h"
+#include "SpeciesData.h"
 
 class MScene;
 class MItem : public QGraphicsItem {

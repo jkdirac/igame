@@ -512,3 +512,35 @@ bool MScene::itemDropped(MItem *item)
 	else
 		return false;
 }
+
+int MScene::childrenCount()
+{
+	if (m_treeItem != NULL)
+		return m_treeItem->childCount();
+}
+
+MScene* MScene::getChild(int n)
+{
+	if (n < 0)
+		return NULL;
+
+	if (m_treeItem != NULL)
+	{
+		return ((SceneTreeItem*)m_treeItem->child(n))->getScene();
+	}
+}
+
+QVector<MItem*>& MScene::getValidSubItems()
+{
+	QVector<MItem*> res;
+	res.clear();
+
+	for (int i=0; i<dataCount; i++)
+	{
+		if (dataItem[i] == NULL)
+			continue;
+
+		if (itemInCompartment(dataItem[i]))
+			res.push_back(dataItem[i]);
+	}
+}
