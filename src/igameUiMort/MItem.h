@@ -22,6 +22,7 @@
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
 #include "SpeciesData.h"
+#include "SettingWidget.h"
 
 class MScene;
 class MItem : public QGraphicsItem {
@@ -191,6 +192,8 @@ public:
 
 	virtual void deletOwnerScene() {};
 	virtual void invalidOwnerScene(bool valid) {};
+	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
@@ -251,6 +254,7 @@ private:
 	MScene* m_scene;
 
 	SpeciesData* m_speciesdata;
+	SettingWidget* m_settingWidget;
 
 	void init();
 };

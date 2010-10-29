@@ -315,6 +315,8 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
 
 void MItem::init()
 {
+	m_settingWidget = NULL;
+	setAcceptHoverEvents(true);
 	renew();
 }
 
@@ -340,7 +342,7 @@ QRectF MItem::outlineRect() const
     QRectF rect(this->x(), this->y(), m_width, m_height);
 
     rect.adjust(-m_padding, -m_padding, +m_padding, +m_padding);
-    rect.translate(-rect.center());
+	rect.translate(-rect.center());
 
     return rect;
 }
@@ -541,7 +543,39 @@ void MItem::setScene(MScene* sce)
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
 	qDebug() << "double click in mitem";
-	return QGraphicsItem::mouseDoubleClickEvent(event);
+
+	m_settingWidget = new ItemDataSetting(this);
+	if (m_scene != NULL)
+	{
+		m_scene->addWidget(m_settingWidget); 
+//        m_settingWidget->setx(x());
+//        m_settingWidget->sety(y());
+	}
+//    return QGraphicsItem::mouseDoubleClickEvent(event);
+}
+
+void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
+{
+	if (m_settingWidget != NULL)
+	{
+		m_settingWidget->set();
+		m_settingWidget->close();
+	}
+}
+
+void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
+{
+	if (m_settingWidget == NULL)
+	{
+		m_settingWidget = new ItemDataSetting(this);
+
+		if (m_scene != NULL)
+			m_scene->addWidget(m_settingWidget); 
+	}
+	else
+	{
+		m_settingWidget->show();
+	}
 }
 
 /*
