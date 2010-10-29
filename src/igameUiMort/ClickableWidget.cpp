@@ -32,16 +32,18 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	if (m_ownScene != NULL)
 	{
 		qDebug() << "-- item had a scene";
-		return;
 	}
+	else
+	{
 
-	//One Item in operation region can create new scene
-	if (!getScene()->itemInCompartment(this))
-		return;
+		//One Item in operation region can create new scene
+		if (!getScene()->itemInCompartment(this))
+			return;
 
-	m_ownScene = new MScene(NULL, id(), type());
-//    newScene->loadXml(":demoUiXml.ui.xml");
-	qDebug() << "new scene id: " << id();
+		m_ownScene = new MScene(NULL, id(), type());
+		//    newScene->loadXml(":demoUiXml.ui.xml");
+		qDebug() << "new scene id: " << id();
+	}
 
 	if (m_senemgr == NULL)
 	{

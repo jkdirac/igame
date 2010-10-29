@@ -32,8 +32,13 @@ QString& InputGen::generateInput()
 	{
 		MScene* scene = ((SceneTreeItem*)*iter) -> getScene();
 
-		if (scene != NULL)
-			m_listScene.push_back(scene);
+		if (!(*iter)->isDisabled())
+		{
+			if (scene != NULL)
+			{
+				m_listScene.push_back(scene);
+			}
+		}
 
 		iter++;
 	}

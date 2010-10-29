@@ -124,6 +124,10 @@ void SceneManager::broswerScene(QTreeWidgetItem * current, int cl)
 	qDebug() << "broswer Scene";
 
 	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+
+	if (curSceneItem->isDisabled())
+		return;
+
 	MScene* setScene = curSceneItem->getScene();
 	
 	setCurrentScene(setScene);
