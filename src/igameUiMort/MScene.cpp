@@ -14,6 +14,7 @@
 #include "IdSelWidget.h"
 #include "SceneViewWidget.h"
 #include "SceneTreeItem.h"
+#include "ClickableWidget.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -55,6 +56,7 @@ MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 
 void MScene::init()
 {
+	m_nFree = 0;
 	m_browserItem = NULL;
 	m_browserItemX = 140;
 	m_browserItemY = -250;
@@ -92,6 +94,7 @@ void MScene::init()
 MScene::~MScene()
 {
 	qDebug() << "delete mscene";
+
 	//递归调用
 	//if child == NULL
 	int nChildren = m_treeItem->childCount();
@@ -128,6 +131,13 @@ MScene::~MScene()
 		if (dataItem[i] != NULL)
 			delete dataItem[i];
 	}
+
+	for (int i=0; i < m_nFree; i++)
+	{
+		delete dirtyItemPool[i];
+		dirtyItemPool[i] = NULL;
+	}
+
 }
 
 int MScene::addSpeciesItem(MItem *item)
@@ -173,20 +183,7 @@ void MScene::deletItemEx(MItem* item)
 	if (!bfound)
 		return;
 
-	this->removeItem(item);
-
-	/* The code here leads to the memory leaks, If I delete this pointer here, a core dump occurs
-	 * So I have to keep this bug
-	 * */
-	delete item;
-
-	for (int i = n; i < dataCount-1; i++)
-	{
-		dataItem[i] = dataItem[i+1];
-		dataItem[i+1] = NULL;
-	}
-
-	dataCount--;
+	deletItemEx(n);
 }
 
 void MScene::deletItemEx(int n)
@@ -197,8 +194,19 @@ void MScene::deletItemEx(int n)
 	if (dataItem[n] != NULL)
 	{
 		this->removeItem(dataItem[n]);
-		delete dataItem[n];
 	}
+
+	if (m_nFree >= POOLNUM)
+	{
+		for (int i=0; i < POOLNUM; i++)
+		{
+			delete dirtyItemPool[i];
+			dirtyItemPool[i] = NULL;
+		}
+		m_nFree = 0;
+	}
+
+	dirtyItemPool[m_nFree] = dataItem[n];
 
 	for (int i = n; i < dataCount; i++)
 	{
@@ -464,6 +472,9 @@ void MScene::addChildScene(MScene *child)
 		qDebug() << "m_treeItem: " << (int)m_treeItem;
 		SceneTreeItem* newItem = child->getTreeItem();
 		m_treeItem->addChild(newItem);
+		newItem->setSelected(true);
+		m_treeItem->setSelected(false);
+		m_treeItem->setExpanded(true);
 		child->setParent(this);
 	}
 }
@@ -539,11 +550,26 @@ bool MScene::itemDropped(MItem *item)
 
 	if (item->collidesWithItem(m_trashItem))
 	{
+		item->deletOwnerScene();
 		deletItemEx(item);
 		return true;
 	}
-	else
-		return false;
+	else 
+	{
+		if (!itemInCompartment(item))
+		{
+			qDebug() << "invalid the scene";
+			item->invalidOwnerScene(true);
+		}
+		else
+		{
+			item->invalidOwnerScene(false);
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 int MScene::childrenCount()
@@ -672,12 +698,18 @@ void MScene::addBrowserItem(MItem *item)
 	{
 		deletItemEx(m_browserItem);
 		m_browserItem = NULL;
-		//        delete m_browserItem;
 	}
-
 
 	m_browserItem = item;
 	m_browserItem->setX(m_browserItemX);
 	m_browserItem->setY(m_browserItemY);
 	addSpeciesItem(m_browserItem);
+}
+
+void MScene::invalidTree(bool invalid)
+{
+	if (m_treeItem == NULL)
+		return;
+	qDebug() << "Disable the tree item";
+	m_treeItem->setDisabled(invalid);
 }

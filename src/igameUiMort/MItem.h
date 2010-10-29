@@ -189,6 +189,9 @@ public:
 
 	SpeciesData* getSpeciesData() { return m_speciesdata; };
 
+	virtual void deletOwnerScene() {};
+	virtual void invalidOwnerScene(bool valid) {};
+
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 

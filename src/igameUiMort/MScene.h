@@ -87,6 +87,11 @@ public:
     MItem* dataScene;
 	MItem* m_trashItem;
     MItem* dataItem[1024];
+
+#define POOLNUM 16
+	MItem* dirtyItemPool[POOLNUM];
+	int m_nFree;
+
     int dataCount;
 
 	QString& getId();
@@ -111,6 +116,8 @@ public:
 	void addBrowserItem(MItem *item);
 
 	MScene* parent() { return m_parent; };
+
+	void invalidTree(bool invalid);
 
 private:
 	void addItemEx(MItem *item);

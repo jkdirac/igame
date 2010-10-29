@@ -31,6 +31,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="toolTip">
+   <string/>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -76,7 +79,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(240, 240, 240);
-font: 9pt &quot;Verdana&quot;;</string>
+selection-background-color:rgb(151, 203, 154);
+font: 10pt &quot;Verdana&quot;;
+</string>
    </property>
    <property name="itemsExpandable">
     <bool>true</bool>

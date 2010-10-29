@@ -323,6 +323,13 @@ MItem::~MItem()
 {
 	qDebug() << "Mitem deleted";
 	delete m_speciesdata;
+
+	if (m_scene)
+	{
+		m_scene->deletItemEx(this);
+	}
+
+	m_scene = NULL;
 }
 
 

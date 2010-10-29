@@ -16,6 +16,8 @@ class ClickableWidget: public MItem
 		ClickableWidget(const QString& xmlfile, SPECIESTYPE type=SPEC_COMPARTMENT);
 		virtual ~ClickableWidget();
 		void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+		void deletOwnerScene();
+		void invalidOwnerScene(bool invalid);
 };
 
 #endif

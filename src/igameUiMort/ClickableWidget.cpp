@@ -12,11 +12,6 @@ ClickableWidget::ClickableWidget(SPECIESTYPE type) : MItem(NULL, type)
 ClickableWidget::~ClickableWidget()
 {
 	qDebug() << "clickable widget deleted";
-	if (m_ownScene != NULL)
-	{
-		delete m_ownScene;
-		m_ownScene = NULL;
-	}
 }
 
 ClickableWidget::ClickableWidget(const QString& fileName, SPECIESTYPE type) : MItem(fileName, type)
@@ -55,5 +50,27 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 	else
 	{
 		m_senemgr->addNewScene(m_ownScene);
+	}
+}
+
+void ClickableWidget::deletOwnerScene()
+{
+	if (m_ownScene)
+		delete m_ownScene;
+}
+
+/** 
+ * @breif  
+ *	Disable the SceneItemView in the System tree view
+ * 
+ * @Param invalid 
+ *	invalid the scene and its sub scene if true
+ *	ohterwis enable those scenes
+ */
+void ClickableWidget::invalidOwnerScene(bool invalid)
+{
+	if (m_ownScene)
+	{
+		m_ownScene->invalidTree(invalid);
 	}
 }
