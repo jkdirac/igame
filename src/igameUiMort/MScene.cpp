@@ -55,13 +55,16 @@ MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 
 void MScene::init()
 {
-//    loadXml(":demoUiXml.ui.xml");
-    this->dataScene = new MItem();
-    this->addItem(this->dataScene);
+	m_browserItem = NULL;
+	m_browserItemX = 140;
+	m_browserItemY = -250;
+	//    loadXml(":demoUiXml.ui.xml");
+	this->dataScene = new MItem();
+	this->addItem(this->dataScene);
 
-    this->dataScene->setPos(0, 0);
-    this->dataScene->setWidth(0);
-    this->dataScene->setHeight(0);
+	this->dataScene->setPos(0, 0);
+	this->dataScene->setWidth(0);
+	this->dataScene->setHeight(0);
 
 	if (m_type == SPEC_COMPARTMENT)
 		m_rootItem = new MItem(":xml/scene-compartment.ui.xml");
@@ -74,9 +77,9 @@ void MScene::init()
 	m_rootItem->setScene(this);
 
 	m_trashItem = NULL;
-
-//    m_trashItem = new MItem(":xml/trash.ui.xml");
-//    addItemEx(m_trashItem);
+	m_trashItem = new MItem(":xml/trash.ui.xml");
+	addItem(m_trashItem);
+	m_trashItem->setScene(this);
 
 	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
@@ -106,18 +109,24 @@ MScene::~MScene()
 	}
 	// return;
 	
-	//call child.deletChildScene
-	
 	//delete childScene;
-	delete m_treeItem;
-
+	if (m_parent == this)	
+	{
+		delete m_treeItem;
+	}
+	else
+	{
+		m_parent->getTreeItem()->removeChild( m_treeItem );
+		delete m_treeItem;
+	}
 	//
     delete dataScene;
 
 	//delete items
 	for (int i = 0; i < dataCount; i++)
 	{
-		delete dataItem[i];
+		if (dataItem[i] != NULL)
+			delete dataItem[i];
 	}
 }
 
@@ -165,6 +174,10 @@ void MScene::deletItemEx(MItem* item)
 		return;
 
 	this->removeItem(item);
+
+	/* The code here leads to the memory leaks, If I delete this pointer here, a core dump occurs
+	 * So I have to keep this bug
+	 * */
 	delete item;
 
 	for (int i = n; i < dataCount-1; i++)
@@ -516,10 +529,17 @@ bool MScene::itemDropped(MItem *item)
 	if (item == m_trashItem)
 		return false;
 
+	if ((m_browserItem == item)
+			&& ((m_browserItem->x() != m_browserItemX)
+			|| (m_browserItem->y() != m_browserItemY)))
+	{
+		qDebug() << "m_broserItem was dragged";
+		m_browserItem = NULL;
+	}
+
 	if (item->collidesWithItem(m_trashItem))
 	{
-//        deletItemEx(item);
-//        deletItemEx(item->sceneId());
+		deletItemEx(item);
 		return true;
 	}
 	else
@@ -635,4 +655,29 @@ QString MScene::generateSpeXmlString()
 	}
 
 	return res;
+}
+
+void MScene::addBrowserItem(MItem *item)
+{
+	if (item == NULL)
+	{
+		return ;
+	}
+
+	//check position
+	//if m_browserItem was not in init region, confirmed inserted in the scene
+	//else delete the m_browserItem 
+	//
+	if (m_browserItem)
+	{
+		deletItemEx(m_browserItem);
+		m_browserItem = NULL;
+		//        delete m_browserItem;
+	}
+
+
+	m_browserItem = item;
+	m_browserItem->setX(m_browserItemX);
+	m_browserItem->setY(m_browserItemY);
+	addSpeciesItem(m_browserItem);
 }

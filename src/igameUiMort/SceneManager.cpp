@@ -9,13 +9,8 @@ SceneManager* SceneManager::_single_instance = NULL;
 SceneManager::SceneManager()
 	: m_view(NULL),
 	m_rootscene(NULL),
-	m_currentscene(NULL),
-	m_browserItem(NULL),
-	m_browserItemId(0)
+	m_currentscene(NULL)
 {
-	m_browserItemX = 140;
-	m_browserItemY = -250;
-
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
 
@@ -79,8 +74,6 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (scene == NULL)
 		return;
 
-	m_browserItem = NULL;
-
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
@@ -105,30 +98,7 @@ void SceneManager::setCurrentScene(MScene* scene)
 
 void SceneManager::browserItem(MItem* item)
 {
-	if (item == NULL)
-	{
-		return;
-	}
-
-	//check position
-	//if m_browserItem was not in init region, confirmed inserted in the scene
-	//else delete the m_browserItem 
-	//
-
-	if (m_browserItem 
-			&& (m_browserItem->x() == m_browserItemX)
-			&& (m_browserItem->y() == m_browserItemY))
-	{
-		m_currentscene->deletItemEx(m_browserItem);
-		m_browserItem = NULL;
-//        delete m_browserItem;
-	}
-	
-
-	m_browserItem = item;
-	m_browserItem->setX(m_browserItemX);
-	m_browserItem->setY(m_browserItemY);
-	m_browserItemId = m_currentscene->addSpeciesItem(m_browserItem);
+	m_currentscene->addBrowserItem(item);
 }
 
 SceneTreeItem* SceneManager::getRootItem()
@@ -158,6 +128,7 @@ void SceneManager::broswerScene(QTreeWidgetItem * current, int cl)
 	
 	setCurrentScene(setScene);
 }
+
 void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
 {
 	qDebug() << "broswer Scene";

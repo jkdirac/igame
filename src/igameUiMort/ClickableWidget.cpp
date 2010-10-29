@@ -11,6 +11,12 @@ ClickableWidget::ClickableWidget(SPECIESTYPE type) : MItem(NULL, type)
 
 ClickableWidget::~ClickableWidget()
 {
+	qDebug() << "clickable widget deleted";
+	if (m_ownScene != NULL)
+	{
+		delete m_ownScene;
+		m_ownScene = NULL;
+	}
 }
 
 ClickableWidget::ClickableWidget(const QString& fileName, SPECIESTYPE type) : MItem(fileName, type)

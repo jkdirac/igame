@@ -108,6 +108,7 @@ public:
 	QString generateSpeXmlString();
 
 	int addSpeciesItem(MItem *item);
+	void addBrowserItem(MItem *item);
 
 	MScene* parent() { return m_parent; };
 
@@ -129,6 +130,10 @@ private:
 	SceneViewWidget* m_overviewWidget;
 	SceneTreeItem* m_treeItem;
 
+	MItem* m_browserItem;
+	int m_browserItemId;
+	qreal m_browserItemX;
+	qreal m_browserItemY;
 };
 
 

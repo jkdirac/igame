@@ -321,8 +321,8 @@ void MItem::init()
 // Class MItem destructor
 MItem::~MItem()
 {
-    //foreach(LinkT *link, myLinkT)
-    //    delete link;
+	qDebug() << "Mitem deleted";
+	delete m_speciesdata;
 }
 
 
