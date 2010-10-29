@@ -361,6 +361,19 @@ font: 9pt &quot;Verdana&quot;;</string>
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QTextBrowser" name="m_console">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>300</y>
+     <width>300</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(241, 241, 241);</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="iGaME.qrc"/>

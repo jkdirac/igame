@@ -470,7 +470,9 @@ BdRetVal bdbXMLInterface::add_directory(const string &directory)
 
 	QString path_name(directory.c_str());
 	QDirIterator dir_itr(path_name, QDir::Files, QDirIterator::Subdirectories);
+
 	bdbXMLInterface db_interface;
+
 	while (dir_itr.hasNext())
 	{
 		QString cur_pathname = dir_itr.next();
@@ -500,9 +502,7 @@ BdRetVal bdbXMLInterface::add_directory(const string &directory)
 		catch (XmlException &se)
 		{
 			debugOut() << "add files exception" << cur_pathname.toStdString() << endl;
-			throw se;
 		}
-
 		//add to directory
 	}
 }
