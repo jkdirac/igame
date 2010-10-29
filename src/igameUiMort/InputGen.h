@@ -10,12 +10,15 @@ class InputGen
 {
 	public:
 		InputGen();
-		void generateInput();
+		QString& generateInput();
 
 	private:
-		QVector<SpeciesData*>  m_listCompartments;
-		QVector<MScene*>  m_listParts;
-		QVector<MScene*>  m_listScene;
+		QString m_listCompartments;
+		QString m_listSpecies;
+		QString m_xmlStart;
+		QString m_xmlEnd;
+		QString m_inputContent;
+		QVector<MScene*> m_listScene;
 		SceneManager* m_scenMgr;
 };
 

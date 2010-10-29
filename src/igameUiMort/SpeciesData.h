@@ -37,7 +37,7 @@ class SpeciesData
 		void setParent(QString& id, SPECIESTYPE type) 
 		{ m_compartment = id; m_parentType = type; };
 
-		QString& generatePartsXmlString();
-		QString& generateCompartmentXmlString();
+		QString generatePartsXmlString();
+		QString generateCompartmentXmlString();
 };
 #endif

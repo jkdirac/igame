@@ -30,7 +30,7 @@ SpeciesData& SpeciesData::operator = (const SpeciesData &other)
 	return *this;
 }
 
-QString& SpeciesData::generateCompartmentXmlString()
+QString SpeciesData::generateCompartmentXmlString()
 {
 //    <compartment db="Chemostat">
 //        <id>Chemostat</id>
@@ -49,7 +49,7 @@ QString& SpeciesData::generateCompartmentXmlString()
 	return res;
 }
 
-QString& SpeciesData::generatePartsXmlString()
+QString SpeciesData::generatePartsXmlString()
 {
 	QString res;
 	res.clear();

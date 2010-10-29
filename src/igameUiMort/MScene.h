@@ -106,8 +106,8 @@ public:
 
 	Iterator* getIterator() { return new Iterator(this); };
 
-	QString& generateComXmlString();
-	QString& generateSpeXmlString();
+	QString generateComXmlString();
+	QString generateSpeXmlString();
 private:
 	QString m_id;
 	QString m_name;

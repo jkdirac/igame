@@ -545,10 +545,10 @@ QVector<MItem*>& MScene::getValidSubItems()
 	}
 }
 
-QString& MScene::generateComXmlString()
+QString MScene::generateComXmlString()
 {
 }
 
-QString& MScene::generateSpeXmlString()
+QString MScene::generateSpeXmlString()
 {
 }

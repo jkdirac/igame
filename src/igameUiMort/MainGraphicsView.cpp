@@ -21,6 +21,8 @@
 #include <QProcess>
 #include <QMessageBox>
 
+#include "InputGen.h"
+
 #include "driver.h"
 #include "CopsiInterface.h"
 
@@ -248,29 +250,28 @@ void MainGraphicsView::getStart()
 void MainGraphicsView::sceneNext()
 {
 	qDebug() << "HaHa next pressed";
+	InputGen inputGenerator;
 
 	//review
 	if (m_state == GAMESCENE)
 	{
-		QString name = "network.xml";
-		QFile file(name);
-		if (!file.open(QFile::ReadOnly | QFile::Text)) {
-			QMessageBox::warning(this, tr("Application"),
-					tr("Cannot read file %1:\n%2.")
-					.arg(name)
-					.arg(file.errorString()));
-			return;
-		}
-		QTextStream in(&file);
+		try
+		{
+			QString& inputXml = inputGenerator.generateInput();
+
 #ifndef QT_NO_CURSOR
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-
-		ui.m_fileBrowser->setPlainText(in.readAll());
-
+		ui.m_fileBrowser->setPlainText(inputXml);
 #ifndef QT_NO_CURSOR
 		QApplication::restoreOverrideCursor();
 #endif
+		}
+		catch (CoreException &se)
+		{
+			qDebug() << "CoreException: " << se.what();
+		}
+
 	}
 
 	//simulate
