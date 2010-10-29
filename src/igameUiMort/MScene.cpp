@@ -71,6 +71,7 @@ void MScene::init()
 	//add root Item
 	m_rootItem->setId(m_id);
     addItem(m_rootItem);
+	m_rootItem->setScene(this);
 
 	m_trashItem = NULL;
 
