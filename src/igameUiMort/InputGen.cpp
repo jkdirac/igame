@@ -38,9 +38,26 @@ QString& InputGen::generateInput()
 		iter++;
 	}
 
-	m_xmlStart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<MoDeL>\n<dbInterface>\n<input>\n";
-	m_xmlEnd = "</input>\n</dbInterface>\n</MoDeL>\n";
+	m_listCompartments += "\n<listOfCompartments>\n";
+	m_listSpecies += "\n<listOfSpecies>\n";
+	for (int i = 0; i < m_listScene.size(); i++)
+	{
+		if (m_listScene[i] == NULL)
+			continue;
 
-	m_inputContent = m_xmlStart + m_listCompartments + m_listSpecies + m_xmlEnd;
+		m_listCompartments += m_listScene[i]->generateComXmlString();
+		m_listSpecies += m_listScene[i]->generateSpeXmlString();
+	}
+
+	m_listCompartments += "</listOfCompartments>\n";
+	m_listSpecies += "</listOfSpecies>\n";
+
+	m_xmlStart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<MoDeL>\n<dbInterface>\n<input>\n";
+	m_xmlEnd = "\n</input>\n</dbInterface>\n</MoDeL>\n";
+
+	m_inputContent += m_xmlStart;
+    m_inputContent += m_listCompartments;
+    m_inputContent += m_listSpecies;
+	m_inputContent += m_xmlEnd;
 	return m_inputContent;
 }

@@ -94,7 +94,7 @@ font: 9pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>600</y>
+     <y>610</y>
      <width>170</width>
      <height>65</height>
     </rect>
@@ -322,13 +322,32 @@ font: 9pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>600</y>
+     <y>610</y>
      <width>170</width>
      <height>65</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/iGaME.images/button-review.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_scen_backforward">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>610</y>
+     <width>170</width>
+     <height>65</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/iGaME.images/button-back.png);</string>
    </property>
    <property name="text">
     <string/>

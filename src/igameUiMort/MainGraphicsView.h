@@ -39,6 +39,8 @@ class MainGraphicsView : public QWidget
 		QStringList m_bioList;
 		SceneManager* m_scenemgr;
 
+		bool m_showBackforward;
+
 		void getCompartFromDb();
 		void getBackboneFromDb();
 		void getBiobricksFromDb();
@@ -61,6 +63,7 @@ class MainGraphicsView : public QWidget
 		void sceneNext();
 		void loadDb();
 		void backToMainMenu();
+		void sceneBackForward();
 };
 
 #endif

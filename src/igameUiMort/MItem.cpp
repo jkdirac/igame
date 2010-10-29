@@ -46,8 +46,6 @@
 // Class MItem constructor
 MItem::MItem(SPECIESTYPE type) 
 	: m_scene(NULL)
-	  , m_type(type)
-    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -97,13 +95,13 @@ MItem::MItem(SPECIESTYPE type)
     , m_isAlternativeImageAvailable(false)
 	, m_speciesdata(NULL)
 {
+	m_speciesdata = new SpeciesData();
+	m_speciesdata->setType(type);
 	init();
 }
 
 MItem::MItem(const QString& fileName, SPECIESTYPE type)
 	: m_scene(NULL)
-	  ,m_type(type)
-    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -153,6 +151,9 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
     , m_isAlternativeImageAvailable(false)
 	, m_speciesdata(NULL)
 {
+	m_speciesdata = new SpeciesData();
+	m_speciesdata->setType(type);
+
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
@@ -314,7 +315,6 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
 
 void MItem::init()
 {
-	m_speciesdata = new SpeciesData();
 	renew();
 }
 
@@ -462,7 +462,6 @@ void MItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
             painter->setPen(m_textColor);
             painter->setFont(m_textFont);
             painter->drawText(rect, Qt::AlignCenter, m_text);
-//            qDebug() << "draw text " << m_id << " " << rect.x() << " " << rect.y() << " " << m_width << " " << m_height;
 
         } else { // draw alternative text
             painter->setPen(m_alternativeTextColor);
@@ -526,7 +525,9 @@ void MItem::setScene(MScene* sce)
 
 	m_scene = sce;
 	if (m_speciesdata != NULL)
+	{
 		m_speciesdata->setParent(sce->getId(), sce->type());
+	}
 }
 
 //Process MItem mouse double click event - formally

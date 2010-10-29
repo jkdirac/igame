@@ -4,7 +4,7 @@
 按照场景遍历：
 	如果是Compartment场景，那么需要把内部的dataItem表示的Compartment和compounds生成listOfSpeices的内容,
 同时把场景的compartment类型root_item给生成一个listOfCompartment的内容；plasmid的item可以忽略了
-	如果是Plasmid场景，把内部的Compartment生成CnModel内容。
+	如果是Plasmid场景，把内部的parts生成CnModel内容。
 
 上面两条规则就足够应付input.xml的要求了，因为input.xml只要把链都列举出来，把compartment和species列举出来就好了
 

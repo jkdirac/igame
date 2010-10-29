@@ -39,11 +39,11 @@ public:
 
     void renew();
 
-    const QString& id() { return m_id; }
+    const QString& id() { return m_speciesdata->id(); }
     void setId(QString id) 
 	{ 
-		m_id = id; 
-		setText(m_id); 
+		setText(id); 
+		m_speciesdata->setId(id);
 		this->renew(); 
 	}
 
@@ -185,7 +185,7 @@ public:
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
 
-	SPECIESTYPE type() { return m_type; }
+	SPECIESTYPE type() { return m_speciesdata->type(); }
 
 	SpeciesData* getSpeciesData() { return m_speciesdata; };
 
@@ -197,7 +197,6 @@ protected:
 
 private:
 	int sene_id;
-    QString m_id;
     QString m_name;
     QString m_category;
 
@@ -247,7 +246,6 @@ private:
     bool m_isAlternativeImageAvailable;
 
 	MScene* m_scene;
-	SPECIESTYPE m_type;
 
 	SpeciesData* m_speciesdata;
 

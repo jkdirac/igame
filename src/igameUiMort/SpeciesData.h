@@ -30,14 +30,19 @@ class SpeciesData
 		SpeciesData& operator = (const SpeciesData &other);
 
 		SPECIESTYPE type() const { return m_type; }
+		void setType(SPECIESTYPE type) { m_type = type; };
+
 		const QString& id() const { return m_id; }
 		const QString& parent() const { return m_compartment; } 
 		SPECIESTYPE parentType() const { return m_parentType; }
 
-		void setParent(QString& id, SPECIESTYPE type) 
+		void setParent(const QString& id, SPECIESTYPE type) 
 		{ m_compartment = id; m_parentType = type; };
 
 		QString generatePartsXmlString();
 		QString generateCompartmentXmlString();
+		QString generateSpeciesXmlString();
+
+		void setId(QString id) { m_id = id; };
 };
 #endif

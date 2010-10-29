@@ -55,6 +55,9 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	connect(ui.m_scenBack, SIGNAL(pressed()), 
 			                     this, SLOT(backToMainMenu()));
 
+	connect(ui.m_scen_backforward, SIGNAL(pressed()), 
+			                     this, SLOT(sceneBackForward()));
+
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
@@ -65,6 +68,8 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	getBackboneFromDb();
 	getBiobricksFromDb();
 	getCompoundFromDb();
+
+	m_showBackforward = false;
 //    setTreeView();
 }
 
@@ -83,6 +88,7 @@ void MainGraphicsView::setUi(STATE curState)
 {
 	if (curState == START)
 	{
+		m_showBackforward = false;
 		ui.m_overViewWidget->setVisible(false);
 
 		ui.m_frame->setVisible(false);
@@ -93,6 +99,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 		ui.m_scenNext->setVisible(false);
 		ui.m_scenBack->setVisible(false);
+		ui.m_scen_backforward->setVisible(false);
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -117,6 +124,8 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_scenNext->setVisible(true);
         ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-review.png);"));
 		ui.m_scenBack->setVisible(true);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-forward.png);"));
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -130,6 +139,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 	if (curState == REVIEW)
 	{
+		m_showBackforward = true;
 		qDebug() << "enter Review";
 		ui.m_overViewWidget->setVisible(true);
 		ui.m_frame->setVisible(false);
@@ -141,6 +151,8 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_scenNext->setVisible(true);
         ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
 		ui.m_scenBack->setVisible(true);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
 
 		ui.m_fileBrowser->setVisible(true);
 		ui.m_fileBrowser->setGeometry(m_mainRect);
@@ -479,9 +491,17 @@ void MainGraphicsView::getCompoundFromDb()
 
 void MainGraphicsView::backToMainMenu()
 {
-	m_scenemgr->deleteAllScene();
+	m_scenemgr->destoryShow();
 	setState(START);
 	return;
+}
+
+void MainGraphicsView::sceneBackForward()
+{
+	if (m_state == GAMESCENE)
+		setState(REVIEW);
+	else
+		setState(GAMESCENE);
 }
 
 void MainGraphicsView::compartmentScene()

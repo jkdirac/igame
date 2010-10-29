@@ -33,8 +33,8 @@ MScene::MScene(QObject* parent, SPECIESTYPE type)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
 	  ,m_trashItem(NULL)
-	  ,m_comItem(NULL)
 	  ,m_type(type)
+	  ,m_rootItem(NULL)
 {
 	init();
 }
@@ -46,8 +46,8 @@ MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
 	  ,m_trashItem(NULL)
-	  ,m_comItem(NULL)
 	  ,m_type(type)
+	  ,m_rootItem(NULL)
 {
 	m_id = id;
 	init();
@@ -64,12 +64,13 @@ void MScene::init()
     this->dataScene->setHeight(0);
 
 	if (m_type == SPEC_COMPARTMENT)
-		m_comItem = new MItem(":xml/scene-compartment.ui.xml");
+		m_rootItem = new MItem(":xml/scene-compartment.ui.xml");
 	else
-		m_comItem = new MItem(":xml/scene-backbone.ui.xml");
+		m_rootItem = new MItem(":xml/scene-backbone.ui.xml");
 
-	m_comItem->setId(m_id);
-	addItemEx(m_comItem);
+	//add root Item
+	m_rootItem->setId(m_id);
+    addItem(m_rootItem);
 
 	m_trashItem = NULL;
 
@@ -79,6 +80,8 @@ void MScene::init()
 	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
 	setTreeItem(newItem);
+
+	setParent(this);
 }
 
 // Class MScene destructor
@@ -117,19 +120,27 @@ MScene::~MScene()
 	}
 }
 
-int MScene::addItemEx(MItem *item)
+int MScene::addSpeciesItem(MItem *item)
 {
 	if (item == NULL)
 		return -1;
-	
-	dataItem[dataCount] = item;
 
+	addItemEx(item);
+
+	dataItem[dataCount] = item;
+	dataCount++;
+
+	qDebug() << "item count: " << dataCount;
+	return dataCount-1;
+}
+
+void MScene::addItemEx(MItem *item)
+{
+	if (item == NULL)
+		return;
+	
     this->addItem(item);
 	item->setScene(this);
-	item->setSceneId(dataCount);
-
-	dataCount++;
-	return dataCount-1;
 }
 
 void MScene::deletItemEx(MItem* item)
@@ -439,6 +450,7 @@ void MScene::addChildScene(MScene *child)
 		qDebug() << "m_treeItem: " << (int)m_treeItem;
 		SceneTreeItem* newItem = child->getTreeItem();
 		m_treeItem->addChild(newItem);
+		child->setParent(this);
 	}
 }
 
@@ -486,7 +498,7 @@ bool MScene::itemInCompartment(MItem *item)
 	if (item == NULL)
 		return false;
 
-	if (item->collidesWithItem(m_comItem))
+	if (item->collidesWithItem(m_rootItem))
 		return true;
 	else
 		return false;
@@ -547,8 +559,79 @@ QVector<MItem*>& MScene::getValidSubItems()
 
 QString MScene::generateComXmlString()
 {
+	qDebug() << "MSCene generate compartment xml string";
+	if (type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
+
+	if (m_rootItem != NULL)
+	{
+		if (m_parent == this)
+			m_rootItem->getSpeciesData()->setParent("ROOT", SPEC_COMPARTMENT);
+		else
+			m_rootItem->getSpeciesData()->setParent(m_parent->getId(), m_parent->type());
+
+		return m_rootItem->getSpeciesData()->generateCompartmentXmlString();
+	}
 }
 
 QString MScene::generateSpeXmlString()
 {
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+	if (type() == SPEC_BACKBONE)
+	{
+		if (m_rootItem == NULL)
+			return "";
+
+	    res += "<species>\n";
+		res += "<id>"; res += m_rootItem->getSpeciesData()->id(); res += "</id>\n";
+		res += "<compartment>"; res+=m_rootItem->getSpeciesData()->parent(); res += "</compartment>\n";
+		res += "<initialConcentration>"; res += "2.37E-9"; res += "</initialConcentration>\n";
+		res += "<cnModel>\n";
+		res += "<listOfChains>\n";
+		res += "<chain>\n";
+		res += "<listOfParts>\n";
+
+
+		for (int i = 0; i < dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
+
+			if (tmp->type() != SPEC_BIOBRICK)
+				continue;
+
+			res += tmp->getSpeciesData()->generatePartsXmlString();
+		}
+
+		res += "</listOfParts>\n";
+		res += "</chain>\n";
+		res += "</listOfChains>\n";
+		res += "</cnModel>\n";
+	    res += "</species>\n";
+	}
+	else
+	{
+		for (int i=0; i < dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
+
+			if (tmp->type() == SPEC_BACKBONE)
+				continue;
+
+			res += tmp->getSpeciesData()->generateSpeciesXmlString();
+		}
+	}
+
+	return res;
 }

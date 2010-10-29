@@ -43,9 +43,9 @@ class SceneManager : public QObject
 		SceneTreeItem* getRootItem();
 
 		void startShow();
+		void destoryShow();
 
 		MScene* getRootScene();
-		void deleteAllScene();
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);
 //

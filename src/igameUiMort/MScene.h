@@ -81,12 +81,10 @@ public:
 	void deleteChildScene(int id);
 	void setParent(MScene* parent);
 
-	int addItemEx(MItem *item);
 	void deletItemEx(int n);
 	void deletItemEx(MItem* item);
 
     MItem* dataScene;
-	MItem* m_comItem;
 	MItem* m_trashItem;
     MItem* dataItem[1024];
     int dataCount;
@@ -108,7 +106,14 @@ public:
 
 	QString generateComXmlString();
 	QString generateSpeXmlString();
+
+	int addSpeciesItem(MItem *item);
+
+	MScene* parent() { return m_parent; };
+
 private:
+	void addItemEx(MItem *item);
+
 	QString m_id;
 	QString m_name;
     qreal m_minZValue;

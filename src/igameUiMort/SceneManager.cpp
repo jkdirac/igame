@@ -19,18 +19,35 @@ SceneManager::SceneManager()
 	m_rootItem = new SceneTreeItem(NULL, NULL);
 }
 
+void SceneManager::destoryShow()
+{
+	if (m_rootscene != NULL)
+	{
+		delete m_rootscene;
+		m_rootscene = NULL;
+	}
+}
+
 void SceneManager::startShow()
 {
+	qDebug() << "start to show!";
+	if (m_rootscene != NULL)
+	{
+		m_rootItem = m_rootscene->getTreeItem();
+		setCurrentScene(m_rootscene);
+		return;
+	}
+
 	m_rootscene = new MScene(NULL, "Flask");
 
 	if ( m_rootscene != NULL)
 	{
 		m_rootItem = m_rootscene->getTreeItem();
-//        m_rootscene->loadXml(":demoUiXml.ui.xml");
 
-		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
 	}
+
+	m_mainWindow->setTreeView();
 }
 
 SceneManager* SceneManager::setMainWindow(MainGraphicsView *win)
@@ -64,16 +81,15 @@ void SceneManager::setCurrentScene(MScene* scene)
 
 	m_browserItem = NULL;
 
-	if (m_rootscene == NULL)
-	{
-		m_rootscene = scene;
-	}
-
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
-		m_mainWindow->setTreeView();
-//        m_currentscene->showTreeWidget(m_rootItem);
+
+		if (m_rootscene == NULL)
+		{
+			m_rootscene = scene;
+		}
+
 		m_view->setScene(m_currentscene);
 
 		if (m_currentscene->type() == SPEC_COMPARTMENT)
@@ -112,7 +128,7 @@ void SceneManager::browserItem(MItem* item)
 	m_browserItem = item;
 	m_browserItem->setX(m_browserItemX);
 	m_browserItem->setY(m_browserItemY);
-	m_browserItemId = m_currentscene->addItemEx(m_browserItem);
+	m_browserItemId = m_currentscene->addSpeciesItem(m_browserItem);
 }
 
 SceneTreeItem* SceneManager::getRootItem()
@@ -149,15 +165,6 @@ void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
 	MScene* setScene = curSceneItem->getScene();
 	
 	setCurrentScene(setScene);
-}
-
-void SceneManager::deleteAllScene()
-{
-	if (m_rootscene != NULL)
-	{
-		delete m_rootscene;
-		m_rootscene = NULL;
-	}
 }
 
 MScene* SceneManager::getRootScene()
