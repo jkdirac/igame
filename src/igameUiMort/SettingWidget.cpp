@@ -17,5 +17,5 @@ void SettingWidget::focusOutEvent(QFocusEvent * event)
 
 void SettingWidget::leaveEvent ( QEvent * event )
 {
-	close();
+//    close();
 }

@@ -41,6 +41,8 @@
 #include <iostream>
 #include <QDebug>
 
+#include <QCursor>
+
 #include "MScene.h"
 
 // Class MItem constructor
@@ -558,6 +560,25 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 {
 	if (m_settingWidget != NULL)
 	{
+		QPointF point = mapToScene(event->pos());
+		int x = point.x();
+		int y = point.y();
+		int rec_x = m_settingWidget->x();
+		int rec_y = m_settingWidget->y();
+		int rec_width = m_settingWidget->width();
+		int rec_height = m_settingWidget->height();
+		QRect rec = m_settingWidget->rect();
+		qDebug() << "rect " << rec.x() << " " << rec.y() << " " << rec.width() << " " << rec.height();
+		qDebug() << "x: " << x << " y: " << y;
+		qDebug() << "rec x: " << m_settingWidget->x() << " rec y: " << m_settingWidget->y() << "width: " << m_settingWidget->width() << " height: " << m_settingWidget->height();
+//        if (m_settingWidget->underMouse())
+		if ( ((x - rec_x) * (x - rec_x - rec_width) <= 0 )
+				&& ((y - rec_y) * (y - rec_y - rec_height) <= 0) )
+		{
+			qDebug() << "widget under mouse!";
+			return;
+		}
+
 		m_settingWidget->set();
 		m_settingWidget->close();
 	}
@@ -570,10 +591,14 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 		m_settingWidget = new ItemDataSetting(this);
 
 		if (m_scene != NULL)
-			m_scene->addWidget(m_settingWidget); 
+			m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
+		m_settWidgetScene->setX(x());
+		m_settWidgetScene->setY(y());
 	}
 	else
 	{
+		m_settWidgetScene->setX(x());
+		m_settWidgetScene->setY(y());
 		m_settingWidget->show();
 	}
 }

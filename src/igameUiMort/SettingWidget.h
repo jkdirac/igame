@@ -2,6 +2,7 @@
 #define _SETTING_WIDGET_H_
 
 #include <QWidget>
+#include "MWidget.h"
 
 #include "ui_ItemDataSetting.h"
 

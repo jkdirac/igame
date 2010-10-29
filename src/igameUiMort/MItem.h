@@ -255,6 +255,7 @@ private:
 
 	SpeciesData* m_speciesdata;
 	SettingWidget* m_settingWidget;
+	MWidget* m_settWidgetScene;
 
 	void init();
 };
