@@ -3,6 +3,6 @@
 	x="150" y="150"
 	width="150" height="150"
 	isVisible="1" isSelectable="1" isMovable="0"
-	isTextVisible="1" text="pSB1A3"
-	isPixmapVisible="1" pixmap=":iGaME.images/plasmid.png"/>
+	isTextVisible="1" text="Trash"
+	isPixmapVisible="1" pixmap=":iGaME.images/trash.png"/>
 </comp>

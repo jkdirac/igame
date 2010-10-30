@@ -190,15 +190,15 @@ public:
 	virtual void deletOwnerScene() {};
 	virtual void invalidOwnerScene(bool valid) {};
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 //    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
-
-    //void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 private:
 	int sene_id;

@@ -5,7 +5,10 @@
 #include "MWidget.h"
 
 #include <QDebug>
-#include "ui_ItemDataSetting.h"
+#include "ui_CompartDataSet.h"
+#include "ui_RuleDataSet.h"
+#include "ui_SpeciesDataSet.h"
+#include "ui_BiobrickDataSet.h"
 
 class MItem;
 class SettingWidget : public QWidget
@@ -26,16 +29,51 @@ class SettingWidget : public QWidget
 		MItem* m_item;
 };
 
-class ItemDataSetting : public SettingWidget
+class CompartDataSet : public SettingWidget
 {
 	Q_OBJECT
 	public:
-		ItemDataSetting(MItem *);
+		CompartDataSet(MItem *item);
 		void set();
 		void showSetting(const QString& id);
 
 	private:
-		Ui::ItemDataSetting ui;
+		Ui::CompartDataSet ui;
 };	
 
+class SpeciesDataSet : public SettingWidget
+{
+	Q_OBJECT
+	public:
+		SpeciesDataSet(MItem *item) : SettingWidget(item) { ui.setupUi(this); };
+		void set() {};
+		void showSetting(const QString& id) {};
+
+	private:
+		Ui::SpeciesDataSet ui;
+};	
+
+class BiobrickDataSet : public SettingWidget
+{
+	Q_OBJECT
+	public:
+		BiobrickDataSet(MItem *item) : SettingWidget(item) { ui.setupUi(this); };
+		void set() {};
+		void showSetting(const QString& id) {};
+
+	private:
+		Ui::BiobrickDataSet ui;
+};	
+
+class RuleDataSet : public SettingWidget
+{
+	Q_OBJECT
+	public:
+		RuleDataSet(MItem *item) : SettingWidget(item) {};
+		void set() {};
+		void showSetting(const QString& id) {};
+
+	private:
+		Ui::RuleDataSet ui;
+};	
 #endif

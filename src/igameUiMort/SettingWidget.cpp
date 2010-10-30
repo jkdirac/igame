@@ -16,7 +16,7 @@ void SettingWidget::leaveEvent ( QEvent * event )
 {
 }
 
-ItemDataSetting::ItemDataSetting(MItem *item) : SettingWidget(item)
+CompartDataSet::CompartDataSet(MItem *item) : SettingWidget(item)
 {
 	ui.setupUi(this);
 
@@ -26,13 +26,13 @@ ItemDataSetting::ItemDataSetting(MItem *item) : SettingWidget(item)
 	}
 }
 
-void ItemDataSetting::showSetting(const QString& id)
+void CompartDataSet::showSetting(const QString& id)
 {
 	qDebug() << "showSetting id";
 	ui.m_compartmentId->setText(id);
 }
 
-void ItemDataSetting::set()
+void CompartDataSet::set()
 {
 //    close();
 }

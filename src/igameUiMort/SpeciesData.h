@@ -23,6 +23,14 @@ class SpeciesData
 
 		MItem* m_item;
 
+		//compartment
+		QString m_compartSize; // 0.10
+		QString m_compartConstant; // true
+		QString m_compartInitConcentration; //"4.15135E-24"
+
+		//compartment
+		QString m_partType; // "ForwardDNA"
+
 	public:
 		SpeciesData();
 		SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType=SPEC_COMPARTMENT, const QString& parent="ROOT");

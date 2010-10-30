@@ -69,9 +69,9 @@ void MScene::init()
 //    this->dataScene->setHeight(0);
 
 	if (m_type == SPEC_COMPARTMENT)
-		m_rootItem = new MItem(":xml/scene-compartment.ui.xml");
+		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type);
 	else
-		m_rootItem = new MItem(":xml/scene-backbone.ui.xml");
+		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type);
 
 	//add root Item
 	m_rootItem->setId(m_id);

@@ -528,7 +528,7 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 
     }
 
-    return QGraphicsItem::itemChange(change, value);
+    QGraphicsItem::itemChange(change, value);
 }
 
 MScene* MItem::getScene()
@@ -552,7 +552,8 @@ void MItem::setScene(MScene* sce)
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
 	qDebug() << "double click in mitem";
-	return;
+
+	QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
 void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
@@ -566,10 +567,13 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 		int rec_y = m_settingWidget->y();
 		int rec_width = m_settingWidget->width();
 		int rec_height = m_settingWidget->height();
-		QRect rec = m_settingWidget->rect();
-		qDebug() << "rect " << rec.x() << " " << rec.y() << " " << rec.width() << " " << rec.height();
-		qDebug() << "x: " << x << " y: " << y;
-		qDebug() << "rec x: " << m_settingWidget->x() << " rec y: " << m_settingWidget->y() << "width: " << m_settingWidget->width() << " height: " << m_settingWidget->height();
+
+//        QRect rec = m_settingWidget->rect();
+
+		QRectF rec = outlineRect(); 
+		qDebug() << "rect outline: " << rec.x() << " " << rec.y() << " " << rec.width() << " " << rec.height();
+		qDebug() << "rec x: " << m_settingWidget->x() << " rec y: " << m_settingWidget->y() 
+			<< " width: " << m_settingWidget->width() << " height: " << m_settingWidget->height();
 //        if (m_settingWidget->underMouse())
 		if ( ((x - rec_x) * (x - rec_x - rec_width) <= 0 )
 				&& ((y - rec_y) * (y - rec_y - rec_height) <= 0) )
@@ -581,10 +585,18 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 		m_settingWidget->set();
 		m_settingWidget->close();
 	}
+
+	QGraphicsItem::hoverLeaveEvent (event);
 }
 
 void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 {
+	if (type() == SPEC_COMPOUNDS)
+	{
+		m_settingWidget = NULL;
+		return;
+	}
+
 	if ((m_scene)
 			&& (m_scene->itemInTrash(this)))
 	{
@@ -593,10 +605,22 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 
 	if (m_settingWidget == NULL)
 	{
-		m_settingWidget = new ItemDataSetting(this);
+		if (type() == SPEC_COMPARTMENT)
+		{
+			m_settingWidget = new CompartDataSet(this);
+		}
+		else if (type() == SPEC_BACKBONE)
+		{
+			m_settingWidget = new SpeciesDataSet(this);
+		}
+		else if (type() == SPEC_BIOBRICK)
+		{
+			m_settingWidget = new BiobrickDataSet(this);
+		}
 
 		if (m_scene != NULL)
 			m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
+
 		m_settWidgetScene->setX(x());
 		m_settWidgetScene->setY(y());
 	}
@@ -606,6 +630,8 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 		m_settWidgetScene->setY(y());
 		m_settingWidget->show();
 	}
+
+	QGraphicsItem::hoverEnterEvent(event);
 }
 
 // Process MItem mouse press event - formally
@@ -614,17 +640,21 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 //    if (m_settingWidget == NULL)
 //        return;
 
+//    QPointF point = mapToScene(event->pos());
+//    
+//    this->setPos(point);
+
 //    m_settingWidget->close();
 //    return QGraphicsItem::mouseReleaseEvent(event);
 //}
 
-
-/*
 // Process MItem mouse move event - formally
 void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    return QGraphicsItem::mouseMoveEvent(event);
+    QGraphicsItem::mouseMoveEvent(event);
 }
+
+/*
 
 // Process MItem mouse release event - formally
 void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -637,5 +667,13 @@ void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	qDebug() << "mouse released";
 	getScene()->itemDropped(this);
-	return QGraphicsItem::mouseReleaseEvent(event);
+
+	QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void MItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event )
+{
+//    if (m_settingWidget != NULL)
+//        m_settingWidget->close();
+	QGraphicsItem::hoverMoveEvent(event);
 }
