@@ -528,7 +528,7 @@ QVariant MItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 
     }
 
-    QGraphicsItem::itemChange(change, value);
+    return QGraphicsItem::itemChange(change, value);
 }
 
 MScene* MItem::getScene()
@@ -619,34 +619,38 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 		}
 
 		if (m_scene != NULL)
+		{
 			m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
-
-		m_settWidgetScene->setX(x());
-		m_settWidgetScene->setY(y());
+			m_settWidgetScene->setX(x());
+			m_settWidgetScene->setY(y());
+			m_scene->showSettWidget(m_settingWidget);
+		}
 	}
 	else
 	{
 		m_settWidgetScene->setX(x());
 		m_settWidgetScene->setY(y());
-		m_settingWidget->show();
+
+		if (m_scene == NULL)
+			return;
+
+		m_scene->showSettWidget(m_settingWidget);
 	}
 
 	QGraphicsItem::hoverEnterEvent(event);
 }
 
 // Process MItem mouse press event - formally
-//void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
-//{
-//    if (m_settingWidget == NULL)
-//        return;
+void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+	if ((m_settingWidget == NULL) ||
+			(m_scene == NULL))
+		return;
 
-//    QPointF point = mapToScene(event->pos());
-//    
-//    this->setPos(point);
-
+	m_scene->closeSettWidget(m_settingWidget);
 //    m_settingWidget->close();
-//    return QGraphicsItem::mouseReleaseEvent(event);
-//}
+	return QGraphicsItem::mousePressEvent(event);
+}
 
 // Process MItem mouse move event - formally
 void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)

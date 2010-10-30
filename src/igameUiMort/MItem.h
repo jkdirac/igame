@@ -194,7 +194,7 @@ public:
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
-//    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+	void mousePressEvent(QGraphicsSceneMouseEvent* event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 protected:

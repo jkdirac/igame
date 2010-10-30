@@ -56,6 +56,7 @@ MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 
 void MScene::init()
 {
+	m_setWidget = NULL;
 	m_nFree = 0;
 	m_browserItem = NULL;
 	m_browserItemX = 140;
@@ -565,4 +566,35 @@ void MScene::invalidTree(bool invalid)
 		return;
 	qDebug() << "Disable the tree item";
 	m_treeItem->setDisabled(invalid);
+}
+
+/** 
+ * @breif  
+ *	This function is for Items in the Scene
+ *	to ask for show setting widget of this item
+ */
+void MScene::showSettWidget(SettingWidget *set)
+{
+	if (set == NULL)
+		return;
+
+	if (m_setWidget != NULL)
+		m_setWidget->close();
+
+	m_setWidget = set;
+	set->show();
+}
+
+/** 
+ * @breif  
+ *	This function is for Items in the Scene
+ *	to ask for close setting widget of this item
+ */
+void MScene::closeSettWidget(SettingWidget *set)
+{
+	if (set == NULL)
+		return;
+
+	m_setWidget = NULL;
+	set->close();
 }

@@ -19,6 +19,7 @@
 #include <QTreeWidgetItemIterator>
 #include "SpeciesData.h"
 #include "SceneTreeItem.h"
+#include "SettingWidget.h"
 
 //#include "SceneTreeItem.h"
 
@@ -119,6 +120,9 @@ public:
 	MScene* parent() { return m_parent; };
 
 	void invalidTree(bool invalid);
+	
+	void showSettWidget(SettingWidget *wid);
+	void closeSettWidget(SettingWidget *wid);
 
 private:
 	void addItemEx(MItem *item);
@@ -142,6 +146,8 @@ private:
 	int m_browserItemId;
 	qreal m_browserItemX;
 	qreal m_browserItemY;
+
+	SettingWidget *m_setWidget;
 };
 
 
