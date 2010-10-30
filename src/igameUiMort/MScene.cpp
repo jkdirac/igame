@@ -598,3 +598,11 @@ void MScene::closeSettWidget(SettingWidget *set)
 	m_setWidget = NULL;
 	set->close();
 }
+
+bool MScene::itemIsRootItem(MItem* item)
+{
+	if ((item == NULL) || (m_rootItem == NULL))
+		return false;
+
+	return item == m_rootItem;
+}

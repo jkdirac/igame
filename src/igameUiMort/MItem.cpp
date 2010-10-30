@@ -597,8 +597,9 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 		return;
 	}
 
-	if ((m_scene)
-			&& (m_scene->itemInTrash(this)))
+	if (m_scene
+			&& (m_scene->itemInTrash(this)
+				|| !m_scene->itemIsRootItem(this)) )
 	{
 		return;
 	}
@@ -641,16 +642,17 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 }
 
 // Process MItem mouse press event - formally
-void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-	if ((m_settingWidget == NULL) ||
-			(m_scene == NULL))
-		return;
+// With following code, When I drag a item, the other moves too, Why?
+//void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+//{
+//    if ((m_settingWidget == NULL) ||
+//            (m_scene == NULL))
+//        return;
 
-	m_scene->closeSettWidget(m_settingWidget);
+//    m_scene->closeSettWidget(m_settingWidget);
 //    m_settingWidget->close();
-	return QGraphicsItem::mousePressEvent(event);
-}
+//    return QGraphicsItem::mousePressEvent(event);
+//}
 
 // Process MItem mouse move event - formally
 void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)

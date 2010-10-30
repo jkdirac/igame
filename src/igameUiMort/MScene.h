@@ -101,6 +101,7 @@ public:
 	//Item drag and clicked handler
 	bool itemInTrash(MItem *item);
 	bool itemInCompartment(MItem *item);
+	bool itemIsRootItem(MItem* item);
 	bool itemDropped(MItem *item);
 
 	SPECIESTYPE type() {return m_type; }
@@ -123,6 +124,7 @@ public:
 	
 	void showSettWidget(SettingWidget *wid);
 	void closeSettWidget(SettingWidget *wid);
+
 
 private:
 	void addItemEx(MItem *item);
