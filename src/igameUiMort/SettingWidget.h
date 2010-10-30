@@ -21,8 +21,8 @@ class SettingWidget : public QWidget
 			qDebug() << "showSetting id";
 		} ;
 
-		void focusOutEvent(QFocusEvent * event);
-		void leaveEvent ( QEvent * event ); 
+//        void focusOutEvent(QFocusEvent * event);
+//        void leaveEvent ( QEvent * event ); 
 		MItem* getItem() { return m_item; }
 
 	private:

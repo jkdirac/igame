@@ -7,14 +7,15 @@ SettingWidget::SettingWidget(MItem* item):QWidget(NULL)
 	
 }
 
-void SettingWidget::focusOutEvent(QFocusEvent * event)
-{
-	close();
-}
+//void SettingWidget::focusOutEvent(QFocusEvent * event)
+//{
+//    close();
+//    QWidget::fout
+//}
 
-void SettingWidget::leaveEvent ( QEvent * event )
-{
-}
+//void SettingWidget::leaveEvent ( QEvent * event )
+//{
+//}
 
 CompartDataSet::CompartDataSet(MItem *item) : SettingWidget(item)
 {

@@ -25,11 +25,13 @@ class SpeciesData
 
 		//compartment
 		QString m_compartSize; // 0.10
-		QString m_compartConstant; // true
-		QString m_compartInitConcentration; //"4.15135E-24"
 
-		//compartment
+		QString m_InitConcentration; //"4.15135E-24"
+		QString m_constant; // true
+		//part
 		QString m_partType; // "ForwardDNA"
+
+		void init();
 
 	public:
 		SpeciesData();

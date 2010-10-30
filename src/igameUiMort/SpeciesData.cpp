@@ -1,10 +1,26 @@
 #include "SpeciesData.h"
 #include <QDebug>
 
+void SpeciesData::init()
+{
+	//compartment
+	m_compartSize = "0.10"; // 0.10
+
+	m_InitConcentration = "4.15135E-24"; //"4.15135E-24"
+
+	if (m_type == SPEC_COMPARTMENT)
+		m_constant = "true"; // true
+	if (m_type == SPEC_BACKBONE)
+		m_constant = "false";
+	//part
+	m_partType = "ForwardDNA"; // "ForwardDNA"
+}
+
 SpeciesData::SpeciesData()
 {
 	m_parentType = SPEC_COMPARTMENT;
 	m_compartment = "ROOT";
+	init();
 }
 
 SpeciesData::SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType, const QString& parent)
@@ -13,6 +29,7 @@ SpeciesData::SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parent
 	m_id = id;
 	m_compartment = parent;
 	m_parentType = parentType;
+	init();
 }
 
 SpeciesData::SpeciesData(const SpeciesData &other)
@@ -49,7 +66,7 @@ QString SpeciesData::generateCompartmentXmlString()
 	res += "\t<id>"; res += m_id; res+="</id>\n";
 	res += "\t<size>"; res += m_compartSize;  res += "</size>\n";
 	res += "\t<outside>"; res += m_compartment; res += "</outside>\n";
-	res += "\t<constant>"; res += m_compartConstant; res += "</constant>\n";
+	res += "\t<constant>"; res += m_constant; res += "</constant>\n";
 	res += "</compartment>\n";
 
 	return res;
@@ -65,7 +82,7 @@ QString SpeciesData::generateSpeciesXmlString()
 	res += "<species db="; res += m_id; res += ">\n";
 	res += "\t<id>"; res += m_id; res += "</id>\n";
 	res += "\t<compartment>"; res += m_compartment; res += "</compartment>\n";
-	res += "\t<initialConcentration>"; res += m_compartInitConcentration; res += "</initialConcentration>\n";
+	res += "\t<initialConcentration>"; res += m_InitConcentration; res += "</initialConcentration>\n";
 	res += "</species>\n";
 
 	return res;
