@@ -98,6 +98,7 @@ public:
 	void setId(const QString& id);
 
 	//Item drag and clicked handler
+	bool itemInTrash(MItem *item);
 	bool itemInCompartment(MItem *item);
 	bool itemDropped(MItem *item);
 

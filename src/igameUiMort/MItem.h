@@ -179,9 +179,6 @@ public:
 	MScene* getScene();
 	void setScene(MScene* sce);
 
-	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-
 	//the identifier in the scene
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
@@ -194,12 +191,14 @@ public:
 	virtual void invalidOwnerScene(bool valid) {};
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+//    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
     //void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    //void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 private:
 	int sene_id;

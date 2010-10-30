@@ -333,6 +333,13 @@ MItem::~MItem()
 		m_scene->deletItemEx(this);
 	}
 
+	if (m_settingWidget)
+	{
+		m_settingWidget->close();
+		delete m_settingWidget;
+		m_settingWidget = NULL;
+	}
+
 	m_scene = NULL;
 }
 
@@ -545,15 +552,7 @@ void MItem::setScene(MScene* sce)
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
 	qDebug() << "double click in mitem";
-
-	m_settingWidget = new ItemDataSetting(this);
-	if (m_scene != NULL)
-	{
-		m_scene->addWidget(m_settingWidget); 
-//        m_settingWidget->setx(x());
-//        m_settingWidget->sety(y());
-	}
-//    return QGraphicsItem::mouseDoubleClickEvent(event);
+	return;
 }
 
 void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
@@ -586,6 +585,12 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 
 void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 {
+	if ((m_scene)
+			&& (m_scene->itemInTrash(this)))
+	{
+		return;
+	}
+
 	if (m_settingWidget == NULL)
 	{
 		m_settingWidget = new ItemDataSetting(this);
@@ -603,17 +608,22 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 	}
 }
 
+// Process MItem mouse press event - formally
+//void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+//{
+//    if (m_settingWidget == NULL)
+//        return;
+
+//    m_settingWidget->close();
+//    return QGraphicsItem::mouseReleaseEvent(event);
+//}
+
+
 /*
 // Process MItem mouse move event - formally
 void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     return QGraphicsItem::mouseMoveEvent(event);
-}
-
-// Process MItem mouse press event - formally
-void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    return QGraphicsItem::mousePressEvent(event);
 }
 
 // Process MItem mouse release event - formally

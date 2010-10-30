@@ -371,6 +371,17 @@ bool MScene::itemInCompartment(MItem *item)
 		return false;
 }
 
+bool MScene::itemInTrash(MItem *item)
+{
+	if (item == NULL)
+		return false;
+
+	if (item->collidesWithItem(m_trashItem))
+		return true;
+	else
+		return false;
+}
+
 bool MScene::itemDropped(MItem *item)
 {
 	if (item == NULL)
