@@ -22,6 +22,14 @@
      <height>91</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(157, 222, 88);</string>
+   </property>
    <layout class="QFormLayout" name="formLayout_3">
     <property name="fieldGrowthPolicy">
      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>

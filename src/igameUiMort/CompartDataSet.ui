@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(151, 203, 154);</string>
+   <string notr="true">background-color: rgb(157, 222, 88);</string>
   </property>
   <widget class="QFrame" name="m_compartSet">
    <property name="geometry">
