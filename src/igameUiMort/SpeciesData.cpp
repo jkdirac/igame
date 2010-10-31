@@ -114,7 +114,7 @@ QString SpeciesData::generatePartsXmlString()
 	res += "<part>\n";
 	res += "\t<partReference>"; res+=m_dbId; res += "</partReference>\n";
 	res += "\t<partLabel>"; res+=m_dbId; res += "</partLabel>\n";
-	res += "\t<partType>"; res+="ForwardDNA"; res += "</partType>\n";
+	res += "\t<partType>"; res+=partType(); res += "</partType>\n";
 	res += "\t<partLabel>"; res+=typeString; res += "</partLabel>\n";
 	res += "\t</part>\n";
 

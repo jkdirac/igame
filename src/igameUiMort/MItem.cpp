@@ -37,6 +37,7 @@
 #include <QStyle>
 #include <QGraphicsSceneMouseEvent>
 #include <QXmlStreamReader>
+#include "SpeciesDataManager.h"
 
 #include <iostream>
 #include <QDebug>
@@ -99,7 +100,8 @@ MItem::MItem(SPECIESTYPE type, SpeciesData* data)
 {
 	if (data == NULL)
 	{
-		m_speciesdata = new SpeciesData();
+//        m_speciesdata = new SpeciesData();
+		m_speciesdata = SpeciesDataManager::newSpeciesData();
 		m_speciesdata->setType(type);
 	}
 	
@@ -579,7 +581,7 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 //        QRect rec = m_settingWidget->rect();
 
 		QRectF rec = outlineRect(); 
-		qDebug() << "rect outline: " << rec.x() << " " << rec.y() << " " << rec.width() << " " << rec.height();
+		qDebug() << "mouse position: " << x << " " << y; 
 		qDebug() << "rec x: " << m_settingWidget->x() << " rec y: " << m_settingWidget->y() 
 			<< " width: " << m_settingWidget->width() << " height: " << m_settingWidget->height();
 //        if (m_settingWidget->underMouse())
@@ -624,10 +626,10 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 			{
 				m_settingWidget = new CompartDataSet(this);
 			}
-			else if (type() == SPEC_BACKBONE)
-			{
-				m_settingWidget = new SpeciesDataSet(this);
-			}
+		}
+		else
+		{
+			m_settingWidget = new SpeciesDataSet(this);
 		}
 
 		m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 

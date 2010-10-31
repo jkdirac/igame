@@ -1,6 +1,6 @@
 format 66
 "Ui" // Ui
-  revision 3
+  revision 4
   modified_by 100 "jkdirac"
   // class settings
   //class diagram settings
@@ -375,6 +375,13 @@ format 66
 	    classrelation_ref 134500 // <unidirectional association>
 	  b parent class_ref 134244 // SpeciesData
       end
+
+      classrelation 136932 // <unidirectional association>
+	relation 136548 --->
+	  a role_name "" private
+	    classrelation_ref 136932 // <unidirectional association>
+	  b parent class_ref 136804 // SpeciesDataManager
+      end
     end
 
     class 135524 "CompartmentScene"
@@ -408,6 +415,23 @@ format 66
 	  a public
 	    classrelation_ref 135652 // <generalisation>
 	  b parent class_ref 131812 // Scene
+      end
+    end
+
+    class 136804 "SpeciesDataManager"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 137060 // <unidirectional association>
+	relation 136676 --->
+	  a role_name "" private
+	    classrelation_ref 137060 // <unidirectional association>
+	  b parent class_ref 134244 // SpeciesData
       end
     end
   end

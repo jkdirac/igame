@@ -14,18 +14,21 @@ class MItem;
 class SettingWidget : public QWidget
 {
 	public:
-		SettingWidget(MItem* item); 
+		SettingWidget(MItem* item, SettingWidget* impl); 
+		~SettingWidget() {};
+
 		virtual void set() = 0;
-		virtual void showSetting () 
+		void showSetting () 
 		{
 			qDebug() << "showSetting id";
 		} ;
 
 //        void focusOutEvent(QFocusEvent * event);
-//        void leaveEvent ( QEvent * event ); 
+		void leaveEvent ( QEvent * event ); 
 		MItem* getItem() { return m_item; }
 
 	private:
+		SettingWidget* m_impl;
 		MItem* m_item;
 };
 

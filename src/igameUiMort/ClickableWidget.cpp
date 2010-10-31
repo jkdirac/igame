@@ -40,9 +40,9 @@ void ClickableWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 		if (!getScene()->itemInCompartment(this))
 			return;
 
+		qDebug() << "apply new scene id: " << id();
 		m_ownScene = getScene()->itemApplyNewScene(this);
 		//    newScene->loadXml(":demoUiXml.ui.xml");
-		qDebug() << "new scene id: " << id();
 	}
 
 	if (m_senemgr == NULL)

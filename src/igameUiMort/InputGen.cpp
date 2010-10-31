@@ -50,8 +50,8 @@ QString& InputGen::generateInput()
 		if (m_listScene[i] == NULL)
 			continue;
 
-		m_listCompartments += m_listScene[i]->generateComXmlString();
-		m_listSpecies += m_listScene[i]->generateSpeXmlString();
+//        m_listCompartments += m_listScene[i]->generateComXmlString();
+//        m_listSpecies += m_listScene[i]->generateSpeXmlString();
 	}
 
 	m_listCompartments += "</listOfCompartments>\n";

@@ -49,15 +49,15 @@ class SpeciesData
 		const QString& partType() const { return m_partType; }
 		const QString& inputId() const { return m_inputId; }
 
-		void setType(SPECIESTYPE type) { m_type = type; };
-		void setParentType(SPECIESTYPE type) { m_parentType = type; }
-		void setId(const QString id) { m_dbId = id; };
-		void setParent(const QString& id, SPECIESTYPE type) { m_parent = id; m_parentType = type; };
-		void setSize(const QString& size) { m_compartSize = size; }
-		void setConstant(const QString& constant) { m_constant = constant; }
-		void setInitConcentration(QString& con) { m_InitConcentration = con; }
-		void setPartType(QString &type) { m_partType = type; }
-		void setInputId(QString input) { m_inputId = input; }
+		inline void setType(SPECIESTYPE type) { m_type = type; };
+		inline void setParentType(SPECIESTYPE type) { m_parentType = type; }
+		inline void setId(const QString id) { m_dbId = id; };
+		inline void setParent(const QString& id, SPECIESTYPE type) { m_parent = id; m_parentType = type; };
+		inline void setSize(const QString& size) { m_compartSize = size; }
+		inline void setConstant(const QString& constant) { m_constant = constant; }
+		inline void setInitConcentration(QString& con) { m_InitConcentration = con; }
+		inline void setPartType(QString &type) { m_partType = type; }
+		inline void setInputId(QString input) { m_inputId = input; }
 
 		QString generatePartsXmlString();
 		QString generateCompartmentXmlString();

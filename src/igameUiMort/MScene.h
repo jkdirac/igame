@@ -114,8 +114,8 @@ public:
 
 	Iterator* getIterator() { return new Iterator(this); };
 
-	QString generateComXmlString();
-	QString generateSpeXmlString();
+//    QString generateComXmlString();
+//    QString generateSpeXmlString();
 
 	int addSpeciesItem(MItem *item);
 	void addBrowserItem(MItem *item);
