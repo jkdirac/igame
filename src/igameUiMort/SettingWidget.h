@@ -16,7 +16,7 @@ class SettingWidget : public QWidget
 	public:
 		SettingWidget(MItem* item); 
 		virtual void set() = 0;
-		virtual void showSetting (const QString &id) 
+		virtual void showSetting () 
 		{
 			qDebug() << "showSetting id";
 		} ;
@@ -35,7 +35,7 @@ class CompartDataSet : public SettingWidget
 	public:
 		CompartDataSet(MItem *item);
 		void set();
-		void showSetting(const QString& id);
+		void showSetting();
 
 	private:
 		Ui::CompartDataSet ui;
@@ -45,9 +45,9 @@ class SpeciesDataSet : public SettingWidget
 {
 	Q_OBJECT
 	public:
-		SpeciesDataSet(MItem *item) : SettingWidget(item) { ui.setupUi(this); };
-		void set() {};
-		void showSetting(const QString& id) {};
+		SpeciesDataSet(MItem *item);
+		void set();
+		void showSetting();
 
 	private:
 		Ui::SpeciesDataSet ui;
@@ -57,9 +57,9 @@ class BiobrickDataSet : public SettingWidget
 {
 	Q_OBJECT
 	public:
-		BiobrickDataSet(MItem *item) : SettingWidget(item) { ui.setupUi(this); };
-		void set() {};
-		void showSetting(const QString& id) {};
+		BiobrickDataSet(MItem *item);
+		void set();
+		void showSetting();
 
 	private:
 		Ui::BiobrickDataSet ui;
@@ -69,9 +69,9 @@ class RuleDataSet : public SettingWidget
 {
 	Q_OBJECT
 	public:
-		RuleDataSet(MItem *item) : SettingWidget(item) {};
-		void set() {};
-		void showSetting(const QString& id) {};
+		RuleDataSet(MItem *item);
+		void set();
+		void showSetting();
 
 	private:
 		Ui::RuleDataSet ui;

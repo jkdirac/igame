@@ -599,41 +599,41 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 
 void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 {
+	if (m_scene
+			&& m_scene->itemInTrash(this))
+	{
+		return;
+	}
+
 	if (type() == SPEC_COMPOUNDS)
 	{
 		m_settingWidget = NULL;
 		return;
 	}
 
-	if (m_scene
-			&& (m_scene->itemInTrash(this)
-				|| !m_scene->itemIsRootItem(this)) )
-	{
-		return;
-	}
-
 	if (m_settingWidget == NULL)
 	{
-		if (type() == SPEC_COMPARTMENT)
+		if (type() == SPEC_BIOBRICK)
 		{
-			m_settingWidget = new CompartDataSet(this);
-		}
-		else if (type() == SPEC_BACKBONE)
-		{
-			m_settingWidget = new SpeciesDataSet(this);
-		}
-		else if (type() == SPEC_BIOBRICK)
-		{
+			qDebug() << "biobrick type";
 			m_settingWidget = new BiobrickDataSet(this);
 		}
-
-		if (m_scene != NULL)
+		else if (m_scene->itemIsRootItem(this)) 
 		{
-			m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
-			m_settWidgetScene->setX(x());
-			m_settWidgetScene->setY(y());
-			m_scene->showSettWidget(m_settingWidget);
+			if (type() == SPEC_COMPARTMENT)
+			{
+				m_settingWidget = new CompartDataSet(this);
+			}
+			else if (type() == SPEC_BACKBONE)
+			{
+				m_settingWidget = new SpeciesDataSet(this);
+			}
 		}
+
+		m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
+		m_settWidgetScene->setX(x());
+		m_settWidgetScene->setY(y());
+		m_scene->showSettWidget(m_settingWidget);
 	}
 	else
 	{

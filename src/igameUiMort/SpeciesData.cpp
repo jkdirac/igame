@@ -19,15 +19,15 @@ void SpeciesData::init()
 SpeciesData::SpeciesData()
 {
 	m_parentType = SPEC_COMPARTMENT;
-	m_compartment = "ROOT";
+	m_parent = "ROOT";
 	init();
 }
 
 SpeciesData::SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType, const QString& parent)
 {
 	m_type = type;
-	m_id = id;
-	m_compartment = parent;
+	m_dbId = id;
+	m_parent = parent;
 	m_parentType = parentType;
 	init();
 }
@@ -35,16 +35,16 @@ SpeciesData::SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parent
 SpeciesData::SpeciesData(const SpeciesData &other)
 {
 	m_type = other.type();
-	m_id = other.id();
-	m_compartment = other.parent();
+	m_dbId = other.id();
+	m_parent = other.parent();
 	m_parentType = other.parentType();
 }
 
 SpeciesData& SpeciesData::operator = (const SpeciesData &other)
 {
 	m_type = other.type();
-	m_id = other.id();
-	m_compartment = other.parent();
+	m_dbId = other.id();
+	m_parent = other.parent();
 	m_parentType = other.parentType();
 
 	return *this;
@@ -62,10 +62,10 @@ QString SpeciesData::generateCompartmentXmlString()
 
 	qDebug() << "SpeciesData generate compartment xml string";
 
-	res += "<compartment db=\""; res += m_id; res += "\">\n";
-	res += "\t<id>"; res += m_id; res+="</id>\n";
+	res += "<compartment db=\""; res += m_dbId; res += "\">\n";
+	res += "\t<id>"; res += m_dbId; res+="</id>\n";
 	res += "\t<size>"; res += m_compartSize;  res += "</size>\n";
-	res += "\t<outside>"; res += m_compartment; res += "</outside>\n";
+	res += "\t<outside>"; res += m_parent; res += "</outside>\n";
 	res += "\t<constant>"; res += m_constant; res += "</constant>\n";
 	res += "</compartment>\n";
 
@@ -79,9 +79,9 @@ QString SpeciesData::generateSpeciesXmlString()
 
 	qDebug() << "SpeciesData generate species xml string";
 	//no dbid
-	res += "<species db="; res += m_id; res += ">\n";
-	res += "\t<id>"; res += m_id; res += "</id>\n";
-	res += "\t<compartment>"; res += m_compartment; res += "</compartment>\n";
+	res += "<species db="; res += m_dbId; res += ">\n";
+	res += "\t<id>"; res += m_dbId; res += "</id>\n";
+	res += "\t<compartment>"; res += m_parent; res += "</compartment>\n";
 	res += "\t<initialConcentration>"; res += m_InitConcentration; res += "</initialConcentration>\n";
 	res += "</species>\n";
 
@@ -112,8 +112,8 @@ QString SpeciesData::generatePartsXmlString()
 		typeString = "comparement";
 
 	res += "<part>\n";
-	res += "\t<partReference>"; res+=m_id; res += "</partReference>\n";
-	res += "\t<partLabel>"; res+=m_id; res += "</partLabel>\n";
+	res += "\t<partReference>"; res+=m_dbId; res += "</partReference>\n";
+	res += "\t<partLabel>"; res+=m_dbId; res += "</partLabel>\n";
 	res += "\t<partType>"; res+="ForwardDNA"; res += "</partType>\n";
 	res += "\t<partLabel>"; res+=typeString; res += "</partLabel>\n";
 	res += "\t</part>\n";
