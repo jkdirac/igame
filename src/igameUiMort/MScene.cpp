@@ -163,7 +163,7 @@ int MScene::addSpeciesItem(MItem *item)
 	else
 	{
 		SpeciesData* data = SpeciesDataManager::newSpeciesData();
-		data->setParent(m_rootItem->id(), m_rootItem->type());
+		data->setParent(m_rootItem->getSpeciesData()->inputId(), m_rootItem->type());
 		item->setSpeciesData(data);
 	}
 

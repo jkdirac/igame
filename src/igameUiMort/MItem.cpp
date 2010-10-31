@@ -540,10 +540,6 @@ void MItem::setScene(MScene* sce)
 		return;
 
 	m_scene = sce;
-	if (m_speciesdata != NULL)
-	{
-		m_speciesdata->setParent(sce->getId(), sce->type());
-	}
 }
 
 //Process MItem mouse double click event - formally
@@ -688,6 +684,7 @@ void MItem::setSpeciesData(SpeciesData* data)
 	m_speciesdata = data; 
 	if (m_speciesdata != NULL)
 	{
+		m_speciesdata->setItem(this);
 		m_speciesdata->setId(m_id);
 		m_speciesdata->setType(m_type);
 	}
