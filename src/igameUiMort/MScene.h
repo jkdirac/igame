@@ -82,6 +82,8 @@ public:
 	void deleteChildScene(int id);
 	void setParent(MScene* parent);
 
+	MScene* itemApplyNewScene(MItem *item);
+
 	void deletItemEx(int n);
 	void deletItemEx(MItem* item);
 

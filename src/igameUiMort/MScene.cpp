@@ -616,3 +616,13 @@ bool MScene::itemIsRootItem(MItem* item)
 
 	return item == m_rootItem;
 }
+
+MScene* MScene::itemApplyNewScene(MItem *item)
+{
+	if (item == NULL)
+		return NULL;
+
+	MScene* sce = new MScene(NULL, item->id(), item->type(), item);
+//    addChildScene(item);
+	return sce;
+}
