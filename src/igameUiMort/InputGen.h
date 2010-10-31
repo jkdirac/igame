@@ -11,8 +11,11 @@ class InputGen
 	public:
 		InputGen();
 		QString& generateInput();
+		static int getSpecNo() { return spec_id; }
+		static int incSpecNo() { spec_id++; };
 
 	private:
+		static int spec_id;
 		QString m_listCompartments;
 		QString m_listSpecies;
 		QString m_xmlStart;

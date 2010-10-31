@@ -163,7 +163,7 @@ int MScene::addSpeciesItem(MItem *item)
 	else
 	{
 		SpeciesData* data = SpeciesDataManager::newSpeciesData();
-		data->setParent(m_rootItem->getSpeciesData()->inputId(), m_rootItem->type());
+		data->setParent(m_rootItem->getSpeciesData()->fileId(), m_rootItem->type());
 		item->setSpeciesData(data);
 	}
 
@@ -478,84 +478,202 @@ QVector<MItem*>& MScene::getValidSubItems()
 	}
 }
 
-//QString MScene::generateComXmlString()
-//{
-//    qDebug() << "MSCene generate compartment xml string";
-//    if (type() == SPEC_BACKBONE)
-//    {
-//        return "";
-//    }
+QString MScene::generateComXmlString()
+{
+	qDebug() << "MSCene generate compartment xml string";
+	if (type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
 
-//    if (m_rootItem != NULL)
-//    {
-//        if (m_parent == this)
-//            m_rootItem->getSpeciesData()->setParent("ROOT", SPEC_COMPARTMENT);
-//        else
-//            m_rootItem->getSpeciesData()->setParent(m_parent->getId(), m_parent->type());
+	QString res;
+	res.clear();
 
-//        return m_rootItem->getSpeciesData()->generateCompartmentXmlString();
-//    }
-//}
+	if (m_rootItem != NULL)
+	{
+		res = m_rootItem->getSpeciesData()->generateCompartmentXmlString();
+		for (int i=0; i<dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
 
-//QString MScene::generateSpeXmlString()
-//{
-//    qDebug() << "MSCene generate species xml string";
-//    QString res;
-//    res.clear();
-//    if (type() == SPEC_BACKBONE)
-//    {
-//        if (m_rootItem == NULL)
-//            return "";
+			if (dataItem[i] != NULL)
+			{
+				if ((dataItem[i]->type() == SPEC_COMPARTMENT)
+						&& (dataItem[i]->getOwnerScene() == NULL))
+				{
+					SpeciesData* data = dataItem[i]->getSpeciesData();
+					if (data != NULL)
+						res += data->generateCompartmentXmlString();
+				}
+			}
+		}
+	}
+	else
+	{
+		return "";
+	}
 
-//        res += "<species>\n";
-//        res += "<id>"; res += m_rootItem->getSpeciesData()->id(); res += "</id>\n";
-//        res += "<compartment>"; res+=m_rootItem->getSpeciesData()->parent(); res += "</compartment>\n";
-//        res += "<initialConcentration>"; res += m_rootItem->getSpeciesData()->initConcentration(); res += "</initialConcentration>\n";
-//        res += "<cnModel>\n";
-//        res += "<listOfChains>\n";
-//        res += "<chain>\n";
-//        res += "<listOfParts>\n";
+	return res;
+}
+
+QString MScene::generateListOfPartsXmlString()
+{
+}
+
+QString MScene::generateSpeXmlString()
+{
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+
+	if(type() == SPEC_COMPARTMENT)
+	{
+		for (int i=0; i < dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
+
+			SpeciesData* data = dataItem[i]->getSpeciesData();
+			if (data == NULL)
+				continue; 
+
+			if(data->type() == SPEC_BACKBONE)
+				continue;
+
+			res += "<species>\n";
+			res += data->generateSpeciesXmlString();
+			res += "  <cnModel>\n";
+			res += "    <listOfChains>\n";
+			res += "      <chain>\n";
+			res += "        <listOfParts>\n";
+
+			if (type() == SPEC_COMPARTMENT) 
+			{
+				res += data->generatePartsXmlString();
+			}
+
+			res += "        </listOfParts>\n";
+			res += "      </chain>\n";
+			res += "    </listOfChains>\n";
+			res += "  </cnModel>\n";
+			res += "</species>\n";
+		}
+	}
+	//backbone chain
+	else if(type() == SPEC_BACKBONE)
+	{
+		if (m_rootItem == NULL)
+		{
+			res = "";
+			return res;
+		}
+
+		SpeciesData* root_data = m_rootItem->getSpeciesData();
+		if (root_data == NULL)
+		{
+			res = "";
+			return res;
+		}
+
+		res += "<species>\n";
+		res += root_data->generateSpeciesXmlString();
+		res += "  <cnModel>\n";
+		res += "    <listOfChains>\n";
+		res += "      <chain>\n";
+		res += "        <listOfParts>\n";
+
+		res += root_data->generatePartsXmlString();
+
+		for (int i=0; i < dataCount; i++)
+		{
+			if ((dataItem[i] == m_rootItem)
+				|| (dataItem[i] == NULL))
+				continue;
+
+			SpeciesData* data = dataItem[i]->getSpeciesData();
+			if (data->type() != SPEC_BIOBRICK)
+				continue;
+
+			if (data == NULL)
+				continue; 
+
+			res += data->generatePartsXmlString();
+		}
+
+		res += "        </listOfParts>\n";
+		res += "      </chain>\n";
+		res += "    </listOfChains>\n";
+		res += "  </cnModel>\n";
+		res += "</species>\n";
+	}
+	else
+		res = "";
+
+	return res;
+}
+
+/*
+QString MScene::generateSpeXmlString()
+{
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+	if (type() == SPEC_BACKBONE)
+	{
+		if (m_rootItem == NULL)
+			return "";
+
+		res += "<species>\n";
+		res += "<id>"; res += m_rootItem->getSpeciesData()->id(); res += "</id>\n";
+		res += "<compartment>"; res+=m_rootItem->getSpeciesData()->parent(); res += "</compartment>\n";
+		res += "<initialConcentration>"; res += m_rootItem->getSpeciesData()->initConcentration(); res += "</initialConcentration>\n";
+		res += "<cnModel>\n";
+		res += "<listOfChains>\n";
+		res += "<chain>\n";
+		res += "<listOfParts>\n";
 
 
-//        for (int i = 0; i < dataCount; i++)
-//        {
-//            MItem* tmp = dataItem[i];
-//            if (tmp == NULL)
-//                continue;
-//            if (!itemInCompartment(tmp))
-//                continue;
+		for (int i = 0; i < dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
 
-//            if (tmp->type() != SPEC_BIOBRICK)
-//                continue;
+			if (tmp->type() != SPEC_BIOBRICK)
+				continue;
 
-//            res += tmp->getSpeciesData()->generatePartsXmlString();
-//        }
+			res += tmp->getSpeciesData()->generatePartsXmlString();
+		}
 
-//        res += "</listOfParts>\n";
-//        res += "</chain>\n";
-//        res += "</listOfChains>\n";
-//        res += "</cnModel>\n";
-//        res += "</species>\n";
-//    }
-//    else
-//    {
-//        for (int i=0; i < dataCount; i++)
-//        {
-//            MItem* tmp = dataItem[i];
-//            if (tmp == NULL)
-//                continue;
-//            if (!itemInCompartment(tmp))
-//                continue;
+		res += "</listOfParts>\n";
+		res += "</chain>\n";
+		res += "</listOfChains>\n";
+		res += "</cnModel>\n";
+		res += "</species>\n";
+	}
+	else
+	{
+		for (int i=0; i < dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
 
-//            if (tmp->type() == SPEC_BACKBONE)
-//                continue;
+			if (tmp->type() == SPEC_BACKBONE)
+				continue;
 
-//            res += tmp->getSpeciesData()->generateSpeciesXmlString();
-//        }
-//    }
+			res += tmp->getSpeciesData()->generateSpeciesXmlString();
+		}
+	}
 
-//    return res;
-//}
+	return res;
+}
+*/
 
 void MScene::addBrowserItem(MItem *item)
 {

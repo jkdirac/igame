@@ -1,6 +1,7 @@
 #include "SpeciesData.h"
 #include "MScene.h"
 #include "MItem.h"
+#include "InputGen.h"
 #include <QDebug>
 
 void SpeciesData::init()
@@ -59,30 +60,25 @@ QString SpeciesData::generateCompartmentXmlString()
 //        </compartment>
 	QString res;
 
-	qDebug() << "SpeciesData generate compartment xml string";
 	if ((m_item == NULL)
 			|| (type() != SPEC_COMPARTMENT))
 	{
 		return "";
 	}
 
-	qDebug() << "SpeciesData generate compartment xml string";
 	MScene* sce = m_item->getScene();
-	qDebug() << "SpeciesData generate compartment xml string1" << (int)sce;
 	if ((sce == NULL)
 			|| (!sce->itemInCompartment(m_item)))
 	{
 		return "";
 	}
 
-	qDebug() << "SpeciesData generate compartment xml string2";
-
-	res += "<compartment db=\""; res += m_dbId; res += "\">\n";
-	res += "\t<id>"; res += inputId(); res+="</id>\n";
-	res += "\t<size>"; res += m_compartSize;  res += "</size>\n";
-	res += "\t<outside>"; res += m_parent; res += "</outside>\n";
-	res += "\t<constant>"; res += constant(); res += "</constant>\n";
-	res += "</compartment>\n";
+	res += "  <compartment db=\""; res += m_dbId; res += "\">\n";
+	res += "    <id>"; res += fileId(); res+="</id>\n";
+	res += "    <size>"; res += m_compartSize;  res += "</size>\n";
+	res += "    <outside>"; res += m_parent; res += "</outside>\n";
+	res += "    <constant>"; res += constant(); res += "</constant>\n";
+	res += "  </compartment>\n";
 
 	return res;
 }
@@ -94,11 +90,29 @@ QString SpeciesData::generateSpeciesXmlString()
 
 	qDebug() << "SpeciesData generate species xml string";
 	//no dbid
-	res += "<species db="; res += m_dbId; res += ">\n";
-	res += "\t<id>"; res += m_dbId; res += "</id>\n";
-	res += "\t<compartment>"; res += m_parent; res += "</compartment>\n";
-	res += "\t<initialConcentration>"; res += m_InitConcentration; res += "</initialConcentration>\n";
-	res += "</species>\n";
+//    res += "<species>\n";
+	QString specId = "sPecIes";
+	specId += QString::number(InputGen::getSpecNo());
+	InputGen::incSpecNo();
+	res += "  <id>"; res += specId; res += "</id>\n";
+	res += "  <compartment>"; res += parent(); res += "</compartment>\n";
+
+	if ((type() == SPEC_COMPARTMENT) || (type() == SPEC_COMPOUNDS))
+	{
+		res += "  <initialConcentration>"; res += initConcentration(); res += "</initialConcentration>\n";
+	}
+
+	res += "  <constant>"; res += constant(); res += "</constant>\n";
+//    res += "<cnModel>\n";
+//    res += "<listOfChains>\n";
+//    res += "<chain>\n";
+//    res += "<listOfParts>\n";
+//    res += generatePartsXmlString();
+//    res += "</listOfParts>\n";
+//    res += "</chain>\n";
+//    res += "</listOfChains>\n";
+//    res += "</cnModel>\n";
+//    res += "</species>\n";
 
 	return res;
 }
@@ -119,28 +133,26 @@ QString SpeciesData::generatePartsXmlString()
 
 	//ignore the part/comparement types
 	//because the ui forbid add compartment to plasmids
-	if (m_type == SPEC_BIOBRICK)
-		typeString = "biobrick";
-	else if (m_type == SPEC_COMPOUNDS)
-		typeString = "compound";
-	else
-		typeString = "comparement";
 
-	res += "<part>\n";
-	res += "\t<partReference>"; res+=m_dbId; res += "</partReference>\n";
-	res += "\t<partLabel>"; res+=m_dbId; res += "</partLabel>\n";
-	res += "\t<partType>"; res+=partType(); res += "</partType>\n";
-	res += "\t<partLabel>"; res+=typeString; res += "</partLabel>\n";
-	res += "\t</part>\n";
+	res += "          <part>\n";
+	res += "            <partReference>"; res+=id(); res += "</partReference>\n";
+	if ((type() == SPEC_BIOBRICK)
+			|| (type() == SPEC_BACKBONE))
+	{
+		res += "            <partLabel>"; res+=fileId(); res += "</partLabel>\n";
+	}
+	res += "            <partType>"; res+=partType(); res += "</partType>\n";
+	res += "            <partCategory>"; res+=partCategory(); res += "</partCategory>\n";
+	res += "          </part>\n";
 
 	return res;
 }
 
 void SpeciesData::setInputNo(int nm)
 {
-	m_inputId += "_i";
+	m_fileId += "_i";
 
-	m_inputId += QString::number(nm);
+	m_fileId += QString::number(nm);
 }
 
 void SpeciesData::setType(SPECIESTYPE type) 
@@ -148,7 +160,24 @@ void SpeciesData::setType(SPECIESTYPE type)
 	m_type = type; 
 
 	if (m_type == SPEC_COMPARTMENT)
+	{
 		m_constant = "true";
+		m_partType = "Compartment";
+		m_partCatgory = "compartment";
+	}
 	if (m_type == SPEC_BACKBONE)
+	{
 		m_constant = "false";
+		m_partType = "ForwardDNA";
+		m_partCatgory = "biobrick";
+	}
+	if (m_type == SPEC_COMPOUNDS)
+	{
+		m_partType = "Compound";
+		m_partCatgory = "compound";
+	}
+	if (m_type == SPEC_BIOBRICK)
+	{
+		m_partCatgory = "biobrick";
+	}
 };

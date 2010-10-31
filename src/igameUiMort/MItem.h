@@ -191,6 +191,7 @@ public:
 
 	virtual void deletOwnerScene() {};
 	virtual void invalidOwnerScene(bool valid) {};
+	virtual const MScene* getOwnerScene() const { return NULL; };
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverMoveEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );

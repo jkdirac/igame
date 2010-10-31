@@ -12,6 +12,7 @@ class ClickableWidget: public MItem
 		MScene* m_ownScene;
 
 	public:
+		const MScene* getOwnerScene() const { return m_ownScene; };
 		ClickableWidget(SPECIESTYPE type=SPEC_COMPARTMENT);
 		ClickableWidget(const QString& xmlfile, SPECIESTYPE type=SPEC_COMPARTMENT);
 		virtual ~ClickableWidget();
