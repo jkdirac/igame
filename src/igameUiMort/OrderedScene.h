@@ -16,6 +16,7 @@ class OrderedScene : public MScene
 		void rearrangeItem();
 		void adjustItemPos();
 
+		QString generateSpeXmlString();
 		void insertItem(MItem *item);
 
 	private:

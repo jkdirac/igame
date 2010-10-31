@@ -69,9 +69,8 @@ public:
 	MScene* getChild(int n);
 	QVector<MItem*>& getValidSubItems();
 
-	QString generateComXmlString();
-	QString generateSpeXmlString();
-	QString generateListOfPartsXmlString();
+	virtual QString generateComXmlString();
+	virtual QString generateSpeXmlString();
 
 	int addSpeciesItem(MItem *item);
 	void addBrowserItem(MItem *item);

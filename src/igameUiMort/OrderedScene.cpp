@@ -13,19 +13,20 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 	m_x = m_rootItem->x();
 	m_y = m_rootItem->y();
 
-	m_bone = new MItem(":xml/biobrick.ui.xml");
+	m_bone = new MItem(":xml/biobrick.ui.xml", SPEC_NON);
+	m_bone->setId(getId());
 	m_bone->setY(m_y);
 	m_bone->setX(m_x+2);
 	m_bone->setMovable(false);
 	m_bioWidth = m_bone->width();
 
-	m_head = new MItem(":xml/biobrick.ui.xml");
+	m_head = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
 	m_head->setX(m_x+2);
 	m_head->setY(m_y);
 	m_head->setId("TEX_100_head");
 	m_head->setMovable(false);
 
-	m_tail = new MItem(":xml/biobrick.ui.xml");
+	m_tail = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
 	m_tail->setX(m_x+1);
 	m_tail->setY(m_y);
 	m_tail->setId("TEX_100_tail");
@@ -46,6 +47,10 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 bool OrderedScene::itemDropped(MItem *item)
 {
 	MScene::itemDropped(item);
+
+	if ((item == m_rootItem)
+			|| (item == m_bone))
+		return false;
 
 	if (item == NULL)
 		return false;
@@ -97,7 +102,7 @@ void OrderedScene::insertItem(MItem *item)
 
 bool OrderedScene::posxGreatethan(MItem* it1, MItem* it2)
 {
-	return it1->x() < it2->x();
+	return it1->x() > it2->x();
 }
 
 void OrderedScene::rearrangeItem()
@@ -131,10 +136,10 @@ void OrderedScene::adjustItemPos()
 	m_width = nNum * m_bioWidth + (nNum-1) * m_margin + 50;
 	m_height = 70;
 
-	startX = m_x - (m_width - 10) / 2 + m_bioWidth/2;
+	startX = m_x - 10 + m_width/2 - m_bioWidth;
 	for (int i=0; i < nNum; i++)
 	{
-		int item_x = startX + i * m_bioWidth;
+		int item_x = startX - i * m_bioWidth;
 		m_validItem[i]->setX(item_x);
 		m_validItem[i]->setY(m_y);
 		qDebug() << "item " << i << " " << item_x ;
@@ -145,4 +150,67 @@ void OrderedScene::adjustItemPos()
 	m_rootItem->setWidth(m_width);
 	m_rootItem->setHeight(m_height);
 	qDebug() << "root item " << m_x << " " << m_y << " " << m_width << " " << m_height;
+}
+
+QString OrderedScene::generateSpeXmlString()
+{
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+
+	if(type() == SPEC_COMPARTMENT)
+	{
+		return "";
+	}
+	//backbone chain
+	else if(type() == SPEC_BACKBONE)
+	{
+		if (m_rootItem == NULL)
+		{
+			res = "";
+			return res;
+		}
+
+		SpeciesData* root_data = m_rootItem->getSpeciesData();
+		if (root_data == NULL)
+		{
+			res = "";
+			return res;
+		}
+
+		res += "<species>\n";
+		res += root_data->generateSpeciesXmlString();
+		res += "  <cnModel>\n";
+		res += "    <listOfChains>\n";
+		res += "      <chain>\n";
+		res += "        <listOfParts>\n";
+
+		res += root_data->generatePartsXmlString();
+
+		for (int i=0; i <m_validItem.size() ; i++)
+		{
+			if ((m_validItem[i] == m_rootItem)
+				|| (m_validItem[i] == NULL))
+				continue;
+
+			SpeciesData* data = m_validItem[i]->getSpeciesData();
+			if (data->type() != SPEC_BIOBRICK)
+				continue;
+
+			if (data == NULL)
+				continue; 
+
+			res += data->generatePartsXmlString();
+		}
+
+		res += "        </listOfParts>\n";
+		res += "      </chain>\n";
+		res += "    </listOfChains>\n";
+		res += "  </cnModel>\n";
+		res += "</species>\n";
+	}
+	else
+		res = "";
+
+	return res;
 }

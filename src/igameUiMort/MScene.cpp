@@ -517,10 +517,6 @@ QString MScene::generateComXmlString()
 	return res;
 }
 
-QString MScene::generateListOfPartsXmlString()
-{
-}
-
 QString MScene::generateSpeXmlString()
 {
 	qDebug() << "MSCene generate species xml string";
@@ -563,49 +559,7 @@ QString MScene::generateSpeXmlString()
 	//backbone chain
 	else if(type() == SPEC_BACKBONE)
 	{
-		if (m_rootItem == NULL)
-		{
-			res = "";
-			return res;
-		}
-
-		SpeciesData* root_data = m_rootItem->getSpeciesData();
-		if (root_data == NULL)
-		{
-			res = "";
-			return res;
-		}
-
-		res += "<species>\n";
-		res += root_data->generateSpeciesXmlString();
-		res += "  <cnModel>\n";
-		res += "    <listOfChains>\n";
-		res += "      <chain>\n";
-		res += "        <listOfParts>\n";
-
-		res += root_data->generatePartsXmlString();
-
-		for (int i=0; i < m_dataCount; i++)
-		{
-			if ((dataItem[i] == m_rootItem)
-				|| (dataItem[i] == NULL))
-				continue;
-
-			SpeciesData* data = dataItem[i]->getSpeciesData();
-			if (data->type() != SPEC_BIOBRICK)
-				continue;
-
-			if (data == NULL)
-				continue; 
-
-			res += data->generatePartsXmlString();
-		}
-
-		res += "        </listOfParts>\n";
-		res += "      </chain>\n";
-		res += "    </listOfChains>\n";
-		res += "  </cnModel>\n";
-		res += "</species>\n";
+		return "";
 	}
 	else
 		res = "";
