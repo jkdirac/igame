@@ -28,8 +28,8 @@ class MScene;
 class MItem : public QGraphicsItem {
 
 public:
-	MItem(SPECIESTYPE type = SPEC_COMPARTMENT, SpeciesData* data = NULL);
-	MItem(const QString& filename, SPECIESTYPE type=SPEC_COMPARTMENT, SpeciesData* data = NULL);
+	MItem(SPECIESTYPE type = SPEC_COMPARTMENT);
+	MItem(const QString& filename, SPECIESTYPE type=SPEC_COMPARTMENT);
     virtual ~MItem();
 
     QRectF outlineRect() const;
@@ -40,13 +40,15 @@ public:
 
     void renew();
 
-    const QString& id() { return m_speciesdata->id(); }
+    const QString& id() { return m_id; }
     void setId(QString id) 
 	{ 
 		setText(id); 
-		m_speciesdata->setId(id);
+		m_id = id;
 		this->renew(); 
 	}
+
+	void setSpeciesData(SpeciesData* data);
 
     QString name() { return m_name; }
     void setName(QString name) { m_name = name; this->renew(); }
@@ -183,7 +185,7 @@ public:
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
 
-	SPECIESTYPE type() { return m_speciesdata->type(); }
+	SPECIESTYPE type() { return m_type; }
 
 	SpeciesData* getSpeciesData() { return m_speciesdata; };
 
@@ -197,6 +199,7 @@ public:
 //    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
+	void removeData();
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
@@ -255,6 +258,9 @@ private:
 	SpeciesData* m_speciesdata;
 	SettingWidget* m_settingWidget;
 	MWidget* m_settWidgetScene;
+
+	QString m_id;
+	SPECIESTYPE m_type;
 
 	void init();
 };

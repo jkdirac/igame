@@ -15,6 +15,7 @@
 #include "SceneViewWidget.h"
 #include "SceneTreeItem.h"
 #include "ClickableWidget.h"
+#include "SpeciesDataManager.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -73,28 +74,19 @@ void MScene::init()
 	m_browserItem = NULL;
 	m_browserItemX = 140;
 	m_browserItemY = -250;
-	//    loadXml(":demoUiXml.ui.xml");
-//    this->dataScene = new MItem();
-//    this->addItem(this->dataScene);
-
-//    this->dataScene->setPos(0, 0);
-//    this->dataScene->setWidth(0);
-//    this->dataScene->setHeight(0);
 
 	if (m_type == SPEC_COMPARTMENT)
-		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type, m_rootData);
+		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type);
 	else
-		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type, m_rootData);
+		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type);
 
 	//add root Item
 	m_rootItem->setId(m_id);
-    addItem(m_rootItem);
-	m_rootItem->setScene(this);
+	addSpeciesItem(m_rootItem);
 
 	m_trashItem = NULL;
 	m_trashItem = new MItem(":xml/trash.ui.xml");
-	addItem(m_trashItem);
-	m_trashItem->setScene(this);
+	addItemEx(m_trashItem);
 
 	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
@@ -159,6 +151,22 @@ int MScene::addSpeciesItem(MItem *item)
 
 	addItemEx(item);
 
+	//set Data
+	if (item == m_rootItem)
+	{
+		if (m_rootData == NULL)
+		{
+			m_rootData = SpeciesDataManager::newSpeciesData();
+		}
+		item->setSpeciesData(m_rootData);
+	}
+	else
+	{
+		SpeciesData* data = SpeciesDataManager::newSpeciesData();
+		data->setParent(m_rootItem->id(), m_rootItem->type());
+		item->setSpeciesData(data);
+	}
+
 	dataItem[dataCount] = item;
 	dataCount++;
 
@@ -170,7 +178,7 @@ void MScene::addItemEx(MItem *item)
 {
 	if (item == NULL)
 		return;
-	
+
     this->addItem(item);
 	item->setScene(this);
 }
@@ -206,6 +214,7 @@ void MScene::deletItemEx(int n)
 	if (dataItem[n] != NULL)
 	{
 		this->removeItem(dataItem[n]);
+		dataItem[n]->removeData();
 	}
 
 	if (m_nFree >= POOLNUM)
@@ -230,8 +239,7 @@ void MScene::deletItemEx(int n)
 }
 
 // Get the only selected item
-MItem*
-MScene::selectedItem() const
+MItem* MScene::selectedItem() const
 {
     QList<QGraphicsItem*> items = this->selectedItems();
 

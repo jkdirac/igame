@@ -47,7 +47,7 @@
 #include "MScene.h"
 
 // Class MItem constructor
-MItem::MItem(SPECIESTYPE type, SpeciesData* data) 
+MItem::MItem(SPECIESTYPE type) 
 	: m_scene(NULL)
     , m_name("")
     , m_category("")
@@ -93,22 +93,14 @@ MItem::MItem(SPECIESTYPE type, SpeciesData* data)
 
     , m_image("")
     , m_isImageVisible(false)
-
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
-	, m_speciesdata(data)
+	, m_type(type)
 {
-	if (data == NULL)
-	{
-//        m_speciesdata = new SpeciesData();
-		m_speciesdata = SpeciesDataManager::newSpeciesData();
-		m_speciesdata->setType(type);
-	}
-	
 	init();
 }
 
-MItem::MItem(const QString& fileName, SPECIESTYPE type, SpeciesData* data)
+MItem::MItem(const QString& fileName, SPECIESTYPE type)
 	: m_scene(NULL)
     , m_name("")
     , m_category("")
@@ -157,14 +149,9 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type, SpeciesData* data)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
-	, m_speciesdata(data)
+	, m_speciesdata(NULL)
+	, m_type(type)
 {
-	if (m_speciesdata == NULL)
-	{
-		m_speciesdata = new SpeciesData();
-		m_speciesdata->setType(type);
-	}
-
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
@@ -326,6 +313,7 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type, SpeciesData* data)
 
 void MItem::init()
 {
+	m_speciesdata = NULL;
 	m_settingWidget = NULL;
 	setAcceptHoverEvents(true);
 	renew();
@@ -336,7 +324,7 @@ MItem::~MItem()
 {
 	qDebug() << "Mitem deleted";
 	// call speciesDataManager to delete
-//    delete m_speciesdata;
+	SpeciesDataManager::removeData(m_speciesdata);
 
 	if (m_scene)
 	{
@@ -561,8 +549,6 @@ void MItem::setScene(MScene* sce)
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-	qDebug() << "double click in mitem";
-
 	QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
@@ -581,14 +567,9 @@ void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 //        QRect rec = m_settingWidget->rect();
 
 		QRectF rec = outlineRect(); 
-		qDebug() << "mouse position: " << x << " " << y; 
-		qDebug() << "rec x: " << m_settingWidget->x() << " rec y: " << m_settingWidget->y() 
-			<< " width: " << m_settingWidget->width() << " height: " << m_settingWidget->height();
-//        if (m_settingWidget->underMouse())
 		if ( ((x - rec_x) * (x - rec_x - rec_width) <= 0 )
 				&& ((y - rec_y) * (y - rec_y - rec_height) <= 0) )
 		{
-			qDebug() << "widget under mouse!";
 			return;
 		}
 
@@ -681,7 +662,6 @@ void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
 void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-	qDebug() << "mouse released";
 	getScene()->itemDropped(this);
 
 	QGraphicsItem::mouseReleaseEvent(event);
@@ -692,4 +672,23 @@ void MItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event )
 //    if (m_settingWidget != NULL)
 //        m_settingWidget->close();
 	QGraphicsItem::hoverMoveEvent(event);
+}
+
+void MItem::removeData()
+{
+	if (m_speciesdata != NULL)
+	{
+		SpeciesDataManager::removeData(m_speciesdata);
+		m_speciesdata = NULL;
+	}
+}
+
+void MItem::setSpeciesData(SpeciesData* data) 
+{ 
+	m_speciesdata = data; 
+	if (m_speciesdata != NULL)
+	{
+		m_speciesdata->setId(m_id);
+		m_speciesdata->setType(m_type);
+	}
 }

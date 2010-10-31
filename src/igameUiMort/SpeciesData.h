@@ -15,6 +15,7 @@ typedef enum
 
 class SpeciesData
 {
+	friend class SpeciesDataManager;
 	private:
 		MItem* m_item;
 
@@ -33,11 +34,12 @@ class SpeciesData
 
 		void init();
 
-	public:
 		SpeciesData();
 		SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType=SPEC_COMPARTMENT, const QString& parent="ROOT");
 		SpeciesData(const SpeciesData &other);
 		SpeciesData& operator = (const SpeciesData &other);
+
+	public:
 
 		const SPECIESTYPE type() const { return m_type; }
 		const SPECIESTYPE parentType() const { return m_parentType; }

@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "CoreException.h"
+#include "SpeciesDataManager.h"
 
 InputGen::InputGen() : m_scenMgr(NULL)
 {
@@ -15,6 +16,7 @@ InputGen::InputGen() : m_scenMgr(NULL)
 	m_scenMgr = SceneManager::getSceneManger();
 }
 
+#if 0
 QString& InputGen::generateInput()
 {
 //    MScene* rootScene = m_scenMgr->getRootScene();
@@ -64,5 +66,13 @@ QString& InputGen::generateInput()
     m_inputContent += m_listCompartments;
     m_inputContent += m_listSpecies;
 	m_inputContent += m_xmlEnd;
+	return m_inputContent;
+}
+#endif
+
+QString& InputGen::generateInput()
+{
+	SpeciesDataManager::dumpSpeciesData();
+	m_inputContent = "hello";
 	return m_inputContent;
 }
