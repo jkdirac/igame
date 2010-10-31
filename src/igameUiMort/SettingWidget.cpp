@@ -72,6 +72,8 @@ void CompartDataSet::set()
 	{
 		SpeciesData* data = item->getSpeciesData();
 		
+		if (data == NULL)
+			return;
 		QString size = ui.lineEdit_size->text();
 		data->setSize(size);
 	}
@@ -108,6 +110,8 @@ void BiobrickDataSet::set()
 	{
 		SpeciesData* data = item->getSpeciesData();
 		
+		if (data == NULL)
+			return;
 		QString type = ui.comb_partType->currentText();
 		data->setPartType(type);
 	}
@@ -133,6 +137,8 @@ void SpeciesDataSet::set()
 	{
 		SpeciesData* data = item->getSpeciesData();
 		
+		if (data == NULL)
+			return;
 		QString initCon = ui.tx_SpecInitCon->text();
 		data->setInitConcentration(initCon);
 	}

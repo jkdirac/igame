@@ -31,39 +31,6 @@ class MScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
-	class Iterator
-	{
-		private:
-			QTreeWidgetItemIterator* m_iterator;
-			MScene* m_this;
-
-		public:
-			Iterator(MScene* sce) 
-			{ 
-				if (sce == NULL)
-					return;
-
-				m_this = sce;
-				m_iterator = new QTreeWidgetItemIterator((QTreeWidgetItem*)(sce->m_treeItem));
-			};
-
-			MScene* operator * ()
-			{
-				return m_this;
-			}
-
-			Iterator* operator ++ ()
-			{
-				m_iterator++;
-				if (*(*m_iterator) != NULL)
-				{
-					return ((SceneTreeItem*)*(*m_iterator))->getScene()->getIterator();
-				}
-			}
-	};
-
-public:
-
     MScene(QObject* parent = 0, SPECIESTYPE type=SPEC_COMPARTMENT, MItem* root = NULL);
     MScene(QObject* parent, const QString& id, SPECIESTYPE=SPEC_COMPARTMENT, MItem* root = NULL);
     ~MScene();
@@ -87,16 +54,6 @@ public:
 	void deletItemEx(int n);
 	void deletItemEx(MItem* item);
 
-    MItem* dataScene;
-	MItem* m_trashItem;
-    MItem* dataItem[1024];
-
-#define POOLNUM 16
-	MItem* dirtyItemPool[POOLNUM];
-	int m_nFree;
-
-    int dataCount;
-
 	QString& getId();
 	void setId(const QString& id);
 
@@ -104,15 +61,13 @@ public:
 	bool itemInTrash(MItem *item);
 	bool itemInCompartment(MItem *item);
 	bool itemIsRootItem(MItem* item);
-	bool itemDropped(MItem *item);
+	virtual bool itemDropped(MItem *item);
 
 	SPECIESTYPE type() {return m_type; }
 
 	int childrenCount();
 	MScene* getChild(int n);
 	QVector<MItem*>& getValidSubItems();
-
-	Iterator* getIterator() { return new Iterator(this); };
 
 	QString generateComXmlString();
 	QString generateSpeXmlString();
@@ -128,31 +83,40 @@ public:
 	void showSettWidget(SettingWidget *wid);
 	void closeSettWidget(SettingWidget *wid);
 
+protected:
+	MItem* m_rootItem;
+	SpeciesData* m_rootData;
+    MItem* dataScene;
+	MItem* m_trashItem;
+#define ITEMBUFNUM 1024
+    MItem* dataItem[ITEMBUFNUM];
+    int m_dataCount;
+	qreal m_browserItemX;
+	qreal m_browserItemY;
+	SPECIESTYPE m_type;
+	QString m_id;
+
+	//dirty pool
+#define POOLNUM 16
+	MItem* dirtyItemPool[POOLNUM];
+	int m_nFree;
+
+	void addItemEx(MItem *item);
+	void init();
 
 private:
-	void addItemEx(MItem *item);
 
-	QString m_id;
 	QString m_name;
     qreal m_minZValue;
     qreal m_maxZValue;
 	QVector<MScene*> m_childern;
-	MItem* m_rootItem;
-	SpeciesData* m_rootData;
-
 	MScene* m_parent;
-
-	SPECIESTYPE m_type;
-
-	void init();
 	MWidget* selWidget;
 	SceneViewWidget* m_overviewWidget;
 	SceneTreeItem* m_treeItem;
 
 	MItem* m_browserItem;
 	int m_browserItemId;
-	qreal m_browserItemX;
-	qreal m_browserItemY;
 
 	SettingWidget *m_setWidget;
 };

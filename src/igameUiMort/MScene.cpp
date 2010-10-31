@@ -17,6 +17,8 @@
 #include "ClickableWidget.h"
 #include "SpeciesDataManager.h"
 
+#include "OrderedScene.h"
+
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QFile>
@@ -30,7 +32,7 @@
 // Class MScene constructor
 MScene::MScene(QObject* parent, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
-	, dataCount(0)
+	, m_dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
@@ -49,7 +51,7 @@ MScene::MScene(QObject* parent, SPECIESTYPE type, MItem* rootitem)
 
 MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
-	, dataCount(0)
+	, m_dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
@@ -130,7 +132,7 @@ MScene::~MScene()
 	//
 
 	//delete items
-	for (int i = 0; i < dataCount; i++)
+	for (int i = 0; i < m_dataCount; i++)
 	{
 		if (dataItem[i] != NULL)
 			delete dataItem[i];
@@ -167,11 +169,11 @@ int MScene::addSpeciesItem(MItem *item)
 		item->setSpeciesData(data);
 	}
 
-	dataItem[dataCount] = item;
-	dataCount++;
+	dataItem[m_dataCount] = item;
+	m_dataCount++;
 
-	qDebug() << "item count: " << dataCount;
-	return dataCount-1;
+	qDebug() << "item count: " << m_dataCount;
+	return m_dataCount-1;
 }
 
 void MScene::addItemEx(MItem *item)
@@ -190,7 +192,7 @@ void MScene::deletItemEx(MItem* item)
 	if (item == NULL)
 		return;
 
-	while (n < dataCount)
+	while (n < m_dataCount)
 	{
 		if (item == dataItem[n])
 		{
@@ -208,7 +210,7 @@ void MScene::deletItemEx(MItem* item)
 
 void MScene::deletItemEx(int n)
 {
-	if ((n < 0) || (n >= dataCount))
+	if ((n < 0) || (n >= m_dataCount))
 		return;
 
 	if (dataItem[n] != NULL)
@@ -229,13 +231,13 @@ void MScene::deletItemEx(int n)
 
 	dirtyItemPool[m_nFree] = dataItem[n];
 
-	for (int i = n; i < dataCount; i++)
+	for (int i = n; i < m_dataCount; i++)
 	{
 		dataItem[i] = dataItem[i+1];
 		dataItem[i+1] = NULL;
 	}
 
-	dataCount--;
+	m_dataCount--;
 }
 
 // Get the only selected item
@@ -275,8 +277,6 @@ void MScene::selectedItemSendToBack()
     return;
 }
 
-
-
 //& Load data scene from XML
 void MScene::loadXml(const QString& fileName)
 {
@@ -292,7 +292,7 @@ void MScene::writeXml(const QString& fileName)
 
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
-    for(int t = 0; t < dataCount; t++) {
+    for(int t = 0; t < m_dataCount; t++) {
         if (t == 0 || (dataItem[t - 1] == dataItem[t]->parentItem())) {
             writer.writeStartElement(dataItem[t]->text());
 
@@ -468,7 +468,7 @@ QVector<MItem*>& MScene::getValidSubItems()
 	QVector<MItem*> res;
 	res.clear();
 
-	for (int i=0; i<dataCount; i++)
+	for (int i=0; i<m_dataCount; i++)
 	{
 		if (dataItem[i] == NULL)
 			continue;
@@ -492,7 +492,7 @@ QString MScene::generateComXmlString()
 	if (m_rootItem != NULL)
 	{
 		res = m_rootItem->getSpeciesData()->generateCompartmentXmlString();
-		for (int i=0; i<dataCount; i++)
+		for (int i=0; i<m_dataCount; i++)
 		{
 			if (dataItem[i] == m_rootItem)
 				continue;
@@ -529,7 +529,7 @@ QString MScene::generateSpeXmlString()
 
 	if(type() == SPEC_COMPARTMENT)
 	{
-		for (int i=0; i < dataCount; i++)
+		for (int i=0; i < m_dataCount; i++)
 		{
 			if (dataItem[i] == m_rootItem)
 				continue;
@@ -585,7 +585,7 @@ QString MScene::generateSpeXmlString()
 
 		res += root_data->generatePartsXmlString();
 
-		for (int i=0; i < dataCount; i++)
+		for (int i=0; i < m_dataCount; i++)
 		{
 			if ((dataItem[i] == m_rootItem)
 				|| (dataItem[i] == NULL))
@@ -634,7 +634,7 @@ QString MScene::generateSpeXmlString()
 		res += "<listOfParts>\n";
 
 
-		for (int i = 0; i < dataCount; i++)
+		for (int i = 0; i < m_dataCount; i++)
 		{
 			MItem* tmp = dataItem[i];
 			if (tmp == NULL)
@@ -656,7 +656,7 @@ QString MScene::generateSpeXmlString()
 	}
 	else
 	{
-		for (int i=0; i < dataCount; i++)
+		for (int i=0; i < m_dataCount; i++)
 		{
 			MItem* tmp = dataItem[i];
 			if (tmp == NULL)
@@ -750,7 +750,11 @@ MScene* MScene::itemApplyNewScene(MItem *item)
 	if (item == NULL)
 		return NULL;
 
-	MScene* sce = new MScene(NULL, item->id(), item->type(), item);
+	MScene* sce; 
+	if (item->type() == SPEC_BACKBONE)
+		sce = new OrderedScene(item->id(), item->type(), item);
+	else
+		sce = new MScene(NULL, item->id(), item->type(), item);
 //    addChildScene(item);
 	return sce;
 }
