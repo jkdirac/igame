@@ -28,8 +28,8 @@ class MScene;
 class MItem : public QGraphicsItem {
 
 public:
-	MItem(SPECIESTYPE type = SPEC_COMPARTMENT);
-	MItem(const QString& filename, SPECIESTYPE type=SPEC_COMPARTMENT);
+	MItem(SPECIESTYPE type = SPEC_COMPARTMENT, SpeciesData* data = NULL);
+	MItem(const QString& filename, SPECIESTYPE type=SPEC_COMPARTMENT, SpeciesData* data = NULL);
     virtual ~MItem();
 
     QRectF outlineRect() const;

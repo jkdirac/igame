@@ -46,7 +46,7 @@
 #include "MScene.h"
 
 // Class MItem constructor
-MItem::MItem(SPECIESTYPE type) 
+MItem::MItem(SPECIESTYPE type, SpeciesData* data) 
 	: m_scene(NULL)
     , m_name("")
     , m_category("")
@@ -95,14 +95,18 @@ MItem::MItem(SPECIESTYPE type)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
-	, m_speciesdata(NULL)
+	, m_speciesdata(data)
 {
-	m_speciesdata = new SpeciesData();
-	m_speciesdata->setType(type);
+	if (data == NULL)
+	{
+		m_speciesdata = new SpeciesData();
+		m_speciesdata->setType(type);
+	}
+	
 	init();
 }
 
-MItem::MItem(const QString& fileName, SPECIESTYPE type)
+MItem::MItem(const QString& fileName, SPECIESTYPE type, SpeciesData* data)
 	: m_scene(NULL)
     , m_name("")
     , m_category("")
@@ -151,10 +155,13 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
-	, m_speciesdata(NULL)
+	, m_speciesdata(data)
 {
-	m_speciesdata = new SpeciesData();
-	m_speciesdata->setType(type);
+	if (m_speciesdata == NULL)
+	{
+		m_speciesdata = new SpeciesData();
+		m_speciesdata->setType(type);
+	}
 
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -326,7 +333,8 @@ void MItem::init()
 MItem::~MItem()
 {
 	qDebug() << "Mitem deleted";
-	delete m_speciesdata;
+	// call speciesDataManager to delete
+//    delete m_speciesdata;
 
 	if (m_scene)
 	{

@@ -1,14 +1,14 @@
-window_sizes 1018 694 240 772 500 120
+window_sizes 1024 696 240 778 502 120
 diagrams
   classdiagram_ref 128100 // sbml
     778 502 100 4 0 0
   classdiagram_ref 129252 // cvode
     778 502 100 4 0 0
   active  classdiagram_ref 130404 // ui
-    778 502 100 4 27 0
+    778 502 100 4 180 0
 end
 show_stereotypes
-selected class_ref 131812 // Scene
+selected class_ref 132580 // SelectWidget
 open
   classview_ref 130404 // ui
 end

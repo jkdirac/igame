@@ -64,8 +64,8 @@ public:
 
 public:
 
-    MScene(QObject* parent = 0, SPECIESTYPE type=SPEC_COMPARTMENT);
-    MScene(QObject* parent, const QString& id, SPECIESTYPE=SPEC_COMPARTMENT);
+    MScene(QObject* parent = 0, SPECIESTYPE type=SPEC_COMPARTMENT, MItem* root = NULL);
+    MScene(QObject* parent, const QString& id, SPECIESTYPE=SPEC_COMPARTMENT, MItem* root = NULL);
     ~MScene();
 
     MItem* selectedItem() const;
@@ -135,6 +135,8 @@ private:
     qreal m_maxZValue;
 	QVector<MScene*> m_childern;
 	MItem* m_rootItem;
+	SpeciesData* m_rootData;
+
 	MScene* m_parent;
 
 	SPECIESTYPE m_type;

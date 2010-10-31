@@ -1,6 +1,6 @@
 format 66
 "Ui" // Ui
-  revision 1
+  revision 3
   modified_by 100 "jkdirac"
   // class settings
   //class diagram settings
@@ -88,13 +88,6 @@ format 66
 	  b parent class_ref 131940 // Item
       end
 
-      classrelation 129892 // <unidirectional association>
-	relation 129892 --->
-	  a role_name "" private
-	    classrelation_ref 129892 // <unidirectional association>
-	  b parent class_ref 132324 // globalModel
-      end
-
       attribute 134244 "rootItem"
 	private explicit_type ""
 	cpp_decl ""
@@ -111,25 +104,25 @@ format 66
 	  b parent class_ref 132196 // SceneManager
       end
 
-      classrelation 130276 // <unidirectional association>
-	relation 130276 --->
+      classrelation 132196 // <unidirectional association>
+	relation 132196 --->
 	  a role_name "" private
-	    classrelation_ref 130276 // <unidirectional association>
-	  b parent class_ref 132452 // parameterWidget
+	    classrelation_ref 132196 // <unidirectional association>
+	  b parent class_ref 132196 // SceneManager
       end
 
-      classrelation 130404 // <unidirectional association>
-	relation 130404 --->
+      classrelation 133092 // <unidirectional association>
+	relation 132836 --->
 	  a role_name "" private
-	    classrelation_ref 130404 // <unidirectional association>
-	  b parent class_ref 132580 // SelectWidget
+	    classrelation_ref 133092 // <unidirectional association>
+	  b parent class_ref 133860 // MainGraphicsView
       end
 
-      classrelation 130532 // <unidirectional association>
-	relation 130532 --->
+      classrelation 133988 // <unidirectional association>
+	relation 133604 --->
 	  a role_name "" private
-	    classrelation_ref 130532 // <unidirectional association>
-	  b parent class_ref 132708 // overViewWidget
+	    classrelation_ref 133988 // <unidirectional association>
+	  b parent class_ref 133988 // SceneItemView
       end
     end
 
@@ -148,9 +141,23 @@ format 66
 	    classrelation_ref 129636 // <unidirectional association>
 	  b parent class_ref 131812 // Scene
       end
+
+      classrelation 132068 // <unidirectional association>
+	relation 132068 --->
+	  a role_name "" private
+	    classrelation_ref 132068 // <unidirectional association>
+	  b parent class_ref 132196 // SceneManager
+      end
+
+      classrelation 134372 // <unidirectional association>
+	relation 133988 --->
+	  a role_name "" private
+	    classrelation_ref 134372 // <unidirectional association>
+	  b parent class_ref 134116 // SettingWidget
+      end
     end
 
-    class 132068 "ClickableItem"
+    class 132068 "ClickableWidget"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -199,28 +206,13 @@ format 66
 	
 	
       end
-    end
 
-    class 132324 "globalModel"
-      visibility package 
-      cpp_decl ""
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-    end
-
-    class 132452 "parameterWidget"
-      visibility package 
-      cpp_decl ""
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
+      classrelation 133348 // <unidirectional association>
+	relation 133092 --->
+	  a role_name "" private
+	    classrelation_ref 133348 // <unidirectional association>
+	  b parent class_ref 133860 // MainGraphicsView
+      end
     end
 
     class 132580 "SelectWidget"
@@ -232,11 +224,8 @@ format 66
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 130788 // <unidirectional association>
-	relation 130788 --->
-	  a role_name "" private
-	    classrelation_ref 130788 // <unidirectional association>
-	  b parent class_ref 132324 // globalModel
+      classrelation 132836 // <aggregation>
+	relation_ref 132580 // <aggregation>
       end
     end
 
@@ -249,18 +238,176 @@ format 66
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 130660 // <unidirectional association>
-	relation 130660 --->
-	  a role_name "" private
-	    classrelation_ref 130660 // <unidirectional association>
-	  b parent class_ref 132324 // globalModel
+      classrelation 132452 // <aggregation>
+	relation_ref 132324 // <aggregation>
       end
 
-      classrelation 130916 // <unidirectional association>
-	relation 130916 --->
+      classrelation 133476 // <unidirectional association>
+	relation 133220 --->
 	  a role_name "" private
-	    classrelation_ref 130916 // <unidirectional association>
+	    classrelation_ref 133476 // <unidirectional association>
+	  b parent class_ref 133988 // SceneItemView
+      end
+
+      classrelation 133604 // <aggregation>
+	relation 133348 o---
+	  a role_name "" private
+	    classrelation_ref 133604 // <aggregation>
+	  b role_name "" private
+	    classrelation_ref 133732 // <aggregation>
+      end
+    end
+
+    class 133860 "MainGraphicsView"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 132324 // <aggregation>
+	relation 132324 o---
+	  a role_name "" private
+	    classrelation_ref 132324 // <aggregation>
+	  b role_name "" private
+	    classrelation_ref 132452 // <aggregation>
+      end
+
+      classrelation 132580 // <directional aggregation>
+	relation 132452 o-->
+	  a role_name "" private
+	    classrelation_ref 132580 // <directional aggregation>
+	  b parent class_ref 132580 // SelectWidget
+      end
+
+      classrelation 132708 // <aggregation>
+	relation 132580 o---
+	  a role_name "" private
+	    classrelation_ref 132708 // <aggregation>
+	  b role_name "" private
+	    classrelation_ref 132836 // <aggregation>
+      end
+
+      classrelation 132964 // <unidirectional association>
+	relation 132708 --->
+	  a role_name "" private
+	    classrelation_ref 132964 // <unidirectional association>
+	  b parent class_ref 131812 // Scene
+      end
+
+      classrelation 133220 // <unidirectional association>
+	relation 132964 --->
+	  a role_name "" private
+	    classrelation_ref 133220 // <unidirectional association>
 	  b parent class_ref 132196 // SceneManager
+      end
+    end
+
+    class 133988 "SceneItemView"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 133732 // <aggregation>
+	relation_ref 133348 // <aggregation>
+      end
+
+      classrelation 133860 // <unidirectional association>
+	relation 133476 --->
+	  a role_name "" private
+	    classrelation_ref 133860 // <unidirectional association>
+	  b parent class_ref 131812 // Scene
+      end
+    end
+
+    class 134116 "SettingWidget"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134116 // <unidirectional association>
+	relation 133732 --->
+	  a role_name "" private
+	    classrelation_ref 134116 // <unidirectional association>
+	  b parent class_ref 134244 // SpeciesData
+      end
+    end
+
+    class 134244 "SpeciesData"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134244 // <unidirectional association>
+	relation 133860 --->
+	  a role_name "" private
+	    classrelation_ref 134244 // <unidirectional association>
+	  b parent class_ref 131940 // Item
+      end
+    end
+
+    class 134372 "InputGenerate"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 134500 // <unidirectional association>
+	relation 134116 --->
+	  a role_name "" private
+	    classrelation_ref 134500 // <unidirectional association>
+	  b parent class_ref 134244 // SpeciesData
+      end
+    end
+
+    class 135524 "CompartmentScene"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 135780 // <generalisation>
+	relation 135396 ---|>
+	  a public
+	    classrelation_ref 135780 // <generalisation>
+	  b parent class_ref 131812 // Scene
+      end
+    end
+
+    class 135652 "BackboneScene"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 135652 // <generalisation>
+	relation 135268 ---|>
+	  a public
+	    classrelation_ref 135652 // <generalisation>
+	  b parent class_ref 131812 // Scene
       end
     end
   end

@@ -27,7 +27,7 @@
 #include <QDebug>
 
 // Class MScene constructor
-MScene::MScene(QObject* parent, SPECIESTYPE type)
+MScene::MScene(QObject* parent, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
 	, dataCount(0)
 	, m_minZValue(0)
@@ -36,11 +36,16 @@ MScene::MScene(QObject* parent, SPECIESTYPE type)
 	  ,m_trashItem(NULL)
 	  ,m_type(type)
 	  ,m_rootItem(NULL)
+	   ,m_rootData(NULL)
 {
+	if (rootitem)
+	{
+		m_rootData = rootitem->getSpeciesData();
+	}
 	init();
 }
 
-MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
+MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
 	, dataCount(0)
 	, m_minZValue(0)
@@ -49,7 +54,12 @@ MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
 	  ,m_trashItem(NULL)
 	  ,m_type(type)
 	  ,m_rootItem(NULL)
+	   ,m_rootData(NULL)
 {
+	if (rootitem)
+	{
+		m_rootData = rootitem->getSpeciesData();
+	}
 	m_id = id;
 	init();
 }
@@ -70,9 +80,9 @@ void MScene::init()
 //    this->dataScene->setHeight(0);
 
 	if (m_type == SPEC_COMPARTMENT)
-		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type);
+		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type, m_rootData);
 	else
-		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type);
+		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type, m_rootData);
 
 	//add root Item
 	m_rootItem->setId(m_id);
