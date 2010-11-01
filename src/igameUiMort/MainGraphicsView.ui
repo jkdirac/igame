@@ -156,8 +156,8 @@ background-image: url(:/iGaME.images/button-bm.png);</string>
   <widget class="QPushButton" name="m_loadbase">
    <property name="geometry">
     <rect>
-     <x>600</x>
-     <y>500</y>
+     <x>500</x>
+     <y>450</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -185,8 +185,8 @@ font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>500</y>
+     <x>100</x>
+     <y>450</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -215,8 +215,8 @@ font:75 12pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_runDemo">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>500</y>
+     <x>300</x>
+     <y>450</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -410,6 +410,64 @@ font: 9pt &quot;Verdana&quot;;</string>
    </property>
    <property name="flat">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_help">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>450</y>
+     <width>201</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/iGaME.images/button-help.png);
+font: 75 12pt &quot;Verdana&quot;;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="m_rotateImg">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>630</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="m_label_generating">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>630</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;Verdana&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Generating...</string>
    </property>
   </widget>
  </widget>

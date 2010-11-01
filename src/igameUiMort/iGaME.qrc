@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="/">
+    <file>iGaME.images/animation.png</file>
+    <file>iGaME.images/button-cancel.png</file>
+    <file>iGaME.images/button-help.png</file>
     <file>iGaME.images/botton-genModel.png</file>
     <file>iGaME.images/trash.png</file>
     <file>iGaME.images/compartment-1.png</file>
