@@ -16,7 +16,7 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 	m_bone = new MItem(":xml/biobrick.ui.xml", SPEC_NON);
 	m_bone->setId(getId());
 	m_bone->setY(m_y);
-	m_bone->setX(m_x+2);
+	m_bone->setX(m_x+1);
 	m_bone->setMovable(false);
 	m_bioWidth = m_bone->width();
 
@@ -27,7 +27,7 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 	m_head->setMovable(false);
 
 	m_tail = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
-	m_tail->setX(m_x+1);
+	m_tail->setX(m_x+3);
 	m_tail->setY(m_y);
 	m_tail->setId("TEX_100_tail");
 	m_tail->setMovable(false);
@@ -72,8 +72,8 @@ bool OrderedScene::itemDropped(MItem *item)
 
 	//
 	if ( itemInCompartment(item) &&
-			((item->x() > m_head->x())
-			 || (item->x() < m_tail->x())))
+			((item->x() < m_head->x())
+			 || (item->x() > m_tail->x())))
 	{
 		qDebug() << "invalid input in " << item->x() << " head: " << m_head->x() << " tail: " << m_tail->x();
 		item->setY(m_y - 100);
@@ -119,11 +119,9 @@ void OrderedScene::rearrangeItem()
 	}
 
 	qSort(m_validItem.begin(), m_validItem.end(), OrderedScene::posxGreatethan);
-	for (itr = m_validItem.begin(); 
-			itr != m_validItem.end();
-			itr++)
+	for (int i = 0; i < m_validItem.size(); i++)
 	{
-		qDebug() <<"x: " << (*itr)->x();
+		qDebug() <<"x: " << m_validItem[i]->x();
 	}
 }
 
@@ -187,7 +185,7 @@ QString OrderedScene::generateSpeXmlString()
 
 		res += root_data->generatePartsXmlString();
 
-		for (int i=0; i <m_validItem.size() ; i++)
+		for (int i=m_validItem.size()-1; i >= 0 ; i--)
 		{
 			if ((m_validItem[i] == m_rootItem)
 				|| (m_validItem[i] == NULL))
