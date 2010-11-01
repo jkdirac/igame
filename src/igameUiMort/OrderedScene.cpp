@@ -131,10 +131,11 @@ void OrderedScene::adjustItemPos()
 	int nNum = m_validItem.size();
 	int startX;
 
-	m_width = nNum * m_bioWidth + (nNum-1) * m_margin + 50;
+	m_width = nNum * (m_bioWidth+20) + (nNum-1) * m_margin + 200;
+	qDebug() << "item num " << nNum << " biobrick width " << m_bioWidth << " width " << m_width;
 	m_height = 70;
 
-	startX = m_x - 10 + m_width/2 - m_bioWidth;
+	startX = m_x + m_width/2 - m_bioWidth/2 - 100;
 	for (int i=0; i < nNum; i++)
 	{
 		int item_x = startX - i * m_bioWidth;
