@@ -17,6 +17,7 @@ class MainGraphicsView : public QWidget
 			START,
 			GAMESCENE,
 			REVIEW,
+			GENMODEL,
 			SIMULATE
 		} STATE;
 
@@ -61,6 +62,9 @@ class MainGraphicsView : public QWidget
 		void runDemo();
 		void getStart();
 		void sceneNext();
+		void sceneGenModel();
+		void sceneSimulate();
+		void sceneReview();
 		void loadDb();
 		void backToMainMenu();
 		void sceneBackForward();

@@ -323,7 +323,7 @@ font: 9pt &quot;Verdana&quot;;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="m_scenNext">
+  <widget class="QPushButton" name="m_scenReview">
    <property name="geometry">
     <rect>
      <x>810</x>
@@ -374,11 +374,11 @@ font: 9pt &quot;Verdana&quot;;</string>
     <string notr="true">background-color: rgb(241, 241, 241);</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="m_genModel">
+  <widget class="QPushButton" name="m_scenGenModel">
    <property name="geometry">
     <rect>
      <x>800</x>
-     <y>540</y>
+     <y>610</y>
      <width>181</width>
      <height>65</height>
     </rect>
@@ -393,11 +393,11 @@ font: 9pt &quot;Verdana&quot;;</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="m_simulate">
+  <widget class="QPushButton" name="m_scenSimulate">
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>470</y>
+     <y>610</y>
      <width>171</width>
      <height>65</height>
     </rect>
