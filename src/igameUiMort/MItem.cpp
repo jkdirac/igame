@@ -584,8 +584,9 @@ void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 		return;
 	}
 
-	if ((type() == SPEC_COMPOUNDS)
-			|| (type() == SPEC_NON))
+//    if ((type() == SPEC_COMPOUNDS)
+//            || (type() == SPEC_NON))
+	if (type() == SPEC_NON)	
 	{
 		m_settingWidget = NULL;
 		return;
