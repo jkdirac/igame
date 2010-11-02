@@ -1,0 +1,56 @@
+
+UI XML Format Standard:
+
+  - 标签的属性应严格在标签< >内部，使用字符串定义
+  - 布尔值使用"0" / "1"定义
+  - 绝不能重复定义任何属性
+  - 允许定义暂时还不存在的属性，即使对外观没有任何影响
+  - 建议所有常用的属性都进行定义；某些属性不定义会取默认值，但不推荐
+  - 标签下的子标签视作对象的子对象，可以通过这种方式把对象作为其他对象的容器
+  - 标签必须严格使用"/>"或"</label>"关闭，否则会出现不可预料的后果
+
+UI XML Reference:
+
+  id: 对象ID
+  name: 对象名称
+  category: 对象类别
+  
+  x: 对象X坐标（子对象使用原点在父对象中心的笛卡尔坐标系，最高级别对象使用屏幕坐标系）
+  y: 对象Y坐标（子对象使用原点在父对象中心的笛卡尔坐标系，最高级别对象使用屏幕坐标系）
+  zValue: 对象Z坐标（决定叠放顺序）
+
+  width: 对象宽度
+  height: 对象高度
+  
+  toolTip: 对象鼠标悬停提示文本
+  color: 对象颜色，默认"#000000"
+  
+  isVisible: 对象是否可见，默认"1"
+  isSelectable: 对象是否鼠标点击可选，默认"0"
+  isMouseOverSelectable: 对象是否鼠标悬停可选，默认"0"
+  isMovable: 对象是否可拖动，默认"0"
+  
+  isOutlineAvailable: 对象选中时轮廓是否可见
+  outlineColor: 对象轮廓的颜色
+  outlineWidth: 对象轮廓的粗细
+  
+  isTextVisible: 对象文本是否可见
+  text: 对象文本
+  textColor: 对象文本的颜色
+  isAlternativeTextAvailable: 对象选中时替代文本是否可用
+  alternativeText: 对象选中时替代文本
+  alternativeTextColor: 对象选中时替代文本的颜色
+  
+  isFigureVisible: 对象几何形状是否可见
+  figure: 对象几何形状："RECTANGLE"（矩形）；"ELLIPSE"（椭圆形）；"ROUND_RECTANGLE"（圆角矩形）
+  figureColor: 对象几何形状的颜色
+  isAlternativeFigureAvailable: 对象选中时替代几何形状是否可用
+  alternativeFigure: 对象选中时替代几何形状
+  alternativeFigureColor: 对象选中时替代几何形状的颜色
+  
+  isPixmapVisible: 对象像素图是否可见
+  pixmap: 对象像素图的文件路径
+  isAlternativePixmapAvailable: 对象选中时替代像素图是否可用
+  alternativePixmap: 对象选中时替代像素图的文件路径
+
+

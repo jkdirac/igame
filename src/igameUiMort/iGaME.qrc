@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="/">
+    <file>iGaME.images/trash.png</file>
+    <file>iGaME.images/compartment-1.png</file>
+    <file>iGaME.images/button-start.png</file>
+    <file>iGaME.images/button-bm.png</file>
+    <file>iGaME.images/button-lddb.png</file>
+    <file>iGaME.images/button-review.png</file>
+    <file>iGaME.images/button-rundm.png</file>
     <file>iGaME.images/coding sequence.png</file>
     <file>iGaME.images/compartment.png</file>
     <file>iGaME.images/compound.png</file>
@@ -7,6 +14,9 @@
     <file>iGaME.images/demobg.png</file>
     <file>iGaME.images/Igame_logo.png</file>
     <file>iGaME.images/iGaME.ico</file>
+    <file>iGaME.images/button-back.png</file>
+    <file>iGaME.images/button-simulate.png</file>
+    <file>iGaME.images/button-forward.png</file>
     <file>iGaME.images/plasmid.png</file>
     <file>iGaME.images/plasmid line.png</file>
     <file>iGaME.images/splash.png</file>

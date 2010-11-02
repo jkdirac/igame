@@ -21,14 +21,8 @@ class SceneManager : public QObject
 
 		QGraphicsView* m_view;
 
-		MItem* m_browserItem;
-		int m_browserItemId;
-		qreal m_browserItemX;
-		qreal m_browserItemY;
-
 		private slots:
-			void broswerScene(QTreeWidgetItem * current, 
-					QTreeWidgetItem * previous);
+			void broswerScene(QTreeWidgetItem * current, int cl);
 		void broswerScene1(QTreeWidgetItem * current, int column);
 	public:
 		static SceneManager* getSceneManger();
@@ -43,7 +37,9 @@ class SceneManager : public QObject
 		SceneTreeItem* getRootItem();
 
 		void startShow();
+		void destoryShow();
 
+		MScene* getRootScene();
 		void browserItem(MItem* item);
 //        void confirmItem(MItem* item);
 //

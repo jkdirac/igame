@@ -5,8 +5,10 @@
 #include "ClickableWidget.h"
 #include "GlobalSetting.h"
 #include "CoreException.h"
-
 #include "MainGraphicsView.h"
+
+#include <QMessageBox>
+#include <QObject>
 
 namespace uiObjects {
 
@@ -65,7 +67,9 @@ BEGIN(demoUiXml)
 	bSucc = init_global_dir_setting();
 	if (!bSucc)
 	{
-		qDebug() << "global dir setting error: " << endl;
+		QMessageBox::warning(NULL, QObject::tr("Application"),
+				QObject::tr("iGame Cannot create file in home directory,\nplease check the file system available space or get the permission.")
+				);
 		return 0;
 	}
 
@@ -74,28 +78,9 @@ BEGIN(demoUiXml)
 	int deskWidth = QApplication::desktop()->width();
 	int deskheight = QApplication::desktop()->height();
 
-//    MView* mainview = new MView();
-
-//    mainview->setWindowTitle("demoUiXml");
-//    mainview->showMaximized();
-//    mainview->setSceneRect(0, 0, deskWidth, deskheight);
-//    mainview->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    mainview->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	MainGraphicsView* mainWindow = new MainGraphicsView(NULL);
 
-//    mainScene = new MScene();
-//    mainScene->loadXml(":demoUiXml.ui.xml");
-//    mainScene->setBackgroundBrush(QPixmap(":/images/demobg.png"));
-
-//    MItem* Item = new MItem(":xml/compartment.ui.xml");
-//    ClickableWidget* cItem = new ClickableWidget(":demoUiXml.ui.xml");
-//    int Item_id = mainScene->addItemEx(Item);
-
-//    ClickableWidget* cItem = new ClickableWidget(":xml/compartment.ui.xml");
-//    ClickableWidget* cItem = new ClickableWidget(":demoUiXml.ui.xml");
-//    int Item_clickable_id = mainScene->addItemEx(cItem);
 	sceneMgr->setMainView(mainWindow->ui.m_mainGraph);
-	sceneMgr->startShow();
 	mainWindow->show();
 }
 END(demoUiXml)

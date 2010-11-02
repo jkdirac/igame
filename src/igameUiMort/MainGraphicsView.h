@@ -26,6 +26,9 @@ class MainGraphicsView : public QWidget
 		void setUi(STATE curState);
 		void setState(STATE curState);
 
+		void compartmentScene();
+		void plasmidScene();
+
 	private:
 		int m_state;
 		QRect m_mainRect;
@@ -35,6 +38,8 @@ class MainGraphicsView : public QWidget
 		QStringList m_backboneList;
 		QStringList m_bioList;
 		SceneManager* m_scenemgr;
+
+		bool m_showBackforward;
 
 		void getCompartFromDb();
 		void getBackboneFromDb();
@@ -57,8 +62,8 @@ class MainGraphicsView : public QWidget
 		void getStart();
 		void sceneNext();
 		void loadDb();
-		void broswerScene(QTreeWidgetItem * current, 
-				QTreeWidgetItem * previous);
+		void backToMainMenu();
+		void sceneBackForward();
 };
 
 #endif

@@ -9,28 +9,40 @@ SceneManager* SceneManager::_single_instance = NULL;
 SceneManager::SceneManager()
 	: m_view(NULL),
 	m_rootscene(NULL),
-	m_currentscene(NULL),
-	m_browserItem(NULL),
-	m_browserItemId(0)
+	m_currentscene(NULL)
 {
-	m_browserItemX = 140;
-	m_browserItemY = -150;
-
 	m_rootItem = new SceneTreeItem(NULL, NULL);
+}
+
+void SceneManager::destoryShow()
+{
+	if (m_rootscene != NULL)
+	{
+		delete m_rootscene;
+		m_rootscene = NULL;
+	}
 }
 
 void SceneManager::startShow()
 {
+	qDebug() << "start to show!";
+	if (m_rootscene != NULL)
+	{
+		m_rootItem = m_rootscene->getTreeItem();
+		setCurrentScene(m_rootscene);
+		return;
+	}
+
 	m_rootscene = new MScene(NULL, "Flask");
 
 	if ( m_rootscene != NULL)
 	{
 		m_rootItem = m_rootscene->getTreeItem();
-//        m_rootscene->loadXml(":demoUiXml.ui.xml");
 
-		qDebug() << "start to show!";
 		setCurrentScene(m_rootscene);
 	}
+
+	m_mainWindow->setTreeView();
 }
 
 SceneManager* SceneManager::setMainWindow(MainGraphicsView *win)
@@ -62,46 +74,31 @@ void SceneManager::setCurrentScene(MScene* scene)
 	if (scene == NULL)
 		return;
 
-	if (m_rootscene == NULL)
-	{
-		m_rootscene = scene;
-	}
-
 	if (m_view != NULL)
 	{
 		m_currentscene = scene;
-		m_mainWindow->setTreeView();
-//        m_currentscene->showTreeWidget(m_rootItem);
+
+		if (m_rootscene == NULL)
+		{
+			m_rootscene = scene;
+		}
+
 		m_view->setScene(m_currentscene);
+
+		if (m_currentscene->type() == SPEC_COMPARTMENT)
+		{
+			m_mainWindow->compartmentScene();
+		}
+		if (m_currentscene->type() == SPEC_BACKBONE)
+		{
+			m_mainWindow->plasmidScene();
+		}
 	}
 }
 
 void SceneManager::browserItem(MItem* item)
 {
-	if (item == NULL)
-	{
-		return;
-	}
-
-	//check position
-	//if m_browserItem was not in init region, confirmed inserted in the scene
-	//else delete the m_browserItem 
-	//
-
-	if (m_browserItem 
-			&& (m_browserItem->x() == m_browserItemX)
-			&& (m_browserItem->y() == m_browserItemY))
-	{
-		m_currentscene->deletItemEx(m_browserItem);
-		m_browserItem = NULL;
-//        delete m_browserItem;
-	}
-	
-
-	m_browserItem = item;
-	m_browserItem->setX(m_browserItemX);
-	m_browserItem->setY(m_browserItemY);
-	m_browserItemId = m_currentscene->addItemEx(m_browserItem);
+	m_currentscene->addBrowserItem(item);
 }
 
 SceneTreeItem* SceneManager::getRootItem()
@@ -119,14 +116,23 @@ void SceneManager::addNewScene(MScene* newScene)
 	setCurrentScene(newScene);
 }
 
-void SceneManager::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+void SceneManager::broswerScene(QTreeWidgetItem * current, int cl)
 {
+	if (current == NULL)
+		return;
+
 	qDebug() << "broswer Scene";
+
 	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
+
+	if (curSceneItem->isDisabled())
+		return;
+
 	MScene* setScene = curSceneItem->getScene();
 	
 	setCurrentScene(setScene);
 }
+
 void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
 {
 	qDebug() << "broswer Scene";
@@ -134,4 +140,9 @@ void SceneManager::broswerScene1(QTreeWidgetItem * current, int previous)
 	MScene* setScene = curSceneItem->getScene();
 	
 	setCurrentScene(setScene);
+}
+
+MScene* SceneManager::getRootScene()
+{
+	return m_rootscene;
 }

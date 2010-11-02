@@ -30,13 +30,13 @@ ADD_LIBRARY( core
 
 TARGET_LINK_LIBRARIES( core
   ${QT_LIBRARIES}
-  qwt5
   dbxml
   sbml-3.4.1
   bdinterface
   utility
   str_cacu
   )
+  #qwt5
 
 #ADD_EXECUTABLE( helloplot
 #	${PRO_PLOT_TEST_SRC}

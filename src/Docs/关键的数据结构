@@ -1,0 +1,406 @@
+1 CVode计算核心数据结构
+typedef struct CVodeMemRec {
+
+  realtype cv_uround;    /* machine unit roundoff */
+
+  /*-------------------------- 
+    Problem Specification Data 
+    --------------------------*/
+
+  CVRhsFn cv_f;        /* y' = f(t,y(t))                    */
+  void *cv_f_data;     /* user pointer passed to f          */
+  int cv_lmm;          /* lmm = CV_ADAMS or CV_BDF          */
+  int cv_iter;         /* iter = CV_FUNCTIONAL or CV_NEWTON */
+  int cv_itol;         /* itol = CV_SS or CV_SV             */
+
+  realtype cv_reltol;  /* relative tolerance                */
+  realtype cv_Sabstol; /* scalar absolute tolerance         */
+  N_Vector cv_Vabstol; /* vector absolute tolerance         */
+  CVEwtFn cv_efun;     /* function to set ewt               */
+  void *cv_e_data;     /* user pointer passed to efun       */
+
+  /*-----------------------
+    Nordsieck History Array 
+    -----------------------*/
+
+  N_Vector cv_zn[L_MAX];  /* Nordsieck array, of size N x (q+1).         */
+                          /* zn[j] is a vector of length N (j=0,...,q)   */
+                          /* zn[j] = [1/factorial(j)] * h^j * (jth       */ 
+                          /* derivative of the interpolating polynomial  */
+
+  /*--------------------------
+    other vectors of length N 
+    -------------------------*/
+
+  N_Vector cv_ewt;     /* error weight vector                          */
+  N_Vector cv_y;       /* y is used as temporary storage by the solver */
+                       /* The memory is provided by the user to CVode  */
+                       /* where the vector is named yout.              */
+  N_Vector cv_acor;    /* In the context of the solution of the        */
+                       /* nonlinear equation, acor = y_n(m) - y_n(0).  */
+                       /* On return, this vector is scaled to give     */
+                       /* the estimated local error in y.              */
+  N_Vector cv_tempv;   /* temporary storage vector                     */
+  N_Vector cv_ftemp;   /* temporary storage vector                     */
+
+  /*-----------------
+    Tstop information
+    -----------------*/
+  booleantype cv_tstopset;
+  realtype cv_tstop;
+
+  /*---------
+    Step Data 
+    ---------*/  
+
+  int cv_q;         /* current order                           */
+  int cv_qprime;    /* order to be used on the next step       */ 
+                    /* = q-1, q, or q+1                        */
+  int cv_next_q;    /* order to be used on the next step       */
+  int cv_qwait;     /* number of internal steps to wait before */
+                    /* considering a change in q               */
+  int cv_L;         /* L = q + 1                               */
+
+  realtype cv_hin;
+  realtype cv_h;      /* current step size                     */
+  realtype cv_hprime; /* step size to be used on the next step */ 
+  realtype cv_next_h; /* step size to be used on the next step */ 
+  realtype cv_eta;    /* eta = hprime / h                      */
+  realtype cv_hscale; /* value of h used in zn                 */
+  realtype cv_tn;     /* current internal value of t           */
+
+  realtype cv_tau[L_MAX+1];    /* array of previous q+1 successful step     */
+                               /* sizes indexed from 1 to q+1               */
+  realtype cv_tq[NUM_TESTS+1]; /* array of test quantities indexed from     */
+                               /* 1 to NUM_TESTS(=5)                        */
+  realtype cv_l[L_MAX];        /* coefficients of l(x) (degree q poly)      */
+
+  realtype cv_rl1;     /* 1 / l[1]                     */
+  realtype cv_gamma;   /* gamma = h * rl1              */
+  realtype cv_gammap;  /* gamma at the last setup call */
+  realtype cv_gamrat;  /* gamma / gammap               */
+
+  realtype cv_crate;   /* estimated corrector convergence rate     */
+  realtype cv_acnrm;   /* | acor | wrms                            */
+  realtype cv_nlscoef; /* coeficient in nonlinear convergence test */
+  int  cv_mnewt;       /* Newton iteration counter                 */
+
+  /*------
+    Limits 
+    ------*/
+
+  int cv_qmax;        /* q <= qmax                                          */
+  long int cv_mxstep; /* maximum number of internal steps for one user call */
+  int cv_maxcor;      /* maximum number of corrector iterations for the     */
+                      /* solution of the nonlinear equation                 */
+  int cv_mxhnil;      /* maximum number of warning messages issued to the   */
+                      /* user that t + h == t for the next internal step    */
+  int cv_maxnef;      /* maximum number of error test failures              */
+  int cv_maxncf;      /* maximum number of nonlinear convergence failures   */
+
+  realtype cv_hmin;     /* |h| >= hmin       */
+  realtype cv_hmax_inv; /* |h| <= 1/hmax_inv */
+  realtype cv_etamax;   /* eta <= etamax     */
+
+  /*--------
+    Counters 
+    --------*/
+
+  long int cv_nst;              /* number of internal steps taken             */
+  long int cv_nfe;              /* number of f calls                          */
+  long int cv_ncfn;             /* number of corrector convergence failures   */
+  long int cv_netf;             /* number of error test failures              */
+  long int cv_nni;              /* number of Newton iterations performed      */
+  long int cv_nsetups;          /* number of setup calls                      */
+  int cv_nhnil;                 /* number of messages issued to the user that */
+                                /* t + h == t for the next iternal step       */
+
+  realtype cv_etaqm1;      /* ratio of new to old h for order q-1        */
+  realtype cv_etaq;        /* ratio of new to old h for order q          */
+  realtype cv_etaqp1;      /* ratio of new to old h for order q+1        */
+
+  /*----------------------------
+    Space requirements for CVODE 
+    ----------------------------*/
+
+  long int cv_lrw1;        /* no. of realtype words in 1 N_Vector         */ 
+  long int cv_liw1;        /* no. of integer words in 1 N_Vector          */ 
+  long int cv_lrw;         /* no. of realtype words in CVODE work vectors */
+  long int cv_liw;         /* no. of integer words in CVODE work vectors  */
+
+  /*------------------
+    Linear Solver Data 
+    ------------------*/
+
+  /* Linear Solver functions to be called */
+
+  int (*cv_linit)(struct CVodeMemRec *cv_mem);
+
+  int (*cv_lsetup)(struct CVodeMemRec *cv_mem, int convfail, N_Vector ypred,
+                   N_Vector fpred, booleantype *jcurPtr, N_Vector vtemp1,
+                   N_Vector vtemp2, N_Vector vtemp3); 
+
+  int (*cv_lsolve)(struct CVodeMemRec *cv_mem, N_Vector b, N_Vector weight,
+                   N_Vector ycur, N_Vector fcur);
+
+  void (*cv_lfree)(struct CVodeMemRec *cv_mem);
+
+  /* Linear Solver specific memory */
+
+  void *cv_lmem;           
+
+  /*------------
+    Saved Values
+    ------------*/
+
+  int cv_qu;             /* last successful q value used   */
+  long int cv_nstlp;          /* step number of last setup call */
+  realtype cv_h0u;       /* actual initial stepsize        */
+  realtype cv_hu;        /* last successful h value used   */
+  realtype cv_saved_tq5; /* saved value of tq[5]           */
+  booleantype cv_jcur;   /* Is the Jacobian info used by   */
+                         /* linear solver current?         */
+  realtype cv_tolsf;     /* tolerance scale factor         */
+  booleantype cv_setupNonNull; /* Does setup do something? */
+
+  booleantype cv_VabstolMallocDone;
+  booleantype cv_MallocDone;  
+
+  /*----------
+    Error File 
+    ----------*/
+
+  FILE *cv_errfp;       /* CVODE error messages are sent to errfp */
+
+  /*-------------------------
+    Stability Limit Detection
+    -------------------------*/
+
+  booleantype cv_sldeton;     /* Is Stability Limit Detection on?          */
+  realtype cv_ssdat[6][4];    /* scaled data array for STALD               */
+  int cv_nscon;               /* counter for STALD method                  */
+  long int cv_nor;            /* counter for number of order reductions    */
+
+  /*----------------
+    Rootfinding Data
+    ----------------*/
+
+  CVRootFn cv_gfun;     /* Function g for roots sought                     */
+  int cv_nrtfn;         /* number of components of g                       */
+  void *cv_g_data;      /* pointer to user data for g                      */
+  int *cv_iroots;       /* int array for root information                  */
+  realtype cv_tlo;      /* nearest endpoint of interval in root search     */
+  realtype cv_thi;      /* farthest endpoint of interval in root search    */
+  realtype cv_troot;    /* approximate root location                       */
+  realtype *cv_glo;     /* saved array of g values at t = tlo              */
+  realtype *cv_ghi;     /* saved array of g values at t = thi              */
+  realtype *cv_groot;   /* array of g values at t = troot                  */
+  realtype cv_tretlast; /* last value of t returned                        */
+  realtype cv_toutc;    /* copy of tout (if NORMAL mode)                   */
+  realtype cv_ttol;     /* tolerance on root location troot                */
+  int cv_taskc;         /* copy of parameter task                          */
+  int cv_irfnd;         /* flag showing whether last step had a root       */
+  int cv_nge;           /* counter for g evaluations                       */
+
+} *CVodeMem;
+
+2 cvodeData
+/** Contains all data needed for CVODE integration, i.e.
+   the ODEs, initial values, variable and parameter IDs and
+   names, events, and integration settings and output files,
+   but also
+   the SBML model from which they have been derived,
+   and the SBML version of the ODE model.
+ */
+struct cvodeData {
+
+  odeModel_t *model;
+  
+  /* ODEs f(x,p,t) = dx/dt and values x. The ODEs are usually
+     optimized versions of the same array in odeModel */
+  int neq;         /**< number of ODEs */
+  ASTNode_t **ode; /**< optimized ODEs as used for integration */
+
+  
+  int nvalues; /**< total number of values (variables x(t) + parameters p) */
+  /** The value array is used to write and read the
+     current values of all variables x(t) and parameters p of the
+     system (of which there are `nvalues') */  
+  double *value; 
+
+  /** the current time of the integration */
+  float currenttime;
+
+  /* current sensitivities: dx(t)/dp */
+  int nsens;            /**< number of sensitivities */
+  double **sensitivity; /**< current values of sensitivities d[Y(t)]/dP */
+  /** current values of parameters in sensitivity analysis, required
+      and filled only if no r.h.s function fS is available */
+  realtype *p;
+  
+  /** cvode settings: start- and end times, timesteps, number of timesteps,
+     error tolerances, maximum number of steps, etc... */
+  cvodeSettings_t *opt;
+  
+  /** trigger flags: check if triggers were active or not
+     at the previous time step */
+  int *trigger;
+  /** steady state flag: check if steady state was found */
+  int steadystate; 
+
+  /** Results: time series of integration are stored in this
+     structure (see above) */
+  cvodeResults_t *results;
+
+  /** number of runs with the one integratorInstance */
+  int run;
+
+} ;
+
+3 odeModel
+/** The internal ODE Model as constructed in odeModel.c from an SBML
+    input file, that only contains rate rules (constructed from
+    reaction network in odeConstruct.c)
+*/
+struct odeModel
+{
+  SBMLDocument_t *d; /**< not-NULL only if the odeModel was directly
+			  created from file */
+  Model_t *m;        /**< the input SBML reaction network */
+  Model_t *simple;   /**< the derived SBML with rate rules */
+
+  /** All names, i.e. ODE variables, assigned parameters, and constant
+      parameters */
+  char **names; 
+
+  int neq;    /**< number of ODEs */
+  int nalg;   /**< number of algebraic rules */ 
+  int nass;   /**< number of assigned variables (nass) */
+  int nconst; /**< number of constant parameters */ 
+
+  /** Assigned variables: stores species, compartments and parameters,
+      that are set by an assignment rule */
+  ASTNode_t **assignment;
+
+  /** Algebraic Rules (constraints) as used for DAE systems */
+  ASTNode_t **algebraic;
+  
+  /** The Ordinary Differential Equation System (ODE)s: f(x,p,t) = dx/dt */
+  ASTNode_t **ode; 
+
+  /** The jacobian matrix df(x)/dx of the ODE system 
+      neq x neq */
+  ASTNode_t ***jacob;
+  /** was the jacobian matrix constructed ? */
+  int jacobian;
+
+  /* forward sensitivity analysis structure
+      neq x num_param */
+  int nsens;               /**< number of parameters for sens. analysis */
+  int *index_sens;         /**< indexes of parameters in char **names,
+			        char *value*/
+  ASTNode_t ***jacob_sens; /**< sensitivity matrix: df(x)/dp  */
+  int sensitivity;         /**< was the sensitivity matrix constructed ? */
+
+  /* adjoint */
+
+};
+
+4 Model
+/* In SBML Level 2 Versions 2, 3 and 4, the components are:
+ * FunctionDefinition, UnitDefinition, CompartmentType, SpeciesType,
+ * Compartment, Species, Parameter, InitialAssignment, Rule, Constraint,
+ * Reaction and Event.  Instances of the classes are placed inside
+ * instances of classes ListOfFunctionDefinitions, ListOfUnitDefinitions,
+ * ListOfCompartmentTypes, ListOfSpeciesTypes, ListOfCompartments,
+ * ListOfSpecies, ListOfParameters, ListOfInitialAssignments, ListOfRules,
+ * ListOfConstraints, ListOfReactions, and ListOfEvents.
+ * </ul>
+std::string     mId;
+  std::string     mName;
+  ModelHistory*   mHistory;
+
+
+  ListOfFunctionDefinitions  mFunctionDefinitions;
+  ListOfUnitDefinitions      mUnitDefinitions;
+  ListOfCompartmentTypes     mCompartmentTypes;
+  ListOfSpeciesTypes         mSpeciesTypes;
+  ListOfCompartments         mCompartments;
+  ListOfSpecies              mSpecies;
+  ListOfParameters           mParameters;
+  ListOfInitialAssignments   mInitialAssignments;
+  ListOfRules                mRules;
+  ListOfConstraints          mConstraints;
+  ListOfReactions            mReactions;
+  ListOfEvents               mEvents;
+
+  List *      mFormulaUnitsData;
+
+5 integratorInstance
+  /** the main structure for numerical integration */
+  struct integratorInstance
+  {
+    /** the ODE Model as passed for construction of cvodeData and
+	cvodeSolver */
+    odeModel_t *om;
+    /** the integrator settings as passed for construction
+	of cvodeData and cvodeSolver  */
+    cvodeSettings_t *opt;
+    /** contains current values,
+	created with integratorInstance from odeModel and cvodeSettings */
+    cvodeData_t *data;
+    /** solver structure (CVODES or IDA or other future solvers) */
+    cvodeSolver_t *solver;
+    /** optional results structure, shared with cvodeData */
+    cvodeResults_t *results; 
+  };
+
+6 cvodeSolver
+  /** Solver State Information */
+  struct cvodeSolver
+  {
+    
+    double t, tout, t0;
+    int iout, nout;  /**< above data are required by all solvers */    
+    realtype reltol, atol1;
+    N_Vector y, abstol, senstol;
+    void *cvode_mem; /**< above data are used by the CVode Solver */    
+    int nsens;
+    N_Vector *yS;    /**< sensitivities vector specific */    
+    N_Vector dy;     /**< IDA specific data: current ODE values dx/dt */
+  };
+
+7 关键的函数
+void f(realtype t, N_Vector y, N_Vector ydot, void *f_data)
+{
+  
+  int i;
+  realtype *ydata, *dydata;
+  cvodeData_t *data;
+  data   = (cvodeData_t *) f_data;
+  ydata  = NV_DATA_S(y);
+  dydata = NV_DATA_S(ydot);
+
+  /* update parameters: p is modified by CVODES,
+     if fS could not be generated  */
+  if ( data->p != NULL && data->opt->Sensitivity  )
+    for ( i=0; i<data->nsens; i++ )
+      data->value[data->model->index_sens[i]] = data->p[i];
+
+  /* update ODE variables from CVODE */
+  for ( i=0; i<data->model->neq; i++ ) 
+    data->value[i] = ydata[i];
+
+  /* update assignment rules */
+  for ( i=0; i<data->model->nass; i++ ) 
+    data->value[data->model->neq+i] =
+      evaluateAST(data->model->assignment[i],data);
+
+  /* update time  */
+  data->currenttime = t;
+
+  /* evaluate ODEs */
+  for ( i=0; i<data->model->neq; i++ ) 
+    dydata[i] = evaluateAST(data->ode[i],data);
+
+}

@@ -21,7 +21,8 @@
 #include <QFile>
 #include <QVariant>
 #include <QGraphicsSceneMouseEvent>
-#include "Species.h"
+#include "SpeciesData.h"
+#include "SettingWidget.h"
 
 class MScene;
 class MItem : public QGraphicsItem {
@@ -42,10 +43,12 @@ public:
     const QString& id() { return m_id; }
     void setId(QString id) 
 	{ 
-		m_id = id; 
-		setText(m_id); 
+		setText(id); 
+		m_id = id;
 		this->renew(); 
 	}
+
+	void setSpeciesData(SpeciesData* data);
 
     QString name() { return m_name; }
     void setName(QString name) { m_name = name; this->renew(); }
@@ -169,8 +172,6 @@ public:
     bool isImageVisible() { return m_isImageVisible; }
     void setImageVisible(bool isImageVisible) { m_isImageVisible = isImageVisible; this->renew(); }
 
-
-
     QString alternativeImage() { return m_alternativeImage; }
     void setAlternativeImage(QString alternativeImage) { m_alternativeImage = alternativeImage; setAlternativeImageAvailable(true); }
 
@@ -180,23 +181,31 @@ public:
 	MScene* getScene();
 	void setScene(MScene* sce);
 
-	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-
+	//the identifier in the scene
 	int sceneId() {return sene_id; }
 	void setSceneId(int id) { sene_id = id; }
 
 	SPECIESTYPE type() { return m_type; }
 
+	SpeciesData* getSpeciesData() { return m_speciesdata; };
+
+	virtual void deletOwnerScene() {};
+	virtual void invalidOwnerScene(bool valid) {};
+	virtual const MScene* getOwnerScene() const { return NULL; };
+	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+//    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+
+	void removeData();
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value);
 
-    //void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    //void mousePressEvent(QGraphicsSceneMouseEvent* event);
-
 private:
 	int sene_id;
-    QString m_id;
     QString m_name;
     QString m_category;
 
@@ -246,7 +255,15 @@ private:
     bool m_isAlternativeImageAvailable;
 
 	MScene* m_scene;
+
+	SpeciesData* m_speciesdata;
+	SettingWidget* m_settingWidget;
+	MWidget* m_settWidgetScene;
+
+	QString m_id;
 	SPECIESTYPE m_type;
+
+	void init();
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "cacu_main.h"
+#include "GlobalSetting.h"
 
 int lineno = 0;
 double result;
@@ -149,7 +150,15 @@ int cacu_string_exp(char *par, char *expr)
 		return -1;
 	}
 
-	fp = fopen("tmp.cacu", "w");
+	char* file_name = "/tmp.cacu";
+	char* home_path = get_igame_home_dir(); //this pointer is guaranteed to be non NULL
+	
+	int file_path_len = strlen(home_path) + strlen(file_name) + 1;
+    char* file_path = (char*) malloc(file_path_len * sizeof(char));
+	memset(file_path, 0, file_path_len * sizeof(char));
+
+	sprintf(file_path, "%s%s" , home_path, file_name);
+	fp = fopen(file_path, "w");
 	if (fp == NULL)
 	{
 		err_no = STRCACU_NULL_POINTER;

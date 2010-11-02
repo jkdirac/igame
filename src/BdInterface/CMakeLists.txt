@@ -30,3 +30,5 @@ TARGET_LINK_LIBRARIES( bdinterface
 	bdinterface
 	utility
   )
+
+INSTALL_PROJECT(bdinterface)

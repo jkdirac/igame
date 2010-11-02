@@ -105,10 +105,6 @@
 				<species db="ampicillin_molecule">
 					<id>ampicillin_i006</id>
 					<compartment>Flask_i002</compartment>
-					<initialConcentration>2E-14</initialConcentration>
-					<substanceUnits>mole</substanceUnits>
-					<hasOnlySubstanceUnits>false</hasOnlySubstanceUnits>
-					<boundaryCondition>false</boundaryCondition>
 					<constant>false</constant>
 					<cnModel>
 					</cnModel>

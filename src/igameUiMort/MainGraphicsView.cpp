@@ -18,6 +18,15 @@
 #include <QDirIterator>
 #include <QVector>
 
+#include <QProcess>
+#include <QMessageBox>
+
+#include <string>
+
+#include "InputGen.h"
+#include "driver.h"
+#include "CopsiInterface.h"
+
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
@@ -43,16 +52,25 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 			                     this, SLOT(runDemo()));
 	connect(ui.m_scenNext, SIGNAL(pressed()), 
 			                     this, SLOT(sceneNext()));
+
+	connect(ui.m_scenBack, SIGNAL(pressed()), 
+			                     this, SLOT(backToMainMenu()));
+
+	connect(ui.m_scen_backforward, SIGNAL(pressed()), 
+			                     this, SLOT(sceneBackForward()));
+
 	m_scenemgr = SceneManager::getSceneManger();
 	m_scenemgr->setMainWindow(this);
 
-	connect(ui.m_overViewWidget, SIGNAL(currentItemChanged(QTreeWidgetItem* , QTreeWidgetItem*)),
-		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , QTreeWidgetItem*)));
+	connect(ui.m_overViewWidget, SIGNAL(itemClicked(QTreeWidgetItem* , int)),
+		m_scenemgr, SLOT(broswerScene(QTreeWidgetItem* , int)));
 
 	getCompartFromDb();
 	getBackboneFromDb();
 	getBiobricksFromDb();
 	getCompoundFromDb();
+
+	m_showBackforward = false;
 //    setTreeView();
 }
 
@@ -60,12 +78,18 @@ void MainGraphicsView::setState(STATE curState)
 {
 	setUi(curState);
 	m_state = curState;
+
+	if (m_state == GAMESCENE)
+	{
+		m_scenemgr->startShow();
+	}
 }
 
 void MainGraphicsView::setUi(STATE curState)
 {
 	if (curState == START)
 	{
+		m_showBackforward = false;
 		ui.m_overViewWidget->setVisible(false);
 
 		ui.m_frame->setVisible(false);
@@ -76,6 +100,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 		ui.m_scenNext->setVisible(false);
 		ui.m_scenBack->setVisible(false);
+		ui.m_scen_backforward->setVisible(false);
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -83,6 +108,8 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_mainGraph->setGeometry(QRect(0, 0, 0, 0));
 		ui.m_logo->setVisible(true);
 		ui.m_logo->setGeometry(rect());
+
+		ui.m_console->setVisible(false);
 
 		update();
 	}
@@ -98,9 +125,10 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_runDemo->setVisible(false);
 
 		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setText(QApplication::translate("MainGraphicsView", "Review", 
-					0, QApplication::UnicodeUTF8));
+        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-review.png);"));
 		ui.m_scenBack->setVisible(true);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-forward.png);"));
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -108,12 +136,14 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_mainGraph->setGeometry(m_mainRect);
 		ui.m_logo->setVisible(false);
 		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
+		ui.m_console->setVisible(false);
 
 		update();
 	}
 
 	if (curState == REVIEW)
 	{
+		m_showBackforward = true;
 		qDebug() << "enter Review";
 		ui.m_overViewWidget->setVisible(true);
 		ui.m_frame->setVisible(false);
@@ -123,8 +153,10 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_runDemo->setVisible(false);
 
 		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setText(QApplication::translate("MainGraphicsView", "Simulate", 0, QApplication::UnicodeUTF8));
+        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
 		ui.m_scenBack->setVisible(true);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
 
 		ui.m_fileBrowser->setVisible(true);
 		ui.m_fileBrowser->setGeometry(m_mainRect);
@@ -133,11 +165,38 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_logo->setVisible(false);
 		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
 
+		ui.m_console->setVisible(false);
+
 		update();
 	}
 
 	if (curState == SIMULATE)
 	{
+		m_showBackforward = true;
+		qDebug() << "enter Review";
+		ui.m_overViewWidget->setVisible(true);
+		ui.m_frame->setVisible(false);
+
+		ui.m_getStart->setVisible(false);
+		ui.m_loadbase->setVisible(false);
+		ui.m_runDemo->setVisible(false);
+
+		ui.m_scenNext->setVisible(true);
+        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
+		ui.m_scenBack->setVisible(true);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
+
+		ui.m_fileBrowser->setVisible(true);
+		ui.m_fileBrowser->setGeometry(m_mainRect);
+		ui.m_mainGraph->setVisible(false);
+		ui.m_mainGraph->setGeometry(QRect(0,0,0,0));
+		ui.m_logo->setVisible(false);
+		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
+
+		ui.m_console->setVisible(true);
+
+		update();
 	}
 }
 
@@ -153,24 +212,28 @@ void MainGraphicsView::setTreeView()
 void MainGraphicsView::setBiobricks(QStringList &list)
 {
 	m_bioList = list;
+	ui.bio_combx->clear();
 	ui.bio_combx->addItems(m_bioList);
 }
 
 void MainGraphicsView::setBackbone(QStringList &list)
 {
 	m_backboneList = list;
+	ui.backbone_combx->clear();
 	ui.backbone_combx->addItems(m_backboneList);
 }
 
 void MainGraphicsView::setCompartments(QStringList &list)
 {
 	m_compList = list;
+	ui.com_combx->clear();
 	ui.com_combx->addItems(m_compList);
 }
 
 void MainGraphicsView::setCompounds(QStringList &list)
 {
 	m_compList = list;
+	ui.compound_combx->clear();
 	ui.compound_combx->addItems(m_compList);
 }
 
@@ -233,8 +296,59 @@ void MainGraphicsView::getStart()
 	
 void MainGraphicsView::sceneNext()
 {
-	qDebug() << "HaHa get start pressed";
-	setState(REVIEW);
+	qDebug() << "HaHa next pressed";
+	InputGen inputGenerator;
+
+	//review
+	if (m_state == GAMESCENE)
+	{
+		try
+		{
+			QString& inputXml = inputGenerator.generateInput();
+
+#ifndef QT_NO_CURSOR
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+		ui.m_fileBrowser->setPlainText(inputXml);
+#ifndef QT_NO_CURSOR
+		QApplication::restoreOverrideCursor();
+#endif
+		}
+		catch (CoreException &se)
+		{
+			qDebug() << "CoreException: " << se.what();
+		}
+
+	}
+
+	//simulate
+	if (m_state == REVIEW)
+	{
+		Driver driver;
+		try
+		{
+			bool errno = driver.beginSimulation ();
+
+			if (errno == 0)
+			{
+				QStringList par_list;
+				QString pro_name("../../../ExternalLib/linux/CopasiUI");
+				QString par_1("-i");
+				QString par_2("network.xml");
+				par_list << par_1 << par_2;
+				QProcess::execute(pro_name, par_list);
+			}
+		}
+		catch (CoreException &se)
+		{
+			cout << "exceptions" << endl;
+		}
+	}
+
+	if (m_state == GAMESCENE)
+		setState(REVIEW);
+	else if (m_state == REVIEW)
+		setState(SIMULATE);
 }
 
 void MainGraphicsView::loadDb()
@@ -246,38 +360,21 @@ void MainGraphicsView::loadDb()
 	if (path_name.isNull())
 		return;
 
-	QDirIterator dir_itr(path_name, QDir::Files, QDirIterator::Subdirectories);
-	bdbXMLInterface db_interface;
-	while (dir_itr.hasNext())
+	try
 	{
-		QString cur_pathname = dir_itr.next();
+		std::string name = path_name.toLatin1().constData();
+		bdbXMLInterface interface;
+		interface.add_directory(name);
 
-		QFileInfo cur_file(cur_pathname);
-		if (!cur_file.isFile())
-			continue;
-
-		QString cur_filename = cur_file.fileName();
-
-		//file name is ended with .xml?
-		QString xml_ext(".xml");
-		if (!cur_filename.endsWith(xml_ext, Qt::CaseInsensitive))
-		{
-			continue;
-		}
-		else 
-		{
-			int str_len = cur_filename.size();
-			cur_filename.remove(str_len - 4, 4);
-		}
-
-		BdRetVal bsucc = db_interface.add_files(cur_pathname.toStdString(), cur_filename.toStdString());
-		//add to directory
+		getCompartFromDb();
+		getBackboneFromDb();
+		getBiobricksFromDb();
+		getCompoundFromDb();
+	}
+	catch (XmlException &se)
+	{
 	}
 
-	getCompartFromDb();
-	getBackboneFromDb();
-	getBiobricksFromDb();
-	getCompoundFromDb();
 }
 
 void MainGraphicsView::runDemo()
@@ -410,11 +507,33 @@ void MainGraphicsView::getCompoundFromDb()
 	setCompounds(comList);
 }
 
-void MainGraphicsView::broswerScene(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+void MainGraphicsView::backToMainMenu()
 {
-	qDebug() << "broswer Scene";
-	SceneTreeItem* curSceneItem = (SceneTreeItem*)current;
-	MScene* setScene = curSceneItem->getScene();
-	
-	m_scenemgr->setCurrentScene(setScene);
+	m_scenemgr->destoryShow();
+	setState(START);
+	return;
+}
+
+void MainGraphicsView::sceneBackForward()
+{
+	if (m_state == GAMESCENE)
+		setState(REVIEW);
+	else
+		setState(GAMESCENE);
+}
+
+void MainGraphicsView::compartmentScene()
+{
+	ui.com_combx->setEnabled(true);
+	ui.backbone_combx->setEnabled(true);
+	ui.bio_combx->setEnabled(false);
+	ui.compound_combx->setEnabled(true);
+}
+
+void MainGraphicsView::plasmidScene()
+{
+	ui.com_combx->setEnabled(false);
+	ui.backbone_combx->setEnabled(false);
+	ui.bio_combx->setEnabled(true);
+	ui.compound_combx->setEnabled(false);
 }

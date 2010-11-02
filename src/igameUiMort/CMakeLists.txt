@@ -69,5 +69,5 @@ TARGET_LINK_LIBRARIES( igameUiMain
   )
 
 
-INSTALL_PROJECT( igameUiMort )
-INSTALL_PROJECT( demoUiXml )
+INSTALL_PROJECT(igameUiMain)
+INSTALL_PROJECT(uicore)

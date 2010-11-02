@@ -14,6 +14,10 @@
 #include "IdSelWidget.h"
 #include "SceneViewWidget.h"
 #include "SceneTreeItem.h"
+#include "ClickableWidget.h"
+#include "SpeciesDataManager.h"
+
+#include "OrderedScene.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -26,65 +30,78 @@
 #include <QDebug>
 
 // Class MScene constructor
-MScene::MScene(QObject* parent, SPECIESTYPE type)
+MScene::MScene(QObject* parent, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
-	, dataCount(0)
+	, m_dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
 	  ,m_trashItem(NULL)
-	  ,m_comItem(NULL)
 	  ,m_type(type)
+	  ,m_rootItem(NULL)
+	   ,m_rootData(NULL)
 {
+	if (rootitem)
+	{
+		qDebug() << "--------use exists item";
+		m_rootData = rootitem->getSpeciesData();
+	}
 	init();
 }
 
-MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type)
+MScene::MScene(QObject* parent, const QString& id, SPECIESTYPE type, MItem* rootitem)
 	: QGraphicsScene(parent)
-	, dataCount(0)
+	, m_dataCount(0)
 	, m_minZValue(0)
 	, m_maxZValue(0)
 	, m_treeItem(NULL)
 	  ,m_trashItem(NULL)
-	  ,m_comItem(NULL)
 	  ,m_type(type)
+	  ,m_rootItem(NULL)
+	   ,m_rootData(NULL)
 {
+	if (rootitem)
+	{
+		qDebug() << "--------use exists item";
+		m_rootData = rootitem->getSpeciesData();
+	}
 	m_id = id;
 	init();
 }
 
 void MScene::init()
 {
-//    loadXml(":demoUiXml.ui.xml");
-    this->dataScene = new MItem();
-    this->addItem(this->dataScene);
-
-    this->dataScene->setPos(0, 0);
-    this->dataScene->setWidth(0);
-    this->dataScene->setHeight(0);
+	m_setWidget = NULL;
+	m_nFree = 0;
+	m_browserItem = NULL;
+	m_browserItemX = 140;
+	m_browserItemY = -250;
 
 	if (m_type == SPEC_COMPARTMENT)
-		m_comItem = new MItem(":xml/scene-compartment.ui.xml");
+		m_rootItem = new MItem(":xml/scene-compartment.ui.xml", m_type);
 	else
-		m_comItem = new MItem(":xml/scene-backbone.ui.xml");
+		m_rootItem = new MItem(":xml/scene-backbone.ui.xml", m_type);
 
-	m_comItem->setId(m_id);
-	addItemEx(m_comItem);
+	//add root Item
+	m_rootItem->setId(m_id);
+	addSpeciesItem(m_rootItem);
 
 	m_trashItem = NULL;
-
-//    m_trashItem = new MItem(":xml/trash.ui.xml");
-//    addItemEx(m_trashItem);
+	m_trashItem = new MItem(":xml/trash.ui.xml");
+	addItemEx(m_trashItem);
 
 	//Displayed item in OverView TreeView
 	SceneTreeItem* newItem = new SceneTreeItem(NULL, this);
 	setTreeItem(newItem);
+
+	setParent(this);
 }
 
 // Class MScene destructor
 MScene::~MScene()
 {
 	qDebug() << "delete mscene";
+
 	//递归调用
 	//if child == NULL
 	int nChildren = m_treeItem->childCount();
@@ -93,39 +110,79 @@ MScene::~MScene()
 		for (int i=0; i < nChildren; i++)
 		{
 			SceneTreeItem* pItem = (SceneTreeItem*)m_treeItem->child(i);
-			delete pItem->getScene();
+			if (pItem != NULL)
+			{
+				if(pItem->getScene() != NULL)
+					delete pItem->getScene();
+			}
 		}
 	}
 	// return;
 	
-	//call child.deletChildScene
-	
 	//delete childScene;
-	delete m_treeItem;
-
+	if (m_parent == this)	
+	{
+		delete m_treeItem;
+	}
+	else
+	{
+		m_parent->getTreeItem()->removeChild( m_treeItem );
+		delete m_treeItem;
+	}
 	//
-    delete dataScene;
 
 	//delete items
-	for (int i = 0; i < dataCount; i++)
+	for (int i = 0; i < m_dataCount; i++)
 	{
-		delete dataItem[i];
+		if (dataItem[i] != NULL)
+			delete dataItem[i];
 	}
+
+	for (int i=0; i < m_nFree; i++)
+	{
+		delete dirtyItemPool[i];
+		dirtyItemPool[i] = NULL;
+	}
+
 }
 
-int MScene::addItemEx(MItem *item)
+int MScene::addSpeciesItem(MItem *item)
 {
 	if (item == NULL)
 		return -1;
-	
-	dataItem[dataCount] = item;
+
+	addItemEx(item);
+
+	//set Data
+	if (item == m_rootItem)
+	{
+		if (m_rootData == NULL)
+		{
+			m_rootData = SpeciesDataManager::newSpeciesData();
+		}
+		item->setSpeciesData(m_rootData);
+	}
+	else
+	{
+		SpeciesData* data = SpeciesDataManager::newSpeciesData();
+		data->setParent(m_rootItem->getSpeciesData()->fileId(), m_rootItem->type());
+		item->setSpeciesData(data);
+	}
+
+	dataItem[m_dataCount] = item;
+	m_dataCount++;
+
+	qDebug() << "item count: " << m_dataCount;
+	return m_dataCount-1;
+}
+
+void MScene::addItemEx(MItem *item)
+{
+	if (item == NULL)
+		return;
 
     this->addItem(item);
 	item->setScene(this);
-	item->setSceneId(dataCount);
-
-	dataCount++;
-	return dataCount-1;
 }
 
 void MScene::deletItemEx(MItem* item)
@@ -135,7 +192,7 @@ void MScene::deletItemEx(MItem* item)
 	if (item == NULL)
 		return;
 
-	while (n < dataCount)
+	while (n < m_dataCount)
 	{
 		if (item == dataItem[n])
 		{
@@ -148,41 +205,43 @@ void MScene::deletItemEx(MItem* item)
 	if (!bfound)
 		return;
 
-	this->removeItem(item);
-	delete item;
-
-	for (int i = n; i < dataCount-1; i++)
-	{
-		dataItem[i] = dataItem[i+1];
-		dataItem[i+1] = NULL;
-	}
-
-	dataCount--;
+	deletItemEx(n);
 }
 
 void MScene::deletItemEx(int n)
 {
-	if ((n < 0) || (n >= dataCount))
+	if ((n < 0) || (n >= m_dataCount))
 		return;
 
 	if (dataItem[n] != NULL)
 	{
 		this->removeItem(dataItem[n]);
-		delete dataItem[n];
+		dataItem[n]->removeData();
 	}
 
-	for (int i = n; i < dataCount; i++)
+	if (m_nFree >= POOLNUM)
+	{
+		for (int i=0; i < POOLNUM; i++)
+		{
+			delete dirtyItemPool[i];
+			dirtyItemPool[i] = NULL;
+		}
+		m_nFree = 0;
+	}
+
+	dirtyItemPool[m_nFree] = dataItem[n];
+
+	for (int i = n; i < m_dataCount; i++)
 	{
 		dataItem[i] = dataItem[i+1];
 		dataItem[i+1] = NULL;
 	}
 
-	dataCount--;
+	m_dataCount--;
 }
 
 // Get the only selected item
-MItem*
-MScene::selectedItem() const
+MItem* MScene::selectedItem() const
 {
     QList<QGraphicsItem*> items = this->selectedItems();
 
@@ -218,168 +277,9 @@ void MScene::selectedItemSendToBack()
     return;
 }
 
-
-
 //& Load data scene from XML
 void MScene::loadXml(const QString& fileName)
 {
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-        return;
-    QXmlStreamReader reader(&file);
-    MItem* p = this->dataScene;
-
-    reader.readNext();
-    while (!reader.atEnd()) {
-        if (reader.isStartElement()) {
-            QString name = reader.name().toString();
-            dataItem[dataCount++] = new MItem();
-            dataItem[dataCount - 1]->setParentItem(p);
-
-            if (reader.attributes().hasAttribute("id"))
-                dataItem[dataCount - 1]->setId(reader.attributes().value("id").toString());
-
-            if (reader.attributes().hasAttribute("name"))
-                dataItem[dataCount - 1]->setName(reader.attributes().value("name").toString());
-            else
-                dataItem[dataCount - 1]->setText(name);
-
-            if (reader.attributes().hasAttribute("category"))
-                dataItem[dataCount - 1]->setCategory(reader.attributes().value("category").toString());
-
-            if (reader.attributes().hasAttribute("x"))
-                dataItem[dataCount - 1]->setX(reader.attributes().value("x").toString().toDouble());
-            else
-                dataItem[dataCount - 1]->setX(200);
-
-            if (reader.attributes().hasAttribute("y"))
-                dataItem[dataCount - 1]->setY(reader.attributes().value("y").toString().toDouble());
-            else
-                dataItem[dataCount - 1]->setY(50);
-
-            if (reader.attributes().hasAttribute("zValue"))
-                dataItem[dataCount - 1]->setZValue(reader.attributes().value("zValue").toString().toDouble());
-
-            if (reader.attributes().hasAttribute("toolTip"))
-                dataItem[dataCount - 1]->setToolTip(reader.attributes().value("toolTip").toString());
-
-            if (reader.attributes().hasAttribute("isVisible"))
-                dataItem[dataCount - 1]->setVisible(reader.attributes().value("isVisible").toString().toInt());
-
-            if (reader.attributes().hasAttribute("color"))
-                dataItem[dataCount - 1]->setColor(QColor(reader.attributes().value("color").toString()));
-
-            if (reader.attributes().hasAttribute("width"))
-                dataItem[dataCount - 1]->setWidth(reader.attributes().value("width").toString().toDouble());
-            else
-                dataItem[dataCount - 1]->setWidth(100);
-
-            if (reader.attributes().hasAttribute("height"))
-                dataItem[dataCount - 1]->setHeight(reader.attributes().value("height").toString().toDouble());
-            else
-                dataItem[dataCount - 1]->setHeight(50);
-
-            if (reader.attributes().hasAttribute("isSelectable"))
-                dataItem[dataCount - 1]->setSelectable(reader.attributes().value("isSelectable").toString().toInt());
-            else
-                dataItem[dataCount - 1]->setSelectable(true);
-
-            if (reader.attributes().hasAttribute("isMouseOverSelectable"))
-                dataItem[dataCount - 1]->setMouseOverSelectable(reader.attributes().value("isMouseOverSelectable").toString().toInt());
-            else
-                dataItem[dataCount - 1]->setMouseOverSelectable(false);
-
-            if (reader.attributes().hasAttribute("isMovable"))
-                dataItem[dataCount - 1]->setMovable(reader.attributes().value("isMovable").toString().toInt());
-            else
-                dataItem[dataCount - 1]->setMovable(true);
-
-            if (reader.attributes().hasAttribute("isOutlineAvailable"))
-                dataItem[dataCount - 1]->setOutlineAvailable(reader.attributes().value("isOutlineAvailable").toString().toInt());
-
-            if (reader.attributes().hasAttribute("outlineColor"))
-                dataItem[dataCount - 1]->setOutlineColor(QColor(reader.attributes().value("outlineColor").toString()));
-
-            if (reader.attributes().hasAttribute("outlineWidth"))
-                dataItem[dataCount - 1]->setOutlineWidth(reader.attributes().value("outlineWidth").toString().toDouble());
-
-            if (reader.attributes().hasAttribute("isFigureVisible"))
-                dataItem[dataCount - 1]->setFigureVisible(reader.attributes().value("isFigureVisible").toString().toInt());
-
-            if (reader.attributes().hasAttribute("figure"))
-                dataItem[dataCount - 1]->setFigure(reader.attributes().value("figure").toString());
-
-            if (reader.attributes().hasAttribute("figureColor"))
-                dataItem[dataCount - 1]->setFigureColor(QColor(reader.attributes().value("figureColor").toString()));
-
-            if (reader.attributes().hasAttribute("isAlternativeFigureAvailable"))
-                dataItem[dataCount - 1]->setAlternativeFigureAvailable(reader.attributes().value("isAlternativeFigureAvailable").toString().toInt());
-
-            if (reader.attributes().hasAttribute("alternativeFigure"))
-                dataItem[dataCount - 1]->setAlternativeFigure(reader.attributes().value("alternativeFigure").toString());
-
-            if (reader.attributes().hasAttribute("alternativeFigureColor"))
-                dataItem[dataCount - 1]->setAlternativeFigureColor(QColor(reader.attributes().value("alternativeFigureColor").toString()));
-
-            if (reader.attributes().hasAttribute("isTextVisible"))
-                dataItem[dataCount - 1]->setTextVisible(reader.attributes().value("isTextVisible").toString().toInt());
-
-            if (reader.attributes().hasAttribute("text"))
-                dataItem[dataCount - 1]->setText(reader.attributes().value("text").toString());
-            else
-                dataItem[dataCount - 1]->setText(name);
-
-            if (reader.attributes().hasAttribute("textColor"))
-                dataItem[dataCount - 1]->setTextColor(QColor(reader.attributes().value("textColor").toString()));
-
-            if (reader.attributes().hasAttribute("isAlternativeTextAvailable"))
-                dataItem[dataCount - 1]->setAlternativeTextAvailable(reader.attributes().value("isAlternativeTextAvailable").toString().toInt());
-
-            if (reader.attributes().hasAttribute("alternativeText"))
-                dataItem[dataCount - 1]->setAlternativeText(reader.attributes().value("alternativeText").toString());
-
-            if (reader.attributes().hasAttribute("alternativeTextColor"))
-                dataItem[dataCount - 1]->setAlternativeTextColor(QColor(reader.attributes().value("alternativeTextColor").toString()));
-
-            if (reader.attributes().hasAttribute("pixmap"))
-                dataItem[dataCount - 1]->setPixmap(reader.attributes().value("pixmap").toString());
-
-            if (reader.attributes().hasAttribute("isPixmapVisible"))
-                dataItem[dataCount - 1]->setPixmapVisible(reader.attributes().value("isPixmapVisible").toString().toInt());
-
-            if (reader.attributes().hasAttribute("alternativePixmap"))
-                dataItem[dataCount - 1]->setAlternativePixmap(reader.attributes().value("alternativePixmap").toString());
-
-            if (reader.attributes().hasAttribute("isAlternativePixmapAvailable"))
-                dataItem[dataCount - 1]->setAlternativePixmapAvailable(reader.attributes().value("isAlternativePixmapAvailable").toString().toInt());
-
-            if (reader.attributes().hasAttribute("image"))
-                dataItem[dataCount - 1]->setImage(reader.attributes().value("image").toString());
-
-            if (reader.attributes().hasAttribute("isImageVisible"))
-                dataItem[dataCount - 1]->setImageVisible(reader.attributes().value("isImageVisible").toString().toInt());
-
-            if (reader.attributes().hasAttribute("alternativeImage"))
-                dataItem[dataCount - 1]->setAlternativeImage(reader.attributes().value("alternativeImage").toString());
-
-            if (reader.attributes().hasAttribute("isAlternativeImageAvailable"))
-                dataItem[dataCount - 1]->setAlternativeImageAvailable(reader.attributes().value("isAlternativeImageAvailable").toString().toInt());
-
-            p = dataItem[dataCount - 1];
-
-        } else if (reader.isEndElement())
-            p = (MItem*) (p->parentItem());
-        else if (reader.isCharacters()) {
-            QString characters = reader.text().toString();
-
-            if (characters != "" && characters != "\n" && characters != "\r" && characters !="\r\n")
-                dataItem[dataCount - 1]->setData(0, characters);
-        }
-
-        reader.readNext();
-    }
-
-    return;
 }
 
 //& Write data scene to XML
@@ -392,7 +292,7 @@ void MScene::writeXml(const QString& fileName)
 
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
-    for(int t = 0; t < dataCount; t++) {
+    for(int t = 0; t < m_dataCount; t++) {
         if (t == 0 || (dataItem[t - 1] == dataItem[t]->parentItem())) {
             writer.writeStartElement(dataItem[t]->text());
 
@@ -435,6 +335,10 @@ void MScene::addChildScene(MScene *child)
 		qDebug() << "m_treeItem: " << (int)m_treeItem;
 		SceneTreeItem* newItem = child->getTreeItem();
 		m_treeItem->addChild(newItem);
+		newItem->setSelected(true);
+		m_treeItem->setSelected(false);
+		m_treeItem->setExpanded(true);
+		child->setParent(this);
 	}
 }
 
@@ -482,7 +386,18 @@ bool MScene::itemInCompartment(MItem *item)
 	if (item == NULL)
 		return false;
 
-	if (item->collidesWithItem(m_comItem))
+	if (item->collidesWithItem(m_rootItem))
+		return true;
+	else
+		return false;
+}
+
+bool MScene::itemInTrash(MItem *item)
+{
+	if (item == NULL)
+		return false;
+
+	if (item->collidesWithItem(m_trashItem))
 		return true;
 	else
 		return false;
@@ -499,12 +414,301 @@ bool MScene::itemDropped(MItem *item)
 	if (item == m_trashItem)
 		return false;
 
+	if ((m_browserItem == item)
+			&& ((m_browserItem->x() != m_browserItemX)
+			|| (m_browserItem->y() != m_browserItemY)))
+	{
+		qDebug() << "m_broserItem was dragged";
+		m_browserItem = NULL;
+	}
+
 	if (item->collidesWithItem(m_trashItem))
 	{
-//        deletItemEx(item);
-//        deletItemEx(item->sceneId());
+		item->deletOwnerScene();
+		deletItemEx(item);
 		return true;
 	}
+	else 
+	{
+		if (!itemInCompartment(item))
+		{
+			qDebug() << "invalid the scene";
+			item->invalidOwnerScene(true);
+		}
+		else
+		{
+			item->invalidOwnerScene(false);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+int MScene::childrenCount()
+{
+	if (m_treeItem != NULL)
+		return m_treeItem->childCount();
+}
+
+MScene* MScene::getChild(int n)
+{
+	if (n < 0)
+		return NULL;
+
+	if (m_treeItem != NULL)
+	{
+		return ((SceneTreeItem*)m_treeItem->child(n))->getScene();
+	}
+}
+
+QVector<MItem*>& MScene::getValidSubItems()
+{
+	QVector<MItem*> res;
+	res.clear();
+
+	for (int i=0; i<m_dataCount; i++)
+	{
+		if (dataItem[i] == NULL)
+			continue;
+
+		if (itemInCompartment(dataItem[i]))
+			res.push_back(dataItem[i]);
+	}
+}
+
+QString MScene::generateComXmlString()
+{
+	qDebug() << "MSCene generate compartment xml string";
+	if (type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
+
+	QString res;
+	res.clear();
+
+	if (m_rootItem != NULL)
+	{
+		res = m_rootItem->getSpeciesData()->generateCompartmentXmlString();
+		for (int i=0; i<m_dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
+
+			if (dataItem[i] != NULL)
+			{
+				if ((dataItem[i]->type() == SPEC_COMPARTMENT)
+						&& (dataItem[i]->getOwnerScene() == NULL))
+				{
+					SpeciesData* data = dataItem[i]->getSpeciesData();
+					if (data != NULL)
+						res += data->generateCompartmentXmlString();
+				}
+			}
+		}
+	}
 	else
+	{
+		return "";
+	}
+
+	return res;
+}
+
+QString MScene::generateSpeXmlString()
+{
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+
+	if(type() == SPEC_COMPARTMENT)
+	{
+		for (int i=0; i < m_dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
+
+			SpeciesData* data = dataItem[i]->getSpeciesData();
+			if (data == NULL)
+				continue; 
+
+			if(data->type() == SPEC_BACKBONE)
+				continue;
+
+			res += "<species>\n";
+			res += data->generateSpeciesXmlString();
+			res += "  <cnModel>\n";
+			res += "    <listOfChains>\n";
+			res += "      <chain>\n";
+			res += "        <listOfParts>\n";
+
+			if (type() == SPEC_COMPARTMENT) 
+			{
+				res += data->generatePartsXmlString();
+			}
+
+			res += "        </listOfParts>\n";
+			res += "      </chain>\n";
+			res += "    </listOfChains>\n";
+			res += "  </cnModel>\n";
+			res += "</species>\n";
+		}
+	}
+	//backbone chain
+	else if(type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
+	else
+		res = "";
+
+	return res;
+}
+
+/*
+QString MScene::generateSpeXmlString()
+{
+	qDebug() << "MSCene generate species xml string";
+	QString res;
+	res.clear();
+	if (type() == SPEC_BACKBONE)
+	{
+		if (m_rootItem == NULL)
+			return "";
+
+		res += "<species>\n";
+		res += "<id>"; res += m_rootItem->getSpeciesData()->id(); res += "</id>\n";
+		res += "<compartment>"; res+=m_rootItem->getSpeciesData()->parent(); res += "</compartment>\n";
+		res += "<initialConcentration>"; res += m_rootItem->getSpeciesData()->initConcentration(); res += "</initialConcentration>\n";
+		res += "<cnModel>\n";
+		res += "<listOfChains>\n";
+		res += "<chain>\n";
+		res += "<listOfParts>\n";
+
+
+		for (int i = 0; i < m_dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
+
+			if (tmp->type() != SPEC_BIOBRICK)
+				continue;
+
+			res += tmp->getSpeciesData()->generatePartsXmlString();
+		}
+
+		res += "</listOfParts>\n";
+		res += "</chain>\n";
+		res += "</listOfChains>\n";
+		res += "</cnModel>\n";
+		res += "</species>\n";
+	}
+	else
+	{
+		for (int i=0; i < m_dataCount; i++)
+		{
+			MItem* tmp = dataItem[i];
+			if (tmp == NULL)
+				continue;
+			if (!itemInCompartment(tmp))
+				continue;
+
+			if (tmp->type() == SPEC_BACKBONE)
+				continue;
+
+			res += tmp->getSpeciesData()->generateSpeciesXmlString();
+		}
+	}
+
+	return res;
+}
+*/
+
+void MScene::addBrowserItem(MItem *item)
+{
+	if (item == NULL)
+	{
+		return ;
+	}
+
+	//check position
+	//if m_browserItem was not in init region, confirmed inserted in the scene
+	//else delete the m_browserItem 
+	//
+	if (m_browserItem)
+	{
+		deletItemEx(m_browserItem);
+		m_browserItem = NULL;
+	}
+
+	m_browserItem = item;
+	m_browserItem->setX(m_browserItemX);
+	m_browserItem->setY(m_browserItemY);
+	addSpeciesItem(m_browserItem);
+}
+
+void MScene::invalidTree(bool invalid)
+{
+	if (m_treeItem == NULL)
+		return;
+	qDebug() << "Disable the tree item";
+	m_treeItem->setDisabled(invalid);
+}
+
+/** 
+ * @breif  
+ *	This function is for Items in the Scene
+ *	to ask for show setting widget of this item
+ */
+void MScene::showSettWidget(SettingWidget *set)
+{
+	if (set == NULL)
+		return;
+
+	if (m_setWidget != NULL)
+		m_setWidget->close();
+
+	m_setWidget = set;
+	set->show();
+}
+
+/** 
+ * @breif  
+ *	This function is for Items in the Scene
+ *	to ask for close setting widget of this item
+ */
+void MScene::closeSettWidget(SettingWidget *set)
+{
+	if (set == NULL)
+		return;
+
+	m_setWidget = NULL;
+	set->close();
+}
+
+bool MScene::itemIsRootItem(MItem* item)
+{
+	if ((item == NULL) || (m_rootItem == NULL))
 		return false;
+
+	return item == m_rootItem;
+}
+
+MScene* MScene::itemApplyNewScene(MItem *item)
+{
+	if (item == NULL)
+		return NULL;
+
+	MScene* sce; 
+	if (item->type() == SPEC_BACKBONE)
+		sce = new OrderedScene(item->id(), item->type(), item);
+	else
+		sce = new MScene(NULL, item->id(), item->type(), item);
+//    addChildScene(item);
+	return sce;
 }

@@ -1,4 +1,4 @@
-                      dbparser - License
+                      iGame - License
 
    This package is Free Software available under licenses below. 
 

@@ -37,17 +37,18 @@
 #include <QStyle>
 #include <QGraphicsSceneMouseEvent>
 #include <QXmlStreamReader>
+#include "SpeciesDataManager.h"
 
 #include <iostream>
 #include <QDebug>
+
+#include <QCursor>
 
 #include "MScene.h"
 
 // Class MItem constructor
 MItem::MItem(SPECIESTYPE type) 
 	: m_scene(NULL)
-	  , m_type(type)
-    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -92,17 +93,15 @@ MItem::MItem(SPECIESTYPE type)
 
     , m_image("")
     , m_isImageVisible(false)
-
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
+	, m_type(type)
 {
-    this->renew();
+	init();
 }
 
 MItem::MItem(const QString& fileName, SPECIESTYPE type)
 	: m_scene(NULL)
-	  ,m_type(type)
-    , m_id("")
     , m_name("")
     , m_category("")
 
@@ -150,6 +149,8 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
 
     , m_alternativeImage("")
     , m_isAlternativeImageAvailable(false)
+	, m_speciesdata(NULL)
+	, m_type(type)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -307,14 +308,37 @@ MItem::MItem(const QString& fileName, SPECIESTYPE type)
         reader.readNext();
     }
 
+	init();
+}
+
+void MItem::init()
+{
+	m_speciesdata = NULL;
+	m_settingWidget = NULL;
+	setAcceptHoverEvents(true);
 	renew();
 }
 
 // Class MItem destructor
 MItem::~MItem()
 {
-    //foreach(LinkT *link, myLinkT)
-    //    delete link;
+	qDebug() << "Mitem deleted";
+	// call speciesDataManager to delete
+	SpeciesDataManager::removeData(m_speciesdata);
+
+	if (m_scene)
+	{
+		m_scene->deletItemEx(this);
+	}
+
+	if (m_settingWidget)
+	{
+		m_settingWidget->close();
+		delete m_settingWidget;
+		m_settingWidget = NULL;
+	}
+
+	m_scene = NULL;
 }
 
 
@@ -325,7 +349,7 @@ QRectF MItem::outlineRect() const
     QRectF rect(this->x(), this->y(), m_width, m_height);
 
     rect.adjust(-m_padding, -m_padding, +m_padding, +m_padding);
-    rect.translate(-rect.center());
+	rect.translate(-rect.center());
 
     return rect;
 }
@@ -454,7 +478,6 @@ void MItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
             painter->setPen(m_textColor);
             painter->setFont(m_textFont);
             painter->drawText(rect, Qt::AlignCenter, m_text);
-//            qDebug() << "draw text " << m_id << " " << rect.x() << " " << rect.y() << " " << m_width << " " << m_height;
 
         } else { // draw alternative text
             painter->setPen(m_alternativeTextColor);
@@ -513,28 +536,119 @@ MScene* MItem::getScene()
 
 void MItem::setScene(MScene* sce)
 {
+	if (sce == NULL)
+		return;
+
 	m_scene = sce;
 }
 
 //Process MItem mouse double click event - formally
 void MItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-	qDebug() << "double click in mitem";
-	return QGraphicsItem::mouseDoubleClickEvent(event);
+	QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-/*
-// Process MItem mouse move event - formally
-void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void MItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 {
-    return QGraphicsItem::mouseMoveEvent(event);
+	if (m_settingWidget != NULL)
+	{
+		QPointF point = mapToScene(event->pos());
+		int x = point.x();
+		int y = point.y();
+		int rec_x = m_settingWidget->x();
+		int rec_y = m_settingWidget->y();
+		int rec_width = m_settingWidget->width();
+		int rec_height = m_settingWidget->height();
+
+//        QRect rec = m_settingWidget->rect();
+
+		QRectF rec = outlineRect(); 
+		if ( ((x - rec_x) * (x - rec_x - rec_width) <= 0 )
+				&& ((y - rec_y) * (y - rec_y - rec_height) <= 0) )
+		{
+			return;
+		}
+
+		m_settingWidget->set();
+		m_settingWidget->close();
+	}
+
+	QGraphicsItem::hoverLeaveEvent (event);
+}
+
+void MItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
+{
+	if (m_scene
+			&& m_scene->itemInTrash(this))
+	{
+		return;
+	}
+
+	if ((type() == SPEC_COMPOUNDS)
+			|| (type() == SPEC_NON))
+	{
+		m_settingWidget = NULL;
+		return;
+	}
+
+	if (m_settingWidget == NULL)
+	{
+		if (type() == SPEC_BIOBRICK)
+		{
+			qDebug() << "biobrick type";
+			m_settingWidget = new BiobrickDataSet(this);
+		}
+		else if (m_scene->itemIsRootItem(this)) 
+		{
+			if (type() == SPEC_COMPARTMENT)
+			{
+				m_settingWidget = new CompartDataSet(this);
+			}
+		}
+		else
+		{
+			m_settingWidget = new SpeciesDataSet(this);
+		}
+
+		m_settWidgetScene = (MWidget*)m_scene->addWidget(m_settingWidget); 
+		m_settWidgetScene->setX(x());
+		m_settWidgetScene->setY(y());
+		m_scene->showSettWidget(m_settingWidget);
+	}
+	else
+	{
+		m_settWidgetScene->setX(x());
+		m_settWidgetScene->setY(y());
+
+		if (m_scene == NULL)
+			return;
+
+		m_scene->showSettWidget(m_settingWidget);
+	}
+
+	QGraphicsItem::hoverEnterEvent(event);
 }
 
 // Process MItem mouse press event - formally
-void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+// With following code, When I drag a item, the other moves too, Why?
+//void MItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
+//{
+//    if ((m_settingWidget == NULL) ||
+//            (m_scene == NULL))
+//        return;
+
+//    m_scene->closeSettWidget(m_settingWidget);
+//    m_settingWidget->close();
+//    return QGraphicsItem::mousePressEvent(event);
+//}
+
+// Process MItem mouse move event - formally
+void MItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    return QGraphicsItem::mousePressEvent(event);
+    QGraphicsItem::mouseMoveEvent(event);
 }
+
+/*
 
 // Process MItem mouse release event - formally
 void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -545,7 +659,34 @@ void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
 void MItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-	qDebug() << "mouse released";
 	getScene()->itemDropped(this);
-	return QGraphicsItem::mouseReleaseEvent(event);
+
+	QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void MItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event )
+{
+//    if (m_settingWidget != NULL)
+//        m_settingWidget->close();
+	QGraphicsItem::hoverMoveEvent(event);
+}
+
+void MItem::removeData()
+{
+	if (m_speciesdata != NULL)
+	{
+		SpeciesDataManager::removeData(m_speciesdata);
+		m_speciesdata = NULL;
+	}
+}
+
+void MItem::setSpeciesData(SpeciesData* data) 
+{ 
+	m_speciesdata = data; 
+	if (m_speciesdata != NULL)
+	{
+		m_speciesdata->setItem(this);
+		m_speciesdata->setId(m_id);
+		m_speciesdata->setType(m_type);
+	}
 }
