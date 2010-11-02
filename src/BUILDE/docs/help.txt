@@ -1,0 +1,23 @@
+About iGame
+    To promote public awareness of synthetic biology and introduce its basic ideas to the laymen,
+our team is devoted to the development of an experimental video game which aims at instructing
+non-biologists to design and improve biological systems. Following the games-with-a-purpose paradigm
+in which players help solve scientific problems, we apply the human brain's puzzle-solving abilities
+to the complex designs of biological systems. While most of developed simulation tools are designed
+for experts to model the reaction networks from scratch, our game integrates a modeling environment
+in which users only need to submit their assembling of parts for our program to discover and
+generate the biological model automatically. With a mass of data for the use of modeling, we propose
+the Standard Biological Parts Automatic Modeling Database Language, which enables descriptions of
+complicated biological processes. Additionally, previous iGEM project models will be featured to
+demonstrate the availability of our idea.
+
+
+Introduction step by step
+1 Before getting start
+Extract the tar, cd "path/igame/bin" and find the execute file igameMain, launch it! You need to load the 
+database input file into db at the first run. Launch the igameUiMain execute file, push the "Load db" 
+button, select the "path/igame/beta" directory, then confirm the selection. Push the "Get Started" button 
+to get start!
+
+2 Getting Start
+
