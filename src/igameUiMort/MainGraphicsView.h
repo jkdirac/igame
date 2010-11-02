@@ -91,6 +91,7 @@ class MainGraphicsView : public QWidget
 		void backToMainMenu();
 		void sceneBackForward();
 		void genThreadFinished();
+		void showHelp();
 };
 
 #endif

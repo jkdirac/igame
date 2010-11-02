@@ -41,11 +41,19 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	setState(START);
 	connect(ui.com_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightComCombx(const QString &)));
+	connect(ui.com_combx, SIGNAL(activated(const QString &)), 
+			                     this, SLOT(highlightComCombx(const QString &)));
 	connect(ui.backbone_combx, SIGNAL(highlighted(const QString &)), 
+			                     this, SLOT(highlightbackboneCombx(const QString &)));
+	connect(ui.backbone_combx, SIGNAL(activated(const QString &)), 
 			                     this, SLOT(highlightbackboneCombx(const QString &)));
 	connect(ui.bio_combx, SIGNAL(highlighted(const QString &)), 
 			                     this, SLOT(highlightBioCombx(const QString &)));
+	connect(ui.bio_combx, SIGNAL(activated(const QString &)), 
+			                     this, SLOT(highlightBioCombx(const QString &)));
 	connect(ui.compound_combx, SIGNAL(highlighted(const QString &)), 
+			                     this, SLOT(highlightCompoundCombx(const QString &)));
+	connect(ui.compound_combx, SIGNAL(activated(const QString &)), 
 			                     this, SLOT(highlightCompoundCombx(const QString &)));
 
 //    connect(ui.const, highlightCompoundCombx(const QString &name)
@@ -56,6 +64,8 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 			                     this, SLOT(loadDb()));
 	connect(ui.m_runDemo, SIGNAL(pressed()), 
 			                     this, SLOT(runDemo()));
+	connect(ui.m_help, SIGNAL(pressed()), 
+			                     this, SLOT(showHelp()));
 	connect(ui.m_scenReview, SIGNAL(pressed()), 
 			                     this, SLOT(sceneReview()));
 	connect(ui.m_scenGenModel, SIGNAL(pressed()), 
@@ -658,4 +668,32 @@ void MainGraphicsView::plasmidScene()
 	ui.backbone_combx->setEnabled(false);
 	ui.bio_combx->setEnabled(true);
 	ui.compound_combx->setEnabled(false);
+}
+
+void MainGraphicsView::showHelp()
+{
+	qDebug() << "show help";
+	ui.m_scenBack->setVisible(true);
+	ui.m_fileBrowser->setVisible(true);
+	QString helpName = "../docs/help.txt";
+
+	ui.m_fileBrowser->setGeometry(m_mainRect);
+	ui.m_getStart->setVisible(false);
+	ui.m_loadbase->setVisible(false);
+	ui.m_runDemo->setVisible(false);
+	ui.m_help->setVisible(false);
+	ui.m_logo->setVisible(false);
+
+	QFile modelFile(helpName);
+	if (!modelFile.open(QIODevice::ReadOnly | QIODevice::Text))
+		return;
+	QTextStream os(&modelFile);
+
+#ifndef QT_NO_CURSOR
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+	ui.m_fileBrowser->setPlainText(os.readAll());
+#ifndef QT_NO_CURSOR
+	QApplication::restoreOverrideCursor();
+#endif
 }
