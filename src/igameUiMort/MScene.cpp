@@ -165,7 +165,7 @@ int MScene::addSpeciesItem(MItem *item)
 	else
 	{
 		SpeciesData* data = SpeciesDataManager::newSpeciesData();
-		data->setParent(m_rootItem->getSpeciesData()->fileId(), m_rootItem->type());
+		data->setParent(m_rootItem->getSpeciesData()->fileComId(), m_rootItem->type());
 		item->setSpeciesData(data);
 	}
 
@@ -533,6 +533,11 @@ QString MScene::generateSpeXmlString()
 			SpeciesData* data = dataItem[i]->getSpeciesData();
 			if (data == NULL)
 				continue; 
+
+			//compartment type only E_coli should be added to species list
+			if ((data->type() == SPEC_COMPARTMENT) 
+					&& (data->id() != "E_coli"))
+				continue;
 
 			if(data->type() == SPEC_BACKBONE)
 				continue;

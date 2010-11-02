@@ -156,8 +156,8 @@ background-image: url(:/iGaME.images/button-bm.png);</string>
   <widget class="QPushButton" name="m_loadbase">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>450</y>
+     <x>400</x>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -185,8 +185,8 @@ font: 75 12pt &quot;Verdana&quot;;</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>450</y>
+     <x>200</x>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -216,7 +216,7 @@ font:75 12pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>450</y>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -415,8 +415,8 @@ font: 9pt &quot;Verdana&quot;;</string>
   <widget class="QPushButton" name="m_help">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>450</y>
+     <x>600</x>
+     <y>480</y>
      <width>201</width>
      <height>81</height>
     </rect>
@@ -457,7 +457,7 @@ font: 75 12pt &quot;Verdana&quot;;</string>
   <widget class="QLabel" name="m_label_generating">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>545</x>
      <y>630</y>
      <width>91</width>
      <height>20</height>

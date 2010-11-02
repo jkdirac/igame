@@ -10,11 +10,12 @@ class GenModelThread : public QThread
 		GenModelThread();
 		void stop();
 		void run();
+		bool succ() const;
 
 	protected:
 	private:
 	   	volatile bool m_stop;
-
+	   	volatile bool m_succ;
 };
 
 #endif

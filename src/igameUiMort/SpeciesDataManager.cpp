@@ -12,7 +12,7 @@ SpeciesData* SpeciesDataManager::newSpeciesData()
 		m_dataPool.push_back(p);
 
 	p -> setInputNo(m_num);
-	m_num ++ ;
+	m_num += 2 ;
 
 	return p;
 }
@@ -70,7 +70,7 @@ void SpeciesDataManager::dumpSpeciesData()
 
 		qDebug() << " " << i << " " << m_dataPool[i]->type()
 			<< " " << m_dataPool[i]->id()
-			<< " " << m_dataPool[i]->fileId()
+			<< " " << m_dataPool[i]->fileComId()
 			<< " " << m_dataPool[i]->parent()
 			<< " " << m_dataPool[i]->size()
 			<< " " << m_dataPool[i]->initConcentration()

@@ -24,6 +24,7 @@
 #include <QMessageBox>
 
 #include <string>
+#include <QTextStream>
 
 #include "CoreException.h"
 #include "InputGen.h"
@@ -120,7 +121,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 		ui.m_getStart->setVisible(true);
 		ui.m_loadbase->setVisible(true);
-		ui.m_runDemo->setVisible(true);
+		ui.m_runDemo->setVisible(false);
 		ui.m_help->setVisible(true);
 
 		ui.m_scenReview->setVisible(false);
@@ -128,6 +129,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_scenSimulate->setVisible(false);
 		ui.m_scenBack->setVisible(false);
 		ui.m_scen_backforward->setVisible(false);
+		ui.m_label_generating->setVisible(false);
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -222,6 +224,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 		ui.m_rotateImg->setVisible(true);
 		ui.m_label_generating->setVisible(true);
+        ui.m_label_generating->setText(QApplication::translate("MainGraphicsView", "Generating...", 0, QApplication::UnicodeUTF8));
 		m_anim->start();
 
 		ui.m_fileBrowser->setVisible(true);
@@ -370,6 +373,8 @@ void MainGraphicsView::sceneReview()
 	{
 		try
 		{
+			bdbXMLInterface interface;
+
 			QString& inputXml = inputGenerator.generateInput();
 
 #ifndef QT_NO_CURSOR
@@ -388,6 +393,8 @@ void MainGraphicsView::sceneReview()
 
 			QTextStream out(&file);
 			out << inputXml;
+
+			interface.put_stringtodoc(DBINTERFACE, inputXml, "input");
 		}
 		catch (CoreException &se)
 		{
@@ -421,17 +428,47 @@ void MainGraphicsView::genThreadFinished()
 	ui.m_label_generating->setVisible(false);
 	ui.m_rotateImg->setVisible(false);
 	m_anim->stop();
-	setState(SIMULATE);
+
+	if (m_genThread->succ())
+	{
+		QString modelName = get_igame_home_dir();
+		modelName += "/network.xml";
+
+		QFile modelFile(modelName);
+		if (!modelFile.open(QIODevice::ReadOnly | QIODevice::Text))
+			return;
+		QTextStream os(&modelFile);
+
+#ifndef QT_NO_CURSOR
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+		ui.m_fileBrowser->setPlainText(os.readAll());
+#ifndef QT_NO_CURSOR
+		QApplication::restoreOverrideCursor();
+#endif
+
+		//m_fileBrowser
+		setState(SIMULATE);
+	}
+	else
+	{
+		//error occurs
+		ui.m_label_generating->setVisible(true);
+        ui.m_label_generating->setText(QApplication::translate("MainGraphicsView", "Generate error !!", 0, QApplication::UnicodeUTF8));
+		ui.m_scenBack->setVisible(true);
+	}
 }
 
 void MainGraphicsView::sceneSimulate()
 {
 	setState(SIMULATE);
+	QString modelName = get_igame_home_dir();
+	modelName += "/network.xml";
 
 	QStringList par_list;
 	QString pro_name("../../../ExternalLib/linux/CopasiUI");
 	QString par_1("-i");
-	QString par_2("network.xml");
+	QString par_2(modelName);
 	par_list << par_1 << par_2;
 	QProcess::execute(pro_name, par_list);
 }

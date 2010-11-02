@@ -139,7 +139,6 @@ BdRetVal bdbXMLInterface::put_stringtodoc(container_index container_type, const 
 		}
 	}
 
-	//创建一个新的document
 	try
 	{
 		container->putDocument(doc_name, content, the_context, 0);

@@ -1,5 +1,6 @@
 #include "driver.h"
 #include "DebugOut.h"
+#include "GlobalSetting.h"
 
 Driver::Driver ()
 {}
@@ -11,6 +12,10 @@ bool Driver::beginSimulation ()
 {
 	readInput dbreader;
 	bool SBMLok =	false;
+	string outName = get_igame_home_dir();
+	outName += "/network.xml";
+	string ofsName = get_igame_home_dir();
+	ofsName += "/toSBML.xml";
 
 	//
 	//  (3) core programs to complete reaction networks
@@ -22,12 +27,12 @@ bool Driver::beginSimulation ()
 		mysbmldoc->run (dbreader);
 
 		//	for test
-		ofstream ofs ("toSBML.xml", ios::out);
+		ofstream ofs (ofsName.c_str(), ios::out);
 		ofs << mysbmldoc->toSBML () << endl;
 
 		//	validate 
 		SBMLok  = validateExampleSBML(mysbmldoc);
-		if (SBMLok) writeExampleSBML(mysbmldoc, "network.xml");
+		if (SBMLok) writeExampleSBML(mysbmldoc, outName);
 		delete mysbmldoc;
 		ofs.flush();
 		if (!SBMLok) return 1;
