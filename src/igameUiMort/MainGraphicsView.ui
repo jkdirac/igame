@@ -157,7 +157,7 @@ background-image: url(:/iGaME.images/button-bm.png);</string>
    <property name="geometry">
     <rect>
      <x>500</x>
-     <y>450</y>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -186,7 +186,7 @@ font: 75 12pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>450</y>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -216,7 +216,7 @@ font:75 12pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>450</y>
+     <y>480</y>
      <width>200</width>
      <height>81</height>
     </rect>
@@ -416,7 +416,7 @@ font: 9pt &quot;Verdana&quot;;</string>
    <property name="geometry">
     <rect>
      <x>700</x>
-     <y>450</y>
+     <y>480</y>
      <width>201</width>
      <height>81</height>
     </rect>
