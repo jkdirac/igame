@@ -13,6 +13,7 @@
 class GenModelThread;
 class RotateWidget;
 
+//for anmate the image
 class PixmapItem : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT

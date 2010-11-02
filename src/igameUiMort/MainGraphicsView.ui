@@ -457,7 +457,7 @@ font: 75 12pt &quot;Verdana&quot;;</string>
   <widget class="QLabel" name="m_label_generating">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>545</x>
      <y>630</y>
      <width>91</width>
      <height>20</height>
