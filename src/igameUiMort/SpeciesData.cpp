@@ -2,17 +2,49 @@
 #include "MScene.h"
 #include "MItem.h"
 #include "InputGen.h"
+#include "bdbInterface.h"
+
 #include <QDebug>
+#include <vector>
+#include <string>
+
+using namespace std;
 
 void SpeciesData::init()
 {
 	//compartment
+	/*
 	m_compartSize = "7E-16"; // 0.10
-	m_constant = "true";
 	m_InitConcentration = "2.37E-9"; //"4.15135E-24"
+	*/
 
 	//part
+	m_constant = "true";
 	m_partType = "ForwardDNA"; // "ForwardDNA"
+	m_InitConcentration = "2.37E-9"; //"4.15135E-24"
+}
+
+void SpeciesData::initFromDb(SPECIESTYPE type)
+{
+	bdbXMLInterface interface;
+
+	if (type == SPEC_COMPARTMENT)
+	{
+		string doc = id().toLatin1().constData();
+		string path = "/MoDeL/compartment/@size";
+		vector<string> res; 
+
+		try
+		{
+			interface.get_node_attr(COMPARTMENT, &doc, &path, res);
+			qDebug() << "succss get init size";
+			m_compartSize = res[0].c_str();
+		}
+		catch (XmlException &se)
+		{
+			m_compartSize = "0.10";
+		}
+	}
 }
 
 SpeciesData::SpeciesData()
@@ -179,6 +211,7 @@ void SpeciesData::setType(SPECIESTYPE type)
 	}
 	if (m_type == SPEC_COMPOUNDS)
 	{
+		m_constant = "false";
 		m_partType = "Compound";
 		m_partCatgory = "compound";
 	}
@@ -186,4 +219,5 @@ void SpeciesData::setType(SPECIESTYPE type)
 	{
 		m_partCatgory = "biobrick";
 	}
+	initFromDb(m_type);
 };

@@ -534,6 +534,11 @@ QString MScene::generateSpeXmlString()
 			if (data == NULL)
 				continue; 
 
+			//compartment type only E_coli should be added to species list
+			if ((data->type() == SPEC_COMPARTMENT) 
+					&& (data->id() != "E_coli"))
+				continue;
+
 			if(data->type() == SPEC_BACKBONE)
 				continue;
 

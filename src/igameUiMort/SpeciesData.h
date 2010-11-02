@@ -43,6 +43,7 @@ class SpeciesData
 	SpeciesData(SPECIESTYPE type, const QString& id, SPECIESTYPE parentType=SPEC_COMPARTMENT, const QString& parent="ROOT");
 	SpeciesData(const SpeciesData &other);
 	SpeciesData& operator = (const SpeciesData &other);
+	void initFromDb(SPECIESTYPE type);
 
 	public:
 

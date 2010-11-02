@@ -121,7 +121,7 @@ void MainGraphicsView::setUi(STATE curState)
 
 		ui.m_getStart->setVisible(true);
 		ui.m_loadbase->setVisible(true);
-		ui.m_runDemo->setVisible(true);
+		ui.m_runDemo->setVisible(false);
 		ui.m_help->setVisible(true);
 
 		ui.m_scenReview->setVisible(false);
