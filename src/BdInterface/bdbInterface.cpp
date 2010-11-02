@@ -173,6 +173,8 @@ BdRetVal bdbXMLInterface::add_files(const string& pathname, const string& docnam
 		throw XmlException(XmlException::NULL_POINTER, "n_manager NULL", __FILE__, __LINE__);
 	}
 
+	debugOut() << "try file: " << pathname << endl;
+
 	QString q_pathname(pathname.c_str());
 	for (int i = 0; i < CONT_IDX_NUM; i ++)
 	{
