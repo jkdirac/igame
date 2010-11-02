@@ -23,13 +23,13 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 	m_head = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
 	m_head->setX(m_x+2);
 	m_head->setY(m_y);
-	m_head->setId("TEX_100");
+	m_head->setId("TE_X_100");
 	m_head->setMovable(false);
 
 	m_tail = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
 	m_tail->setX(m_x+3);
 	m_tail->setY(m_y);
-	m_tail->setId("TEX_100");
+	m_tail->setId("TE_X_100");
 	m_tail->setMovable(false);
 
 	addSpeciesItem(m_bone);

@@ -129,6 +129,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_scenSimulate->setVisible(false);
 		ui.m_scenBack->setVisible(false);
 		ui.m_scen_backforward->setVisible(false);
+		ui.m_label_generating->setVisible(false);
 
 		ui.m_fileBrowser->setVisible(false);
 		ui.m_fileBrowser->setGeometry(QRect(0, 0, 0, 0));
@@ -372,6 +373,8 @@ void MainGraphicsView::sceneReview()
 	{
 		try
 		{
+			bdbXMLInterface interface;
+
 			QString& inputXml = inputGenerator.generateInput();
 
 #ifndef QT_NO_CURSOR
@@ -390,6 +393,8 @@ void MainGraphicsView::sceneReview()
 
 			QTextStream out(&file);
 			out << inputXml;
+
+			interface.put_stringtodoc(DBINTERFACE, inputXml, "input");
 		}
 		catch (CoreException &se)
 		{
@@ -447,7 +452,10 @@ void MainGraphicsView::genThreadFinished()
 	}
 	else
 	{
-        ui.m_label_generating->setText(QApplication::translate("MainGraphicsView", "Generate error!", 0, QApplication::UnicodeUTF8));
+		//error occurs
+		ui.m_label_generating->setVisible(true);
+        ui.m_label_generating->setText(QApplication::translate("MainGraphicsView", "Generate error !!", 0, QApplication::UnicodeUTF8));
+		ui.m_scenBack->setVisible(true);
 	}
 }
 
