@@ -664,31 +664,30 @@ void MySpecies::rearrange (const bool& isTemplate)
 	delete [] csymm;
 }
 
-void MySpecies::Output () const
+void MySpecies::Output (ofstream& ofs) const
 {
-	debugOut() << "\n------Begin (MySpeices)------" << endl;
-
-	debugOut() << "\nCHAINs (" << listOfChains.size () << "):" << endl;
+	ofs << "\n------Begin (MySpeices)------" << endl;
+	ofs << "\nCHAINs (" << listOfChains.size () << "):" << endl;
 
 	for (int cnt =0; cnt < listOfChains.size (); cnt++)
 	{
 		Chain* c = listOfChains[cnt];
-		debugOut() << "\nchain (" << cnt << ", " << c->chainLabel <<  ") :"; 
-		c->Output (cout);
+		ofs << "\nchain (" << cnt << ", " << c->chainLabel <<  ") :"; 
+		c->Output (ofs);
 	}
 
 	int numT = listOfTrees.size ();
-	debugOut() << "\n\nTREEs (" << numT << "):" << endl;
+	ofs << "\n\nTREEs (" << numT << "):" << endl;
 
 	for (int cnt =0; cnt < numT; cnt++)
 	{
-		debugOut() << "\ntree " << cnt << " ( NODES = " 
+		ofs << "\ntree " << cnt << " ( NODES = " 
 			<< listOfTrees[cnt]->listOfNodes.size () 
 			<< " ) : " ;
-		listOfTrees[cnt]->Output (cout);
+		listOfTrees[cnt]->Output (ofs);
 	}
 
-	debugOut() << "\n\n------End (MySpeices)------" << endl;
+	ofs << "\n\n------End (MySpeices)------" << endl;
 }
 
 //

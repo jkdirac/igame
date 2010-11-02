@@ -166,9 +166,9 @@ void MyReaction::createReactionsFromTemplate (
 	}
 
 	//	DEBUG
-	debugOut() << "\nMixture:" << endl;
-	mixture->Output ();
-	debugOut () << "\nEnd Mixture!" << endl;
+//    debugOut() << "\nMixture:" << endl;
+//    mixture->Output ();
+//    debugOut () << "\nEnd Mixture!" << endl;
 	//	END
 
 	/**
@@ -178,9 +178,9 @@ void MyReaction::createReactionsFromTemplate (
 	mixture->split (dbreader, splits);
 
 	//	DEBUG
-	debugOut() << "\nSplits:" << endl;
-	for (int i=0; i < splits.size (); i++) splits[i]->Output ();
-	debugOut () << "\nEnd Splits!" << endl;
+//    debugOut() << "\nSplits:" << endl;
+//    for (int i=0; i < splits.size (); i++) splits[i]->Output ();
+//    debugOut () << "\nEnd Splits!" << endl;
 	//	END
 	
 	delete mixture;
@@ -304,7 +304,7 @@ void MyReaction::createReactionsFromTemplate (
 
 			//	it is need to make it clear about chain labels
 			for (int k=0; k < __product->getNumOfChains (); k++) __product->getChain (k)->setLabel ("");
-			__product_tm->Output ();
+//            __product_tm->Output ();
 			delete __product_tm;
 		}
 	}

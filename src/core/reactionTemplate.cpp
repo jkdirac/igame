@@ -281,7 +281,7 @@ bool reactionTemplate::findSpeciesMatch (
 	 */
 
 	int permALL_DB = 1;
-	int n = mapComps.size (); 
+	const int n = mapComps.size (); //number of compartment defined in reaction template
 
 	vector<string> compLabels;
 	vector< vector<int> > options;
@@ -309,6 +309,8 @@ bool reactionTemplate::findSpeciesMatch (
 
 	vector< map<string, int> > compConfig;	//	important
 
+	//	assign each compartment defined in reaction template
+	//	with a number in the compartment list
 	for (int i=0; i < permALL_DB; i++)
 	{
 		map<string,int> conf;
@@ -387,19 +389,19 @@ bool reactionTemplate::findSpeciesMatch (
 	{
 		reactant_sam = new speciesArrayMatch [listOfMyReactants.size ()]; 
 
-		debugOut() << "\nreactant match finding" << endl;
+//        debugOut() << "\nreactant match finding" << endl;
 		for (int i=0; i < listOfMyReactants.size (); i++)
 		{
-			debugOut() << "\ntemplate i = " << endl;
+//            debugOut() << "\ntemplate i = " << endl;
 			MySpecies* tmReactant = listOfMyReactants[i];
-			tmReactant->Output ();
+//            tmReactant->Output ();
 
 			for (int j=0; j <= index; j++)
 			{
 				MySpecies* prevSpe = listOfMySpecies[j];
 
-				debugOut() << "\nmatching species:	"<<endl;
-				prevSpe->Output ();
+//                debugOut() << "\nmatching species:	"<<endl;
+//                prevSpe->Output ();
 
 //                bool same = isSameType (
 //                        prevSpe->getCompTypeId (), 
@@ -415,8 +417,8 @@ bool reactionTemplate::findSpeciesMatch (
 				{
 					for (int k=0; k < trym.size (); k++)
 						reactant_sam[i].push_back (make_pair (j, trym[k]));
-					cout << "\nresults of matching positions = " 
-						 << reactant_sam[i].size () << endl;
+//                    cout << "\nresults of matching positions = " 
+//                         << reactant_sam[i].size () << endl;
 				}
 			}
 
@@ -537,10 +539,11 @@ bool reactionTemplate::findSpeciesMatch (
 			for (int k=0; k < listOfMyModifiers.size (); k++)
 				match_index.insert (possibleModifierMatch[j][k].first);
 
-			debugOut() << "\nindex = " << index << endl;
-			set<int>::iterator iter = match_index.begin ();
-			while (iter != match_index.end ()) debugOut() << "\nit = " << *iter++;
+//            debugOut() << "\nindex = " << index << endl;
+//            set<int>::iterator iter = match_index.begin ();
+//            while (iter != match_index.end ()) debugOut() << "\nit = " << *iter++;
 
+			//	current species handling must appear in the list of either reactants/modifiers
 			if (!match_index.count (index)) continue;
 
 			/**
@@ -584,7 +587,8 @@ bool reactionTemplate::findSpeciesMatch (
 
 						if (__compid_tm != __compid) {fail = true;break;}
 					}
-					if (fail) possible.erase (n1);
+
+					if (fail) {possible.erase (n1); continue;}
 				}
 
 				if (listOfMyModifiers.size () > 0)
@@ -615,20 +619,17 @@ bool reactionTemplate::findSpeciesMatch (
 
 						if (__compid_tm != __compid) {fail = true;break;}
 					}
-					if (fail) possible.erase (n1);
+
+					if (fail) {possible.erase (n1); continue;}
 				}
 			}
 			
 			if (possible.empty ()) continue;
 
 			//	compartment-type species constraints
-			/**
-			 * big bug: for products, it is also needed to check if products
-			 * are in right compartment
-			 */
 			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
-				map<string, int> itself;
+				bool fail = false;
 
 				if (!possible.count (n1)) continue;
 				for (int n2 =0; n2 < listOfMyReactants.size (); n2++)
@@ -636,30 +637,51 @@ bool reactionTemplate::findSpeciesMatch (
 					MySpecies* tmr = listOfMyReactants[n2];
 					if (tmr->isCompartment ())
 					{
-						string __species_itself = tmr->getCompTypeId (); //label of compartment
+						//	one aspect
+						string __species_itself = tmr->getCompTypeId (); //label of compartment defined in reaction template
+						assert (compConfig[n1].count (__species_itself));
+						int __compart1 = compConfig[n1][__species_itself];
+						string compName1 = listOfMyCompartments[__compart1]->getId ();
+
+						//	the other aspect
 						int __species_index = possibleReactantMatch[i][n2].first; //num in species list
-						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __species_index;
-						else if (itself[__species_itself] != __species_index) {
-							possible.erase (n1); break;
+						MySpecies* myspe = listOfMySpecies[__species_index];
+						if (myspe->isCompartment ())
+						{
+							string compName2 = myspe->getCompTypeId ();
+							if (compName1 != compName2) {fail = true; break;}
 						}
+						else {fail = true; break;}
 					}
 				}
+
+				if (fail) {possible.erase (n1); continue;}
 
 				if (!possible.count (n1)) continue;
 				for (int n2 =0; n2 < listOfMyModifiers.size (); n2++)
 				{
-					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
-					if (!__species_itself.empty ())
+					MySpecies* tmr = listOfMyModifiers[n2];
+					if (tmr->isCompartment ())
 					{
-						int __species_index = possibleModifierMatch[j][n2].first;
-						if (!itself.count (__species_itself)) 
-							itself[__species_itself] = __species_index;
-						else if (itself[__species_itself] != __species_index) {
-							possible.erase (n1); break;
+						//	one aspect
+						string __species_itself = tmr->getCompTypeId (); //label of compartment defined in reaction template
+						assert (compConfig[n1].count (__species_itself));
+						int __compart1 = compConfig[n1][__species_itself];
+						string compName1 = listOfMyCompartments[__compart1]->getId ();
+
+						//	the other aspect
+						int __species_index = possibleModifierMatch[j][n2].first; //num in species list
+						MySpecies* myspe = listOfMySpecies[__species_index];
+						if (myspe->isCompartment ())
+						{
+							string compName2 = myspe->getCompTypeId ();
+							if (compName1 != compName2) {fail = true; break;}
 						}
+						else {fail = true; break;}
 					}
 				}
+
+				if (fail) {possible.erase (n1); continue;}
 			}
 
 			if (possible.empty ()) continue;
@@ -669,6 +691,8 @@ bool reactionTemplate::findSpeciesMatch (
 			 * (1) matching result of modifiers and reactants 
 			 * (2) associated product compartment attribution
 			 */
+
+			cout << "\npossible.size = " << possible.size () << endl;
 
 			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
@@ -685,6 +709,7 @@ bool reactionTemplate::findSpeciesMatch (
 					 * it is important to check tmp
 					 */
 					
+					/*
 					debugOut() << "\n---------------------------------------------------\n";
 					debugOut() << "^_!	ADD ONE MATCHING RESULTS:	" << result.size ()-1;
 					debugOut() << "\n---------------------------------------------------\n";
@@ -757,6 +782,7 @@ bool reactionTemplate::findSpeciesMatch (
 						}	
 					}
 
+				*/
 					//	check over
 				}
 			}
@@ -1108,9 +1134,9 @@ bool reactionTemplate::handle_constraints (
 
 void reactionTemplate::OutputProducts ()
 {
-	debugOut() << "\nTESTING...	...	..." << endl;
-	for (int i=0; i < listOfMyProducts.size (); i++)
-		listOfMyProducts[i]->Output ();
+//    debugOut() << "\nTESTING...	...	..." << endl;
+//    for (int i=0; i < listOfMyProducts.size (); i++)
+//        listOfMyProducts[i]->Output ();
 }
 
 bool isSameType (const string& lhs, const string& rhs)

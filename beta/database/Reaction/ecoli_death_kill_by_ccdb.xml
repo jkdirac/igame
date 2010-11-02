@@ -47,7 +47,7 @@
 				<listOfLocalParameters>
 					<localParameter>
 						<id>kk</id>
-						<value>2.95E-3</value>
+						<value>0.1</value>
 						<units>litre_per_mole_per_second</units>
 						<constant>true</constant>
 					</localParameter>

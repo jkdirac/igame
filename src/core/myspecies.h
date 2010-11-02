@@ -117,7 +117,7 @@ class MySpecies:
 		bool match (const MySpecies*, cMatchsArray& res) const;
 
 		void display_name (const int&);
-		void Output () const;
+		void Output (ofstream& ofs) const;
 
 	private:
 

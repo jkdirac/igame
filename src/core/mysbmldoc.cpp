@@ -203,8 +203,8 @@ void MySBMLDocument::run (readDataBase& dbreader)
 		//for each species
 		MySpecies* s = listOfMySpecies[i];
 
-		debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
-		s->Output ();	
+//        debugOut() << "\n===========		SPECIES " << i << "		=============" << endl;
+//        s->Output ();	
 
 		//a set to store species id that has been used
 		set<string> speciesUsed;
@@ -253,14 +253,14 @@ void MySBMLDocument::run (readDataBase& dbreader)
 					sLink->setDB_ref (speciesReference);  
 					dbreader.read_cnModel (sLink, SPECIES, speciesReference, "/MoDeL/species", true);
 
-					debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
-					sLink->Output ();
+//                    debugOut() << "\n------------	TEMPLATES " << t << "	------------\n";
+//                    sLink->Output ();
 
 					//  Does this template match this species?
 					cMatchsArray trym;
 					if (!s->match (sLink, trym)) continue;
 
-					debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
+//                    debugOut() << "\n------------ Match! Find Referenced Reaction	-------------------"<<endl;
 
 					//
 					//  read reaction Links
@@ -283,10 +283,10 @@ void MySBMLDocument::run (readDataBase& dbreader)
 								speciesRole
 								);
 
-						debugOut() << "\nHandling Referenced Reaction	" 
-							<< "	...		DOC	:	" 
-							<< reactionReference << "	TYPE :	"
-							<< speciesRole << endl;
+//                        debugOut() << "\nHandling Referenced Reaction	" 
+//                            << "	...		DOC	:	" 
+//                            << reactionReference << "	TYPE :	"
+//                            << speciesRole << endl;
 
 						handleReactionTemplate (
 								dbreader, 
@@ -831,15 +831,17 @@ void MySBMLDocument::write ()
 
 	int operation = 0;
 
+	ofstream ofs ("species.dat", ios::out);
+
 	for (int i=0; i < listOfMySpecies.size (); i++)
 	{
 		m->addSpecies (listOfMySpecies[i]);
 		
-		debugOut() << "\n------------ OUTPUT SPECIES " << i << "\n";
-		listOfMySpecies[i]->Output ();
-		
-		
+		ofs << "\n------------ OUTPUT SPECIES " << i << "\n";
+		listOfMySpecies[i]->Output (ofs);
 	}
+
+	ofs.close ();
 
 	for (int i=0; i < listOfMyCompartments.size (); i++)
 	{

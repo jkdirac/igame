@@ -201,10 +201,7 @@ void Tree::Output (ostream& os, const string& label) const
 		for (int cnt =0; cnt < numCh; cnt++)
 		{
 			Node* nn = n->children[cnt];
-			os << std::setw(5) << "\n	" 
-				<< " ( " << nn->weight.first << ", " 
-				<< nn->weight.second
-				<< " ) " << "	";
+			os << std::setw(5) << nn->nodeLabel << "	";
 		}
 
 		for (int cnt =0; cnt < numCh; cnt++)

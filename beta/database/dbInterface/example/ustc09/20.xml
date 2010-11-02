@@ -33,7 +33,7 @@
 				<species db="E_coli_cell">
 					<id>sPecIes1</id>
 					<compartment itself="E_coli_1">Flask</compartment>
-					<initialConcentration>4.15135E-24</initialConcentration>
+					<initialConcentration>2.07567e-12</initialConcentration>
 				</species>
 				<species>
 					<id>sPecIes2</id>
