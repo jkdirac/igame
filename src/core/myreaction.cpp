@@ -344,19 +344,33 @@ void MyReaction::createReactionsFromTemplate (
 	//  setMath
 	string mathXMLString = tmpR->math;
 	map<string,string>::const_iterator itMath = replacement.begin ();
+
+	cout << "\nmath = " << mathXMLString << endl;
 	while (itMath != replacement.end ())
 	{
 		string __old = itMath->first;
 		string __new = itMath->second;
 
+		cout << "\nold = " << __old << " new = " << __new << endl;
+
 		if (__old == __new) {itMath++; continue;}
 
 		string::size_type pos = 0;
 		//	each trip reset pos to the next instance in name
+//        int i = 0;
 		while ((pos = mathXMLString.find (__old, pos)) != string::npos)	
+		{
+//            if (i ==5) terminate ();
+//            cout << "pos1 = " << pos ;
 			mathXMLString.replace (pos, __old.size (), __new);
+			pos += __new.size ();
+//            cout << "\nmath = " << mathXMLString << endl;
+//            cout << " pos2 =  " << pos << endl;
+//            i++;
+		}
 		itMath ++;
 	}
+	cout << "\nmath = " << endl;
 
 	ASTNode* astMath = readMathMLFromString(mathXMLString.c_str());
 	if (astMath == NULL) throw CoreException ("Invalid MathML string converted!");
@@ -364,6 +378,8 @@ void MyReaction::createReactionsFromTemplate (
 
 	if (astMath != NULL) delete astMath;
 	if (astMath != NULL) delete stoiMath;
+
+	cout << "\nDone of this reaction!" << endl;
 }
 
 void MyReaction::addSpecialReaction (

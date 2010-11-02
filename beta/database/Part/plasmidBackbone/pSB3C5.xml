@@ -3,7 +3,7 @@
 <!-- Authored by USTC 2010 SOFTWARE TEAM BIONOVO -->
 <MoDeL>
 	<part>
-		<plasmidBackbone id="pSB3C5" name="pSB3C5">
+		<biobrick id="pSB3C5" name="pSB3C5">
 			<interface>
 				<url>http://partsregistry.org/cgi/xml/part.cgi?part=pSB3C5</url>
 				<shortDesc>Low to medium copy BioBrick assembly plasmid</shortDesc>
@@ -17,6 +17,6 @@
 				<referencedSpecies partType="ReverseProtein">protein_sc</referencedSpecies>
 				<referencedSpecies>any_species</referencedSpecies>
 			</listOfReferencedSpecies>
-		</plasmidBackbone>
+		</biobrick>
 	</part>
 </MoDeL>

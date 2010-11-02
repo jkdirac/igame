@@ -542,8 +542,6 @@ bool reactionTemplate::findSpeciesMatch (
 			while (iter != match_index.end ()) debugOut() << "\nit = " << *iter++;
 
 			if (!match_index.count (index)) continue;
-			
-			debugOut() << "\nstop1" << endl;
 
 			/**
 			 * COMPARTMENT CONSTRAINTS
@@ -621,11 +619,13 @@ bool reactionTemplate::findSpeciesMatch (
 				}
 			}
 			
-			debugOut() << "\nstop2" << endl;
-
 			if (possible.empty ()) continue;
 
 			//	compartment-type species constraints
+			/**
+			 * big bug: for products, it is also needed to check if products
+			 * are in right compartment
+			 */
 			for (int n1=0; n1 < compConfig.size (); n1++)
 			{
 				map<string, int> itself;
@@ -634,12 +634,10 @@ bool reactionTemplate::findSpeciesMatch (
 				for (int n2 =0; n2 < listOfMyReactants.size (); n2++)
 				{
 					MySpecies* tmr = listOfMyReactants[n2];
-//                    debugOut() << "\nempty = " << boolalpha << __species_itself.empty() << endl;
-//                    debugOut() << "\n__species_itself = " << __species_itself << endl;
 					if (tmr->isCompartment ())
 					{
-						string __species_itself = tmr->getCompTypeId ();
-						int __species_index = possibleReactantMatch[i][n2].first;
+						string __species_itself = tmr->getCompTypeId (); //label of compartment
+						int __species_index = possibleReactantMatch[i][n2].first; //num in species list
 						if (!itself.count (__species_itself)) 
 							itself[__species_itself] = __species_index;
 						else if (itself[__species_itself] != __species_index) {
@@ -654,7 +652,6 @@ bool reactionTemplate::findSpeciesMatch (
 					string __species_itself = listOfMyModifiers[n2]->getCompTypeId ();
 					if (!__species_itself.empty ())
 					{
-						debugOut() << "\ni = " << i << " n2 = " << n2 << " modifier size = " << listOfMyModifiers.size () << endl;
 						int __species_index = possibleModifierMatch[j][n2].first;
 						if (!itself.count (__species_itself)) 
 							itself[__species_itself] = __species_index;
@@ -665,7 +662,6 @@ bool reactionTemplate::findSpeciesMatch (
 				}
 			}
 
-			debugOut() << "\nstop3" << endl;
 			if (possible.empty ()) continue;
 
 			/**
