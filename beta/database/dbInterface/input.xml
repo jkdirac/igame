@@ -7,19 +7,19 @@
 			<listOfParameters>
 				<parameter>
 					<id> ts </id>
-					<value> 10000 </value>
+					<value> 0 </value>
 					<units> second </units>
 					<constant> true </constant>
 				</parameter>
 				<parameter>
 					<id> te </id>
-					<value> 10001 </value>
+					<value> 40000 </value>
 					<units> second </units>
 					<constant> true </constant>
 				</parameter>
 				<parameter>
 					<id> s </id>
-					<value> 1E-9 </value>
+					<value> 0.001 </value>
 					<units> mole_per_litre </units>
 					<constant> true </constant>
 				</parameter>
@@ -27,34 +27,32 @@
 			<listOfRules>
 				<assignmentRule>
 					<variable>sPecIes1</variable>
-					<math>step_func (t, ts, te, s)</math>
+					<math>square_wave (t, ts, te, s)</math>
 				</assignmentRule>
 			</listOfRules>
-			<listOfRules>
-			</listOfRules>
 			<listOfCompartments>
-				<compartment db="Flask">
-					<id>Flask</id>
-					<size>0.40</size>
+				<compartment db="Chemostat">
+					<id>Chemostat</id>
+					<size>0.1</size>
 					<outside>ROOT</outside>
 					<constant>true</constant>
 				</compartment>
 				<compartment db="E_coli">
 					<id>E_coli</id>
 					<size>7E-16</size>
-					<outside>Flask</outside>
+					<outside>Chemostat</outside>
 					<constant>true</constant>
 				</compartment>
 			</listOfCompartments>
 			<listOfSpecies>
 				<species db="E_coli_cell">
 					<id>sPecIes0</id>
-					<compartment itself="E_coli">Flask</compartment>
-					<initialConcentration>4.15135E-24</initialConcentration>
+					<compartment itself="E_coli">Chemostat</compartment>
+					<initialConcentration>1.05E-13</initialConcentration>
 				</species>
-				<species db="AHL_compound">
+				<species db="IPTG_compound">
 					<id>sPecIes1</id>
-					<compartment>Flask</compartment>
+					<compartment>Chemostat</compartment>
 					<initialConcentration> 0 </initialConcentration>
 					<constant> false </constant>
 					<boundaryCondition> true </boundaryCondition>
@@ -62,7 +60,7 @@
 				<species>
 					<id>sPecIes2</id>
 					<compartment>E_coli</compartment>
-					<initialConcentration>2.37E-9</initialConcentration>
+					<initialConcentration>2.4E-9</initialConcentration>
 					<cnModel>
 						<listOfChains>
 							<chain>
@@ -80,8 +78,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>Promoter1</partReference>
-										<partLabel>Promoter1_0</partLabel>
+										<partReference>placI185</partReference>
+										<partLabel>placI185_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -92,8 +90,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>C0062_LuxR</partReference>
-										<partLabel>C0062_LuxR_0</partLabel>
+										<partReference>cIlam156</partReference>
+										<partLabel>cIlam156_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -104,8 +102,8 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>R0062_pluxI</partReference>
-										<partLabel>R0062_pluxI_0</partLabel>
+										<partReference>ptetR187</partReference>
+										<partLabel>ptetR187_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -116,14 +114,38 @@
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
-										<partReference>E0040_GFP</partReference>
-										<partLabel>E0040_GFP_0</partLabel>
+										<partReference>lacI153</partReference>
+										<partLabel>lacI153_0</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
 									<part>
 										<partReference>TE_X_100</partReference>
 										<partLabel>TE_X_100_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>pcIlam189</partReference>
+										<partLabel>pcIlam189_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>RBS147</partReference>
+										<partLabel>RBS147_2</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>tetR154</partReference>
+										<partLabel>tetR154_0</partLabel>
+										<partType>ForwardDNA</partType>
+										<partCategory>biobrick</partCategory>
+									</part>
+									<part>
+										<partReference>TE_X_100</partReference>
+										<partLabel>TE_X_100_3</partLabel>
 										<partType>ForwardDNA</partType>
 										<partCategory>biobrick</partCategory>
 									</part>
@@ -136,4 +158,3 @@
 		</input>
 	</dbInterface>
 </MoDeL>
-
