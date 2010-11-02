@@ -7,9 +7,9 @@
 void SpeciesData::init()
 {
 	//compartment
-	m_compartSize = "0.10"; // 0.10
+	m_compartSize = "7E-16"; // 0.10
 	m_constant = "true";
-	m_InitConcentration = "4.15135E-24"; //"4.15135E-24"
+	m_InitConcentration = "2.37E-9"; //"4.15135E-24"
 
 	//part
 	m_partType = "ForwardDNA"; // "ForwardDNA"
@@ -74,7 +74,7 @@ QString SpeciesData::generateCompartmentXmlString()
 	}
 
 	res += "  <compartment db=\""; res += m_dbId; res += "\">\n";
-	res += "    <id>"; res += fileId(); res+="</id>\n";
+	res += "    <id>"; res += fileComId(); res+="</id>\n";
 	res += "    <size>"; res += m_compartSize;  res += "</size>\n";
 	res += "    <outside>"; res += m_parent; res += "</outside>\n";
 	res += "    <constant>"; res += constant(); res += "</constant>\n";
@@ -95,9 +95,17 @@ QString SpeciesData::generateSpeciesXmlString()
 	specId += QString::number(InputGen::getSpecNo());
 	InputGen::incSpecNo();
 	res += "  <id>"; res += specId; res += "</id>\n";
-	res += "  <compartment>"; res += parent(); res += "</compartment>\n";
+	if (type() == SPEC_COMPARTMENT)
+	{
+		res += "  <compartment itself=\""; res += fileComId(); res += "\">"; res += parent(); res += "</compartment>\n";
+	}
+	else
+	{
+		res += "  <compartment>"; res += parent(); res += "</compartment>\n";
+	}
 
-	if ((type() == SPEC_COMPARTMENT) || (type() == SPEC_COMPOUNDS))
+	if ((type() == SPEC_COMPARTMENT) || (type() == SPEC_COMPOUNDS)
+			|| (type() == SPEC_BACKBONE))
 	{
 		res += "  <initialConcentration>"; res += initConcentration(); res += "</initialConcentration>\n";
 	}
@@ -136,11 +144,7 @@ QString SpeciesData::generatePartsXmlString()
 
 	res += "          <part>\n";
 	res += "            <partReference>"; res+=id(); res += "</partReference>\n";
-	if ((type() == SPEC_BIOBRICK)
-			|| (type() == SPEC_BACKBONE))
-	{
-		res += "            <partLabel>"; res+=fileId(); res += "</partLabel>\n";
-	}
+	res += "            <partLabel>"; res+=filePartId(); res += "</partLabel>\n";
 	res += "            <partType>"; res+=partType(); res += "</partType>\n";
 	res += "            <partCategory>"; res+=partCategory(); res += "</partCategory>\n";
 	res += "          </part>\n";
@@ -150,9 +154,11 @@ QString SpeciesData::generatePartsXmlString()
 
 void SpeciesData::setInputNo(int nm)
 {
-	m_fileId += "_i";
+	m_fileComId += "_i";
+	m_filePartId += "_i";
 
-	m_fileId += QString::number(nm);
+	m_fileComId += QString::number(nm);
+	m_filePartId += QString::number(nm+1);
 }
 
 void SpeciesData::setType(SPECIESTYPE type) 
@@ -161,7 +167,7 @@ void SpeciesData::setType(SPECIESTYPE type)
 
 	if (m_type == SPEC_COMPARTMENT)
 	{
-		m_constant = "true";
+		m_constant = "false";
 		m_partType = "Compartment";
 		m_partCatgory = "compartment";
 	}

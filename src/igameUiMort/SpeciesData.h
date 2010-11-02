@@ -22,7 +22,8 @@ class SpeciesData
 	MItem* m_item;
 
 	QString m_dbId;
-	QString m_fileId;
+	QString m_fileComId;
+	QString m_filePartId;
 	SPECIESTYPE m_type;
 	QString m_parent;
 	SPECIESTYPE m_parentType;
@@ -54,7 +55,8 @@ class SpeciesData
 	const QString& size() const { return m_compartSize; }
 	const QString& initConcentration() const { return m_InitConcentration; }
 	const QString& partType() const { return m_partType; }
-	const QString fileId() const { return m_dbId + m_fileId; }
+	const QString fileComId() const { return m_dbId + m_fileComId; }
+	const QString filePartId() const { return m_dbId + m_filePartId; }
 	const QString& constant() const { return m_constant; }
 	const QString& partCategory() const { return m_partCatgory; }
 
@@ -67,7 +69,8 @@ class SpeciesData
 	inline void setConstant(const QString& constant) { m_constant = constant; }
 	inline void setInitConcentration(QString& con) { m_InitConcentration = con; }
 	inline void setPartType(QString &type) { m_partType = type; }
-	inline void setfileId(QString input) { m_fileId = input; }
+	inline void setfileComId(QString input) { m_fileComId = input; }
+	inline void setfilePartId(QString input) { m_filePartId = input; }
 	void setType(SPECIESTYPE type);
 
 	void setInputNo(int nm);
