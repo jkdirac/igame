@@ -6,6 +6,22 @@
 #include <string>
 #include "SceneManager.h"
 #include "bdbInterface.h"
+#include <QGraphicsPixmapItem>
+#include <QtGui>
+#include <QPropertyAnimation>
+
+class GenModelThread;
+class RotateWidget;
+
+class PixmapItem : public QObject, public QGraphicsPixmapItem
+{
+	Q_OBJECT
+		Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+	public:
+		PixmapItem(const QPixmap &pix) : QGraphicsPixmapItem(pix)
+	{
+	}
+};
 
 class MainGraphicsView : public QWidget
 {
@@ -17,6 +33,7 @@ class MainGraphicsView : public QWidget
 			START,
 			GAMESCENE,
 			REVIEW,
+			GENMODEL,
 			SIMULATE
 		} STATE;
 
@@ -34,11 +51,17 @@ class MainGraphicsView : public QWidget
 		QRect m_mainRect;
 		QRect m_fullRect;
 
+		//for rotate
+		QGraphicsScene m_scene;
+		PixmapItem* m_item;
+		QPropertyAnimation* m_anim;
+		QSize m_iconSize;
+
 		QStringList m_compList;
 		QStringList m_backboneList;
 		QStringList m_bioList;
 		SceneManager* m_scenemgr;
-
+		GenModelThread* m_genThread;
 		bool m_showBackforward;
 
 		void getCompartFromDb();
@@ -60,10 +83,13 @@ class MainGraphicsView : public QWidget
 		void activateCombx(const QString& partname);
 		void runDemo();
 		void getStart();
-		void sceneNext();
+		void sceneGenModel();
+		void sceneSimulate();
+		void sceneReview();
 		void loadDb();
 		void backToMainMenu();
 		void sceneBackForward();
+		void genThreadFinished();
 };
 
 #endif

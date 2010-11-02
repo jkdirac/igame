@@ -85,6 +85,7 @@ class bdbXMLInterface
 //                const string &uri);
 		BdRetVal get_ids_bycontainer(container_index container_type, vector<string> &res);
 		BdRetVal get_ids_byNodePath(container_index container_type, const char* node_path, vector<string> &res);
+		BdRetVal put_stringtodoc(container_index container_type, const char* content, const string& doc_name);
 };
 
 #endif

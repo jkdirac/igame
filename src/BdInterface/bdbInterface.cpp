@@ -114,6 +114,43 @@ bdbXMLInterface::bdbXMLInterface()
 	//create newdoc.xml
 }
 
+BdRetVal bdbXMLInterface::put_stringtodoc(container_index container_type, const char* content, const string& doc_name)
+{
+	if (m_manager == NULL)
+	{
+		throw XmlException(XmlException::NULL_POINTER, "m_manager", __FILE__, __LINE__);
+	}
+
+	XmlContainer* container = NULL;
+	container = &m_containers[container_type];
+	XmlUpdateContext the_context = m_manager->createUpdateContext();
+
+	try
+	{
+		XmlDocument the_doc = container->getDocument(doc_name);
+		container->deleteDocument(the_doc, the_context);
+	}
+	catch (XmlException &e)
+	{
+		if (e.getExceptionCode() != XmlException::DOCUMENT_NOT_FOUND)
+		{
+			debugOut() << "xml excepiton" << e.what() << endl;
+			throw XmlException(XmlException::NULL_POINTER, "xml document get error", __FILE__, __LINE__);
+		}
+	}
+
+	//创建一个新的document
+	try
+	{
+		container->putDocument(doc_name, content, the_context, 0);
+	}
+	catch (XmlException &e)
+	{
+		debugOut() << "xml exception: " << e.what() << endl;
+		throw XmlException(XmlException::NULL_POINTER, "xml document put content error", __FILE__, __LINE__);
+	}
+}
+
 /** 
  * @breif  
  * 		Put a file to dbxml database, if there already

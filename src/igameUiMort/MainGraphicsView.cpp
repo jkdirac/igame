@@ -6,6 +6,8 @@
 #include "SceneTreeItem.h"
 #include "SceneManager.h"
 #include "Species.h"
+#include <QPixmap>
+
 #include <QStringList>
 #include <QList>
 #include <QTreeWidgetItem>
@@ -23,9 +25,12 @@
 
 #include <string>
 
+#include "CoreException.h"
 #include "InputGen.h"
-#include "driver.h"
 #include "CopsiInterface.h"
+#include "GlobalSetting.h"
+#include "GenModelThread.h"
+#include "RotateWidget.h"
 
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
@@ -50,8 +55,12 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 			                     this, SLOT(loadDb()));
 	connect(ui.m_runDemo, SIGNAL(pressed()), 
 			                     this, SLOT(runDemo()));
-	connect(ui.m_scenNext, SIGNAL(pressed()), 
-			                     this, SLOT(sceneNext()));
+	connect(ui.m_scenReview, SIGNAL(pressed()), 
+			                     this, SLOT(sceneReview()));
+	connect(ui.m_scenGenModel, SIGNAL(pressed()), 
+			                     this, SLOT(sceneGenModel()));
+	connect(ui.m_scenSimulate, SIGNAL(pressed()), 
+			                     this, SLOT(sceneSimulate()));
 
 	connect(ui.m_scenBack, SIGNAL(pressed()), 
 			                     this, SLOT(backToMainMenu()));
@@ -70,7 +79,22 @@ MainGraphicsView::MainGraphicsView(QWidget* parent)
 	getBiobricksFromDb();
 	getCompoundFromDb();
 
+	m_genThread = NULL;
 	m_showBackforward = false;
+
+//    ui.m_rotateImg->setVisible(false);
+	QPixmap pix(QLatin1String(":iGaME.images/animation.png"));
+	m_item = new PixmapItem(pix);
+	m_scene.addItem(m_item);
+	ui.m_rotateImg->setScene(&m_scene);
+	ui.m_rotateImg->setVisible(false);
+	ui.m_label_generating->setVisible(false);
+	m_anim = new QPropertyAnimation((QObject*)m_item, "pos", NULL);
+	m_anim->setStartValue(QPointF(0, 0));
+	m_anim->setEndValue(QPointF(200, 0));
+	m_anim->setDuration(2000);
+	m_anim->setLoopCount(-1); // forever
+
 //    setTreeView();
 }
 
@@ -97,8 +121,11 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_getStart->setVisible(true);
 		ui.m_loadbase->setVisible(true);
 		ui.m_runDemo->setVisible(true);
+		ui.m_help->setVisible(true);
 
-		ui.m_scenNext->setVisible(false);
+		ui.m_scenReview->setVisible(false);
+		ui.m_scenGenModel->setVisible(false);
+		ui.m_scenSimulate->setVisible(false);
 		ui.m_scenBack->setVisible(false);
 		ui.m_scen_backforward->setVisible(false);
 
@@ -123,9 +150,11 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_getStart->setVisible(false);
 		ui.m_loadbase->setVisible(false);
 		ui.m_runDemo->setVisible(false);
+		ui.m_help->setVisible(false);
 
-		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-review.png);"));
+		ui.m_scenReview->setVisible(true);
+		ui.m_scenGenModel->setVisible(false);
+		ui.m_scenSimulate->setVisible(false);
 		ui.m_scenBack->setVisible(true);
 		ui.m_scen_backforward->setVisible(m_showBackforward);
         ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-forward.png);"));
@@ -151,9 +180,11 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_getStart->setVisible(false);
 		ui.m_loadbase->setVisible(false);
 		ui.m_runDemo->setVisible(false);
+		ui.m_help->setVisible(false);
 
-		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
+		ui.m_scenReview->setVisible(false);
+		ui.m_scenGenModel->setVisible(true);
+		ui.m_scenSimulate->setVisible(false);
 		ui.m_scenBack->setVisible(true);
 		ui.m_scen_backforward->setVisible(m_showBackforward);
         ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
@@ -170,9 +201,9 @@ void MainGraphicsView::setUi(STATE curState)
 		update();
 	}
 
-	if (curState == SIMULATE)
+	if (curState == GENMODEL)
 	{
-		m_showBackforward = true;
+		m_showBackforward = false;
 		qDebug() << "enter Review";
 		ui.m_overViewWidget->setVisible(true);
 		ui.m_frame->setVisible(false);
@@ -180,9 +211,45 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_getStart->setVisible(false);
 		ui.m_loadbase->setVisible(false);
 		ui.m_runDemo->setVisible(false);
+		ui.m_help->setVisible(false);
 
-		ui.m_scenNext->setVisible(true);
-        ui.m_scenNext->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-simulate.png);"));
+		ui.m_scenReview->setVisible(false);
+		ui.m_scenGenModel->setVisible(false);
+		ui.m_scenSimulate->setVisible(false);
+		ui.m_scenBack->setVisible(false);
+		ui.m_scen_backforward->setVisible(m_showBackforward);
+        ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
+
+		ui.m_rotateImg->setVisible(true);
+		ui.m_label_generating->setVisible(true);
+		m_anim->start();
+
+		ui.m_fileBrowser->setVisible(true);
+		ui.m_fileBrowser->setGeometry(m_mainRect);
+		ui.m_mainGraph->setVisible(false);
+		ui.m_mainGraph->setGeometry(QRect(0,0,0,0));
+		ui.m_logo->setVisible(false);
+		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
+
+		ui.m_console->setVisible(false);
+
+		update();
+	}
+
+	if (curState == SIMULATE)
+	{
+		m_showBackforward = false;
+		ui.m_overViewWidget->setVisible(true);
+		ui.m_frame->setVisible(false);
+
+		ui.m_getStart->setVisible(false);
+		ui.m_loadbase->setVisible(false);
+		ui.m_runDemo->setVisible(false);
+		ui.m_help->setVisible(false);
+
+		ui.m_scenReview->setVisible(false);
+		ui.m_scenGenModel->setVisible(false);
+		ui.m_scenSimulate->setVisible(true);
 		ui.m_scenBack->setVisible(true);
 		ui.m_scen_backforward->setVisible(m_showBackforward);
         ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
@@ -293,10 +360,9 @@ void MainGraphicsView::getStart()
 	if (m_state == START)
 		setState(GAMESCENE);
 }
-	
-void MainGraphicsView::sceneNext()
+
+void MainGraphicsView::sceneReview()
 {
-	qDebug() << "HaHa next pressed";
 	InputGen inputGenerator;
 
 	//review
@@ -307,50 +373,69 @@ void MainGraphicsView::sceneNext()
 			QString& inputXml = inputGenerator.generateInput();
 
 #ifndef QT_NO_CURSOR
-		QApplication::setOverrideCursor(Qt::WaitCursor);
+			QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-		ui.m_fileBrowser->setPlainText(inputXml);
+			ui.m_fileBrowser->setPlainText(inputXml);
 #ifndef QT_NO_CURSOR
-		QApplication::restoreOverrideCursor();
+			QApplication::restoreOverrideCursor();
 #endif
+
+			QString inputFileName = get_igame_home_dir();
+			inputFileName += "/input.xml";
+			QFile file(inputFileName);
+			if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+				return;
+
+			QTextStream out(&file);
+			out << inputXml;
 		}
 		catch (CoreException &se)
 		{
 			qDebug() << "CoreException: " << se.what();
 		}
-
 	}
 
-	//simulate
-	if (m_state == REVIEW)
-	{
-		Driver driver;
-		try
-		{
-			bool errno = driver.beginSimulation ();
-
-			if (errno == 0)
-			{
-				QStringList par_list;
-				QString pro_name("../../../ExternalLib/linux/CopasiUI");
-				QString par_1("-i");
-				QString par_2("network.xml");
-				par_list << par_1 << par_2;
-				QProcess::execute(pro_name, par_list);
-			}
-		}
-		catch (CoreException &se)
-		{
-			cout << "exceptions" << endl;
-		}
-	}
-
-	if (m_state == GAMESCENE)
-		setState(REVIEW);
-	else if (m_state == REVIEW)
-		setState(SIMULATE);
+	setState(REVIEW);
 }
 
+void MainGraphicsView::sceneGenModel()
+{
+	if (m_state == REVIEW)
+	{
+		setState(GENMODEL);
+		if (m_genThread == NULL)
+			m_genThread = new GenModelThread;
+
+		connect(m_genThread, SIGNAL(finished()), 
+				this, SLOT(genThreadFinished()));
+		if (m_genThread->isRunning())
+			return;
+
+		m_genThread->start();
+	}
+
+}
+
+void MainGraphicsView::genThreadFinished()
+{
+	ui.m_label_generating->setVisible(false);
+	ui.m_rotateImg->setVisible(false);
+	m_anim->stop();
+	setState(SIMULATE);
+}
+
+void MainGraphicsView::sceneSimulate()
+{
+	setState(SIMULATE);
+
+	QStringList par_list;
+	QString pro_name("../../../ExternalLib/linux/CopasiUI");
+	QString par_1("-i");
+	QString par_2("network.xml");
+	par_list << par_1 << par_2;
+	QProcess::execute(pro_name, par_list);
+}
+	
 void MainGraphicsView::loadDb()
 {
 	qDebug() << "HaHa get start pressed";

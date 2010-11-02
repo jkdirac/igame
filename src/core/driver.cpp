@@ -10,7 +10,6 @@ Driver::~Driver ()
 bool Driver::beginSimulation ()
 {
 	readInput dbreader;
-	const string DB_PATH = "../../../example2";
 	bool SBMLok =	false;
 
 	//
@@ -19,7 +18,6 @@ bool Driver::beginSimulation ()
 	try
 	{
 		MySBMLDocument* mysbmldoc = new MySBMLDocument;
-//        dbreader.add_directory (DB_PATH);
 		dbreader.config (mysbmldoc);
 		mysbmldoc->run (dbreader);
 

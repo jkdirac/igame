@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<species category="Promoter"
+	x="-250" y="-150"
+	width="80" height="40"
+	isVisible="1" isSelectable="1" isMovable="1"
+	isTextVisible="1" text="BBa_J23100"
+	isPixmapVisible="1" pixmap=":/iGaME.images/coding sequence.png"
+	/>

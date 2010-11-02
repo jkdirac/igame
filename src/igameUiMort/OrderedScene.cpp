@@ -16,20 +16,20 @@ OrderedScene::OrderedScene(const QString &id, SPECIESTYPE type, MItem *root) : M
 	m_bone = new MItem(":xml/biobrick.ui.xml", SPEC_NON);
 	m_bone->setId(getId());
 	m_bone->setY(m_y);
-	m_bone->setX(m_x+2);
+	m_bone->setX(m_x+1);
 	m_bone->setMovable(false);
 	m_bioWidth = m_bone->width();
 
 	m_head = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
 	m_head->setX(m_x+2);
 	m_head->setY(m_y);
-	m_head->setId("TEX_100_head");
+	m_head->setId("TEX_100");
 	m_head->setMovable(false);
 
 	m_tail = new MItem(":xml/biobrick.ui.xml", SPEC_BIOBRICK);
-	m_tail->setX(m_x+1);
+	m_tail->setX(m_x+3);
 	m_tail->setY(m_y);
-	m_tail->setId("TEX_100_tail");
+	m_tail->setId("TEX_100");
 	m_tail->setMovable(false);
 
 	addSpeciesItem(m_bone);
@@ -72,8 +72,8 @@ bool OrderedScene::itemDropped(MItem *item)
 
 	//
 	if ( itemInCompartment(item) &&
-			((item->x() > m_head->x())
-			 || (item->x() < m_tail->x())))
+			((item->x() < m_head->x())
+			 || (item->x() > m_tail->x())))
 	{
 		qDebug() << "invalid input in " << item->x() << " head: " << m_head->x() << " tail: " << m_tail->x();
 		item->setY(m_y - 100);
@@ -119,11 +119,9 @@ void OrderedScene::rearrangeItem()
 	}
 
 	qSort(m_validItem.begin(), m_validItem.end(), OrderedScene::posxGreatethan);
-	for (itr = m_validItem.begin(); 
-			itr != m_validItem.end();
-			itr++)
+	for (int i = 0; i < m_validItem.size(); i++)
 	{
-		qDebug() <<"x: " << (*itr)->x();
+		qDebug() <<"x: " << m_validItem[i]->x();
 	}
 }
 
@@ -133,10 +131,12 @@ void OrderedScene::adjustItemPos()
 	int nNum = m_validItem.size();
 	int startX;
 
-	m_width = nNum * m_bioWidth + (nNum-1) * m_margin + 50;
+	int m_padd = 200 + nNum * 20;
+	m_width = nNum * m_bioWidth + (nNum-1) * m_margin + m_padd;
+	qDebug() << "item num " << nNum << " biobrick width " << m_bioWidth << " width " << m_width;
 	m_height = 70;
 
-	startX = m_x - 10 + m_width/2 - m_bioWidth;
+	startX = m_x + m_width/2 - m_bioWidth/2 - m_padd/2;
 	for (int i=0; i < nNum; i++)
 	{
 		int item_x = startX - i * m_bioWidth;
@@ -187,7 +187,7 @@ QString OrderedScene::generateSpeXmlString()
 
 		res += root_data->generatePartsXmlString();
 
-		for (int i=0; i <m_validItem.size() ; i++)
+		for (int i=m_validItem.size()-1; i >= 0 ; i--)
 		{
 			if ((m_validItem[i] == m_rootItem)
 				|| (m_validItem[i] == NULL))
