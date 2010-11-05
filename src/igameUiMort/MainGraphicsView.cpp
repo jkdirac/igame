@@ -33,6 +33,10 @@
 #include "GenModelThread.h"
 #include "RotateWidget.h"
 
+#include <algorithm>
+
+using namespace std;
+
 MainGraphicsView::MainGraphicsView(QWidget* parent)
 {
 	ui.setupUi(this);
@@ -476,7 +480,7 @@ void MainGraphicsView::sceneSimulate()
 	modelName += "/network.xml";
 
 	QStringList par_list;
-	QString pro_name("../../../ExternalLib/linux/CopasiUI");
+	QString pro_name("./CopasiUI");
 	QString par_1("-i");
 	QString par_2(modelName);
 	par_list << par_1 << par_2;
@@ -528,6 +532,7 @@ void MainGraphicsView::getBiobricksFromDb()
 		qDebug() << "read ids error " << se.what() << endl;
 	}
 
+	sort(res.begin(), res.end());
 	QStringList comList;
 	comList.clear();
 	for (int i=0; i < res.size(); i++)
@@ -560,6 +565,7 @@ void MainGraphicsView::getBackboneFromDb()
 		qDebug() << "read ids error " << se.what() << endl;
 	}
 
+	sort(res.begin(), res.end());
 	QStringList comList;
 	comList.clear();
 	for (int i=0; i < res.size(); i++)
@@ -591,6 +597,7 @@ void MainGraphicsView::getCompartFromDb()
 		qDebug() << "read ids error " << se.what() << endl;
 	}
 
+	sort(res.begin(), res.end());
 	QStringList comList;
 	comList.clear();
 	for (int i=0; i < res.size(); i++)
@@ -622,6 +629,7 @@ void MainGraphicsView::getCompoundFromDb()
 		qDebug() << "read ids error " << se.what() << endl;
 	}
 
+	sort(res.begin(), res.end());
 	QStringList comList;
 	comList.clear();
 	for (int i=0; i < res.size(); i++)

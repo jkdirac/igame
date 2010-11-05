@@ -19,7 +19,7 @@ void SpeciesData::init()
 	*/
 
 	//part
-	m_constant = "true";
+	m_constant = "false";
 	m_partType = "ForwardDNA"; // "ForwardDNA"
 	m_InitConcentration = "2.37E-9"; //"4.15135E-24"
 }

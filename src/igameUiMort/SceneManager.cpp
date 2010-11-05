@@ -33,7 +33,7 @@ void SceneManager::startShow()
 		return;
 	}
 
-	m_rootscene = new MScene(NULL, "Flask");
+	m_rootscene = new MScene(NULL, "Chemostat");
 
 	if ( m_rootscene != NULL)
 	{

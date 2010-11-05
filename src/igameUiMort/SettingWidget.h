@@ -9,8 +9,20 @@
 #include "ui_RuleDataSet.h"
 #include "ui_SpeciesDataSet.h"
 #include "ui_BiobrickDataSet.h"
+#include "ui_RuleDataEdit.h"
 
 class MItem;
+class RuleDataSet : public QWidget
+{
+	Q_OBJECT
+	public:
+		RuleDataSet(MItem *item);
+
+	private:
+		Ui::RuleDataEdit ui;
+		MItem* m_item;
+};	
+
 class SettingWidget : public QWidget
 {
 	public:
@@ -54,7 +66,11 @@ class SpeciesDataSet : public SettingWidget
 
 	private:
 		Ui::SpeciesDataSet ui;
-};	
+		RuleDataSet* m_dataSet; 
+
+		private slots:
+		void showRuleDataSet();
+};
 
 class BiobrickDataSet : public SettingWidget
 {
@@ -68,15 +84,4 @@ class BiobrickDataSet : public SettingWidget
 		Ui::BiobrickDataSet ui;
 };	
 
-class RuleDataSet : public SettingWidget
-{
-	Q_OBJECT
-	public:
-		RuleDataSet(MItem *item);
-		void set();
-		void showSetting();
-
-	private:
-		Ui::RuleDataSet ui;
-};	
 #endif

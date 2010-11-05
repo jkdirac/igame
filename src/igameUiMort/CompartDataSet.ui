@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>190</width>
-    <height>61</height>
+    <height>92</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,14 +22,14 @@
      <x>0</x>
      <y>0</y>
      <width>191</width>
-     <height>81</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="acceptDrops">
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(230, 230, 230);</string>
+    <string notr="true"/>
    </property>
    <layout class="QFormLayout" name="formLayout">
     <property name="fieldGrowthPolicy">
@@ -58,6 +58,27 @@
     </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEdit_size"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_constant">
+      <property name="text">
+       <string>Constant</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="combx_constant">
+      <item>
+       <property name="text">
+        <string>false</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>true</string>
+       </property>
+      </item>
+     </widget>
     </item>
    </layout>
   </widget>

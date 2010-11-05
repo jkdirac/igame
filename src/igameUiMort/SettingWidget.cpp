@@ -62,6 +62,9 @@ void CompartDataSet::showSetting()
 
 		ui.m_compartmentId->setText(data->id());
 		ui.lineEdit_size->setText(data->size());
+
+		ui.combx_constant->setVisible(false);
+		ui.label_constant->setVisible(false);
 	}
 }
 
@@ -76,6 +79,9 @@ void CompartDataSet::set()
 			return;
 		QString size = ui.lineEdit_size->text();
 		data->setSize(size);
+
+		QString constant = ui.combx_constant->currentText();
+		data->setConstant(constant);
 	}
 }
 
@@ -128,6 +134,15 @@ SpeciesDataSet::SpeciesDataSet(MItem *item) : SettingWidget(item, this)
 	{
 		showSetting();
 	}
+
+	connect(ui.button_editRule, SIGNAL(pressed()), 
+			                     this, SLOT(showRuleDataSet()));
+}
+
+void SpeciesDataSet::showRuleDataSet()
+{
+	m_dataSet = new RuleDataSet();
+	m_dataSet->show();
 }
 
 void SpeciesDataSet::set()
@@ -141,6 +156,9 @@ void SpeciesDataSet::set()
 			return;
 		QString initCon = ui.tx_SpecInitCon->text();
 		data->setInitConcentration(initCon);
+
+		QString constant = ui.combx_constant->currentText();
+		data->setConstant(constant);
 	}
 }
 
@@ -157,22 +175,16 @@ void SpeciesDataSet::showSetting()
 
 		ui.tx_SpeId->setText(data->id());
 		ui.tx_SpecInitCon->setText(data->initConcentration());
+
+		ui.combx_constant->setVisible(false);
+		ui.lable_constant->setVisible(false);
 	}
 }
 
-RuleDataSet::RuleDataSet(MItem *item) : SettingWidget(item, this)
+RuleDataSet::RuleDataSet(MItem* item) : QWidget(NULL), m_item(item)
 {
 	ui.setupUi(this);
-	if (getItem() != NULL)
-	{
-		showSetting();
-	}
-}
+	m_item = item;
 
-void RuleDataSet::set()
-{
-}
 
-void RuleDataSet::showSetting()
-{
 }

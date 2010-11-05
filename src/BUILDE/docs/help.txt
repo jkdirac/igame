@@ -23,13 +23,13 @@ to get start!
 
 2 Getting Start
 Let's get start to build a system!
-After loading database and push the "Get Started" button. There show a colorful screen in the right
+After loading database and push the "Get Started" button. There shows a colorful screen in the right
 window, we call it "scene" for convience, in which exists a round dish with a string in it reads "Flask" 
 and a "trash can-like" icon, 
 They represents the flask and the trash can respectively. One can put a substance into the flask dish to add
 it to the system and throw one into the trash can to dispose it.
 The left window can be divided into two parts. Above one is a overview area, which is very useful
-when look through the builded system. The below is a substance generator consit of four combined
+when look through the builded system. The below is a substance generator consist of four combined
 button and popup list, each represents one substance category. You can select all things exists in the database 
 to build your system by using mouse from the generator. Just move your mouse cursor to the chosen category. 
 select it and there show popup list, and use your mouse to highlight the items in the popup list,
