@@ -9,11 +9,12 @@
 #include "SpeciesDataManager.h"
 
 int InputGen::spec_id = 0;
+QSet<SpeciesData*> InputGen::m_speNoSet;
 
 InputGen::InputGen() : m_scenMgr(NULL)
 {
+	m_speNoSet.clear();
 	spec_id = 0;
-
 	m_listCompartments.clear();
 	m_listScene.clear();
 	m_inputContent.clear();
@@ -108,3 +109,17 @@ QString& InputGen::generateInput()
 	return m_inputContent;
 }
 #endif
+
+int InputGen::applySpecNo(SpeciesData *data)
+{
+	int res;
+	if (m_speNoSet.find(data) == m_speNoSet.end())
+	{
+		res = m_speNoSet.size();
+		m_speNoSet.insert(data);
+		data->setSpeciesNum(res);
+		return res;
+	}
+	else
+		return -1;
+}

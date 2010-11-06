@@ -116,7 +116,7 @@ class SpeciesData
 	SPECIESTYPE m_parentType;
 
 	QString m_speciesId;
-
+	int m_speciesNum;
 
 	//compartment
 	QString m_compartSize; // 0.10
@@ -154,6 +154,7 @@ class SpeciesData
 	const QString& partCategory() const { return m_partCatgory; }
 	const int ruleNum() const { return m_ruleList.size(); }
 	QList<RuleData*>& getRuleList() { return m_ruleList; }
+	inline int speciesNum() { return m_speciesNum; }
 
 	QString speciesId();
 
@@ -170,6 +171,7 @@ class SpeciesData
 	inline void setfileComId(QString input) { m_fileComId = input; }
 	inline void setfilePartId(QString input) { m_filePartId = input; }
 	void setType(SPECIESTYPE type);
+	inline void setSpeciesNum(int input) { m_speciesNum = input; }
 
 	void setInputNo(int nm);
 

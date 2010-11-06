@@ -277,10 +277,13 @@ void SpeciesData::setType(SPECIESTYPE type)
 
 QString SpeciesData::speciesId()
 {
-	if (m_speciesId != "")
-		return m_speciesId;
+//    if (m_speciesId != "")
+//        return m_speciesId;
 
-	m_speciesId = QString::number(InputGen::getSpecNo());
-	InputGen::incSpecNo();
+//    m_speciesId = QString::number(InputGen::getSpecNo());
+//    InputGen::incSpecNo();
+	InputGen::applySpecNo(this);
+	m_speciesId = QString::number(speciesNum());
+	qDebug() << "type " << type() << " id " << m_speciesId;
 	return m_speciesId;
 }

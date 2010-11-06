@@ -3,6 +3,7 @@
 
 #include "SpeciesData.h"
 #include <QVector>
+#include <QSet>
 
 class SceneManager;
 class MScene;
@@ -13,6 +14,7 @@ class InputGen
 		QString& generateInput();
 		static int getSpecNo() { return spec_id; }
 		static int incSpecNo() { spec_id++; };
+		static int applySpecNo(SpeciesData *data);
 
 	private:
 		static int spec_id;
@@ -25,6 +27,8 @@ class InputGen
 		QString m_inputContent;
 		QVector<MScene*> m_listScene;
 		SceneManager* m_scenMgr;
+
+		static QSet<SpeciesData*> m_speNoSet;
 };
 
 #endif
