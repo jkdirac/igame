@@ -1,8 +1,10 @@
 #include "SettingWidget.h"
-#include "MItem.h"
 #include <QDoubleValidator>
 #include <QCursor>
 #include <QListWidgetItem> 
+
+#include "MItem.h"
+#include "MScene.h"
 
 SettingWidget::SettingWidget(MItem* item, SettingWidget* impl):QWidget(NULL) 
 { 
@@ -131,15 +133,33 @@ SpeciesDataSet::SpeciesDataSet(MItem *item) : SettingWidget(item, this)
 		showSetting();
 	}
 
+	m_ruleSett = NULL;
 	connect(ui.button_editRule, SIGNAL(pressed()), 
 			                     this, SLOT(showRuleDataSet()));
 }
 
 void SpeciesDataSet::showRuleDataSet()
 {
+	MItem* item = getItem();
+	if (item == NULL)
+		return;
+
+	MScene* m_scene = item->getScene();
 	if (m_dataSet == NULL)
-		m_dataSet = new RuleDataSet(getItem());
+		m_dataSet = new RuleDataSet(getItem(), this);
+
+	if (m_ruleSett == NULL)
+		m_ruleSett = (MWidget*)m_scene->addWidget(m_dataSet); 
+
+	qDebug() << "x: " << ui.m_speciesSet->x() << "y: " << ui.m_speciesSet->y()
+		<< "width: " << ui.m_speciesSet->width();
+
+	m_ruleSett->setX(x() + width());
+	m_ruleSett->setY(y());
 	m_dataSet->show();
+
+//    connect(m_dataSet, SIGNAL(pressed()), 
+//                                 this, SLOT(showRuleDataSet()));
 }
 
 void SpeciesDataSet::set()
@@ -178,10 +198,12 @@ void SpeciesDataSet::showSetting()
 	}
 }
 
-RuleDataSet::RuleDataSet(MItem* item) : QWidget(NULL), m_item(item)
+RuleDataSet::RuleDataSet(MItem* item, SettingWidget *parent) 
+: QWidget(NULL), m_item(item) ,m_parentWidget(NULL)
 {
 	ui.setupUi(this);
 	m_item = item;
+	m_parentWidget = parent;
 
 	if (m_item == NULL)
 		return;
@@ -214,6 +236,11 @@ RuleDataSet::RuleDataSet(MItem* item) : QWidget(NULL), m_item(item)
 			                     this, SLOT(showParaInfo(QListWidgetItem *)));
 	connect(ui.button_confirm, SIGNAL(pressed()), 
 			                     this, SLOT(setPara()));
+}
+
+void RuleDataSet::leaveEvent ( QEvent * event )
+{
+	close();
 }
 
 void RuleDataSet::createRuleInfo(QListWidgetItem *item)

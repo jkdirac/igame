@@ -13,15 +13,18 @@
 #include "ui_RuleDataEdit.h"
 
 class MItem;
+class SettingWidget;
 class RuleDataSet : public QWidget
 {
 	Q_OBJECT
 	public:
-		RuleDataSet(MItem *item);
+		RuleDataSet(MItem *item, SettingWidget *parent);
+		void leaveEvent ( QEvent * event );
 
 	private:
 		Ui::RuleDataEdit ui;
 		MItem* m_item;
+		SettingWidget* m_parentWidget;
 
 		private slots:
 		void showRuleInfo(QListWidgetItem *item);
@@ -74,6 +77,7 @@ class SpeciesDataSet : public SettingWidget
 	private:
 		Ui::SpeciesDataSet ui;
 		RuleDataSet* m_dataSet; 
+		MWidget* m_ruleSett;
 
 		private slots:
 		void showRuleDataSet();
