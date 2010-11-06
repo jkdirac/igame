@@ -1,6 +1,6 @@
 format 66
 "Ui" // Ui
-  revision 4
+  revision 5
   modified_by 100 "jkdirac"
   // class settings
   //class diagram settings
@@ -358,6 +358,20 @@ format 66
 	    classrelation_ref 134244 // <unidirectional association>
 	  b parent class_ref 131940 // Item
       end
+
+      classrelation 138212 // <unidirectional association>
+	relation 137828 --->
+	  a role_name "" private
+	    classrelation_ref 138212 // <unidirectional association>
+	  b parent class_ref 137956 // ParameterData
+      end
+
+      classrelation 138340 // <unidirectional association>
+	relation 137956 --->
+	  a role_name "" private
+	    classrelation_ref 138340 // <unidirectional association>
+	  b parent class_ref 138084 // QListWidgetItem
+      end
     end
 
     class 134372 "InputGenerate"
@@ -433,6 +447,28 @@ format 66
 	    classrelation_ref 137060 // <unidirectional association>
 	  b parent class_ref 134244 // SpeciesData
       end
+    end
+
+    class 137956 "ParameterData"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 138084 "QListWidgetItem"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 end

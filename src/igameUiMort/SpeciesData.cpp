@@ -17,7 +17,7 @@ void SpeciesData::init()
 	m_compartSize = "7E-16"; // 0.10
 	m_InitConcentration = "2.37E-9"; //"4.15135E-24"
 	*/
-
+	m_speciesId = "";
 	//part
 	m_constant = "false";
 	m_partType = "ForwardDNA"; // "ForwardDNA"
@@ -82,6 +82,36 @@ SpeciesData& SpeciesData::operator = (const SpeciesData &other)
 	return *this;
 }
 
+QString SpeciesData::generateRuleFuncXmlString()
+{
+//    <assignmentRule>
+//        <variable>sPecIes1</variable>
+//        <math>square_wave (t, ts, te, s)</math>
+//        </assignmentRule>
+	QString res;
+	res.clear();
+
+	qDebug() << "SpeciesData generate species rule function xml string";
+	QString specId = "sPecIes";
+	specId += speciesId();
+	for (int i=0; i<ruleNum(); i++)
+	{
+		res+="    <assignmentRule>\n";
+		res+="        <variable>" + specId + "</variable>\n";
+		res+="        <math>" + getRuleList()[i] + "</math>\n";
+		res+="        </assignmentRule>\n";
+	}
+}
+
+QString SpeciesData::generateParameterXmlString()
+{
+	QString res;
+
+	{
+		return "";
+	}
+}
+
 QString SpeciesData::generateCompartmentXmlString()
 {
 //    <compartment db="Chemostat">
@@ -124,8 +154,7 @@ QString SpeciesData::generateSpeciesXmlString()
 	//no dbid
 //    res += "<species>\n";
 	QString specId = "sPecIes";
-	specId += QString::number(InputGen::getSpecNo());
-	InputGen::incSpecNo();
+	specId += speciesId();
 	res += "  <id>"; res += specId; res += "</id>\n";
 	if (type() == SPEC_COMPARTMENT)
 	{
@@ -221,3 +250,13 @@ void SpeciesData::setType(SPECIESTYPE type)
 	}
 	initFromDb(m_type);
 };
+
+QString SpeciesData::speciesId()
+{
+	if (m_speciesId != "")
+		return m_speciesId;
+
+	m_speciesId = QString::number(InputGen::getSpecNo());
+	InputGen::incSpecNo();
+	return m_speciesId;
+}

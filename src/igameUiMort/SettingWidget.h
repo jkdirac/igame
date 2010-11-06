@@ -5,6 +5,7 @@
 #include "MWidget.h"
 
 #include <QDebug>
+#include <QLineEdit>
 #include "ui_CompartDataSet.h"
 #include "ui_RuleDataSet.h"
 #include "ui_SpeciesDataSet.h"
@@ -21,6 +22,12 @@ class RuleDataSet : public QWidget
 	private:
 		Ui::RuleDataEdit ui;
 		MItem* m_item;
+
+		private slots:
+		void showRuleInfo(QListWidgetItem *item);
+		void showParaInfo(QListWidgetItem *item);
+		void createRuleInfo(QListWidgetItem *item);
+		void setPara();
 };	
 
 class SettingWidget : public QWidget

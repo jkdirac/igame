@@ -76,6 +76,17 @@ void SpeciesDataManager::dumpSpeciesData()
 			<< " " << m_dataPool[i]->initConcentration()
 			<< " " << m_dataPool[i]->constant()
 			<< " " << m_dataPool[i]->partType();
+		for (int j=0; j<m_dataPool[i]->ruleNum(); j++)
+		{
+			RuleData* ruleData = (m_dataPool[i]->getRuleList())[j];
+			qDebug() << "	rule: " << j << " " << ruleData->rule();
+			for (int k=0; k<ruleData->parameters().size(); k++)
+			{
+				ParameterData* data = (ruleData->parameters())[k];
+				qDebug() << "		par: " << k << " " << data->id() << " " << data->units() << " "
+					<< data->value() << " " << data->constant();
+			}
+		}
 	}
 
 	qDebug() << "-----------------------------dump: data end";

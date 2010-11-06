@@ -2,6 +2,9 @@
 #define _SPECIES_H_
 
 #include <QString>
+#include <QStringList>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 class MItem;
 
@@ -13,6 +16,90 @@ typedef enum
 	SPEC_COMPOUNDS,
 	SPEC_NON
 } SPECIESTYPE;
+
+class ParameterData
+{
+	private:
+		QString m_id;
+		QString m_value;
+		QString m_constant;
+		QString m_units;
+
+	public:
+		inline QString id() { return m_id;}
+		inline QString value() { return m_value;}
+		inline QString constant() { return m_constant;}
+		inline QString units() { return m_units;}
+		inline void setId(QString sid) { m_id = sid; }
+		inline void setValue(QString svalue) { m_value = svalue; }
+		inline void setConstant(QString sconstant) { m_constant = sconstant; }
+		inline void setUnits(QString sunit) { m_units = sunit; }
+
+		ParameterData() {}
+		ParameterData(ParameterData &data) 
+		{
+			setId(data.id());
+			setValue(data.value());
+			setConstant(data.constant());
+			setUnits(data.units());
+		}
+		ParameterData& operator = (ParameterData &data) 
+		{
+			setId(data.id());
+			setValue(data.value());
+			setConstant(data.constant());
+			setUnits(data.units());
+		}
+};
+
+class RuleData
+{
+	private:
+		QString m_rule;
+		QListWidgetItem* m_ruleitem;
+//        QList<ParameterData*> m_parameters;
+//        QList<QListWidgetItem*> m_parameters;	
+		QList<ParameterData*> m_parameters;	
+	public:
+		inline void setRule(const QString& rule) { m_rule = rule; }
+		inline void setItem(QListWidgetItem* item) 
+		{ 
+			m_ruleitem = item; 
+		}
+		void addParamer(ParameterData *para)
+		{
+			if (para == NULL) return;
+			m_parameters.push_back(para);
+		}	
+		void deleteParamer(int row)
+		{
+//            QListWidgetItem* item = m_parameters.takeAt(row);
+			ParameterData* item = m_parameters[row];	
+			if (item != NULL)
+				delete item;
+		}
+
+		RuleData()
+		{
+			m_parameters.clear();
+//            m_parameterData.clear();
+		};
+		~RuleData() 
+		{
+			//memory leaks
+			m_parameters.clear();
+		}
+
+		inline QString& rule()
+		{ 
+			m_rule = m_ruleitem->text();
+			return m_rule; 
+		}
+		inline QList<ParameterData*>& parameters() 
+		{ 
+			return m_parameters; 
+		}
+};
 
 class SpeciesData
 {
@@ -27,6 +114,9 @@ class SpeciesData
 	SPECIESTYPE m_type;
 	QString m_parent;
 	SPECIESTYPE m_parentType;
+
+	QString m_speciesId;
+
 
 	//compartment
 	QString m_compartSize; // 0.10
@@ -45,6 +135,8 @@ class SpeciesData
 	SpeciesData& operator = (const SpeciesData &other);
 	void initFromDb(SPECIESTYPE type);
 
+	QList<RuleData*> m_ruleList;
+
 	public:
 
 	const bool valid() { return m_bvalid; }
@@ -60,7 +152,12 @@ class SpeciesData
 	const QString filePartId() const { return m_dbId + m_filePartId; }
 	const QString& constant() const { return m_constant; }
 	const QString& partCategory() const { return m_partCatgory; }
+	const int ruleNum() const { return m_ruleList.size(); }
+	QList<RuleData*>& getRuleList() { return m_ruleList; }
 
+	QString speciesId();
+
+	inline void insertFun(RuleData* fun) { m_ruleList.push_back(fun); }
 	inline void setValid(bool valid) { m_bvalid = valid; }
 	inline void setItem(MItem *item) { m_item = item; }
 	inline void setParentType(SPECIESTYPE type) { m_parentType = type; }
@@ -79,6 +176,8 @@ class SpeciesData
 	QString generatePartsXmlString();
 	QString generateCompartmentXmlString();
 	QString generateSpeciesXmlString();
+	QString generateRuleFuncXmlString();
+	QString generateParameterXmlString();
 
 };
 #endif
