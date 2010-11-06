@@ -21,7 +21,7 @@
 							<partReference>pSB3C5</partReference>
 							<partLabel>pSB3C5</partLabel>
 							<partType>ForwardDNA</partType>
-							<partCategory>biobrick</partCategory>
+							<partCategory>plasmidBackbone</partCategory>
 						</part>
 						<part>
 							<partReference>ANY</partReference>

@@ -182,7 +182,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_logo->setVisible(false);
 		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
 		ui.m_console->setVisible(false);
-
+		ui.m_label_generating->setVisible(false);
 		update();
 	}
 
@@ -268,7 +268,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_scenGenModel->setVisible(false);
 		ui.m_scenSimulate->setVisible(true);
 		ui.m_scenBack->setVisible(true);
-		ui.m_scen_backforward->setVisible(m_showBackforward);
+//        ui.m_scen_backforward->setVisible(m_showBackforward);
         ui.m_scen_backforward->setStyleSheet(QString::fromUtf8("background-image: url(:/iGaME.images/button-back.png);"));
 
 		ui.m_fileBrowser->setVisible(true);
@@ -278,6 +278,7 @@ void MainGraphicsView::setUi(STATE curState)
 		ui.m_logo->setVisible(false);
 		ui.m_logo->setGeometry(QRect(0, 0, 0, 0));
 
+		ui.m_scen_backforward->setVisible(true);
 		ui.m_console->setVisible(true);
 
 		update();
@@ -471,6 +472,7 @@ void MainGraphicsView::genThreadFinished()
         ui.m_label_generating->setText(QApplication::translate("MainGraphicsView", "Generate error !!", 0, QApplication::UnicodeUTF8));
 		ui.m_scenBack->setVisible(true);
 	}
+	ui.m_scen_backforward->setVisible(true);
 }
 
 void MainGraphicsView::sceneSimulate()

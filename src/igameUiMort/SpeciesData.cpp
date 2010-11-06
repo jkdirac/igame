@@ -260,7 +260,7 @@ void SpeciesData::setType(SPECIESTYPE type)
 	{
 //        m_constant = "false";
 		m_partType = "ForwardDNA";
-		m_partCatgory = "biobrick";
+		m_partCatgory = "plasmidBackbone";
 	}
 	if (m_type == SPEC_COMPOUNDS)
 	{

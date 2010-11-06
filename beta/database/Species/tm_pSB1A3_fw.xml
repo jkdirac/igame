@@ -21,7 +21,7 @@
 							<partReference>pSB1A3</partReference>
 							<partLabel>pSB1A3</partLabel>
 							<partType>ForwardDNA</partType>
-							<partCategory>biobrick</partCategory>
+							<partCategory>plasmidBackbone</partCategory>
 						</part>
 						<part>
 							<partReference>ANY</partReference>
