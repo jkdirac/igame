@@ -98,18 +98,37 @@ QString SpeciesData::generateRuleFuncXmlString()
 	{
 		res+="    <assignmentRule>\n";
 		res+="        <variable>" + specId + "</variable>\n";
-		res+="        <math>" + getRuleList()[i] + "</math>\n";
-		res+="        </assignmentRule>\n";
+		res+="        <math>" + getRuleList()[i]->rule() + "</math>\n";
+		res+="    </assignmentRule>\n";
 	}
+
+	return res;
 }
 
 QString SpeciesData::generateParameterXmlString()
 {
 	QString res;
+	res.clear();
 
+	qDebug() << "SpeciesData generate species rule function xml string";
+	QString specId = "sPecIes";
+	specId += speciesId();
+	for (int i=0; i<ruleNum(); i++)
 	{
-		return "";
+			RuleData* ruleData = getRuleList()[i];
+			for (int k=0; k<ruleData->parameters().size(); k++)
+			{
+				ParameterData* data = (ruleData->parameters())[k];
+				res += "  <parameter>\n";
+				res += "    <id>" + data->id() + "</id>\n";
+				res += "    <value>" + data->value() + "</value>\n";
+				res += "    <units>" + data->units() + "</units>\n";
+				res += "    <constant>" + data->constant() + "</constant>\n";
+				res += "  </parameter>\n";
+			}
 	}
+
+	return res;
 }
 
 QString SpeciesData::generateCompartmentXmlString()

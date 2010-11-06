@@ -52,6 +52,8 @@ QString& InputGen::generateInput()
 		iter++;
 	}
 
+	m_listRules += "<listOfRules>\n";
+	m_listParameters += "<listOfParameters>\n";
 	m_listCompartments += "\n<listOfCompartments>\n";
 	m_listSpecies += "\n<listOfSpecies>\n";
 	for (int i = 0; i < m_listScene.size(); i++)
@@ -61,12 +63,18 @@ QString& InputGen::generateInput()
 
 		m_listCompartments += m_listScene[i]->generateComXmlString();
 		m_listSpecies += m_listScene[i]->generateSpeXmlString();
+		m_listRules += m_listScene[i]->generateRuleFuncXmlString();
+		m_listParameters += m_listScene[i]->generateParameterXmlString();
 	}
 
 	m_listCompartments += "</listOfCompartments>\n";
 	m_listSpecies += "</listOfSpecies>\n";
+	m_listRules += "</listOfRules>\n";
+	m_listParameters += "</listOfParameters>\n";
 
 	m_inputContent += m_xmlStart;
+	m_inputContent += m_listParameters;
+	m_inputContent += m_listRules;
     m_inputContent += m_listCompartments;
     m_inputContent += m_listSpecies;
 	m_inputContent += m_xmlEnd;

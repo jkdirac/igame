@@ -71,6 +71,8 @@ public:
 
 	virtual QString generateComXmlString();
 	virtual QString generateSpeXmlString();
+	QString generateRuleFuncXmlString();
+	QString generateParameterXmlString();
 
 	int addSpeciesItem(MItem *item);
 	void addBrowserItem(MItem *item);

@@ -717,3 +717,75 @@ MScene* MScene::itemApplyNewScene(MItem *item)
 //    addChildScene(item);
 	return sce;
 }
+
+QString MScene::generateRuleFuncXmlString()
+{
+	qDebug() << "MSCene generate Rule function xml string";
+	QString res;
+	res.clear();
+
+	if(type() == SPEC_COMPARTMENT)
+	{
+		for (int i=0; i < m_dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
+
+			SpeciesData* data = dataItem[i]->getSpeciesData();
+			if (data == NULL)
+				continue; 
+
+			//compartment type only E_coli should be added to species list
+			if ((data->type() == SPEC_COMPARTMENT) 
+					&& (data->id() != "E_coli"))
+				continue;
+
+			res += data->generateRuleFuncXmlString();
+		}
+	}
+	//backbone chain
+	else if(type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
+	else
+		res = "";
+
+	return res;
+}
+
+QString MScene::generateParameterXmlString()
+{
+	qDebug() << "MSCene generate Rule function xml string";
+	QString res;
+	res.clear();
+
+	if(type() == SPEC_COMPARTMENT)
+	{
+		for (int i=0; i < m_dataCount; i++)
+		{
+			if (dataItem[i] == m_rootItem)
+				continue;
+
+			SpeciesData* data = dataItem[i]->getSpeciesData();
+			if (data == NULL)
+				continue; 
+
+			//compartment type only E_coli should be added to species list
+			if ((data->type() == SPEC_COMPARTMENT) 
+					&& (data->id() != "E_coli"))
+				continue;
+
+			res += data->generateParameterXmlString();
+		}
+	}
+	//backbone chain
+	else if(type() == SPEC_BACKBONE)
+	{
+		return "";
+	}
+	else
+		res = "";
+
+	return res;
+}

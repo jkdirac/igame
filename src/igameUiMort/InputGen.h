@@ -16,6 +16,8 @@ class InputGen
 
 	private:
 		static int spec_id;
+		QString m_listRules;
+		QString m_listParameters;
 		QString m_listCompartments;
 		QString m_listSpecies;
 		QString m_xmlStart;
