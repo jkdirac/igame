@@ -191,6 +191,11 @@ QString SpeciesData::generateSpeciesXmlString()
 	}
 
 	res += "  <constant>"; res += constant(); res += "</constant>\n";
+
+	if (ruleNum() != 0)
+	{
+		res += "  <boundaryCondition> true </boundaryCondition>\n";
+	}
 //    res += "<cnModel>\n";
 //    res += "<listOfChains>\n";
 //    res += "<chain>\n";
@@ -247,19 +252,19 @@ void SpeciesData::setType(SPECIESTYPE type)
 
 	if (m_type == SPEC_COMPARTMENT)
 	{
-		m_constant = "false";
+//        m_constant = "false";
 		m_partType = "Compartment";
 		m_partCatgory = "compartment";
 	}
 	if (m_type == SPEC_BACKBONE)
 	{
-		m_constant = "false";
+//        m_constant = "false";
 		m_partType = "ForwardDNA";
 		m_partCatgory = "biobrick";
 	}
 	if (m_type == SPEC_COMPOUNDS)
 	{
-		m_constant = "false";
+//        m_constant = "false";
 		m_partType = "Compound";
 		m_partCatgory = "compound";
 	}

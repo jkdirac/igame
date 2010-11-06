@@ -193,6 +193,7 @@ void SpeciesDataSet::showSetting()
 		ui.tx_SpeId->setText(data->id());
 		ui.tx_SpecInitCon->setText(data->initConcentration());
 
+		//show constant setting
 		ui.combx_constant->setVisible(false);
 		ui.lable_constant->setVisible(false);
 	}
