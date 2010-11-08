@@ -38,6 +38,10 @@ void SpeciesData::initFromDb(SPECIESTYPE type)
 		{
 			interface.get_node_attr(COMPARTMENT, &doc, &path, res);
 			qDebug() << "succss get init size";
+
+			if (res.size() == 0)
+				return;
+
 			m_compartSize = res[0].c_str();
 		}
 		catch (XmlException &se)
