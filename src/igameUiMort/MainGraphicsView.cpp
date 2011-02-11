@@ -24,7 +24,7 @@
 #include <QMessageBox>
 
 #include <string>
-#include <QTextStream>
+#include "SetCopasiWidget.h"
 
 #include "CoreException.h"
 #include "InputGen.h"
@@ -477,16 +477,67 @@ void MainGraphicsView::genThreadFinished()
 
 void MainGraphicsView::sceneSimulate()
 {
-	setState(SIMULATE);
-	QString modelName = get_igame_home_dir();
-	modelName += "/network.xml";
+	bool valid_file = false;
+	bool cancer_simu = false;
 
-	QStringList par_list;
-	QString pro_name("./CopasiUI");
-	QString par_1("-i");
-	QString par_2(modelName);
-	par_list << par_1 << par_2;
-	QProcess::execute(pro_name, par_list);
+	setState(SIMULATE);
+	// get the copasiUI path
+
+	//
+	QString copasi_conf_file_name = get_igame_home_dir();
+	copasi_conf_file_name += "/config.txt";
+
+	QFile copasi_conf_file(copasi_conf_file_name); 
+	copasi_conf_file.open(IO_ReadWrite);
+
+	QTextStream os(&copasi_conf_file);
+	QString pro_name = os.readLine();
+
+	do
+	{
+		if (!QFile::exists (pro_name))
+		{
+			valid_file = false;
+		}
+		else
+		{
+			QFile copasi_file(pro_name);
+			if ((copasi_file.permissions() & QFile::ExeUser) 
+					== QFile::ExeUser)
+			{
+				copasi_conf_file.resize(0);
+				QTextStream is(&copasi_conf_file);
+				valid_file = true;
+				is << pro_name;
+			}
+		}
+
+		SetCopasiWidget set_widget(NULL);
+		if (!valid_file)
+		{
+			pro_name = set_widget.getCopasiPath();
+		}
+
+		if (set_widget.isCanceled())
+			break;
+	}
+	while (!valid_file);
+
+	if (valid_file)
+	{
+		QString modelName = get_igame_home_dir();
+		modelName += "/network.xml";
+
+		QStringList par_list;
+
+		QString par_1("-i");
+		QString par_2(modelName);
+		par_list << par_1 << par_2;
+		
+		QProcess::execute(pro_name, par_list);
+	}
+
+	copasi_conf_file.close();
 }
 	
 void MainGraphicsView::loadDb()
@@ -512,7 +563,6 @@ void MainGraphicsView::loadDb()
 	catch (XmlException &se)
 	{
 	}
-
 }
 
 void MainGraphicsView::runDemo()

@@ -8,6 +8,8 @@ extern "C" {
 void set_igame_home(const char*);
 const char* get_igame_home_dir();
 
+void set_copasi_path(const char*);
+void get_copasi_path();
 #if __cplusplus
 }
 #endif
