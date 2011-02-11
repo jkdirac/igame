@@ -43,8 +43,8 @@ SET( CMAKE_MODULE_PATH
 #FIND PACKAGES
 FIND_PACKAGE( sbml )
 FIND_PACKAGE( dbxml )
-FIND_PACKAGE( copasi )
-FIND_PACKAGE( qwt )
+#FIND_PACKAGE( copasi )
+#FIND_PACKAGE( qwt )
 #FIND_PACKAGE( qwtplot3d )
 #FIND_PACKAGE( odesolver )
 #FIND_PACKAGE( sundials )
@@ -150,9 +150,9 @@ INCLUDE_DIRECTORIES( BEFORE
 #add_subdirectory (ExternalCode)
 add_subdirectory (utility)
 add_subdirectory (BdInterface)
-add_subdirectory (QwtPlot)
+#add_subdirectory (QwtPlot)
 add_subdirectory (core)
-add_subdirectory (igameUi)
+#add_subdirectory (igameUi)
 add_subdirectory (igameUiMort)
 #add_subdirectory (ExternalLib)
 
