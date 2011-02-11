@@ -1,6 +1,6 @@
 PROJECT(IGAME)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_DEBUG -pg")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --export-all-symbols")
 cmake_minimum_required(VERSION 2.6)
 
@@ -12,8 +12,8 @@ INCLUDE( CMakeModules/CustomModules.cmake )
 #---------------------------------------------------------------------------
 # Define EXECUTABLE_OUTPUT_PATH and LIBRARY_OUTPUT_PATH
 #---------------------------------------------------------------------------
-SET(CMAKE_BUILD_TYPE "Debug"
-	CACHE INTERNAL "debug")
+SET(CMAKE_BUILD_TYPE "Release"
+	CACHE INTERNAL "release")
 
 IF( WIN32 )
 SET(EXTERNAL_LIB_OUTPUT_PATH

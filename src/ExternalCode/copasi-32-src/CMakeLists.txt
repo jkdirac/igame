@@ -1,1 +1,1 @@
-ADD_SUBDIRECTORY( copsi )
+ADD_SUBDIRECTORY( copasi )

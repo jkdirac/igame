@@ -1,9 +1,0 @@
-./commandLine.h
-./main.c
-./interactive.h
-./options.c
-./printModel.h
-./interactive.c
-./options.h
-./commandLine.c
-./printModel.c
