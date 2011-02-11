@@ -22,3 +22,11 @@ const char* get_igame_home_dir()
 {
 	return system_igame_home.c_str();
 }
+
+void set_copasi_path(const char*)
+{
+}
+
+void get_copasi_path()
+{
+}
